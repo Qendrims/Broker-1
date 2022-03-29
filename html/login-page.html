@@ -9,17 +9,15 @@
 </head>
 <body>
     <div class="container">
-
-        
-        <form onsubmit="validated();"  autocomplete="off"  action="aboutUs.html" name="form" method="post">
+        <form autocomplete="off"  action="aboutUs.html" name="form" method="post">
             <h1>Sign In</h1>
 
             <div class="labels">Username or E-Mail</div>
-            <input type="text" name="username" placeholder="Username / e-Mail*">
+            <input type="text" id="username" name="username" placeholder="Username / e-Mail*">
             <div class="error" id="username_error">Incorrect email or username.</div>
 
             <div class="labels">Password</div>
-            <input type="password"  name="password" placeholder="Password*">
+            <input type="password" id="pasword"  name="password" placeholder="Password*">
             <div class="error" id="password_error">Incorrect password.</div>
 
             <button id="sumbit-btn" type="submit" >Sign In</button>
