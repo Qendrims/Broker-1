@@ -9,36 +9,36 @@
 </head>
 <body>
     <div class="container">
-        <form onsubmit="return validated();" autocomplete="off"  action="aboutUs.html" name="form" method="post">
+        <form autocomplete="off"  action="aboutUs.html" name="form" method="post">
             <h1>Create Account</h1>
 
             <div class="labels">Firstname</div>
-            <input type="text"  name="firstname" placeholder="Firstname*">
+            <input type="text" id="firstname" name="firstname" placeholder="Firstname*">
             <div class="error" id="firstname_err">Fill your name</div>
            
 
             <div class="labels">Lastname</div>
-            <input type="text"  name="lastname" placeholder="Lastname*">
+            <input type="text" id="lastname" name="lastname" placeholder="Lastname*">
             <div class="error" id="lastname_error">Fill your lastname correctly.</div>
 
             <div class="labels">Birthday</div>
-            <input type="date"  name="birthday" placeholder="Birthday*">
+            <input type="date" id="birthday" name="birthday" placeholder="Birthday*">
             <div class="error" id="bday_error">Fill your birthday correctly.</div>
 
             <div class="labels">Username</div>
-            <input type="text" name="username" placeholder="Username*">
+            <input type="text" id="username" name="username" placeholder="Username*">
             <div class="error" id="username_error">Username must be 8 letters.</div>
 
             <div class="labels">Email</div>
-            <input type="text"  name="email" placeholder="Email*">
+            <input type="text" id="email"  name="email" placeholder="Email*">
             <div class="error" id="email_error">Invalid format for email.</div>
 
             <div class="labels">Password</div>
-            <input type="password"  name="password" placeholder="Password*">
+            <input type="password" id="password"  name="password" placeholder="Password*">
             <div class="error" id="password_error">Enter your password.</div>
 
             <div class="labels">Confirm Password</div>
-            <input type="password"  name="confirm-password" placeholder="Confirm Password*">
+            <input type="password" id="conf_pass" name="confirm-password" placeholder="Confirm Password*">
             <div class="error" id="confirm_password_error">Confirm your password.</div>
 
             <button id="sumbit-btn" type="submit" >Create Account</button>
