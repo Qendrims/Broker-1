@@ -62,6 +62,7 @@ button{
 button:hover{
     background-color: #21130d;
     color: rgb(231, 226, 220);
+  
 }
 .error{
     color: red;
@@ -70,4 +71,7 @@ button:hover{
 }
 .hidden{
     display: none;
+}
+#sumbit-btn{
+    cursor: not-allowed;
 }

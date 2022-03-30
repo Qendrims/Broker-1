@@ -11,42 +11,46 @@
     <h1>Create Account</h1>
     <div class="container">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <form onsubmit="validated();" autocomplete="off"  action="aboutUs.html" name="form" method="post">
             <h1>Create Account</h1>
 =======
         <form autocomplete="off" class="" id="myform"  name="form" method="post">
 >>>>>>> origin/Mejreme-Halilaj
+=======
+        <form autocomplete="off" class="" id="myform"  name="form" method="post">
+>>>>>>> 4a56c3f88e3bd99822e544aecd7a48e2b659ffcb
 
             <div class="labels">Firstname</div>
-            <input type="text" id="firstname" name="firstname" placeholder="Firstname*">
+            <input type="text" id="firstname" name="firstname" placeholder="Firstname*" class="together">
             <div class="error hidden" id="firstname_err">Fill your name</div>
            
 
             <div class="labels">Lastname</div>
-            <input type="text" id="lastname" name="lastname" placeholder="Lastname*">
+            <input type="text" id="lastname" name="lastname" placeholder="Lastname*" class="together">
             <div class="error hidden" id="lastname_error">Fill your lastname correctly.</div>
 
             <div class="labels">Birthday</div>
-            <input type="date" id="birthday" name="birthday" placeholder="Birthday*">
+            <input type="date" id="birthday" name="birthday" placeholder="Birthday*" class="together">
             <div class="error hidden" id="bday_error">Fill your birthday correctly.</div>
 
             <div class="labels">Username</div>
-            <input type="text" id="username" name="username" placeholder="Username*">
+            <input type="text" id="username" name="username" placeholder="Username*" class="together">
             <div class="error hidden" id="username_error">Username must be 8 letters.</div>
 
             <div class="labels">Email</div>
-            <input type="text" id="email"  name="email" placeholder="Email*">
+            <input type="text" id="email"  name="email" placeholder="Email*" class="together">
             <div class="error hidden" id="email_error">Invalid format for email.</div>
 
             <div class="labels">Password</div>
-            <input type="password" id="password"  name="password" placeholder="Password*">
+            <input type="password" id="password"  name="password" placeholder="Password*" class="together">
             <div class="error hidden" id="password_error">Enter your password.</div>
 
             <div class="labels">Confirm Password</div>
-            <input type="password" id="conf_pass" name="confirm-password" placeholder="Confirm Password*">
+            <input type="password" id="conf_pass" name="confirm-password" placeholder="Confirm Password*" class="together">
             <div class="error hidden" id="confirm_password_error">Confirm your password.</div>
 
-            <button id="sumbit-btn" type="submit" >Create Account</button>
+            <input id="sumbit-btn" type="submit" disabled="true"  value="Create Account">
             <div class="error hidden" id="main_error">Please fill all required fields.</div>
         </form>
         <script src="../js/regjister.js"></script>
