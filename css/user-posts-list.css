@@ -1,10 +1,25 @@
-
+body{
+    margin:0;
+    padding: 0;
+}
 nav{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    background-color: blanchedalmond;
 }
 .title{
-
-    padding-right: 40%;
     font-size: 30px;
+
+}
+main{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    margin: 10px 10px;
+    grid-gap: 20px;
+}
+.user-post{
+    
+    border: 1px solid black;
+    border-radius: 5px;
+    text-align: center;
 }
