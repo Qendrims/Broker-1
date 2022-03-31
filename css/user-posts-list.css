@@ -1,0 +1,10 @@
+
+nav{
+    display: flex;
+    justify-content: space-between;
+}
+.title{
+
+    padding-right: 40%;
+    font-size: 30px;
+}
