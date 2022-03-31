@@ -1,4 +1,4 @@
-    let nameInput = document.getElementById('name-input');
+let nameInput = document.getElementById('name-input');
 let nameError = document.getElementById('name-error');
 let lastnameInput = document.getElementById('lastname-input');
 let lastnameError = document.getElementById('lastname-error');
