@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/postpage.css">
+    <title>Poster</title>
+</head>
+<body>
+    <div class="main">
+        <form name="post-form" class="myForm" id="myFrom">
+            <div class="title-div">
+                <label class="titulli" id="title-box">Title</label>
+                <input type="text" name="emri-titullit" id="title" placeholder="Title">
+                <label class="" id="title-error">Please fill post's title</label>
+            </div>
+            <div class="add-image-div">
+                <input type="file" name="posts-image" id="image" accept="image/*" placeholder="">
+                <label for="file" >
+                    <i class="bi bi-image"> Add photo</i> &nbsp;
+                </label>
+             </div>
+             <div>
+                 <label>Add Description</label>
+                 <textarea name="description" id="description-text" cols="20" rows="8">
+                     Description...
+                 </textarea>
+
+             </div>
+            <div>
+                <label name="pricelbl" id="price-lbl">Price:</label>
+                <input type="currency" min="1"  id="price">
+
+            </div>
+            <div class="button">
+                <input type="submit" value="Post" class="post-btn" id="myBtn">
+            </div>
+        </form>
+    </div>
+
+    
+</body>
+</html>
