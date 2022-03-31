@@ -1,22 +1,8 @@
-let username = document.getElementById('username');
-let password = document.getElementById('password');
 
 let usernameError = document.getElementById('username_error');
 let passError = document.getElementById('password_error');
 
 
-
-username.addEventListener('keyup',e=>{
-    username.value = e.target.value;
-})
-
-password.addEventListener('keyup',e=>{
-    password.value = e.target.value;
-    if(password.value.length < 7)
-    passError.style.display = 'block'
-    else
-    passError.style.display = 'none'
-})
 
 var users=[
     {
@@ -31,11 +17,13 @@ var users=[
 
 var verifyUsername = function (e) {
     e.preventDefault();
+    let username = document.getElementById('username').value;
+let password = document.getElementById('password').value;
 
    let isLoggedIn = false;
     users.forEach(user => {
-        if(username.value == user.username && password.value == user.password){
-            localStorage.setItem('broker-username',username.value);
+        if(username == user.username && password == user.password){
+            localStorage.setItem('broker-username',username);
            location.href = '../html/postpage.html';
    isLoggedIn = true;
         }
