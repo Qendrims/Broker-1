@@ -4,7 +4,7 @@
 }
 body{
 
-    background-image: url(/imgs/bg.webp);
+   
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -62,9 +62,16 @@ button{
 button:hover{
     background-color: #21130d;
     color: rgb(231, 226, 220);
+  
 }
 .error{
     color: red;
     font-size: 15px;
+    
+}
+.hidden{
     display: none;
+}
+#sumbit-btn{
+    cursor: not-allowed;
 }
