@@ -1,0 +1,119 @@
+*{
+margin: 0px;
+padding: 0px;
+}
+.FirstPage{
+   width: 100%;
+   height: 100vh; 
+   background-color: whitesmoke;
+}
+.FirstPage h1{
+    position: absolute;
+  margin-left: 12%;
+  padding-top: 11%;
+  font-size: 44px;
+}
+p:before {
+ content: "";
+ display: block;
+ width: 80px;
+  height: 2px;
+  background: black;
+left: 12%;
+ top: 50%;
+position: absolute;
+}
+.Contact{
+    padding-left: 18%;
+    padding-top: 23%;
+    font-size: 22px;
+    position: absolute;
+}
+.Tekst{
+    padding-left: 18%;
+    padding-top: 28%;
+    font-size: 20px;
+
+}
+.FirstPage img{
+margin-left: 55%;
+margin-top: -18%;
+}
+
+.SecondPage {
+    width: 100%;
+    height: 100vh; 
+    background-color: whitesmoke;
+}
+.SecondPage h1{
+    position: absolute;
+    margin-left: 8%;
+    padding-top: 4%;
+    font-size: 38px;
+}
+
+
+.Img2 {
+    width: 30%;
+    height: 50%;
+    margin-left: 60%;
+margin-top: 6%;
+position: absolute;
+}
+.Img3{
+    width: 30%;
+    height: 70%;
+    margin-top: 11%;
+    margin-left: 10%;
+  position: absolute;
+  
+}
+.BodyText{
+    margin-left: 50%;
+    margin-top: 34%;
+    position: absolute;
+    font-size: 20px;
+ 
+}
+.ThirdPage{
+    width: 100%;
+    height: 100vh; 
+    background-color: whitesmoke;
+}
+.ThirdPage h1{
+    position: absolute;
+    margin-left: 38%;
+    padding-top: 5%;
+    font-size: 38px;
+}
+.ThirdPage p{
+
+    padding-top: 10%;
+    font-size: 20px;
+    text-align: center;
+
+}
+.ThirdPage video{
+    padding-left: 19%;
+    padding-top: 2%;
+}
+.FourthPage{
+    width: 100%;
+    height: 60hv;
+    background-color: whitesmoke;
+    border: 1px solid black;
+
+}
+.FourthPage ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.FourthPage ul li{
+    margin: 3% 3% 4% 0%;
+    font-size: 34px;
+    list-style: none;
+font-weight: 500;
+   
+    
+}
