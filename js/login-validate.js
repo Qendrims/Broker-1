@@ -21,12 +21,10 @@ password.addEventListener('keyup',e=>{
 var users=[
     {
         username:"Adhurim",
-        email:'adhurim@gmail.com',
         password:"123123123"
     },
     {
         username:"Lir",
-        email:'liri@gmail.com',
         password:"liriballata"
     },
 ]; 
@@ -36,7 +34,7 @@ var verifyUsername = function (e) {
 
    let isLoggedIn = false;
     users.forEach(user => {
-        if((username.value == user.username || username.value == user.email) && password.value == user.password){
+        if(username.value == user.username && password.value == user.password){
             localStorage.setItem('broker-username',username.value);
            location.href = '../html/postpage.html';
    isLoggedIn = true;
