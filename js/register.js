@@ -63,9 +63,9 @@ function Validate(e){
 
     }
 
+    
 }
 
-export let user ={username,pass,registeredUser};
 
 
 document.querySelectorAll('.together').forEach(element => {

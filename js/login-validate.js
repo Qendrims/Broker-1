@@ -3,20 +3,6 @@ let usernameError = document.getElementById('username_error');
 let passError = document.getElementById('password_error');
 
 
-import {user} from "register.js";
-let newUser=[
-    {
-        username:user[0],
-        password:user[1]
-    }
-];
-
-if(user[2] === true){
-    users.push(newUser);
-}
-var users=[
-    
-]; 
 
 var verifyUsername = function (e) {
     e.preventDefault();
