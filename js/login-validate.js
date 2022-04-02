@@ -5,26 +5,15 @@ let usernameError = document.getElementById('username_error');
 let passError = document.getElementById('password_error');
 
 
-
-username.addEventListener('keyup',e=>{
-    username.value = e.target.value;
-})
-
-password.addEventListener('keyup',e=>{
-    password.value = e.target.value;
-    if(password.value.length < 7)
-    passError.style.display = 'block'
-    else
-    passError.style.display = 'none'
-})
-
 var users=[
     {
         username:"Adhurim",
+        email:'adhurim@gmail.com',
         password:"123123123"
     },
     {
         username:"Lir",
+        email:'lir@gmail.com',
         password:"liriballata"
     },
 ]; 
@@ -34,8 +23,8 @@ var verifyUsername = function (e) {
 
    let isLoggedIn = false;
     users.forEach(user => {
-        if(username.value == user.username && password.value == user.password){
-            localStorage.setItem('broker-username',username.value);
+        if((username.value == user.username || username.value == user.email) && password.value == user.password){
+            localStorage.setItem('broker-username',user.username);
            location.href = '../html/postpage.html';
    isLoggedIn = true;
         }
@@ -43,7 +32,10 @@ var verifyUsername = function (e) {
 
     if(!isLoggedIn){
         usernameError.style.display = 'block';
+        username.value = "";
         passError.style.display='block';
+        password.value = "";
+        username.focus();
     }
 }
 
