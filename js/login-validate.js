@@ -5,6 +5,7 @@ let usernameError = document.getElementById('username_error');
 let passError = document.getElementById('password_error');
 
 
+
 var users=[
     {
         username:"Adhurim",
@@ -25,7 +26,7 @@ var verifyUsername = function (e) {
     users.forEach(user => {
         if((username.value == user.username || username.value == user.email) && password.value == user.password){
             localStorage.setItem('broker-username',user.username);
-           location.href = '../html/postpage.html';
+           location.href = '../html/views/welcomePage.html';
    isLoggedIn = true;
         }
     });
