@@ -10,7 +10,8 @@ var users=[
     {
         username:"Adhurim",
         email:'adhurim@gmail.com',
-        password:"123123123"
+        password:"123123123",
+        
     },
     {
         username:"Lir",
