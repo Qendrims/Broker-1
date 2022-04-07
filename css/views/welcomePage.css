@@ -7,12 +7,14 @@
    --bbyBlue:#5885AF;
 }
 /*Pjesa e navbarit*/
+.fixed{
+    position: fixed;
+}
 .homepage-header{
     width: 100%;
     height: 10vh;
     display: flex;
     justify-content: space-around; 
-    position: fixed;
     z-index: 20203030;
     border-bottom: 1px solid #000;
     background-color: white;
@@ -55,25 +57,20 @@
 /*Pjesa e fotos ne balline*/
 
 .homepage-img{
+    height: 50vh;
     width: 100%;
-    height: 40vh;
-    position: absolute;
-    margin-top: 8%;
     background-image: url(../../imgs/bg1.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .search-btn{
-    position: absolute;
-    width: 50%;
+    width: 25%;
     height: 15%;
     border: none;
-    margin-top: 10%;
-    margin-left: 24%;
     border-radius: 30px;
-}
-.search-btn{
     color: grey;
     font-size: 15px;
     text-align: center;
@@ -85,9 +82,7 @@
 .homepage-grid{
     width: 100%;
     height: 70vh;
-    position: absolute;
-    margin-top: 37%;
-    
+    padding: 20px;
 }
 .grid-content{
     display: grid;
@@ -96,10 +91,7 @@
 }
 .homepagegrid{
     width: 85%;
-    height: 500px;
     border: 1px solid rgba(202, 195, 195,0.7) ;
-    margin-top: 15%;
-    margin-left: 7%;
 }
 .homepagegrid:hover{
     -webkit-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
@@ -156,6 +148,12 @@
 .category-name{
     grid-column-start: 1;
   grid-column-end: 4;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn{
+    margin-bottom: 10px;
 }
 
 
