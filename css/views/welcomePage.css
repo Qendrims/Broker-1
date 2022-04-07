@@ -1,0 +1,255 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+:root{
+    --hoverBlue:#063970;
+   --bbyBlue:#5885AF;
+}
+/*Pjesa e navbarit*/
+.homepage-header{
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    z-index: 20203030;
+    background-color: white;
+}
+.homepage-header:hover{
+    -webkit-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
+}
+.nav-list{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+.nav-list li{
+    list-style: none;
+    padding: 5px 10px;
+}
+.nav-list a{
+    text-decoration: none;
+    font-size: 20px;
+    color: rgba(25,136,179,255);
+}
+.nav-list a:hover{
+    color: #063970;
+    font-weight: 600;
+    transition: 0.4 ease-in-out;
+}
+.homepage-header img{
+    width: 180px;
+}
+
+/*Pjesa e fotos ne balline*/
+
+.homepage-img{
+    width: 100%;
+    height: 40vh;
+    position: absolute;
+    margin-top: 8%;
+    background-image: url(/imgs/bg1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.search-btn{
+    position: absolute;
+    width: 50%;
+    height: 15%;
+    border: none;
+    margin-top: 10%;
+    margin-left: 24%;
+    border-radius: 30px;
+}
+.search-btn{
+    color: grey;
+    font-size: 15px;
+    text-align: center;
+}
+
+
+/*Pjesa e grid ne balline*/
+
+.homepage-grid{
+    width: 100%;
+    height: 70vh;
+    position: absolute;
+    margin-top: 37%;
+    
+}
+.grid-content{
+    display: grid;
+    grid-template-columns: 4fr 4fr 4fr;
+    gap:10px;
+}
+.homepagegrid{
+    width: 85%;
+    height: 500px;
+    border: 1px solid rgba(202, 195, 195,0.7) ;
+    margin-top: 15%;
+    margin-left: 7%;
+}
+.homepagegrid:hover{
+    -webkit-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
+}
+.homepagegrid img{
+    width: 250px;
+    margin: 13%;
+}
+.homepagegrid h1{
+  color: var(--hoverBlue);
+  text-align: center;
+  font-size: 25px
+}
+.homepagegrid p{
+    text-align: center;
+    margin-top: 5%;
+    font-size: 16px;
+}
+.homepagegrid ul{
+    margin-top: 10%;
+    margin-left: 30%;
+}
+.homepagegrid li{
+  list-style: none;
+  border: 1px solid whitesmoke;
+  padding: 10px 20px;
+  width: 35%;
+  text-align: center;
+  -webkit-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
+}
+.homepagegrid li:hover{
+ background-color: #063970;
+ color:white;  
+ animation: 0.4s both;
+ transition: ease-in-out 0.5s;
+}
+.homepagegrid a{
+    text-decoration: none;
+    color: var(--hoverBlue);  
+}
+.homepagegrid a:hover{
+    color:white;  
+}
+
+
+/*Pjesa e footer balline*/
+
+.homepage-footer{
+    width: 100%;
+    height: 65vh;
+    background-color: #52688F;
+    position: absolute;
+    margin-top: 90%;
+}
+.homepage-footer-grid{
+    width: 100%;
+    height: 50%;
+    background-color: #BBC8DE;
+    display: grid;
+    grid-template-columns: 3fr 3fr 3fr;
+    gap: 2%;
+}
+.footer-grid{
+    width: 80%;
+    height: 250px;
+    margin-top: 5%;
+    margin-left: 9%;
+}
+#sectionFirstItem{
+    text-decoration: none;
+    color: var(--hoverBlue);
+    font-size: 28px;
+    text-align: left;
+    margin: 2%;
+}
+.section1 h1{
+    color: var(--hoverBlue);
+    font-size: 22px;
+    font-weight: 500;
+    text-align: left;
+    margin: 2%;
+}
+.section1 p{
+    color: var(--hoverBlue);
+    font-size: 16px;
+    text-align: justify;
+    margin: 2%;
+    font-weight: 200;
+}
+.section1 a, .section2 a{
+    text-decoration: none;
+    margin-left: 2%;
+    color: #063970;
+}
+
+.section2 p{
+    color: var(--hoverBlue);
+   letter-spacing: 1px;
+   margin: 2%;
+}
+#newsletterInput{
+    width: 65%;
+    height: 12%;
+    margin: 2%;
+    border: none;
+}
+#newsletterButton{
+    width: 20%;
+    height: 12%;
+    margin: 2%;
+    border: none;
+}
+#newsletterButton:hover{
+ background-color: #132F70;
+ color: white;
+ border: none;
+}
+
+
+.homepage-footer-box{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color: #132F70;
+    align-items: center;
+    margin: 5%;
+
+}
+.homepage-footer-box h3{
+    font-size: 28px;
+    margin-top: 4%;
+    color: #132F70;
+}
+.homepage-footer-box a{
+  text-decoration: none;
+  color: #063970;
+  margin: 2%;
+  font-size: 16px;
+}
+.fas,.fab{
+    width: 50px;
+    height: 30px;
+    color: #132F70;
+    padding: 10px;
+}
+#copyright{
+    position: absolute;
+    margin-top: 21%;
+    color: var(--hoverBlue);
+    font-weight: 100;
+    text-align: center;
+}
