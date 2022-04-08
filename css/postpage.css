@@ -6,12 +6,16 @@
     align-items: center;
     
 }
+.post-preview{
+    width: 45%;
+    height: 90vh;
+}
 .div-text{
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #5885AF;
-    width: 50%;
+    width: 45%;
     border-radius: 5%;
 }
 .flex{
@@ -19,4 +23,24 @@
 }
 .btn-primary{
     margin: 20px 40px;
+}.second-div{
+    width: 45%;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
 }
+#inner-posts{
+    border: 1px solid black;
+}
+#inner-posts h1{
+    font-size: 20px;
+    padding: 2% 2%;
+}
+#inner-posts p{
+    font-size: 15px;
+    padding: 2% 2%;
+}
+
