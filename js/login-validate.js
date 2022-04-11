@@ -3,8 +3,20 @@ let password = document.getElementById("password");
 
 let usernameError = document.getElementById("username_error");
 let passError = document.getElementById("password_error");
+let btnLogin = document.getElementById('submit-btn')
 
+username.addEventListener('keyup',e=>enableButton(e,password))
 
+password.addEventListener('keyup',e=>enableButton(e,username))
+
+//enable button when username and password input are not empty
+function enableButton(e,input){
+    if(e.target.value != "" && input.value != ""){
+      
+        btnLogin.disabled = false;
+        btnLogin.style.cursor = 'pointer !important';
+    }
+}
 
 //todo: switch with backend data
 var users=[
@@ -31,13 +43,16 @@ var verifyUsername = function (e) {
         username.value.toLowerCase() == user.email) &&
       password.value == user.password
     ) {
-      localStorage.setItem("broker-username", user.username);
+        //username starting with upercase first letter
+      localStorage.setItem("broker-username", user.username[0].toUpperCase() + user.username.slice(1));
       location.href = "../html/views/welcomePage.html";
       hasError = false;
     }
   });
 
   if (hasError) {
+      btnLogin.disabled = true;
+      btnLogin.style.cursor = 'not-allowed !important'
     usernameError.style.display = "block";
     username.value = "";
     passError.style.display = "block";
