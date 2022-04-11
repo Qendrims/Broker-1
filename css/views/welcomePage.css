@@ -79,77 +79,75 @@
 
 /*Pjesa e grid ne balline*/
 
-.homepage-grid{
+#homepage-posts{
     width: 100%;
-    height: 70vh;
     padding: 20px;
 }
-.grid-content{
-    display: grid;
-    grid-template-columns: 4fr 4fr 4fr;
-    gap:10px;
+#homepage-posts h1{
+    text-align: center;
 }
-.homepagegrid{
-    width: 85%;
+
+.homepage-posts-container{
+    display: flex;
+    width: 100%;
+    gap: 5%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.homepage-posts-container.transition{
+    transition: all 0.4s ease-out;
+}
+.homepage-post-cards{
+    flex-shrink: 0;
+    width: 30%;
     border: 1px solid rgba(202, 195, 195,0.7) ;
+}
+/*slider*/
+.slider{
+    position: relative;
+    height: 80vh;
+}
+
+.prev,.next{
+    font-size: 4rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #f3f3f3;
+    cursor: pointer;
+}
+.prev{
+    left: 1rem;
+}
+.next{
+    right: 1rem;
 }
 .homepagegrid:hover{
     -webkit-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
     box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
 }
-.homepagegrid img{
-    width: 250px;
-    margin: 13%;
+.homepage-post-cards img{
+    width: 100%;
+  
 }
-.homepagegrid h1{
-  color: var(--hoverBlue);
-  text-align: center;
-  font-size: 25px
-}
-.homepagegrid p{
-    text-align: center;
-    margin-top: 5%;
-    font-size: 16px;
-}
-.homepagegrid ul{
-    margin-top: 10%;
-    margin-left: 30%;
-}
-.homepagegrid li{
-  list-style: none;
-  border: 1px solid whitesmoke;
-  padding: 10px 20px;
-  width: 35%;
-  text-align: center;
-  -webkit-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
-  -moz-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
-  box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
-}
-.homepagegrid li:hover{
- background-color: #063970;
- color:white;  
- animation: 0.4s both;
- transition: ease-in-out 0.5s;
-}
-.homepagegrid a{
-    text-decoration: none;
-}
-.content1,.content2,.content3{
+
+.content{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.homepagegrid a:hover{
-    color:white;  
-}
 .category-name{
     grid-column-start: 1;
   grid-column-end: 4;
   text-align: center;
   margin-top: 20px;
+}
+.flex-posts{
+    display: flex;
 }
 
 .btn{
@@ -163,8 +161,6 @@
     width: 100%;
     height: 65vh;
     background-color: #52688F;
-    position: absolute;
-    margin-top: 90%;
 }
 .homepage-footer-grid{
     width: 100%;
