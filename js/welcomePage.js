@@ -112,12 +112,15 @@ let posts = [{
 },
 ]
 
+let postsFlex = document.querySelectorAll('.post-flex')
+
 let content = document.querySelectorAll('.grid-content');
 content.forEach(cont => {
   let postsFilter = posts.filter(post=> post.category == cont.id).slice(0,3)
   cont.innerHTML = `<h1 class="category-name">${cont.getAttribute('data-text')}</h1>`;
   postsFilter.forEach(post => {
     cont.innerHTML += `
+
      <div class="homepagegrid content1">
                <img src='../../imgs/${post.img}' alt="Home">
                <h1>${post.title}</h1>

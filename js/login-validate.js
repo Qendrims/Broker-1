@@ -5,8 +5,9 @@ let usernameError = document.getElementById("username_error");
 let passError = document.getElementById("password_error");
 
 
-
+import { posts } from "./welcomePage";
 //todo: switch with backend data
+console.log(posts)
 var users=[
     {
         username:"adhurim",

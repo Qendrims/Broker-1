@@ -88,7 +88,13 @@
     display: grid;
     grid-template-columns: 4fr 4fr 4fr;
     gap:10px;
+    /* display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px; */
 }
+
 .homepagegrid{
     width: 85%;
     border: 1px solid rgba(202, 195, 195,0.7) ;
