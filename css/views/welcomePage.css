@@ -287,3 +287,79 @@
     opacity: 0.5;
     margin-top: 8%;
 }
+
+@media only screen and (max-width:600px){
+    *{
+        margin: 0%;
+        padding: 0%;
+    }
+
+    body{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .homepage-header{
+        height: 70px;
+    }
+    .nav-list li{
+        display: none;
+    }
+
+
+    .homepage-slider{
+        width: 100%;
+        height: 50vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        text-align: center;
+    }
+    
+    .homepage-slider-imgs{
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.75s ease-in-out;
+    }
+    
+    
+    /* search butoni*/
+    
+    .homepage-search{
+        width: 200px;
+        position: absolute;
+        
+        top: 20%;
+        left: 50%;
+    }
+    .homepage-search input{
+        width: 50%;
+        height: 50px;
+        border-radius: 30px;
+        z-index: 5;
+        margin-top: -16%;
+        outline: 0;
+        border: none;
+        box-shadow: 29px 13px 136px 0px rgba(242,242,242,0.74) inset;
+       -webkit-box-shadow: 29px 13px 136px 0px rgba(242,242,242,0.74) inset;
+       -moz-box-shadow: 29px 13px 136px 0px rgba(242,242,242,0.74) inset;
+        background: none;  
+    }
+    
+    .homepage-search input::placeholder{
+        text-align: center;
+        font-size: 22px;
+        color: aliceblue;
+    }
+    
+
+    
+
+    
+}
