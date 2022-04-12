@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.fsproj": {}
+    "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.fsproj": {
+    "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.fsproj",
+        "projectUniqueName": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
         "projectName": "Broker",
-        "projectPath": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.fsproj",
+        "projectPath": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\obj\\",
         "projectStyle": "PackageReference",
@@ -29,24 +29,16 @@
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
         }
       },
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "dependencies": {
-            "FSharp.Core": {
-              "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
-              "target": "Package",
-              "version": "[6.0.2, )",
-              "generatePathProperty": true
-            },
-            "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
-              "target": "Package",
-              "version": "[3.1.22, )",
-              "generatePathProperty": true
-            }
-          },
           "imports": [
             "net461",
             "net462",
