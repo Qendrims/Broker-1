@@ -6,15 +6,15 @@ var checks = {
 
 //['nameCheck','lastnameCheck']
 
-function checkButton(){
-    var el=Object.keys(checks)
-    for(var e of el){
-        if(!checks[e]){//true
-            document.getElementById("sumbit-btn").disabled = true;
-            return;
-        } 
+function checkButton() {
+  var el = Object.keys(checks)
+  for (var e of el) {
+    if (!checks[e]) {//true
+      document.getElementById("sumbit-btn").disabled = true;
+      return;
     }
-    document.getElementById("sumbit-btn").disabled = false;
+  }
+  document.getElementById("sumbit-btn").disabled = false;
 
 }
 
@@ -37,13 +37,13 @@ function Validate(e) {
   var email = document.getElementById("email").value;
   var pass = document.getElementById("password").value;
   var confirmPass = document.getElementById("conf_pass").value;
-
+  var passRegex = /(^[A-Z])/;
   var nameCheck =
     (lastnameCheck =
-    usernameCheck =
-    emailCheck =
-    passCheck =
-    confirmPassCheck =
+      usernameCheck =
+      emailCheck =
+      passCheck =
+      confirmPassCheck =
       false);
   if (name == "" || name == null) {
     document.getElementById("firstname_err").classList.remove("hidden");
@@ -69,7 +69,7 @@ function Validate(e) {
     emailCheck = true;
     document.getElementById("email_error").classList.add("hidden");
   }
-  if (pass == "" || pass == null) {
+  if (pass == "" || pass == null || !passRegex.test(pass) || pass.length<8) {
     document.getElementById("password_error").classList.remove("hidden");
   } else {
     passCheck = true;
