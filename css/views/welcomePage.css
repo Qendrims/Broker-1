@@ -1,6 +1,5 @@
 *{
     margin: 0;
-    padding: 0;
 }
 :root{
     --hoverBlue:#063970;
@@ -11,6 +10,7 @@
     width: 100%;
     height: 10vh;
     display: flex;
+    flex-direction: row;
     justify-content: space-around;
     position: fixed;
     z-index: 20203030;
@@ -48,7 +48,7 @@
 
 .homepage-slider{
     width: 100%;
-    height: 50vh;
+    height: 70vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -102,7 +102,6 @@
 .homepage-grid{
     width: 100%;
     height: 70vh;
-    position: absolute;
     margin-top: 5%;
     
 }
@@ -170,15 +169,13 @@
 
 .homepage-footer{
     width: 100%;
-    height: 55vh;
+    height: 70vh;
     background-color:rgb(202, 240, 248);
-    position: absolute;
-    margin-top: 60%;
+    margin-top: 20%;
 }
 .homepage-footer-grid{
-    width: 100%;
+    width: 80%;
     height: 50%;
-    background-color:rgb(202, 240, 248);
     display: grid;
     grid-template-columns: 3fr 3fr 3fr;
     gap: 2%;
@@ -273,7 +270,7 @@
 }
 #copyright{
     position: absolute;
-    margin-top: 16%;
+    margin-top: 10%;
     color: var(--hoverBlue);
     font-weight: 100;
     text-align: center;
@@ -289,76 +286,44 @@
 }
 
 @media only screen and (max-width:600px){
-    *{
+    
+
+    body{
         margin: 0%;
         padding: 0%;
     }
 
-    body{
-        display: flex;
-        flex-direction: column;
-    }
-
     .homepage-header{
+        
         height: 70px;
     }
+
+    .homepage-slider{
+        width: 100%;
+    }
+
     .nav-list li{
         display: none;
     }
 
 
-    .homepage-slider{
+    .homepage-footer{
         width: 100%;
-        height: 50vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        text-align: center;
+        height: ;
     }
     
-    .homepage-slider-imgs{
+    .footer-grid{
         width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        object-fit: cover;
-        z-index: -1;
-        opacity: 0;
-        transition: opacity 0.75s ease-in-out;
     }
-    
-    
-    /* search butoni*/
-    
-    .homepage-search{
-        width: 200px;
-        position: absolute;
-        
-        top: 20%;
-        left: 50%;
-    }
-    .homepage-search input{
-        width: 50%;
-        height: 50px;
-        border-radius: 30px;
-        z-index: 5;
-        margin-top: -16%;
-        outline: 0;
-        border: none;
-        box-shadow: 29px 13px 136px 0px rgba(242,242,242,0.74) inset;
-       -webkit-box-shadow: 29px 13px 136px 0px rgba(242,242,242,0.74) inset;
-       -moz-box-shadow: 29px 13px 136px 0px rgba(242,242,242,0.74) inset;
-        background: none;  
-    }
-    
-    .homepage-search input::placeholder{
-        text-align: center;
-        font-size: 22px;
-        color: aliceblue;
-    }
-    
+   
+    .homepage-footer-box{
+        width: 100%;
+        margin-top: 20%;
 
+        height: 50vh;
+        background-color:rgb(202, 240, 248);
+
+    }
     
 
     
