@@ -19,7 +19,7 @@ window.onscroll = function(){
 navListLeft.innerHTML +=
   username == null
     ? `
-<li id="SignIn"><a href="#" >Sign In</a></li>`
+<li id="SignIn" ><a asp-controller="Home" asp-action="Login" >Sign In</a></li>`
     : ``;
 
 navHeader.innerHTML +=
@@ -49,7 +49,7 @@ navHeader.innerHTML +=
 
 let signIn = document.getElementById("SignIn");
 signIn?.addEventListener("click", () => {
-  location.href = "../login-page.html";
+   // location.href = '@Url.Content("~/Views/Home/Login.cshtml")';
 });
 
 let logout = document.getElementById('LogOut');
@@ -66,6 +66,12 @@ let posts = [{
   category: 'Home',
   img: 'grid1.jpg'
 },
+    {
+        title: 'Titulli1',
+        description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
+        category: 'Home',
+        img: 'grid1.jpg'
+    },
 {
   title: 'Titulli2',
   description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
@@ -136,15 +142,15 @@ let homepagePosts = document.getElementById('homepage-posts');
 
 //for each category we create a div to insert posts based on category
 //whenever a new category is added it creates new html element dynamically
-categorySet.forEach(c=>{
+categorySet.forEach(category=>{
   homepagePosts.innerHTML += `
-  <h1>${c}s</h1>
+  <h1>${category}s</h1>
  <div class="slider">
-  <div class="homepage-posts-container slides" data-category="${c}" id="slides"></div>
-  <div  class="prev" id="prev">
+  <div class="homepage-posts-container slides" data-category="${category}" id="slides"></div>
+  <div  class="prev" id="prev" data-category-btn=${category}>
    <i class="fas fa-caret-left"></i>
    </div>
-   <div  class="next" id="next">
+   <div  class="next" id="next" data-category-btn=${category}>
    <i class="fas fa-caret-right"></i>
    </div>
    </div>
@@ -160,7 +166,7 @@ postsContainer.forEach(cont => {
   postsFilter.forEach(post => {
     cont.innerHTML += `
           <div class="homepage-post-cards content slide">
-                <img src='../../imgs/${post.img}' alt="Home">
+                <img src="../../Assets/Images/${post.img}" alt="Home">
                 <h1>${post.title}</h1>
                 <p>${post.description}.</p>
                 <a class="btn btn-primary" href="#">Show Details</a>
@@ -181,13 +187,18 @@ prevBtn.forEach(prev=>{
   prev.addEventListener('click',e=>switchSlide(e,'prev'));
 })
 
+//create objects where key is the category and value is index of slider
+let indexes = {};
+categorySet.forEach(cat => {
+    indexes[cat] = 0;
+})
 
-let indexSlide = 0;
 
-
-function switchSlide(e,arg){
-  // select the parent element of slides
-  let parentEl = e.target.parentElement.parentElement.children[0];
+function switchSlide(e, arg) {
+    // select category next/prev button
+    let currentBtn = e.currentTarget.getAttribute('data-category-btn')
+    // select the parent element of slides
+    let parentEl = e.currentTarget.parentElement.children[0];
   // select all slides
  let allSlides = parentEl.children;
  //get the width of slide
@@ -200,19 +211,22 @@ function switchSlide(e,arg){
   // gap is 5% of parent element width so  divide it by 20
   const gap = parentEl.offsetWidth / 20;
 
-  if(arg=='next'){  
-parentEl.style.left = `${(parentEl.offsetLeft - slideWidth) - gap}px`
-indexSlide++;
+        if (slidesLength != 0) {
+    if (arg == 'next') {
+        parentEl.style.left = `${(parentEl.offsetLeft - slideWidth) - gap}px`
+        indexes[currentBtn]++;
   } else {
-    parentEl.style.left = `${(parentEl.offsetLeft + slideWidth) + gap}px`
-    indexSlide--;
+        parentEl.style.left = `${(parentEl.offsetLeft + slideWidth) + gap}px`
+        indexes[currentBtn]--;
   }
-  
-  if(indexSlide == -1){
-   parentEl.style.left =`${parentEl.offsetLeft - (slideWidth * slidesLength) - gap * slidesLength}px`
-   indexSlide = slidesLength;
-   } else if(indexSlide > slidesLength){
-     parentEl.style.left = '0';
-     indexSlide = 0;
-   }
+}
+
+    if (indexes[currentBtn] == -1 && slidesLength != 0) {
+        parentEl.style.left = `${parentEl.offsetLeft - (slideWidth * slidesLength) - gap * slidesLength}px`
+        indexes[currentBtn] = slidesLength;
+    } else if (indexes[currentBtn] > slidesLength && slidesLength != 0) {
+        parentEl.style.left = '0';
+        indexes[currentBtn] = 0;
+    }
+   
 }

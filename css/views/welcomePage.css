@@ -85,6 +85,7 @@
 }
 #homepage-posts h1{
     text-align: center;
+}
 .grid-content{
     display: grid;
     grid-template-columns: 4fr 4fr 4fr;
@@ -98,7 +99,7 @@
 
 .homepagegrid{
     width: 85%;
-
+}
 .homepage-posts-container{
     display: flex;
     width: 100%;

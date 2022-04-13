@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj": {}
+    "C:\\Users\\BM\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj": {
+    "C:\\Users\\BM\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
+        "projectUniqueName": "C:\\Users\\BM\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
         "projectName": "Broker",
-        "projectPath": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
-        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\obj\\",
+        "projectPath": "C:\\Users\\BM\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
+        "packagesPath": "C:\\Users\\BM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\BM\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\BM\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -39,6 +39,16 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
+              "target": "Package",
+              "version": "[3.1.24, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -49,6 +59,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[3.1.22, 3.1.22]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -57,7 +73,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
