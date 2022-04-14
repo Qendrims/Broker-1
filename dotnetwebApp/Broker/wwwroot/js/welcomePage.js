@@ -1,4 +1,4 @@
-let username = localStorage.getItem("broker-username");
+ let username = localStorage.getItem("broker-username");
 let navListLeft = document.getElementById("list1");
 let navHeader = document.getElementById("homepageHeader");
 let navFixed = navHeader.offsetTop;
@@ -19,7 +19,7 @@ window.onscroll = function(){
 navListLeft.innerHTML +=
   username == null
     ? `
-<li id="SignIn" ><a asp-controller="Home" asp-action="Login" >Sign In</a></li>`
+<li id="SignIn" ><a href="#" >Sign In</a></li>`
     : ``;
 
 navHeader.innerHTML +=
@@ -49,7 +49,7 @@ navHeader.innerHTML +=
 
 let signIn = document.getElementById("SignIn");
 signIn?.addEventListener("click", () => {
-   // location.href = '@Url.Content("~/Views/Home/Login.cshtml")';
+    location.href = ("Home/Login");
 });
 
 let logout = document.getElementById('LogOut');

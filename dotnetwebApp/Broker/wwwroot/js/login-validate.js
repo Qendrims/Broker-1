@@ -2,7 +2,7 @@ let username = document.getElementById("username");
 let password = document.getElementById("password");
 
 let usernameError = document.getElementById("username_error");
-let passError = document.getElementById("password_error");
+let passError = document.getElementById("password_error");  
 let btnLogin = document.getElementById('submit-btn')
 
 username.addEventListener('keyup',e=>enableButton(e,password))
@@ -19,7 +19,7 @@ function enableButton(e,input){
 }
 
 //todo: switch with backend data
-console.log(posts)
+
 var users=[
     {
         username:"adhurim",
@@ -30,7 +30,7 @@ var users=[
     {
         username:"lir",
         email:'lir@gmail.com',
-        password:"liriballata"
+        password:"liriballata"   
     },
 ]; 
 
@@ -46,7 +46,7 @@ var verifyUsername = function (e) {
     ) {
         //username starting with upercase first letter
       localStorage.setItem("broker-username", user.username[0].toUpperCase() + user.username.slice(1));
-      location.href = "../html/views/welcomePage.html";
+      location.href = "Home/Index";
       hasError = false;
     }
   });
