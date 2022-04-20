@@ -1,6 +1,8 @@
 ﻿@model HomeViewModel;
+@using Newtonsoft.Json;
 @{
     ViewData["Title"] = "Home Page";
+
 }
 
 <div class="homepage-img">
@@ -17,20 +19,27 @@
             @foreach(var posts in @Model.posts.Where(post => post.Category == category).ToList())
             {
                  <div class="homepage-post-cards content slide">
-                <img src="../../Assets/Images/@posts.image}" alt="Home">
+                <img src="../../Assets/Images/@posts.image" alt="Home">
                 <h1>@posts.Title</h1>
                 <p>@posts.Description</p>
                 <a class="btn btn-primary" href="#">Show Details</a>
             </div>
             }
             </div>
-            <div class="prev" id="prev" data-category-btn=${category}>
+            <div class="prev" id="prev" data-category-btn=@category>
                 <i class="fas fa-caret-left"></i>
             </div>
-            <div class="next" id="next" data-category-btn=${category}>
+            <div class="next" id="next" data-category-btn=@category>
                 <i class="fas fa-caret-right"></i>
             </div>
         </div>
     }
 </div>
+<script>
+    window.onload=function (){
+    const data=@JsonConvert.SerializeObject(Model.posts);
+    console.log(data)
+    }
+    
+</script>
 <script src="~/js/welcomePage.js"></script>

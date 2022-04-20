@@ -3,6 +3,7 @@ let navListLeft = document.getElementById("list1");
 let navHeader = document.getElementById("homepageHeader");
 let navFixed = navHeader.offsetTop;
 
+
 //setting nav bar to fixed
 function navbarFixed() {
   if (window.pageYOffset > navFixed) {
@@ -58,90 +59,9 @@ logout?.addEventListener('click',()=>{
     location.reload();
 })
 
-
-//this will change with back end data
-let posts = [{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Home',
-  img: 'grid1.jpg'
-},
-    {
-        title: 'Titulli1',
-        description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-        category: 'Home',
-        img: 'grid1.jpg'
-    },
-{
-  title: 'Titulli2',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Flat',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Office',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Home',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Flat',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Office',
-  img: 'grid1.jpg'
-},
-
-{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Flat',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Home',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Flat',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli4',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Flat',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli5',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Flat',
-  img: 'grid1.jpg'
-},
-]
+// get data from backend to create a set with unique categories
 
 
-//create an array with unique categories 
-let categorySet = new Set(posts.map(p=>p.category));
-let homepagePosts = document.getElementById('homepage-posts');
-
-//for each category we create a div to insert posts based on category
-//whenever a new category is added it creates new html element dynamically
 
 
 
@@ -161,9 +81,10 @@ prevBtn.forEach(prev=>{
 
 //create objects where key is the category and value is index of slider
 let indexes = {};
-categorySet.forEach(cat => {
-    indexes[cat] = 0;
-})
+
+//categorySet.forEach(cat => {
+ //   indexes[cat] = 0;
+//})
 
 
 function switchSlide(e, arg) {
