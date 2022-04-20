@@ -142,38 +142,10 @@ let homepagePosts = document.getElementById('homepage-posts');
 
 //for each category we create a div to insert posts based on category
 //whenever a new category is added it creates new html element dynamically
-categorySet.forEach(category=>{
-  homepagePosts.innerHTML += `
-  <h1>${category}s</h1>
- <div class="slider">
-  <div class="homepage-posts-container slides" data-category="${category}" id="slides"></div>
-  <div  class="prev" id="prev" data-category-btn=${category}>
-   <i class="fas fa-caret-left"></i>
-   </div>
-   <div  class="next" id="next" data-category-btn=${category}>
-   <i class="fas fa-caret-right"></i>
-   </div>
-   </div>
-  `
-})
-
-let postsContainer = document.querySelectorAll('.homepage-posts-container')
 
 
-postsContainer.forEach(cont => {
-  //filtering the posts based on data-category and inserting them in their own category
-  let postsFilter = posts.filter(post=> post.category == cont.getAttribute('data-category'));
-  postsFilter.forEach(post => {
-    cont.innerHTML += `
-          <div class="homepage-post-cards content slide">
-                <img src="../../Assets/Images/${post.img}" alt="Home">
-                <h1>${post.title}</h1>
-                <p>${post.description}.</p>
-                <a class="btn btn-primary" href="#">Show Details</a>
-            </div>
-    `
-  })
-})
+
+
 
 
 const prevBtn = document.querySelectorAll('.prev');

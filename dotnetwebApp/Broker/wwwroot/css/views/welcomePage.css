@@ -97,6 +97,13 @@
     gap: 10px; */
 }
 
+/*slider*/
+.slider{
+    position: relative;
+    overflow: hidden;
+    height: 50vh;
+}
+
 .homepagegrid {
     width: 85%;
 }
@@ -107,6 +114,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    height: inherit;
 }
 .homepage-posts-container.transition{
     transition: all 0.4s ease-out;
@@ -115,12 +123,6 @@
     flex-shrink: 0;
     width: 30%;
     border: 1px solid rgba(202, 195, 195,0.7) ;
-}
-/*slider*/
-.slider{
-    position: relative;
-    overflow: hidden;
-    height: 80vh;
 }
 
 .prev,.next{
@@ -144,7 +146,7 @@
 }
 .homepage-post-cards img{
     width: 100%;
-  
+   
 }
 
 .content{
