@@ -46,7 +46,7 @@ var verifyUsername = function (e) {
     ) {
         //username starting with upercase first letter
       localStorage.setItem("broker-username", user.username[0].toUpperCase() + user.username.slice(1));
-      location.href = "Home/Index";
+      location.href = "Index";
       hasError = false;
     }
   });

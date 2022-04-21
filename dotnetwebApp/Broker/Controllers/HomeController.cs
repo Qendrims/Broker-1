@@ -38,7 +38,11 @@ namespace Broker.Controllers
             posts.Add(post5);
             posts.Add(post6);
             posts.Add(post7);
-            var data = JsonConvert.SerializeObject(posts);
+
+            HomeViewModel HomeModel = new HomeViewModel();
+            HomeModel.posts = posts;
+            HomeModel.categories = new HashSet<string>(posts.Select(x => x.Category)).ToList();
+            var data = JsonConvert.SerializeObject(HomeModel.categories);
 
             return Json(data);
         }
@@ -71,12 +75,6 @@ namespace Broker.Controllers
         }
 
         public IActionResult Login()
-        {
-            return View();
-        }
-
-
-        public IActionResult Privacy()
         {
             return View();
         }
