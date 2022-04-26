@@ -1,46 +1,67 @@
+let username = document.getElementById("username");
+let password = document.getElementById("password");
 
-let usernameError = document.getElementById('username_error');
-let passError = document.getElementById('password_error');
+let usernameError = document.getElementById("username_error");
+let passError = document.getElementById("password_error");
+let btnLogin = document.getElementById('submit-btn')
 
+username.addEventListener('keyup',e=>enableButton(e,password))
 
+password.addEventListener('keyup',e=>enableButton(e,username))
 
+//enable button when username and password input are not empty
+function enableButton(e,input){
+    if(e.target.value != "" && input.value != ""){
+      
+        btnLogin.disabled = false;
+        btnLogin.style.cursor = 'pointer !important';
+    }
+}
+
+//todo: switch with backend data
+console.log(posts)
 var users=[
     {
-        username:"Adhurim",
+        username:"adhurim",
         email:'adhurim@gmail.com',
-        password:"123123123"
+        password:"123123123",
+        
     },
     {
-        username:"Lir",
+        username:"lir",
         email:'lir@gmail.com',
         password:"liriballata"
     },
 ]; 
 
 var verifyUsername = function (e) {
-    e.preventDefault();
-    let username = document.getElementById('username').value;
-let password = document.getElementById('password').value;
+  e.preventDefault();
 
-   let isLoggedIn = false;
-    users.forEach(user => {
-        if((username.value == user.username || username.value == user.email) && password.value == user.password){
-            localStorage.setItem('broker-username',user.username);
-           location.href = '../html/views/welcomePage.html';
-   isLoggedIn = true;
-        }
-    });
-
-    if(!isLoggedIn){
-        usernameError.style.display = 'block';
-        username.value = "";
-        passError.style.display='block';
-        password.value = "";
-        username.focus();
+  let hasError = true;
+  users.forEach((user) => {
+    if (
+      (username.value.toLowerCase() == user.username ||
+        username.value.toLowerCase() == user.email) &&
+      password.value == user.password
+    ) {
+        //username starting with upercase first letter
+      localStorage.setItem("broker-username", user.username[0].toUpperCase() + user.username.slice(1));
+      location.href = "../html/views/welcomePage.html";
+      hasError = false;
     }
-}
+  });
 
+  if (hasError) {
+      btnLogin.disabled = true;
+      btnLogin.style.cursor = 'not-allowed !important'
+    usernameError.style.display = "block";
+    username.value = "";
+    passError.style.display = "block";
+    password.value = "";
+    username.focus();
+  }
+};
 
-document.getElementById('myForm').addEventListener("submit",function(e){
-    verifyUsername(e);
+document.getElementById("myForm").addEventListener("submit", function (e) {
+  verifyUsername(e);
 });
