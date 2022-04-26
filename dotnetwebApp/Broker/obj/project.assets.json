@@ -6199,19 +6199,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\HP\\.nuget\\packages\\": {}
+    "C:\\Users\\PBCA\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
+      "projectUniqueName": "C:\\Users\\PBCA\\Desktop\\Broker-1\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
       "projectName": "Broker",
-      "projectPath": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
-      "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\obj\\",
+      "projectPath": "C:\\Users\\PBCA\\Desktop\\Broker-1\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
+      "packagesPath": "C:\\Users\\PBCA\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\PBCA\\Desktop\\Broker-1\\Broker-1\\dotnetwebApp\\Broker\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\PBCA\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

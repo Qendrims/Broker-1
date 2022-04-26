@@ -17,7 +17,7 @@
             @foreach(var posts in @Model.posts.Where(post => post.Category == category).ToList())
             {
                  <div class="homepage-post-cards content slide">
-                <img src="../../Assets/Images/@posts.image}" alt="Home">
+                <img src="../../Assets/Images/@posts.image" alt="Home">
                 <h1>@posts.Title</h1>
                 <p>@posts.Description</p>
                 <a class="btn btn-primary" href="#">Show Details</a>

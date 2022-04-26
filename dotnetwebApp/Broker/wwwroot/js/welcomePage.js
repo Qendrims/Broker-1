@@ -26,7 +26,7 @@ navHeader.innerHTML +=
   username == null
     ? `
     <ul class="nav-list" id="list2">
-      <li id="Buy"><a href="#">Buy</a></li>
+      <li id="Buy" ><a href="Home/PostPage">Buy</a></li>
       <li id="Sell"><a href="#">Sell</a></li>
       <li id="Rent"><a href="#">Rent</a></li>
       <li id="Agents"><a href="#">Agents</a></li>

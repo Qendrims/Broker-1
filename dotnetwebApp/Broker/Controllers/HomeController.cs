@@ -63,5 +63,9 @@ namespace Broker.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult PostPage()
+        {
+            return View();
+        }
     }
 }
