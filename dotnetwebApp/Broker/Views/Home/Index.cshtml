@@ -1,13 +1,25 @@
 ﻿@model HomeViewModel;
-@using Newtonsoft.Json;
+
 @{
     ViewData["Title"] = "Home Page";
 
 }
-
+@*
 <div class="homepage-img">
     <input id="homepageSearch" class="search-btn" type="search" placeholder="Search">
-</div>
+</div>*@
+
+  <div class="homeSlider">
+    <div class="homepage-slider">
+        <img src="../../Assets/Images/grid1.jpg" class="homepage-slider-imgs">
+        <img src="../../Assets/Images/slider4.jpg" class="homepage-slider-imgs">
+        <img src="../../Assets/Images/slider5.jpg" class="homepage-slider-imgs">   
+        <div class="homepage-search">
+            <input class="homepageSearch" type="text" placeholder="Find an agent">
+            <div class="searchResults"></div>
+          </div>
+ </div>
+ </div>
 
 
 <div id="homepage-posts">

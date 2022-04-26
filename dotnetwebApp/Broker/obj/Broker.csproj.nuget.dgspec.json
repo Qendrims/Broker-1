@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\PBCA\\Desktop\\Broker-1\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj": {}
+    "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\PBCA\\Desktop\\Broker-1\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj": {
+    "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PBCA\\Desktop\\Broker-1\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
         "projectName": "Broker",
-        "projectPath": "C:\\Users\\PBCA\\Desktop\\Broker-1\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
-        "packagesPath": "C:\\Users\\PBCA\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PBCA\\Desktop\\Broker-1\\Broker-1\\dotnetwebApp\\Broker\\obj\\",
+        "projectPath": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
+        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\PBCA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -43,6 +43,12 @@
             "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
               "target": "Package",
               "version": "[3.1.24, )"
+            },
+            "Microsoft.CodeAnalysis.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.9.4, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",

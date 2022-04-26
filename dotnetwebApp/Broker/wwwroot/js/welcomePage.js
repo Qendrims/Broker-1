@@ -3,6 +3,90 @@ let navListLeft = document.getElementById("list1");
 let navHeader = document.getElementById("homepageHeader");
 let navFixed = navHeader.offsetTop;
 
+const slideshowImages = document.querySelectorAll(".homepage-slider .homepage-slider-imgs");
+
+const nextImageDelay = 3000;
+let currentImageCounter = 0;
+
+//slideshowImages[currentImageCounter].style.display="block";
+slideshowImages[currentImageCounter].style.opacity = 1;
+
+setInterval(nextImage, nextImageDelay);
+
+function nextImage() {
+    //slideshowImages[currentImageCounter].style.display="none";
+    //slideshowImages[currentImageCounter].style.opacity=0;
+    slideshowImages[currentImageCounter].style.zIndex = -2;
+    const tempCounter = currentImageCounter;
+    setTimeout(() => {
+        slideshowImages[tempCounter].style.opacity = 0;
+    }, 1000);
+    currentImageCounter = (currentImageCounter + 1) % slideshowImages.length;
+    //slideshowImages[currentImageCounter].style.display="block";
+    slideshowImages[currentImageCounter].style.opacity = 1;
+    slideshowImages[currentImageCounter].style.zIndex = -1;
+}
+
+const agents = [
+    {
+        name: "Mark Cetinski",
+        location: "California",
+        languages: "English",
+    },
+    {
+        name: "Maya Huan ",
+        location: "Texas",
+        languages: "Latin",
+    },
+    {
+        name: "Patrick Herman",
+        location: "California",
+        languages: "English",
+    },
+    {
+        name: "Joe Daniel",
+        location: "Texas",
+        languages: "English",
+    },
+    {
+        name: "Roberto Hurley",
+        location: "New York",
+        languages: "English",
+    },
+    {
+        name: "Tracy Daniel",
+        location: "New York",
+        languages: "English",
+    },
+];
+
+function clearSearch(e) {
+    document.querySelector(".searchResults").innerHTML = "";
+    document.querySelector(".searchResults").style.display = "none";
+}
+
+document
+    .querySelector(".homepageSearch")
+    .addEventListener("keyup", function (e) {
+        e.preventDefault();
+        const search = document.querySelector(".homepageSearch").value;
+        clearSearch();
+
+        if (search.length > 0) {
+            for (var i = 0; i < agents.length; i++) {
+                if (agents[i].name.toLowerCase().includes(search.toLowerCase())) {
+                    document.querySelector(".searchResults").innerHTML += `
+                <div class="searchResults-item">
+                <span class="search-item">${agents[i].name}</span>
+                <span class="search-item">${agents[i].location}</span>
+                <span class="search-item"${agents[i].languages}</span>
+                </div>
+                `;
+                }
+            }
+            document.querySelector(".searchResults").style.display = "block";
+        }
+    });
 
 //setting nav bar to fixed
 function navbarFixed() {
