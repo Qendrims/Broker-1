@@ -1,30 +1,31 @@
- let username = localStorage.getItem("broker-username");
+let username = localStorage.getItem("broker-username");
 let navListLeft = document.getElementById("list1");
 let navHeader = document.getElementById("homepageHeader");
 let navFixed = navHeader.offsetTop;
 
+
 //setting nav bar to fixed
 function navbarFixed() {
-  if (window.pageYOffset > navFixed) {
-    navHeader.classList.add("fixed")
-  } else {
-    navHeader.classList.remove("fixed");
-  }
+    if (window.pageYOffset > navFixed) {
+        navHeader.classList.add("fixed")
+    } else {
+        navHeader.classList.remove("fixed");
+    }
 }
-window.onscroll = function(){
-  navbarFixed();
+window.onscroll = function () {
+    navbarFixed();
 }
 
 //change the inner html of navbar based on whether the user is logged in or not
 navListLeft.innerHTML +=
-  username == null
-    ? `
+    username == null
+        ? `
 <li id="SignIn" ><a href="#" >Sign In</a></li>`
-    : ``;
+        : ``;
 
 navHeader.innerHTML +=
-  username == null
-    ? `
+    username == null
+        ? `
     <ul class="nav-list" id="list2">
       <li id="Buy" ><a href="Home/PostPage">Buy</a></li>
       <li id="Sell"><a href="#">Sell</a></li>
@@ -32,7 +33,7 @@ navHeader.innerHTML +=
       <li id="Agents"><a href="#">Agents</a></li>
 </ul>
 `
-    : `
+        : `
 <div class="dropdown">
   <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
     Welcome ${username}
@@ -53,95 +54,17 @@ signIn?.addEventListener("click", () => {
 });
 
 let logout = document.getElementById('LogOut');
-logout?.addEventListener('click',()=>{
+logout?.addEventListener('click', () => {
     localStorage.removeItem('broker-username');
     location.reload();
 })
 
-
-//this will change with back end data
-let posts = [{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Home',
-  img: 'grid1.jpg'
-},
-    {
-        title: 'Titulli1',
-        description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-        category: 'Home',
-        img: 'grid1.jpg'
-    },
-{
-  title: 'Titulli2',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Flat',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Office',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Home',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Flat',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Office',
-  img: 'grid1.jpg'
-},
-
-{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Flat',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Home',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli1',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Flat',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli4',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Flat',
-  img: 'grid1.jpg'
-},
-{
-  title: 'Titulli5',
-  description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.',
-  category: 'Flat',
-  img: 'grid1.jpg'
-},
-]
+// get data from backend to create a set with unique categories
 
 
-//create an array with unique categories 
-let categorySet = new Set(posts.map(p=>p.category));
-let homepagePosts = document.getElementById('homepage-posts');
 
-//for each category we create a div to insert posts based on category
-//whenever a new category is added it creates new html element dynamically
+
+
 
 
 
@@ -151,47 +74,65 @@ let homepagePosts = document.getElementById('homepage-posts');
 const prevBtn = document.querySelectorAll('.prev');
 const nextBtn = document.querySelectorAll('.next');
 
-nextBtn.forEach(next=>{
-  next.addEventListener('click',e=>switchSlide(e,'next'));
-})
 
-prevBtn.forEach(prev=>{
-  prev.addEventListener('click',e=>switchSlide(e,'prev'));
-})
 
 //create objects where key is the category and value is index of slider
-let indexes = {};
-categorySet.forEach(cat => {
-    indexes[cat] = 0;
+
+var indexes = {};
+
+//fetch('https://localhost:44359/Home/GetSomething').then(res => res.json()).then(data => {
+    //const prevBtn = document.querySelectorAll('.prev');
+    //const nextBtn = document.querySelectorAll('.next');
+
+nextBtn.forEach(next => {
+    next.addEventListener('click', e => switchSlide(e, 'next'));
 })
+
+prevBtn.forEach(prev => {
+    prev.addEventListener('click', e => switchSlide(e, 'prev'));
+});
+
+fetch('https://localhost:44359/Home/GetSomething').then(res => res.json()).then(data => {
+    data = JSON.parse(data);
+
+    for (let cat of data) {
+        indexes[cat] = 0;
+    }
+})
+
 
 
 function switchSlide(e, arg) {
+
+    if (indexes.Home == undefined) {
+        return;
+    }
+
     // select category next/prev button
     let currentBtn = e.currentTarget.getAttribute('data-category-btn')
     // select the parent element of slides
     let parentEl = e.currentTarget.parentElement.children[0];
-  // select all slides
- let allSlides = parentEl.children;
- //get the width of slide
- const slideWidth = allSlides[0].offsetWidth;
- // if there are 3 or less slides set length to 0 so there is no need to slide because the container fits 3 elements
- //if there are more than 3 slides set length to -3 because container fits 3 elements
- let slidesLength = allSlides.length <= 3 ? 0 : allSlides.length - 3;
+    // select all slides
+    let allSlides = parentEl.children;
+    //get the width of slide
+    const slideWidth = allSlides[0].offsetWidth;
+    // if there are 3 or less slides set length to 0 so there is no need to slide because the container fits 3 elements
+    //if there are more than 3 slides set length to -3 because container fits 3 elements
+    let slidesLength = allSlides.length <= 3 ? 0 : allSlides.length - 3;
 
-  parentEl.classList.add('transition')    
-  // gap is 5% of parent element width so  divide it by 20
-  const gap = parentEl.offsetWidth / 20;
+    parentEl.classList.add('transition')
+    // gap is 5% of parent element width so  divide it by 20
+    const gap = parentEl.offsetWidth / 20;
 
-        if (slidesLength != 0) {
-    if (arg == 'next') {
-        parentEl.style.left = `${(parentEl.offsetLeft - slideWidth) - gap}px`
-        indexes[currentBtn]++;
-  } else {
-        parentEl.style.left = `${(parentEl.offsetLeft + slideWidth) + gap}px`
-        indexes[currentBtn]--;
-  }
-}
+    if (slidesLength != 0) {
+        if (arg == 'next') { 
+            parentEl.style.left = `${(parentEl.offsetLeft - slideWidth) - gap}px`
+            indexes[currentBtn]++;
+        } else {
+            parentEl.style.left = `${(parentEl.offsetLeft + slideWidth) + gap}px`
+            indexes[currentBtn]--;
+        }
+    }
 
     if (indexes[currentBtn] == -1 && slidesLength != 0) {
         parentEl.style.left = `${parentEl.offsetLeft - (slideWidth * slidesLength) - gap * slidesLength}px`
@@ -200,5 +141,5 @@ function switchSlide(e, arg) {
         parentEl.style.left = '0';
         indexes[currentBtn] = 0;
     }
-   
+
 }

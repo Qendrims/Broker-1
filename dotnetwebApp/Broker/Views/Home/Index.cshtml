@@ -1,6 +1,8 @@
 ﻿@model HomeViewModel;
+@using Newtonsoft.Json;
 @{
     ViewData["Title"] = "Home Page";
+
 }
 
 <div class="homepage-img">
@@ -24,13 +26,14 @@
             </div>
             }
             </div>
-            <div class="prev" id="prev" data-category-btn=${category}>
+            <div class="prev" id="prev" data-category-btn=@category>
                 <i class="fas fa-caret-left"></i>
             </div>
-            <div class="next" id="next" data-category-btn=${category}>
+            <div class="next" id="next" data-category-btn=@category>
                 <i class="fas fa-caret-right"></i>
             </div>
         </div>
     }
 </div>
+
 <script src="~/js/welcomePage.js"></script>
