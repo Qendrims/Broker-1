@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <form autocomplete="off"  action="aboutUs.html" name="form" method="post">
+        <form autocomplete="off"  action="aboutUs.html" name="form" method="post" id="myForm">
             <h1>Sign In</h1>
 
             <div class="labels">Username or E-Mail</div>
@@ -20,8 +20,9 @@
             <input type="password" id="pasword"  name="password" placeholder="Password*">
             <div class="error" id="password_error">Incorrect password.</div>
 
-            <button id="sumbit-btn" type="submit" >Sign In</button>
-            <div class="error" id="main_error">Please fill all required fields.</div>
+            <input id="sumbit-btn" type="submit" value="Login">
+            
         </form>
+        <script src="../js/login-validate.js"></script>
 </body>
 </html>
