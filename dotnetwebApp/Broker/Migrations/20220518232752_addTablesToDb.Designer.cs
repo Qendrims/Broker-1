@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Broker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220517105352_init")]
-    partial class init
+    [Migration("20220518232752_addTablesToDb")]
+    partial class addTablesToDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
