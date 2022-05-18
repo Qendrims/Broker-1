@@ -111,7 +111,7 @@ navHeader.innerHTML +=
     username == null
         ? `
     <ul class="nav-list" id="list2">
-      <li id="Buy" ><a href="Home/PostPage">Buy</a></li>
+      <li id="Buy" ><a href="Post/PostPage">Buy</a></li>
       <li id="Sell"><a href="#">Sell</a></li>
       <li id="Rent"><a href="#">Rent</a></li>
       <li id="Agents"><a href="#">Agents</a></li>
@@ -124,8 +124,8 @@ navHeader.innerHTML +=
   </button>
   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
     <li><a class="dropdown-item active" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
-    <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <li><a class="dropdown-item" href="Post/Postpagecreate">Create Post</a></li>
+    <li><a class="dropdown-item" href="Home/Postpage">All posts</a></li>
     <li><hr class="dropdown-divider"></li>
     <li id="LogOut"><a class="dropdown-item" href="#">Log Out</a></li>
   </ul>
