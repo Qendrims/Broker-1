@@ -6203,11 +6203,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
+      "projectUniqueName": "C:\\Users\\HP\\Desktop\\PBCA\\BrokerApp\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
       "projectName": "Broker",
-      "projectPath": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
+      "projectPath": "C:\\Users\\HP\\Desktop\\PBCA\\BrokerApp\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
       "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HP\\Desktop\\Broker-1\\dotnetwebApp\\Broker\\obj\\",
+      "outputPath": "C:\\Users\\HP\\Desktop\\PBCA\\BrokerApp\\Broker-1\\dotnetwebApp\\Broker\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
