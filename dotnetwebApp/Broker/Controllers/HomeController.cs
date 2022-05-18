@@ -38,6 +38,7 @@ namespace Broker.Controllers
             posts.Add(post5);
             posts.Add(post6);
             posts.Add(post7);
+ 
 
             HomeViewModel HomeModel = new HomeViewModel();
             HomeModel.posts = posts;
