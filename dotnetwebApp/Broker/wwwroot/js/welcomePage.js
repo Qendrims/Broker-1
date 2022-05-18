@@ -124,8 +124,8 @@ navHeader.innerHTML +=
   </button>
   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
     <li><a class="dropdown-item active" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
-    <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <li><a class="dropdown-item" href="Post/Postpagecreate">Create Post</a></li>
+    <li><a class="dropdown-item" href="Home/Postpage">All posts</a></li>
     <li><hr class="dropdown-divider"></li>
     <li id="LogOut"><a class="dropdown-item" href="#">Log Out</a></li>
   </ul>
