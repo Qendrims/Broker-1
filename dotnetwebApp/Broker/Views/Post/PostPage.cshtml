@@ -4,6 +4,14 @@
 *@
 
 @model FilteredPostViewModel;
+@{
+    Pagination pager = new Pagination();
+   
+    if(ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+    }
+}
 
 <link href="@Url.Content("~/css/UserPostPage.css")" rel="stylesheet" type="text/css" />
 
@@ -12,15 +20,14 @@
 <div class="container">
 
     <div class="search-products">
-        <form class="search-form" method='get' asp-action="GetFilteredPosts">
+        <form class="search-form" method='get' asp-action="PostPage">
           
 
             <select id="select-category" name='category'>
                <option value="">Select Category</option>
                 @foreach(var cat in Model.FilteredCategories)
                 {
-       <option selected="@(Model.Category == @cat.CategoryName)" value="@cat.CategoryName">@cat.CategoryName</option>
-               
+       <option selected="@(Model.Category == @cat.CategoryName)" value="@cat.CategoryName">@cat.CategoryName</option>             
                 }
             </select>
 
@@ -218,4 +225,46 @@
         </div>*@
 
 </div>
+
+<div class="container">
+
+
+    @if(pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-center"> 
+
+     @if(pager.CurrentPage > 1)
+    {
+        <li class="page-item ">
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-pg="1">First</a>
+                </li>
+                <li class="page-item ">
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-pg="@(pager.CurrentPage - 1)">Previous</a>
+                </li>
+    }
+
+            @for (var page = pager.StartPage; page <= pager.EndPage; page++)
+            {
+                <li class="page-item @(page == pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-pg="@(page)">@(page)</a>
+                </li>
+            }
+
+                @if(pager.CurrentPage < pager.TotalPages)
+    {
+        <li class="page-item ">
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-pg="@(pager.CurrentPage + 1)">Next</a>
+                </li>
+                <li class="page-item ">
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-pg="@(pager.TotalPages)">Last</a>
+                </li>
+    }
+
+        </ul>
+    }
+
+
+</div>
+
+
 <script src="@Url.Content("~/js/UserPostPage.js")"></script>
