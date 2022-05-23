@@ -1174,7 +1174,6 @@ C:\Users\PBCA\Desktop\Broker-1\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp
 C:\Users\PBCA\Desktop\Broker-1\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Broker.dll
 C:\Users\PBCA\Desktop\Broker-1\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Broker.pdb
 C:\Users\PBCA\Desktop\Broker-1\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Broker.genruntimeconfig.cache
-C:\Users\HP\Desktop\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Razor\Views\Post\PostPageCreate.cshtml.g.cs
 C:\Users\HP\Desktop\Broker-1\dotnetwebApp\Broker\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\HP\Desktop\Broker-1\dotnetwebApp\Broker\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
 C:\Users\HP\Desktop\Broker-1\dotnetwebApp\Broker\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll

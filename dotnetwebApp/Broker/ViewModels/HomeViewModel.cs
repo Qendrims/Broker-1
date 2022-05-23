@@ -4,7 +4,7 @@ namespace Broker.Models
 {
     public class HomeViewModel
     {
-        public List<PostViewModel> posts { get; set; }
-        public List<string> categories { get; set; }
+        public List<Post> posts { get; set; }
+        public Category category { get; set; }
     }
 }

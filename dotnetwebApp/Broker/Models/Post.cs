@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Broker.Models
@@ -25,6 +26,8 @@ namespace Broker.Models
         public int? TakenBy { get; set; }
         [ForeignKey("TakenBy")]
         public Agent Agent { get; set; }
+
+        public virtual ICollection<PostCategory> PostCategories { get; set; }
         
     }
 }

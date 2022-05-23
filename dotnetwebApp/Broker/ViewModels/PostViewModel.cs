@@ -1,19 +1,32 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Broker.Models
 {
     public class PostViewModel
     {
         public int Id { get; set; }
-        public string Title { get; set; } = "Title1";
-        public string Description { get; set; } = "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, excepturi voluptatem? Officia repellat praesentium error quibusdam incidunt quasi minus non nihil. Mollitia adipisci nihil illo natus cum sunt blanditiis aliquid.";
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
+        public bool IsArchived { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime MeetingDate { get; set; }
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public int ZipCode { get; set; }
+        public int? PostUserId { get; set; }
+        [ForeignKey("PostUserId")]
+        public User User { get; set; }
 
-        public DateTime CreatedDate { get; set; }
-        public string Category { get; set; }
-        public string image { get; set; } = "grid1.jpg";
-        public PostViewModel(string category)
-        {
-            this.Category = category;
-        }
+        public int? TakenBy { get; set; }
+        [ForeignKey("TakenBy")]
+        public Agent Agent { get; set; }
+
+        public virtual ICollection<PostCategory> PostCategories { get; set; }
     }
 }

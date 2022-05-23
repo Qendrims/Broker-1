@@ -1,32 +1,46 @@
-﻿@*
+﻿@using Broker.ViewModels
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-@model List<PostViewModel>;
+@model FilteredPostViewModel;
 
 <link href="@Url.Content("~/css/UserPostPage.css")" rel="stylesheet" type="text/css" />
+
 
 
 <div class="container">
 
     <div class="search-products">
-        <form method='get'>
-            <label for="select-category">Filter by Category</label>
+        <form class="search-form" method='get' asp-action="GetFilteredPosts">
+          
+
             <select id="select-category" name='category'>
-                <option value="">Select Category</option>
-                <option value="Home">Home</option>
-                <option value="Flat">Flat</option>
-                <option value="Office">Office</option>
-                <input type='submit' value='click' />
+               <option value="">Select Category</option>
+                @foreach(var cat in Model.FilteredCategories)
+                {
+       <option selected="@(Model.Category == @cat.CategoryName)" value="@cat.CategoryName">@cat.CategoryName</option>
+               
+                }
             </select>
+
+            
+            <select id="select-city" name='city'>
+                <option value="">Select City</option>
+                <option value="Prishtine">Prishtine</option>
+                <option value="Gjilan">Gjilan</option>
+                <option value="Ferizaj">Ferizaj</option>
+            </select>
+
+             <input id="btn-submit" type='submit' value='Search' />
         </form>
 
     </div>
 
     <div id="products-container" class="products-container">
-        @foreach (var post in @Model)
+        @foreach (var post in @Model.FilteredPosts)
         {
-            int index = @Model.IndexOf(post) + 1;
+            int index = @Model.FilteredPosts.IndexOf(post) + 1;
             <div class="product" data-name="p-@index">
                 <img src="~/Assets/Images/grid1.jpg" alt="">
                 <h3>@post.Title</h3>

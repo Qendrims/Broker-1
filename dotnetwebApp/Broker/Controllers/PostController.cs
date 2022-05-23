@@ -1,4 +1,6 @@
-﻿using Broker.Models;
+﻿using Broker.ApplicationDB;
+using Broker.Models;
+using Broker.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,29 +9,32 @@ namespace Broker.Controllers
 {
     public class PostController : Controller
     {
-        public IActionResult PostPage(string category)
+        private readonly ApplicationDbContext _db;
+
+        public PostController(ApplicationDbContext applicationDb)
         {
-            List<PostViewModel> posts = new List<PostViewModel>();
-            PostViewModel post = new PostViewModel("Home");
-            PostViewModel post1 = new PostViewModel("Flat");
-            PostViewModel post2 = new PostViewModel("Office");
-            PostViewModel post3 = new PostViewModel("Home");
-            PostViewModel post4 = new PostViewModel("Flat");
-            PostViewModel post5 = new PostViewModel("Home");
-            PostViewModel post6 = new PostViewModel("Flat");
-            PostViewModel post7 = new PostViewModel("Flat");
-            posts.Add(post);
-            posts.Add(post1);
-            posts.Add(post2);
-            posts.Add(post3);
-            posts.Add(post4);
-            posts.Add(post5);
-            posts.Add(post6);
-            posts.Add(post7);
-            List<PostViewModel> postFilter = posts.Where(p => p.Category == category).ToList();
-            if (category != null)
-                return View(postFilter);
-            else return View(posts);
+                this._db = applicationDb;
+        }
+        public IActionResult PostPage()
+        {
+            FilteredPostViewModel posts = new FilteredPostViewModel();
+            posts.FilteredPosts = _db.Posts.ToList();
+            posts.FilteredCategories = _db.Categories.ToList();
+            return View(posts);
+        }
+
+        public IActionResult GetFilteredPosts(string category, string city)
+        {
+
+            FilteredPostViewModel posts = new FilteredPostViewModel();
+            posts.FilteredCategories = _db.Categories.ToList();
+            Category cat = _db.Categories.First(c => c.CategoryName == category);
+            var result = _db.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.Id))
+                .Where(p => city == null || p.City.ToLower() == city.ToLower()).ToList();
+            posts.FilteredPosts = result;
+            posts.Category = category;
+            posts.City = city;
+            return View("PostPage", posts);
         }
     }
 }

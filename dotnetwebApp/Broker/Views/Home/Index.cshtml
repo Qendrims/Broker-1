@@ -1,4 +1,4 @@
-﻿@model HomeViewModel;
+﻿@model List<HomeViewModel>;
 
 @{
     ViewData["Title"] = "Home Page";
@@ -23,25 +23,25 @@
 
 
 <div id="homepage-posts">
-    @foreach (var category in @Model.categories)
+    @foreach (var m in @Model)
     {
-        <h1>@category</h1>
+        <h1>@m.category.CategoryName</h1>
         <div class="slider">
-            <div class="homepage-posts-container slides" data-category="@category" id="slides">
-            @foreach(var posts in @Model.posts.Where(post => post.Category == category).ToList())
+            <div class="homepage-posts-container slides" data-category="@m.category.CategoryName" id="slides">
+            @foreach(var posts in @m.posts)
             {
                  <div class="homepage-post-cards content slide">
-                <img src="../../Assets/Images/@posts.image" alt="Home">
+                <img src="../../Assets/Images/grid1.jpg" alt="Home">
                 <h1>@posts.Title</h1>
                 <p>@posts.Description</p>
                 <a class="btn btn-primary" href="#">Show Details</a>
             </div>
             }
             </div>
-            <div class="prev" id="prev" data-category-btn=@category>
+            <div class="prev" id="prev" data-category-btn=@m.category.CategoryName>
                 <i class="fas fa-caret-left"></i>
             </div>
-            <div class="next" id="next" data-category-btn=@category>
+            <div class="next" id="next" data-category-btn=@m.category.CategoryName>
                 <i class="fas fa-caret-right"></i>
             </div>
         </div>
