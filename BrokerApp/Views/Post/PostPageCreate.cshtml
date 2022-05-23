@@ -60,7 +60,7 @@
         <div class="row col-md-8 col-md-offset-2 div-text">
             <h1>Create post</h1>
 
-            <form id="myForm">
+            <form method="post" enctype="multipart/form-data" asp-controller="Post" asp-action="PostPageCreate" id="myForm">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Title</label>
                     <input type="text"
@@ -98,6 +98,7 @@
                 <br />
                 <div class="input-group together">
                     <input type="text"
+                            name="price"
                            class="form-control"
                            id="price"
                            aria-label="Dollar amount (with dot and two decimal places)" />
@@ -120,7 +121,7 @@
         </div>
     </div>
 </section>
-@section Scripts{
+@*@section Scripts{
 <script>
             var data=[];
             let title = document.getElementById('exampleInputEmail1');
@@ -141,8 +142,8 @@
                 body.innerHTML +=text;
 }
 
-document.getElementById("myForm").addEventListener("submit",e=>postPreview(e));
-</script>
+document.getElementById("myForm").addEventListener("submit",e => postPreview(e));
+</script>*@
 }
 
 
