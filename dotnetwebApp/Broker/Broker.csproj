@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20220524224012_addTablesOfDb.cs" />
+    <Compile Remove="Migrations\20220524224012_addTablesOfDb.Designer.cs" />
+    <Compile Remove="Migrations\20220524224102_addTablesOfDb.cs" />
+    <Compile Remove="Migrations\20220524224102_addTablesOfDb.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\Assets\Images\bg1.jpg" />
     <None Include="wwwroot\Assets\Images\grid1.jpg" />
     <None Include="wwwroot\Assets\Images\grid2.jpg" />
@@ -30,6 +37,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
