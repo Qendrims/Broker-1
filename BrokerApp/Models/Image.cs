@@ -1,16 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BrokerApp.Models
 {
     public class Image
     {
-        public string ImageId { get; set; }
-        public string ImagePath { get; set; }
+        [Key]
+        public int ImageId { get; set; }
+        public string ImageName { get; set; }
         public string ImageType { get; set; }
         public long Size { get; set; }
         public int PostId { get; set; }
         [ForeignKey("PostId")]
-        Post post = new Post();
+        public Post Post { get; set; }  
 
     }
 }

@@ -61,6 +61,7 @@
             <h1>Create post</h1>
 
             <form method="post" enctype="multipart/form-data" asp-controller="Post" asp-action="PostPageCreate" id="myForm">
+                <input name='ownerId' value='2' hidden />
                 <div class="form-group">
                     <label for="exampleInputEmail1">Title</label>
                     <input type="text"
@@ -75,6 +76,7 @@
                 <div class="custom-file">
                     <input type="file"
                            name="image"
+                           multiple
                            class="custom-file-input together"
                            id="inputGroupFile01"
                            aria-describedby="inputGroupFileAddon01" />

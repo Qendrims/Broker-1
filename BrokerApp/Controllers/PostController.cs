@@ -2,6 +2,9 @@
 using BrokerApp.Models;
 using BrokerApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.UserSecrets;
+using System.Globalization;
 
 namespace BrokerApp.Controllers
 {
@@ -23,7 +26,7 @@ namespace BrokerApp.Controllers
         }
         [HttpGet]
         public IActionResult PostPageCreate()
-        {        
+        {
 
             return View();
         }
@@ -35,22 +38,46 @@ namespace BrokerApp.Controllers
             Post post = new Post();
             PostViewModel postViewModel = new PostViewModel();
 
-            postViewModel.Title= post.Title;
-            postViewModel.Description= post.Description;
-            postViewModel.Price= post.Price;
+            postViewModel.Title = post.Title;
+            postViewModel.Description = post.Description;
+            postViewModel.Price = post.Price;
 
             return View(postViewModel);
         }
         [HttpPost]
-        public IActionResult PostPageCreate(PostViewModel postView)
+        public async Task<IActionResult> PostPageCreate(IFormFile file, PostViewModel postView)
         {
-            string fileName = Path.GetFileName(postView.Image[0].FileName); 
-            string webRootPath = _webHostEnvironment.WebRootPath+ "\\Uploads\\"+ fileName;
 
-            using (var stream = System.IO.File.Create(webRootPath))
+            string folder = Environment.CurrentDirectory;
+
+            Post post = new Post();
+            post.Title = postView.Title;
+            post.Description = postView.Description;
+            post.OwnerId = postView.OwnerId;
+            this._Dbcontext.Posts.Add(post);
+            foreach (var imageFile in postView.Image)
             {
-                postView.Image[0].CopyTo(stream);
+                string fileName = postView.Title + "-" + DateTime.Now.ToString("MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + ".jpg";
+                string fullFileName = fileName.Replace(":", "-").Replace(" ", "");
+                string filePath = $"{folder}\\UploadFiles\\{fullFileName}";
+
+                //string fileName = Path.GetFileName(postView.Image[0].FileName); 
+                //string webRootPath = _webHostEnvironment.WebRootPath+ "\\Uploads\\"+ fileName;
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    await imageFile.CopyToAsync(stream);
+                }
+
+                Image image = new Image();
+                image.ImageName = fullFileName;
+                image.Post = post;
+                image.ImageType = "jpg";
+                this._Dbcontext.Images.Add(image);
             }
+
+            await _Dbcontext.SaveChangesAsync();
+
             //File newimage = new File(postView.Title+ "- 1");
             if (postView.Title == "")
             {
@@ -69,15 +96,26 @@ namespace BrokerApp.Controllers
                 return NotFound();
             }
 
-            Post post = new Post();
-            post.Title = postView.Title;
-            post.Description = postView.Description;
-            post.Price = postView.Price;
+            //Post newPost = new Post();
+            //post.Title = postView.Title;
+            //post.Description = postView.Description;
+            //post.Price = postView.Price;
 
-            this._Dbcontext.Posts.Add(post);
-            _Dbcontext.SaveChanges();
+            //this._Dbcontext.Posts.Add(newPost);
+            //_Dbcontext.SaveChanges();
 
-            return View("Index");
+            return RedirectToAction("AboutUs", "About");
+        }
+
+        public IActionResult Get(int id) {
+
+            var img= this._Dbcontext.Images.Where(p => p.ImageId == id).FirstOrDefault();
+
+            var filetype = img.ImageType;
+            var folder = Environment.CurrentDirectory;
+            //var content = (byte[]);
+            var filename = $"{folder}\\UploadFiles\\{img.ImageName}";
+            return View();//new FileContentResult(content, filename);
         }
 
     }

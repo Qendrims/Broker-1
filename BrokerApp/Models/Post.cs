@@ -23,6 +23,6 @@ namespace BrokerApp.Models
         [ForeignKey("TakenBy")]
         public Agent Agent { get; set; }
 
-        Image Image { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
     }
 }
