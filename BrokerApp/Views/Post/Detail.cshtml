@@ -1,9 +1,9 @@
-﻿@model BrokerApp.ViewModels.PostViewModel
+﻿@model BrokerApp.ViewModel.PostDetailViewModel
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Detail";
 }
 
-<h1>Edit</h1>
+<h1>Post Details</h1>
 
 <table border=1px>
     <thead>
@@ -34,13 +34,13 @@
                 @Model.Description
             </td>
             <td>
-                <img src="~/UploadFile/@Model.Image" class="rounded-circle" height="80px" width="80px" asp-append-version="true" />
+                <img src="~/UploadFiles/@Model.Image.ImageName" class="" height="80px" width="80px" />
             </td>
             <td>
                 @Model.Price
             </td>
             <td>
-                @Model.OwnerId
+                @Model.OwnerName
             </td>
         </tr>
     </tbody>

@@ -12,5 +12,12 @@ namespace BrokerApp.AppDbContext
         public DbSet<Post> Posts { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().HasDiscriminator<string>("Discriminator")
+                .HasValue<Agent>("Agent")
+                .HasValue<SimpleUser>("SimpleUser");
+        }
     }
 }

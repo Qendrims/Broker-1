@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Kobit PC\\Desktop\\MYproject\\Broker-1\\BrokerApp\\BrokerApp.csproj": {}
+    "C:\\Users\\ADMIN\\Desktop\\QS\\BrokerApp\\Broker-1\\BrokerApp\\BrokerApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Kobit PC\\Desktop\\MYproject\\Broker-1\\BrokerApp\\BrokerApp.csproj": {
+    "C:\\Users\\ADMIN\\Desktop\\QS\\BrokerApp\\Broker-1\\BrokerApp\\BrokerApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Kobit PC\\Desktop\\MYproject\\Broker-1\\BrokerApp\\BrokerApp.csproj",
+        "projectUniqueName": "C:\\Users\\ADMIN\\Desktop\\QS\\BrokerApp\\Broker-1\\BrokerApp\\BrokerApp.csproj",
         "projectName": "BrokerApp",
-        "projectPath": "C:\\Users\\Kobit PC\\Desktop\\MYproject\\Broker-1\\BrokerApp\\BrokerApp.csproj",
-        "packagesPath": "C:\\Users\\Kobit PC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Kobit PC\\Desktop\\MYproject\\Broker-1\\BrokerApp\\obj\\",
+        "projectPath": "C:\\Users\\ADMIN\\Desktop\\QS\\BrokerApp\\Broker-1\\BrokerApp\\BrokerApp.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ADMIN\\Desktop\\QS\\BrokerApp\\Broker-1\\BrokerApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Kobit PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -81,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

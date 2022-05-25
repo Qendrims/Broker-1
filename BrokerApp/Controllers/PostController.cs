@@ -1,5 +1,6 @@
 ﻿using BrokerApp.AppDbContext;
 using BrokerApp.Models;
+using BrokerApp.ViewModel;
 using BrokerApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,18 +32,21 @@ namespace BrokerApp.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public IActionResult Detail(int? id)
         {
-            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).FirstOrDefault();
+            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(x=>x.User).Include(x=>x.Images).FirstOrDefault();
 
+            //Image img = this._Dbcontext.Images.Where(i => i.PostId == id).FirstOrDefault();
             
-            PostViewModel postViewModel = new PostViewModel();
+            PostDetailViewModel postViewModel = new PostDetailViewModel();
 
             postViewModel.Title = post1.Title;
             postViewModel.Description = post1.Description;
             postViewModel.Price = post1.Price;
             postViewModel.OwnerId = (int)post1.OwnerId;
-
+            postViewModel.OwnerName = post1.User.FirstName + " " + post1.User.LastName;
+            postViewModel.Image = post1.Images.FirstOrDefault();
+            
             return View(postViewModel);
         }
         [HttpPost]
