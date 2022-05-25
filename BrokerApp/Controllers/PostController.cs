@@ -1,7 +1,6 @@
 ﻿using BrokerApp.AppDbContext;
 using BrokerApp.Models;
 using BrokerApp.ViewModel;
-using BrokerApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
@@ -20,24 +19,13 @@ namespace BrokerApp.Controllers
             this._webHostEnvironment = _webHostEnvironment;
         }
 
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-        [HttpGet]
-        public IActionResult PostPageCreate()
-        {
-
-            return View();
-        }
         [HttpGet]
         public IActionResult Detail(int? id)
         {
-            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(x=>x.User).Include(x=>x.Images).FirstOrDefault();
+            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
 
             //Image img = this._Dbcontext.Images.Where(i => i.PostId == id).FirstOrDefault();
-            
+
             PostDetailViewModel postViewModel = new PostDetailViewModel();
 
             postViewModel.Title = post1.Title;
@@ -46,8 +34,15 @@ namespace BrokerApp.Controllers
             postViewModel.OwnerId = (int)post1.OwnerId;
             postViewModel.OwnerName = post1.User.FirstName + " " + post1.User.LastName;
             postViewModel.Image = post1.Images.FirstOrDefault();
-            
+            postViewModel.PostId = post1.PostId;
+
             return View(postViewModel);
+        }
+        [HttpGet]
+        public IActionResult PostPageCreate()
+        {
+
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult> PostPageCreate(IFormFile file, PostViewModel postView)
@@ -109,19 +104,54 @@ namespace BrokerApp.Controllers
             //this._Dbcontext.Posts.Add(newPost);
             //_Dbcontext.SaveChanges();
 
-            return RedirectToAction("Edit", "Post");
+            return RedirectToAction("Detail", "Post");
         }
-        
 
-        public IActionResult Get(int id) {
 
-            var img= this._Dbcontext.Images.Where(p => p.ImageId == id).FirstOrDefault();
+        public IActionResult Get(int id)
+        {
+
+            var img = this._Dbcontext.Images.Where(p => p.ImageId == id).FirstOrDefault();
 
             var filetype = img.ImageType;
             var folder = Environment.CurrentDirectory;
             //var content = (byte[]);
             var filename = $"{folder}\\UploadFiles\\{img.ImageName}";
             return View();//new FileContentResult(content, filename);
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == 0)
+            {
+                return View(new Post());
+            }
+            else
+            {
+                var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(x=>x.Images).FirstOrDefault();
+                PostDetailViewModel postViewModel = new PostDetailViewModel();
+                postViewModel.Title = post.Title;
+                postViewModel.Description = post.Description;
+                postViewModel.Price = post.Price;
+                postViewModel.Image = post.Images.FirstOrDefault();
+                return View(postViewModel);
+
+            }
+        }
+
+
+        [HttpPut]
+        public IActionResult Edit(int id, PostViewModel mo)
+        {
+            if (id == 0)
+            {
+                return View(new Post());
+            }
+            else
+            {
+                return View(this._Dbcontext.Posts.Where(x => x.PostId == id).FirstOrDefault());
+
+            }
         }
 
     }

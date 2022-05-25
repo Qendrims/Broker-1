@@ -1,4 +1,4 @@
-﻿namespace BrokerApp.ViewModels
+﻿namespace BrokerApp.ViewModel
 {
     public class PostViewModel 
     {
