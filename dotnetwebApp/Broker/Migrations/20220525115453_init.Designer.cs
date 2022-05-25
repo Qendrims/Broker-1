@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Broker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220524224146_addTablesOfDb")]
-    partial class addTablesOfDb
+    [Migration("20220525115453_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -311,6 +311,9 @@ namespace Broker.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(30)")
@@ -445,7 +448,7 @@ namespace Broker.Migrations
                         .IsRequired();
 
                     b.HasOne("Broker.Models.Post", "Post")
-                        .WithMany()
+                        .WithMany("PostCategories")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -47,7 +47,7 @@ namespace Broker.Controllers
             {
              cat = _db.Categories.First(c => c.CategoryName == category);
             }
-            var result = _db.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.Id))
+            var result = _db.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
                 .Where(p => city == null || p.City.ToLower() == city.ToLower()).ToList();
             posts.FilteredPosts = result;
             posts.Category = category;

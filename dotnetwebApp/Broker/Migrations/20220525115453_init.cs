@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Broker.Migrations
 {
-    public partial class addTablesOfDb : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,6 +30,7 @@ namespace Broker.Migrations
                     LastName = table.Column<string>(maxLength: 30, nullable: false),
                     Email = table.Column<string>(maxLength: 30, nullable: false),
                     Birthday = table.Column<DateTime>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
                     Telephone = table.Column<string>(maxLength: 20, nullable: false),
                     Street = table.Column<string>(nullable: false),
                     City = table.Column<string>(maxLength: 20, nullable: false),

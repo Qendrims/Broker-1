@@ -65,7 +65,7 @@ namespace Broker.Controllers
                 HomeViewModel model = new HomeViewModel();
 
                 model.category = category;
-                model.posts = this._db.Posts.Where(p => p.PostCategories.Any(x => x.CategoryId == category.Id)).ToList();
+                model.posts = this._db.Posts.Where(p => p.PostCategories.Any(x => x.CategoryId == category.CategoryId)).ToList();
 
                if(model.posts.Count != 0)
                 {

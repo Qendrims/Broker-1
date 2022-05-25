@@ -35,31 +35,31 @@ namespace Broker.ApplicationDB
 
 
                 modelBuilder.Entity<Tags>().Property(t => t.TagName)
-               .HasMaxLength(10);
+               .HasMaxLength(100);
 
                  modelBuilder.Entity<Category>().Property(c => c.CategoryName)
-                .HasMaxLength(10)
+                .HasMaxLength(100)
                 .IsRequired();
 
                 
 
                 modelBuilder.Entity<User>().Property(u => u.Name)
-                .HasMaxLength(20)
+                .HasMaxLength(200)
                 .IsRequired();
 
 
                 modelBuilder.Entity<User>().Property(u => u.LastName)
-                .HasMaxLength(30)
+                .HasMaxLength(300)
                 .IsRequired();
 
 
                 modelBuilder.Entity<User>().Property(u => u.Email)
-                .HasMaxLength(30)
+                .HasMaxLength(300)
                 .IsRequired();
 
 
                 modelBuilder.Entity<User>().Property(u => u.Telephone)
-                .HasMaxLength(20)
+                .HasMaxLength(200)
                 .IsRequired();
 
 
@@ -68,12 +68,12 @@ namespace Broker.ApplicationDB
 
 
                 modelBuilder.Entity<User>().Property(u => u.City)
-                .HasMaxLength(20)
+                .HasMaxLength(200)
                 .IsRequired();
 
 
                 modelBuilder.Entity<User>().Property(u => u.State)
-                .HasMaxLength(20)
+                .HasMaxLength(200)
                 .IsRequired();
 
 
@@ -94,15 +94,15 @@ namespace Broker.ApplicationDB
                 .IsRequired();
 
                 modelBuilder.Entity<Post>().Property(p => p.Street)
-                .HasMaxLength(50)
+                .HasMaxLength(500)
                 .IsRequired();
 
                 modelBuilder.Entity<Post>().Property(p => p.State)
-                .HasMaxLength(20)
+                .HasMaxLength(200)
                 .IsRequired();
 
                 modelBuilder.Entity<Post>().Property(p => p.City)
-                .HasMaxLength(20)
+                .HasMaxLength(200)
                 .IsRequired();
 
                 modelBuilder.Entity<Post>().Property(p => p.PostUserId)
