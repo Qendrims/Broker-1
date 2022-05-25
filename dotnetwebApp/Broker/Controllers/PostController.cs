@@ -36,12 +36,12 @@ namespace Broker.Controllers
         //    return View(posts);
         //   // return View(posts);
         //}
-
+         
         public IActionResult PostPage(string category, string city,int pg=1)
         {
 
             FilteredPostViewModel posts = new FilteredPostViewModel();
-            posts.FilteredCategories = _db.Categories.ToList();
+            posts.FilteredCategories = _db.Categories.ToList();  
             Category cat = new Category();
             if(category != null)
             {
@@ -53,14 +53,14 @@ namespace Broker.Controllers
             posts.Category = category;
             posts.City = city;
 
-            const int pageSize = 2;
+            const int postPerPage = 2;
             if (pg < 1)
                 pg = 1;
 
             int postCount = posts.FilteredPosts.Count();
-            var pager = new Pagination(postCount, pg, pageSize);
+            var pager = new Pagination(postCount, pg, postPerPage);
 
-            int postSkip = (pg - 1) * pageSize;
+            int postSkip = (pg - 1) * postPerPage;
 
             posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
             this.ViewBag.Pager = pager;

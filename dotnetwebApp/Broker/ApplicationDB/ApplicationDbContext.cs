@@ -26,7 +26,7 @@ namespace Broker.ApplicationDB
                  modelBuilder.Entity<User>().HasDiscriminator<string>("type")
                 .HasValue<Agent>("Agent")
                 .HasValue<SimpleUser>("SimpleUser");
-        }
+        }  
     
     }
 }
