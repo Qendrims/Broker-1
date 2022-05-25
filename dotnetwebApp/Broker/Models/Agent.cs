@@ -6,5 +6,8 @@
         public long AccountNr { get; set; }
         public double Income { get; set; }
         public double Outcome { get; set; }
+
+
+        
     }
 }
