@@ -35,12 +35,13 @@ namespace BrokerApp.Controllers
         {
             var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).FirstOrDefault();
 
-            Post post = new Post();
+            
             PostViewModel postViewModel = new PostViewModel();
 
-            postViewModel.Title = post.Title;
-            postViewModel.Description = post.Description;
-            postViewModel.Price = post.Price;
+            postViewModel.Title = post1.Title;
+            postViewModel.Description = post1.Description;
+            postViewModel.Price = post1.Price;
+            postViewModel.OwnerId = (int)post1.OwnerId;
 
             return View(postViewModel);
         }
@@ -104,8 +105,9 @@ namespace BrokerApp.Controllers
             //this._Dbcontext.Posts.Add(newPost);
             //_Dbcontext.SaveChanges();
 
-            return RedirectToAction("AboutUs", "About");
+            return RedirectToAction("Edit", "Post");
         }
+        
 
         public IActionResult Get(int id) {
 

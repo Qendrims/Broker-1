@@ -1,0 +1,48 @@
+﻿@model BrokerApp.ViewModels.PostViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<table border=1px>
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Image
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Owner
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Model.Title
+            </td>
+            <td>
+                @Model.Description
+            </td>
+            <td>
+                <img src="~/UploadFile/@Model.Image" class="rounded-circle" height="80px" width="80px" asp-append-version="true" />
+            </td>
+            <td>
+                @Model.Price
+            </td>
+            <td>
+                @Model.OwnerId
+            </td>
+        </tr>
+    </tbody>
+</table>
+

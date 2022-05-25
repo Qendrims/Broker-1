@@ -163,7 +163,7 @@ namespace BrokerApp.Migrations
             modelBuilder.Entity("BrokerApp.Models.Image", b =>
                 {
                     b.HasOne("BrokerApp.Models.Post", "Post")
-                        .WithMany()
+                        .WithMany("Images")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -184,6 +184,11 @@ namespace BrokerApp.Migrations
                     b.Navigation("Agent");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BrokerApp.Models.Post", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("BrokerApp.Models.User", b =>

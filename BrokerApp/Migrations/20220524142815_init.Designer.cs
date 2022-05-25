@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrokerApp.Migrations
 {
     [DbContext(typeof(PostDbContext))]
-    [Migration("20220524093221_init")]
+    [Migration("20220524142815_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -165,7 +165,7 @@ namespace BrokerApp.Migrations
             modelBuilder.Entity("BrokerApp.Models.Image", b =>
                 {
                     b.HasOne("BrokerApp.Models.Post", "Post")
-                        .WithMany()
+                        .WithMany("Images")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -186,6 +186,11 @@ namespace BrokerApp.Migrations
                     b.Navigation("Agent");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BrokerApp.Models.Post", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("BrokerApp.Models.User", b =>
