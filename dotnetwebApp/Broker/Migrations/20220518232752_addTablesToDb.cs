@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Broker.Migrations
 {
-    public partial class init : Migration
+    public partial class addTablesToDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
