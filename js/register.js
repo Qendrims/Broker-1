@@ -1,3 +1,5 @@
+var registeredUser = false;
+
 function Validate(e){
     e.preventDefault();
     
@@ -52,13 +54,17 @@ function Validate(e){
         confirmPassCheck=true;
         document.getElementById("confirm_password_error").classList.add("hidden");
     }
+
+
     if(nameCheck && lastnameCheck && emailCheck && usernameCheck && passCheck && confirmPassCheck){
         document.getElementById("sumbit-btn").disabled=false;
-        document.getElementById("sumbit-btn").style.cursor = "pointer"
+        document.getElementById("sumbit-btn").style.cursor = "pointer";
+        registeredUser=true;
+
     }
 
+    
 }
-
 
 
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Broker.Migrations
 {
-    public partial class init : Migration
+    public partial class addTablesOfDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,31 +11,32 @@ namespace Broker.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    CategoryId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(nullable: true)
+                    CategoryName = table.Column<string>(maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    UserId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 20, nullable: false),
+                    LastName = table.Column<string>(maxLength: 30, nullable: false),
+                    Email = table.Column<string>(maxLength: 30, nullable: false),
                     Birthday = table.Column<DateTime>(nullable: false),
-                    Telephone = table.Column<string>(nullable: true),
-                    Street = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    State = table.Column<string>(nullable: true),
+                    Telephone = table.Column<string>(maxLength: 20, nullable: false),
+                    Street = table.Column<string>(nullable: false),
+                    City = table.Column<string>(maxLength: 20, nullable: false),
+                    State = table.Column<string>(maxLength: 20, nullable: false),
                     ZipCode = table.Column<int>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     type = table.Column<string>(nullable: false),
                     AgentId = table.Column<int>(nullable: true),
                     AccountNr = table.Column<long>(nullable: true),
@@ -44,35 +45,34 @@ namespace Broker.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "FeedBacks",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    FeedbackId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Comment = table.Column<string>(nullable: true),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false),
                     SentBy = table.Column<int>(nullable: true),
                     SentTo = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FeedBacks", x => x.Id);
+                    table.PrimaryKey("PK_FeedBacks", x => x.FeedbackId);
                     table.ForeignKey(
                         name: "FK_FeedBacks_Users_SentBy",
                         column: x => x.SentBy,
                         principalTable: "Users",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_FeedBacks_Users_SentTo",
                         column: x => x.SentTo,
                         principalTable: "Users",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -80,28 +80,30 @@ namespace Broker.Migrations
                 name: "Payments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    PaymentId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SentBy = table.Column<int>(nullable: true),
                     SentTo = table.Column<int>(nullable: true),
                     Price = table.Column<double>(nullable: false),
                     Tip = table.Column<double>(nullable: false),
-                    PaymentFinished = table.Column<bool>(nullable: false)
+                    PaymentFinished = table.Column<bool>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.PrimaryKey("PK_Payments", x => x.PaymentId);
                     table.ForeignKey(
                         name: "FK_Payments_Users_SentBy",
                         column: x => x.SentBy,
                         principalTable: "Users",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Payments_Users_SentTo",
                         column: x => x.SentTo,
                         principalTable: "Users",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -109,37 +111,39 @@ namespace Broker.Migrations
                 name: "Posts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    PostId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
-                    Latitude = table.Column<decimal>(nullable: false),
-                    Longitude = table.Column<decimal>(nullable: false),
+                    Title = table.Column<string>(maxLength: 100, nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
+                    Latitude = table.Column<double>(nullable: false),
+                    Longitude = table.Column<double>(nullable: false),
                     IsArchived = table.Column<bool>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     MeetingDate = table.Column<DateTime>(nullable: false),
-                    Street = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    State = table.Column<string>(nullable: true),
+                    Street = table.Column<string>(maxLength: 50, nullable: false),
+                    City = table.Column<string>(maxLength: 20, nullable: false),
+                    State = table.Column<string>(maxLength: 20, nullable: false),
                     ZipCode = table.Column<int>(nullable: false),
-                    PostUserId = table.Column<int>(nullable: true),
-                    TakenBy = table.Column<int>(nullable: true)
+                    PostUserId = table.Column<int>(nullable: false),
+                    TakenBy = table.Column<int>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Posts", x => x.Id);
+                    table.PrimaryKey("PK_Posts", x => x.PostId);
                     table.ForeignKey(
                         name: "FK_Posts_Users_PostUserId",
                         column: x => x.PostUserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Posts_Users_TakenBy",
                         column: x => x.TakenBy,
                         principalTable: "Users",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -147,35 +151,37 @@ namespace Broker.Migrations
                 name: "Invites",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    InviteId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PostId = table.Column<int>(nullable: true),
                     SentBy = table.Column<int>(nullable: true),
                     SentTo = table.Column<int>(nullable: true),
                     IsAccepted = table.Column<bool>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    End_Date = table.Column<DateTime>(nullable: false)
+                    End_Date = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Invites", x => x.Id);
+                    table.PrimaryKey("PK_Invites", x => x.InviteId);
                     table.ForeignKey(
                         name: "FK_Invites_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
-                        principalColumn: "Id",
+                        principalColumn: "PostId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Invites_Users_SentBy",
                         column: x => x.SentBy,
                         principalTable: "Users",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Invites_Users_SentTo",
                         column: x => x.SentTo,
                         principalTable: "Users",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -183,47 +189,69 @@ namespace Broker.Migrations
                 name: "PostCategories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryId = table.Column<int>(nullable: true),
-                    PostId = table.Column<int>(nullable: true)
+                    CategoryId = table.Column<int>(nullable: false),
+                    PostId = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostCategories", x => x.Id);
+                    table.PrimaryKey("PK_PostCategories", x => new { x.CategoryId, x.PostId });
                     table.ForeignKey(
                         name: "FK_PostCategories_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PostCategories_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "PostId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "PostImages",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    PostImageId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Path = table.Column<string>(nullable: true),
+                    ImageName = table.Column<string>(nullable: false),
                     Size = table.Column<long>(nullable: false),
-                    Type = table.Column<string>(nullable: true),
-                    PostId = table.Column<int>(nullable: true)
+                    Type = table.Column<string>(maxLength: 10, nullable: false),
+                    PostId = table.Column<int>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostImages", x => x.Id);
+                    table.PrimaryKey("PK_PostImages", x => x.PostImageId);
                     table.ForeignKey(
                         name: "FK_PostImages_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
-                        principalColumn: "Id",
+                        principalColumn: "PostId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tags",
+                columns: table => new
+                {
+                    TagsId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TagName = table.Column<string>(maxLength: 10, nullable: true),
+                    ForPost = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tags", x => x.TagsId);
+                    table.ForeignKey(
+                        name: "FK_Tags_Posts_ForPost",
+                        column: x => x.ForPost,
+                        principalTable: "Posts",
+                        principalColumn: "PostId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -263,11 +291,6 @@ namespace Broker.Migrations
                 column: "SentTo");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PostCategories_CategoryId",
-                table: "PostCategories",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PostCategories_PostId",
                 table: "PostCategories",
                 column: "PostId");
@@ -286,6 +309,11 @@ namespace Broker.Migrations
                 name: "IX_Posts_TakenBy",
                 table: "Posts",
                 column: "TakenBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tags_ForPost",
+                table: "Tags",
+                column: "ForPost");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -304,6 +332,9 @@ namespace Broker.Migrations
 
             migrationBuilder.DropTable(
                 name: "PostImages");
+
+            migrationBuilder.DropTable(
+                name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "Categories");

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Broker.Models
 {
     public class User
     {
-        public int Id { get; set; }
+        [Key]
+        public int UserId { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -16,8 +18,8 @@ namespace Broker.Models
         public string City { get; set; }
         public string State { get; set; }
         public int ZipCode { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
-        
+        public bool IsDeleted { get; set; } = false;
     }
 }
