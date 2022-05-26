@@ -10,8 +10,9 @@
         <div class="row col-md-8 col-md-offset-2 div-text">
             <h1>Create post</h1>
 
-            <form method="put" enctype="multipart/form-data" asp-controller="Post" asp-action="Edit" id="myForm">
-                <input name='ownerId' value='2' hidden />
+            <form method="post" enctype="multipart/form-data" asp-controller="Post" asp-action="Edit" id="myForm">
+                <input name='ownerId' value='2' hidden /><input name='ownerId' value='2' hidden />
+                <input value='@Model.PostId' name='PostId' hidden />
                 <div class="form-group">
                     <label for="exampleInputEmail1">Title</label>
                     <input type="text"

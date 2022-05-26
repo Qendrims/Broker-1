@@ -26,27 +26,32 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>
-                @Model.Title
-            </td>
-            <td>
-                @Model.Description
-            </td>
-            <td>
-                <img src="~/UploadFiles/@Model.Image.ImageName" class="" height="80px" width="80px" />
-            </td>
-            <td>
-                @Model.Price
-            </td>
-            <td>
-                @Model.OwnerName
-            </td>
-            <td>
-                <a type="submit" class="btn-primary" asp-action="Edit" asp-controller="Post" asp-route-id="@Model.PostId" value="Edit">Details </a>
+        @foreach (var el in Model)
+        {
+            <tr>
+                <td>
+                    @Model.Title
+                </td>
+                <td>
+                    @Model.Description
+                </td>
+                <td>
+                    <img src="~/UploadFiles/@Model.Image.ImageName" class="" height="80px" width="80px" />
+                </td>
+                <td>
+                    @Model.Price
+                </td>
+                <td>
+                    @Model.OwnerName
+                </td>
+                <td>
+                    <a type="submit" class="btn-primary" asp-action="Edit" asp-controller="Post" asp-route-id="@Model.PostId" value="Edit">Edit </a>
+                    <a type="submit" class="btn-primary" asp-action="Delete" asp-route-id="@Model.PostId">Delete </a>
 
-            </td>
-        </tr>
+                </td>
+            </tr>
+
+        }
     </tbody>
 </table>
 

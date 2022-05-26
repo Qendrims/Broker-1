@@ -765,3 +765,4 @@ C:\Users\ADMIN\Desktop\QS\BrokerApp\Broker-1\BrokerApp\bin\Debug\net6.0\Swashbuc
 C:\Users\ADMIN\Desktop\QS\BrokerApp\Broker-1\BrokerApp\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\ADMIN\Desktop\QS\BrokerApp\Broker-1\BrokerApp\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\ADMIN\Desktop\QS\BrokerApp\Broker-1\BrokerApp\obj\Debug\net6.0\BrokerApp.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\ADMIN\Desktop\QS\BrokerApp\Broker-1\BrokerApp\obj\Debug\net6.0\BrokerApp.csproj.AssemblyReference.cache

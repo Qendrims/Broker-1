@@ -18,10 +18,13 @@ namespace BrokerApp.Controllers
             this._Dbcontext = _context;
             this._webHostEnvironment = _webHostEnvironment;
         }
-
         [HttpGet]
         public IActionResult Detail(int? id)
         {
+            if (id == null)
+            {
+                RedirectToAction("DetailAll","Post");
+            }
             var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
 
             //Image img = this._Dbcontext.Images.Where(i => i.PostId == id).FirstOrDefault();
@@ -104,21 +107,10 @@ namespace BrokerApp.Controllers
             //this._Dbcontext.Posts.Add(newPost);
             //_Dbcontext.SaveChanges();
 
-            return RedirectToAction("Detail", "Post");
+            return RedirectToAction("DetailAll", "Post");
         }
 
 
-        public IActionResult Get(int id)
-        {
-
-            var img = this._Dbcontext.Images.Where(p => p.ImageId == id).FirstOrDefault();
-
-            var filetype = img.ImageType;
-            var folder = Environment.CurrentDirectory;
-            //var content = (byte[]);
-            var filename = $"{folder}\\UploadFiles\\{img.ImageName}";
-            return View();//new FileContentResult(content, filename);
-        }
 
         public IActionResult Edit(int? id)
         {
@@ -140,19 +132,38 @@ namespace BrokerApp.Controllers
         }
 
 
-        [HttpPut]
-        public IActionResult Edit(int id, PostViewModel mo)
+        [HttpPost]
+        public IActionResult Edit(int id, PostDetailViewModel ViewModel)
         {
-            if (id == 0)
-            {
-                return View(new Post());
-            }
-            else
-            {
-                return View(this._Dbcontext.Posts.Where(x => x.PostId == id).FirstOrDefault());
+            var post= this._Dbcontext.Posts.Where(x=>x.PostId == id).Include(e=>e.Images).FirstOrDefault();
 
-            }
+
+
+            post.Title = ViewModel.Title;
+            post.Description = ViewModel.Description;
+            ViewModel.Image = post.Images.FirstOrDefault();
+            post.Price = ViewModel.Price;
+
+            this._Dbcontext.Update(post);
+            this._Dbcontext.SaveChanges();
+            return View("Detail",ViewModel);
+
         }
+        public IActionResult Delete()
+        {
+            return View();
+        }
+        //Cdo sen qe vjen prej URl By default esjte get
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var postToDelete = this._Dbcontext.Posts.Where(x => x.PostId == id).FirstOrDefault();
+            this._Dbcontext.Posts.Remove(postToDelete);
+            this._Dbcontext.SaveChanges();
+     
+            return RedirectToAction("PostPageCreate");
+        }
+
 
     }
 }
