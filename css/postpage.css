@@ -33,10 +33,14 @@
     
 }
 #inner-posts{
+<<<<<<< HEAD
     border: 1px solid black;}
 .title-div{
     display: flex;
     flex-direction: column;
+=======
+    border: 1px solid black;
+>>>>>>> 8f709ac5b95d0865e74671e62dae114185dcf686
 }
 #inner-posts h1{
     font-size: 20px;
