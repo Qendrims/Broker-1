@@ -44,8 +44,8 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult PostPageCreate()
         {
-
-            return View();
+            //List<Category> categories = this._Dbcontext.Categories.ToList();
+            //return View(categories);
         }
         [HttpPost]
         public async Task<IActionResult> PostPageCreate(IFormFile file, PostViewModel postView)

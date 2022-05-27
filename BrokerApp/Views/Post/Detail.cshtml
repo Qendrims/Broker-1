@@ -1,4 +1,4 @@
-﻿@model BrokerApp.ViewModel.PostDetailViewModel
+﻿@model List<PostDetailViewModel>
 @{
     ViewData["Title"] = "Detail";
 }
@@ -26,27 +26,28 @@
         </tr>
     </thead>
     <tbody>
+
         @foreach (var el in Model)
         {
             <tr>
                 <td>
-                    @Model.Title
+                    @el.Title
                 </td>
                 <td>
-                    @Model.Description
+                    @el.Description
                 </td>
                 <td>
-                    <img src="~/UploadFiles/@Model.Image.ImageName" class="" height="80px" width="80px" />
+                    <img src="~/UploadFiles/@el.Image.ImageName" class="" height="80px" width="80px" />
                 </td>
                 <td>
-                    @Model.Price
+                    @el.Price
                 </td>
                 <td>
-                    @Model.OwnerName
+                    @el.OwnerName
                 </td>
                 <td>
-                    <a type="submit" class="btn-primary" asp-action="Edit" asp-controller="Post" asp-route-id="@Model.PostId" value="Edit">Edit </a>
-                    <a type="submit" class="btn-primary" asp-action="Delete" asp-route-id="@Model.PostId">Delete </a>
+                    <a type="submit" class="btn-primary" asp-action="Edit" asp-controller="Post" asp-route-id="@el.PostId" value="Edit">Edit </a>
+                    <a type="submit" class="btn-primary" asp-action="Delete" asp-route-id="@el.PostId">Delete </a>
 
                 </td>
             </tr>
