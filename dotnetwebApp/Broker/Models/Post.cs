@@ -36,7 +36,9 @@ namespace Broker.Models
 
         public bool IsActive { get; set; } = true;
 
-        
+        public virtual ICollection<Image> Images { get; set; }
+
+
 
     }
 }
