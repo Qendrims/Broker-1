@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+
+ <link href="@Url.Content("~/css/login-page.css")" rel="stylesheet" type="text/css" />
+  
+  <div class="container">
+
+        <form autocomplete="off"  name="form" method="post" id="myForm">
+            <h1>Sign In</h1>
+
+            <div class="labels">Username or E-Mail</div>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username / e-Mail*">
+            <div class="error" id="username_error">Incorrect email or username.</div>
+
+            <div class="labels">Password</div>
+            <input type="password" class="form-control" id="password"  name="password" placeholder="Password*">
+            <div class="error" id="password_error">Incorrect password.</div>
+
+
+            <button class="btn-login" id="submit-btn" type="submit" disabled="true" >Log in</button>
+            
+        </form>
+
+    </div>
+    <script src="~/js/login-validate.js"></script>
+

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var data=[];
 let title = document.getElementById('exampleInputEmail1');
 let file = document.getElementById('inputGroupFile01');
@@ -16,3 +17,10 @@ function postPreview(e){
 }
 
 document.getElementById("myForm").addEventListener("submit",e=>postPreview(e));
+=======
+let welcome = document.getElementById('usernameWelcome');
+let username = localStorage.getItem('broker-username');
+if(username != null){
+    welcome.textContent = `Welcome ${username}`
+}
+>>>>>>> origin/backup-branch

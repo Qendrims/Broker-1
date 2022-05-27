@@ -230,3 +230,14 @@ C:\Users\ADMIN\Desktop\QS\BrokerAppMvc\BrokerApp\BrokerApp\obj\Debug\net6.0\ref\
 C:\Users\ADMIN\Desktop\QS\BrokerAppMvc\BrokerApp\BrokerApp\obj\Debug\net6.0\BrokerApp.pdb
 C:\Users\ADMIN\Desktop\QS\BrokerAppMvc\BrokerApp\BrokerApp\obj\Debug\net6.0\BrokerApp.genruntimeconfig.cache
 C:\Users\ADMIN\Desktop\QS\BrokerAppMvc\BrokerApp\BrokerApp\obj\Debug\net6.0\BrokerApp.csproj.AssemblyReference.cache
+C:\Users\PBCA\Desktop\BROKER-APP\Broker-1\BrokerApp\obj\Debug\net6.0\BrokerApp.csproj.AssemblyReference.cache
+C:\Users\PBCA\Desktop\BROKER-APP\Broker-1\BrokerApp\obj\Debug\net6.0\BrokerApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PBCA\Desktop\BROKER-APP\Broker-1\BrokerApp\obj\Debug\net6.0\BrokerApp.AssemblyInfoInputs.cache
+C:\Users\PBCA\Desktop\BROKER-APP\Broker-1\BrokerApp\obj\Debug\net6.0\BrokerApp.AssemblyInfo.cs
+C:\Users\PBCA\Desktop\BROKER-APP\Broker-1\BrokerApp\obj\Debug\net6.0\BrokerApp.csproj.CoreCompileInputs.cache
+C:\Users\PBCA\Desktop\BROKER-APP\Broker-1\BrokerApp\obj\Debug\net6.0\BrokerApp.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\PBCA\Desktop\BROKER-APP\Broker-1\BrokerApp\obj\Debug\net6.0\BrokerApp.RazorAssemblyInfo.cache
+C:\Users\PBCA\Desktop\BROKER-APP\Broker-1\BrokerApp\obj\Debug\net6.0\BrokerApp.RazorAssemblyInfo.cs
+C:\Users\PBCA\Desktop\BROKER-APP\Broker-1\BrokerApp\obj\Debug\net6.0\BrokerApp.dll
+C:\Users\PBCA\Desktop\BROKER-APP\Broker-1\BrokerApp\obj\Debug\net6.0\ref\BrokerApp.dll
+C:\Users\PBCA\Desktop\BROKER-APP\Broker-1\BrokerApp\obj\Debug\net6.0\BrokerApp.pdb

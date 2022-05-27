@@ -21,11 +21,15 @@
 .flex{
     display: flex;
 }
+<<<<<<< HEAD
 .btn-primary{
     margin: 20px 40px;
 }.second-div{
     width: 45%;
     height: 90vh;
+=======
+.title-div{
+>>>>>>> origin/backup-branch
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ADMIN\\Desktop\\QS\\BrokerAppMvc\\BrokerApp\\BrokerApp\\BrokerApp.csproj": {}
+    "C:\\Users\\PBCA\\Desktop\\BROKER-APP\\Broker-1\\BrokerApp\\BrokerApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ADMIN\\Desktop\\QS\\BrokerAppMvc\\BrokerApp\\BrokerApp\\BrokerApp.csproj": {
+    "C:\\Users\\PBCA\\Desktop\\BROKER-APP\\Broker-1\\BrokerApp\\BrokerApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\Desktop\\QS\\BrokerAppMvc\\BrokerApp\\BrokerApp\\BrokerApp.csproj",
+        "projectUniqueName": "C:\\Users\\PBCA\\Desktop\\BROKER-APP\\Broker-1\\BrokerApp\\BrokerApp.csproj",
         "projectName": "BrokerApp",
-        "projectPath": "C:\\Users\\ADMIN\\Desktop\\QS\\BrokerAppMvc\\BrokerApp\\BrokerApp\\BrokerApp.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ADMIN\\Desktop\\QS\\BrokerAppMvc\\BrokerApp\\BrokerApp\\obj\\",
+        "projectPath": "C:\\Users\\PBCA\\Desktop\\BROKER-APP\\Broker-1\\BrokerApp\\BrokerApp.csproj",
+        "packagesPath": "C:\\Users\\PBCA\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PBCA\\Desktop\\BROKER-APP\\Broker-1\\BrokerApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\PBCA\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,6 +40,26 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[6.0.2, )"
@@ -63,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
