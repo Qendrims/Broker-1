@@ -1637,3 +1637,6 @@ C:\Users\BM\Desktop\BrokerApp\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3
 C:\Users\BM\Desktop\BrokerApp\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Broker.dll
 C:\Users\BM\Desktop\BrokerApp\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Broker.pdb
 C:\Users\BM\Desktop\BrokerApp\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Broker.genruntimeconfig.cache
+C:\Users\HP\Desktop\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Razor\Views\Home\ContactUs.cshtml.g.cs
+C:\Users\HP\Desktop\Broker-1\dotnetwebApp\Broker\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Users\HP\Desktop\Broker-1\dotnetwebApp\Broker\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
