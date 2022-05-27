@@ -35,6 +35,10 @@
 #inner-posts{
     border: 1px solid black;
 }
+.title-div{
+    display: flex;
+    flex-direction: column;
+}
 #inner-posts h1{
     font-size: 20px;
     padding: 2% 2%;
