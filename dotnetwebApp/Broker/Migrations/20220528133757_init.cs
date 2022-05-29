@@ -13,7 +13,7 @@ namespace Broker.Migrations
                 {
                     CategoryId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(maxLength: 10, nullable: false)
+                    CategoryName = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,15 +26,15 @@ namespace Broker.Migrations
                 {
                     UserId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 20, nullable: false),
-                    LastName = table.Column<string>(maxLength: 30, nullable: false),
-                    Email = table.Column<string>(maxLength: 30, nullable: false),
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    LastName = table.Column<string>(maxLength: 300, nullable: false),
+                    Email = table.Column<string>(maxLength: 300, nullable: false),
                     Birthday = table.Column<DateTime>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    Telephone = table.Column<string>(maxLength: 20, nullable: false),
+                    Telephone = table.Column<string>(maxLength: 200, nullable: false),
                     Street = table.Column<string>(nullable: false),
-                    City = table.Column<string>(maxLength: 20, nullable: false),
-                    State = table.Column<string>(maxLength: 20, nullable: false),
+                    City = table.Column<string>(maxLength: 200, nullable: false),
+                    State = table.Column<string>(maxLength: 200, nullable: false),
                     ZipCode = table.Column<int>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -122,9 +122,9 @@ namespace Broker.Migrations
                     IsArchived = table.Column<bool>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     MeetingDate = table.Column<DateTime>(nullable: false),
-                    Street = table.Column<string>(maxLength: 50, nullable: false),
-                    City = table.Column<string>(maxLength: 20, nullable: false),
-                    State = table.Column<string>(maxLength: 20, nullable: false),
+                    Street = table.Column<string>(maxLength: 500, nullable: false),
+                    City = table.Column<string>(maxLength: 200, nullable: false),
+                    State = table.Column<string>(maxLength: 200, nullable: false),
                     ZipCode = table.Column<int>(nullable: false),
                     PostUserId = table.Column<int>(nullable: false),
                     TakenBy = table.Column<int>(nullable: true),
@@ -242,7 +242,7 @@ namespace Broker.Migrations
                 {
                     TagsId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TagName = table.Column<string>(maxLength: 10, nullable: true),
+                    TagName = table.Column<string>(maxLength: 100, nullable: true),
                     ForPost = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
