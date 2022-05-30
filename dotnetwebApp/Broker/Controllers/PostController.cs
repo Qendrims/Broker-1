@@ -1,7 +1,6 @@
 ﻿using Broker.ApplicationDB;
 using Broker.Models;
-using BrokerApp.Models;
-using BrokerApp.ViewModel;
+using Broker.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,10 +27,6 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult Detail(int? id)
         {
-            if (id == null)
-            {
-                RedirectToAction("DetailAll","Post");
-            }
             var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
 
             //Image img = this._Dbcontext.Images.Where(i => i.PostId == id).FirstOrDefault();
@@ -79,10 +74,10 @@ namespace BrokerApp.Controllers
                     await imageFile.CopyToAsync(stream);
                 }
 
-                Image image = new Image();
+                PostImage image = new PostImage();
                 image.ImageName = fullFileName;
                 image.Post = post;
-                image.ImageType = "jpg";
+                image.Type = "jpg";
                 this._Dbcontext.PostImages.Add(image);
             }
 

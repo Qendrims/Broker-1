@@ -33,8 +33,7 @@ namespace Broker.ApplicationDB
            .HasMaxLength(100);
 
             modelBuilder.Entity<Category>().Property(c => c.CategoryName)
-           .HasMaxLength(100)
-           .IsRequired();
+           .HasMaxLength(100);
 
             modelBuilder.Entity<User>().Property(u => u.Name)
             .HasMaxLength(200)
@@ -58,12 +57,10 @@ namespace Broker.ApplicationDB
 
 
             modelBuilder.Entity<User>().Property(u => u.City)
-            .HasMaxLength(200)
-            .IsRequired();
+            .HasMaxLength(200);
 
             modelBuilder.Entity<User>().Property(u => u.State)
-            .HasMaxLength(200)
-            .IsRequired();
+            .HasMaxLength(200);
 
             modelBuilder.Entity<Agent>().Property(a => a.AgentId)
             .IsRequired();
@@ -80,16 +77,13 @@ namespace Broker.ApplicationDB
             .IsRequired();
 
             modelBuilder.Entity<Post>().Property(p => p.Street)
-            .HasMaxLength(500)
-            .IsRequired();
+            .HasMaxLength(500);
 
             modelBuilder.Entity<Post>().Property(p => p.State)
-            .HasMaxLength(200)
-            .IsRequired();
+            .HasMaxLength(200);
 
             modelBuilder.Entity<Post>().Property(p => p.City)
-            .HasMaxLength(200)
-            .IsRequired();
+            .HasMaxLength(200);
 
             modelBuilder.Entity<Post>().Property(p => p.PostUserId)
             .IsRequired();

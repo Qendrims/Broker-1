@@ -24,6 +24,7 @@ namespace Broker.Models
         public string City { get; set; }
         public string State { get; set; }
         public int ZipCode { get; set; }
+
         public int? PostUserId { get; set; }
         [ForeignKey("PostUserId")]
         public User User { get; set; }
@@ -37,7 +38,7 @@ namespace Broker.Models
 
         public bool IsActive { get; set; } = true;
 
-        public virtual ICollection<Image> Images { get; set; }
+        public virtual ICollection<PostImage> Images { get; set; }
 
 
 

@@ -1,13 +1,12 @@
-﻿using BrokerApp.Models;
-
-namespace BrokerApp.ViewModel
+﻿using Broker.Models;
+namespace Broker.ViewModels
 {
     public class PostDetailViewModel
     {
         public int PostId { get; set; }
         public string Title { get; set; }
 
-        public Image Image { get; set; }
+        public PostImage Image { get; set; }
 
         public string Description { get; set; }
 
