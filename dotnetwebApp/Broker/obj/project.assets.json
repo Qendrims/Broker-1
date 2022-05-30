@@ -8786,19 +8786,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\PBCA\\.nuget\\packages\\": {}
+    "C:\\Users\\Mejreme Halilaj\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PBCA\\Desktop\\BROKER-APP\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
+      "projectUniqueName": "C:\\Users\\Mejreme Halilaj\\Desktop\\BROKER APP TETE\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
       "projectName": "Broker",
-      "projectPath": "C:\\Users\\PBCA\\Desktop\\BROKER-APP\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
-      "packagesPath": "C:\\Users\\PBCA\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PBCA\\Desktop\\BROKER-APP\\Broker-1\\dotnetwebApp\\Broker\\obj\\",
+      "projectPath": "C:\\Users\\Mejreme Halilaj\\Desktop\\BROKER APP TETE\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
+      "packagesPath": "C:\\Users\\Mejreme Halilaj\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Mejreme Halilaj\\Desktop\\BROKER APP TETE\\Broker-1\\dotnetwebApp\\Broker\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\PBCA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Mejreme Halilaj\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8881,7 +8881,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
       }
     }
   }

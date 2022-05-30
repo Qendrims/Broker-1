@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
 }
+/*
 body{
 
    
@@ -74,4 +75,58 @@ button:hover{
 }
 #sumbit-btn{
     cursor: not-allowed;
+}
+
+    */
+
+
+.container {
+    width: 40%;
+    display: flex;
+    margin: 5% auto;
+    flex-direction: column;
+    background-color: #9aafd6;
+    -webkit-box-shadow: 10px -9px 48px 22px rgba(214,214,240,1);
+    -moz-box-shadow: 10px -9px 48px 22px rgba(214,214,240,1);
+    box-shadow: 10px -9px 48px 22px rgba(214,214,240,1);
+}
+form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 5% auto;
+}
+h1{
+    font-size:24px;
+    text-align:center;
+    color:darkblue;
+}
+.labels {
+    margin-left: 15%;
+    margin-bottom: 2%;
+    margin-top: 2%;
+    color: white;
+    font-size: 20px;
+}
+.error {
+    margin-left: 15%;
+    margin-bottom: 2%;
+    color:darkred;
+    display:none;
+}
+input{
+    width:70%;
+    height:50px;
+    margin:auto;
+    border:none;
+}
+#sumbit-btn {
+    margin-bottom: 2%;
+    margin-top: 5%;
+    background-color: #f39f59;
+    color: #063970;
+    font-size: 22px;
+}
+#sumbit-btn:hover {
+    color: rgba(225,101,37,255);
 }
