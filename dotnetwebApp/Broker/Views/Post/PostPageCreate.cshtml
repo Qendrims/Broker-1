@@ -15,25 +15,36 @@
 
 <style type="text/css">
     #lat, #lon { text-align:right }
-.address { cursor:pointer }
+.address { cursor:pointer;}
+.address:not(:last-child){
+     border-bottom: 1px solid black
+}
 .address:hover { color:#AA0000;text-decoration:underline }
+
     #map{
         height: 400px;
         min-width: 60%;
         margin-left: 20px;
+        margin-top: 10px;
+    }
+    #addr{
+        width: 80% !important;
+    }
+    #addr:focus{
+     outline: none !important;
+    }
+    .btn{
+        margin: 5px !important;
     }
     .hidden{
         display: none;
-    }
-    .coord-input{
-        margin-left: 20px;
     }
      input{
          margin-bottom: 5px;
      }
     .wrapper {
+        margin-top: 10px;
         width: 100%;
-        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -49,7 +60,6 @@
         background-color: #5885AF;
         width: 45%;
         border-radius: 5%;
-        color: white;
     }
     .flex {
         display: flex;
@@ -69,6 +79,18 @@
             font-size: 15px;
             padding: 2% 2%;
         }
+        #search{
+            display: flex;
+            align-items: center;
+        }
+        #results{
+            background-color: #fff;
+            width: 80%;
+            margin-top: -8px;
+            border-radius: 5px;
+            padding-left: 5px;
+        }
+       
 </style>
 }
 
@@ -125,16 +147,41 @@
                     </div>
                 </div>
                 <br />
-                <input type="text" name="City" id="city" class="hidden"/>
-                <input type="text" name="Country" id="country" class="hidden"/>
-                <input type="text" name="Neighbourhood" id="neighbourhood" class="hidden"/>
-                <input type="text" name="Road" id="road" class="hidden"/>
-                <input type="text" name="State" id="state" class="hidden"/>
-                <input type="number" name="HouseNumber" id="housenumber" class="hidden"/>
-                <input type="number" name="ZipCode" id="zipcode" class="hidden"/>
+                <label>City</label>
+                <input type="text" name="City" id="city" class="form-control disabled" readonly/>
+                <input type="text" name="Country" id="country" class="form-control disabled" readonly/>
+                <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly/>
+                <input type="text" name="Road" id="road" class="form-control disabled" readonly/>
+                <input type="text" name="State" id="state" class="form-control disabled" readonly/>
+                <input type="number" name="HouseNumber" id="housenumber" class="form-control disabled" readonly/>
+                <input type="number" name="ZipCode" id="zipcode" class="form-control disabled" readonly/>
 
-                <input type="submit" class="btn btn-primary" value="Submit" />
+<div class="coord-input">
+
+<b>Coordinates</b>
+<input type="text" name="latitude" id="lat" size=12 class='form-control' value="">
+<input type="text" name="longitude" id="lon" size=12 class='form-control' value="">
+</div>
+ 
+
+<b>Search Address</b>
+<div id="search">
+<input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
+<button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
+</div>
+
+
+<div id="results"></div>
+
+
+<div style="display: flex;">
+<div id="map"></div>
+ <h3 style="text-align: center" id="currAddress"></h3>
+</div>
+
+<input type="submit" class="btn btn-primary" value="Submit" />
             </form>
+
         </div>
         <div class="second-div" id="post-preview">
             <!-- <h1>Post Preview</h1>
@@ -147,53 +194,33 @@
     </div>
 </section>
 
-<div class="coord-input">
-
-<b>Coordinates</b>
-<input type="text" name="latitude" id="lat" size=12 class='form-control' value="">
-<input type="text" name="longitude" id="lon" size=12 class='form-control' value="">
-</div>
 
 
-<form>
-<b>Search Address</b>
-<div id="search">
-<input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
-<button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
-</div>
-</form>
 
-<div id="results"></div>
-
-
-<div style="display: flex;">
-<div id="map"></div>
- <h3 style="text-align: center" id="currAddress"></h3>
-</div>
 
 
 @section Scripts{
     <script src="~/js/CreatePostMap.js"></script>
 <script>
 
-            var data=[];
-            let title = document.getElementById('exampleInputEmail1');
-            let file = document.getElementById('inputGroupFile01');
-            let description = document.getElementById('description');
-            var body = document.getElementById("post-preview");
-            let price= document.getElementById("price")
-            function postPreview(e){
-                e.preventDefault();
-                var text=`
-                <h1>Post Preview</h1>
-                 <div id="inner-posts">
-                    <h1>${title.value}</h1>
-                <p>${description.value}</p>
-                <p>${price.value}</p>
-            </div>`;
-                body.innerHTML +=text;
-}
-document.getElementById("myForm").addEventListener("submit",e=>postPreview(e));
+//            var data=[];
+//            let title = document.getElementById('exampleInputEmail1');
+//            let file = document.getElementById('inputGroupFile01');
+//            let description = document.getElementById('description');
+//            var body = document.getElementById("post-preview");
+//            let price= document.getElementById("price")
+//            function postPreview(e){
+//                e.preventDefault();
+//                var text=`
+//                <h1>Post Preview</h1>
+//                 <div id="inner-posts">
+//                    <h1>${title.value}</h1>
+//                <p>${description.value}</p>
+//                <p>${price.value}</p>
+//            </div>`;
+//                body.innerHTML +=text;
+//}
+//document.getElementById("myForm").addEventListener("submit",e=>postPreview(e));
 
 
 </script>

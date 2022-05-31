@@ -24,6 +24,38 @@ namespace BrokerApp.Controllers
             this._Dbcontext = _context;
             this._webHostEnvironment = _webHostEnvironment;
         }
+
+        public IActionResult PostPage(string category, string city, int pg = 1)
+        {
+
+            FilteredPostViewModel posts = new FilteredPostViewModel();
+            posts.FilteredCategories = _Dbcontext.Categories.ToList();
+            Category cat = new Category();
+            if (category != null)
+            {
+                cat = _Dbcontext.Categories.First(c => c.CategoryName == category);
+            }
+            var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
+                .Where(p => city == null || p.City.ToLower() == city.ToLower()).ToList();
+            posts.FilteredPosts = result;
+            posts.Category = category;
+            posts.City = city;
+
+            const int postPerPage = 2;
+            if (pg < 1)
+                pg = 1;
+
+            int postCount = posts.FilteredPosts.Count();
+            var pager = new Pagination(postCount, pg, postPerPage);
+
+            int postSkip = (pg - 1) * postPerPage;
+
+            posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
+            this.ViewBag.Pager = pager;
+
+            return View("PostPage", posts);
+        }
+
         [HttpGet]
         public IActionResult Detail(int? id)
         {
@@ -121,6 +153,24 @@ namespace BrokerApp.Controllers
             else
             {
                 var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(x=>x.Images).FirstOrDefault();
+                PostDetailViewModel postViewModel = new PostDetailViewModel();
+                postViewModel.Title = post.Title;
+                postViewModel.Description = post.Description;
+                postViewModel.Price = post.Price;
+                postViewModel.Image = post.Images.FirstOrDefault();
+                return View(postViewModel);
+
+            }
+        }
+        public IActionResult EditView(int? id)
+        {
+            if (id == 0)
+            {
+                return View(new Post());
+            }
+            else
+            {
+                var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(x => x.Images).FirstOrDefault();
                 PostDetailViewModel postViewModel = new PostDetailViewModel();
                 postViewModel.Title = post.Title;
                 postViewModel.Description = post.Description;

@@ -20,7 +20,7 @@ var myMarker = L.marker([startLat, startLong], { title: "Coordinates", alt: "Coo
 
     document.getElementById('lat').value = lat;
     document.getElementById('lon').value = lon;
-
+    latlongSearch(lat,lon)
 });
 
 
@@ -39,7 +39,7 @@ function chooseAddr(lat1, lng1, address) {
 
 //show search results
 function myFunction(arr) {
-    var out = "<br />";
+    var out = "";
     var i;
 
 
@@ -62,15 +62,14 @@ function myFunction(arr) {
 // search address based on latitude and longitude
 function latlongSearch(lat, long) {
     fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + lat + "&lon=" + long).then(res => res.json()).then(data => {
-
          document.getElementById('currAddress').textContent = data.display_name;
-        document.getElementById('city').value = data.address.city;
-       document.getElementById('country').value = data.address.country;
-         document.getElementById('neighbourhood').value = data.address.neighbourhood;
-           document.getElementById('road').value = data.address.road;
-          document.getElementById('state').value = data.address.state;
-         document.getElementById('housenumber').value = +data.address.house_number;
-          document.getElementById('zipcode').value = +data.address.postcode;
+        document.getElementById('city').value = data.address.city != null ? data.address.city : "";
+        document.getElementById('country').value = data.address.country != null ? data.address.country : "";
+        document.getElementById('neighbourhood').value = data.address.neighbourhood != null ? data.address.neighbourhood : "";
+        document.getElementById('road').value = data.address.road != null ? data.address.road : "";
+        document.getElementById('state').value = data.address.state != null ? data.address.state : "";
+        document.getElementById('housenumber').value = data.address.house_number != null ? +data.address.house_number : "";
+        document.getElementById('zipcode').value = data.address.postcode != null ? +data.address.postcode : "";
         
    });
 }
