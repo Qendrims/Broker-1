@@ -23,9 +23,8 @@
 
     #map{
         height: 400px;
-        min-width: 60%;
+        min-width: 70%;
         margin-left: 20px;
-        margin-top: 10px;
     }
     #addr{
         width: 80% !important;
@@ -48,6 +47,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background-image: url(../../wwwroot/Assets/Images/grid1.jpg);
     }
     .post-preview {
         width: 45%;
@@ -59,7 +59,7 @@
         align-items: center;
         background-color: #5885AF;
         width: 45%;
-        border-radius: 5%;
+        border-radius: 5px;
     }
     .flex {
         display: flex;
@@ -100,7 +100,7 @@
         <div class="row col-md-8 col-md-offset-2 div-text">
             <h1>Create post</h1>
 
-            <form id="myForm">
+            <form id="myForm" method="post" asp-controller="Post" asp-action="PostPageCreate">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Title</label>
                     <input type="text"
@@ -109,7 +109,7 @@
                            id="exampleInputEmail1"
                            aria-describedby="emailHelp"
                            placeholder="Enter title" /><br />
-                    <small id="emailHelp" class="form-text text-muted">Please fill your title.</small>
+                    @*<small id="emailHelp" class="form-text text-muted">Please fill your title.</small>*@
                 </div>
 
                 <div class="custom-file">
@@ -147,24 +147,9 @@
                     </div>
                 </div>
                 <br />
-                <label>City</label>
-                <input type="text" name="City" id="city" class="form-control disabled" readonly/>
-                <input type="text" name="Country" id="country" class="form-control disabled" readonly/>
-                <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly/>
-                <input type="text" name="Road" id="road" class="form-control disabled" readonly/>
-                <input type="text" name="State" id="state" class="form-control disabled" readonly/>
-                <input type="number" name="HouseNumber" id="housenumber" class="form-control disabled" readonly/>
-                <input type="number" name="ZipCode" id="zipcode" class="form-control disabled" readonly/>
 
-<div class="coord-input">
 
-<b>Coordinates</b>
-<input type="text" name="latitude" id="lat" size=12 class='form-control' value="">
-<input type="text" name="longitude" id="lon" size=12 class='form-control' value="">
-</div>
- 
-
-<b>Search Address</b>
+                <b>Search Address</b>
 <div id="search">
 <input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
 <button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
@@ -174,22 +159,38 @@
 <div id="results"></div>
 
 
-<div style="display: flex;">
+<div style="display: flex; flex-direction: column;">
+<p>Please mark the address on map</p>
 <div id="map"></div>
- <h3 style="text-align: center" id="currAddress"></h3>
+ <h4 style="text-align: center" id="currAddress"></h4>
 </div>
+
+<div class="coord-input">
+
+<b>Coordinates</b>
+<input type="text" name="Latitude" id="lat" size=12 class='form-control' value="" readonly>
+<input type="text" name="Longitude" id="lon" size=12 class='form-control' value="" readonly>
+</div>
+
+
+                <label>City</label>
+                <input type="text" name="City" id="city" class="form-control disabled" readonly/>
+                <label>Country</label>
+                <input type="text" name="Country" id="country" class="form-control disabled" readonly/>
+                <label>Neighbourhood</label>
+                <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly/>
+                <label>Road</label>
+                <input type="text" name="Road" id="road" class="form-control disabled" readonly/>
+                <label>State</label>
+                <input type="text" name="State" id="state" class="form-control disabled" readonly/>
+                <label>House Number</label>
+                <input type="number" name="HouseNumber" id="housenumber" class="form-control disabled" readonly/>
+                <label>Zip Code</label>
+                <input type="number" name="ZipCode" id="zipcode" class="form-control disabled" readonly/>
 
 <input type="submit" class="btn btn-primary" value="Submit" />
             </form>
 
-        </div>
-        <div class="second-div" id="post-preview">
-            <!-- <h1>Post Preview</h1>
-                <div id="inner-posts">
-                    <img src="../imgs/" alt="">
-                    <h1 class=""></h1>
-                    <p></p>
-                </div> -->
         </div>
     </div>
 </section>
