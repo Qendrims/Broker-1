@@ -21,10 +21,6 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult Detail(int? id)
         {
-            if (id == null)
-            {
-                RedirectToAction("DetailAll","Post");
-            }
             var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
 
             //Image img = this._Dbcontext.Images.Where(i => i.PostId == id).FirstOrDefault();

@@ -64,7 +64,7 @@ namespace BrokerApp.Controllers
             {
                 string fileName = postView.Title + "-" + DateTime.Now.ToString("MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + ".jpg";
                 string fullFileName = fileName.Replace(":", "-").Replace(" ", "");
-                string filePath = $"{folder}\\UploadFiles\\{fullFileName}";
+                string filePath = $"{folder}\\wwwroot\\UploadFiles\\{fullFileName}";
 
                 //string fileName = Path.GetFileName(postView.Image[0].FileName); 
                 //string webRootPath = _webHostEnvironment.WebRootPath+ "\\Uploads\\"+ fileName;
@@ -109,7 +109,7 @@ namespace BrokerApp.Controllers
             //this._Dbcontext.Posts.Add(newPost);
             //_Dbcontext.SaveChanges();
 
-            return RedirectToAction("DetailAll", "Post");
+            return RedirectToAction("Index","Home");
         }
 
 
@@ -139,8 +139,6 @@ namespace BrokerApp.Controllers
         {
             var post= this._Dbcontext.Posts.Where(x=>x.PostId == id).Include(e=>e.Images).FirstOrDefault();
 
-
-
             post.Title = ViewModel.Title;
             post.Description = ViewModel.Description;
             ViewModel.Image = post.Images.FirstOrDefault();
@@ -159,13 +157,13 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var postToDelete = this._Dbcontext.Posts.Where(x => x.PostId == id).FirstOrDefault();
+            var postToDelete = this._Dbcontext.Posts.Find(id);
+            var imageToDelete=this._Dbcontext.PostImages.Where(x=>x.PostId == id).FirstOrDefault();
+            this._Dbcontext.PostImages.Remove((PostImage)imageToDelete);
             this._Dbcontext.Posts.Remove(postToDelete);
             this._Dbcontext.SaveChanges();
-     
+
             return RedirectToAction("PostPageCreate");
         }
-
-
     }
 }

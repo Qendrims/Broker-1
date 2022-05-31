@@ -6,11 +6,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\UploadFiles\asdasfa-05-3011-15-20.831.jpg" />
+    <Content Remove="wwwroot\UploadFiles\Livadh-05-3110-07-21.367.jpg" />
+    <Content Remove="wwwroot\UploadFiles\sdasdgfsdfghasdf-05-3011-12-42.607.jpg" />
+    <Content Remove="wwwroot\UploadFiles\sdfsesdf-05-3011-10-51.791.jpg" />
+    <Content Remove="wwwroot\UploadFiles\ShitetBanesa-05-3109-47-06.842.jpg" />
+    <Content Remove="wwwroot\UploadFiles\shitettoka-05-3011-48-14.643.jpg" />
+    <Content Remove="wwwroot\UploadFiles\shitettoka-05-3011-50-13.269.jpg" />
+    <Content Remove="wwwroot\UploadFiles\shitettoka-05-3012-13-34.574.jpg" />
+    <Content Remove="wwwroot\UploadFiles\shtepia-05-3110-10-01.594.jpg" />
+    <Content Remove="wwwroot\UploadFiles\Trotineti-05-3011-02-51.866.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\Assets\Images\bg1.jpg" />
     <None Include="wwwroot\Assets\Images\grid1.jpg" />
     <None Include="wwwroot\Assets\Images\grid2.jpg" />
     <None Include="wwwroot\Assets\Images\grid3.jpg" />
     <None Include="wwwroot\Assets\Images\logo.jpg" />
+    <None Include="wwwroot\UploadFiles\asdasfa-05-3011-15-20.831.jpg" />
+    <None Include="wwwroot\UploadFiles\Livadh-05-3110-07-21.367.jpg" />
+    <None Include="wwwroot\UploadFiles\sdasdgfsdfghasdf-05-3011-12-42.607.jpg" />
+    <None Include="wwwroot\UploadFiles\sdfsesdf-05-3011-10-51.791.jpg" />
+    <None Include="wwwroot\UploadFiles\ShitetBanesa-05-3109-47-06.842.jpg" />
+    <None Include="wwwroot\UploadFiles\shitettoka-05-3011-48-14.643.jpg" />
+    <None Include="wwwroot\UploadFiles\shitettoka-05-3011-50-13.269.jpg" />
+    <None Include="wwwroot\UploadFiles\shitettoka-05-3012-13-34.574.jpg" />
+    <None Include="wwwroot\UploadFiles\shtepia-05-3110-10-01.594.jpg" />
+    <None Include="wwwroot\UploadFiles\Trotineti-05-3011-02-51.866.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,10 +54,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UploadFiles\" />
   </ItemGroup>
 
 </Project>
