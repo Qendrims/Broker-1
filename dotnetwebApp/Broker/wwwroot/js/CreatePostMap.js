@@ -7,8 +7,6 @@ var options = {
 }
 
 
-
-
 document.getElementById('lat').value = startLat;
 document.getElementById('lon').value = startLong;
 
@@ -25,6 +23,7 @@ var myMarker = L.marker([startLat, startLong], { title: "Coordinates", alt: "Coo
 
 });
 
+
 function chooseAddr(lat1, lng1, address) {
     console.log(address);
     map.setView([lat1, lng1], 14);
@@ -35,10 +34,10 @@ function chooseAddr(lat1, lng1, address) {
     document.getElementById('lon').value = lon;
     
     document.getElementById('results').innerHTML = "";
-    document.getElementById('currAddress').textContent = address;
-
+    latlongSearch(lat1,lng1)
 }
 
+//show search results
 function myFunction(arr) {
     var out = "<br />";
     var i;
@@ -60,13 +59,23 @@ function myFunction(arr) {
 
 
 
+// search address based on latitude and longitude
 function latlongSearch(lat, long) {
     fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + lat + "&lon=" + long).then(res => res.json()).then(data => {
 
-        document.getElementById('currAddress').textContent = data.display_name;
-    });
+         document.getElementById('currAddress').textContent = data.display_name;
+        document.getElementById('city').value = data.address.city;
+       document.getElementById('country').value = data.address.country;
+         document.getElementById('neighbourhood').value = data.address.neighbourhood;
+           document.getElementById('road').value = data.address.road;
+          document.getElementById('state').value = data.address.state;
+         document.getElementById('housenumber').value = +data.address.house_number;
+          document.getElementById('zipcode').value = +data.address.postcode;
+        
+   });
 }
 
+// click on map function
 map.on('click', e => {
     var lat = e.latlng.lat.toFixed(8);
     var long = e.latlng.lng.toFixed(8);
@@ -74,10 +83,12 @@ map.on('click', e => {
     myMarker.setLatLng([lat, long]);
     map.setView([lat, long], 14)
     latlongSearch(lat, long);
+
     document.getElementById('lat').value = lat;
     document.getElementById('lon').value = long;
 })
 
+// search address with text input
 function addr_search() {
     var inp = document.getElementById("addr");
     var xmlhttp = new XMLHttpRequest();
@@ -85,6 +96,7 @@ function addr_search() {
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var myArr = JSON.parse(this.responseText);
+           // console.log(myArr);
             myFunction(myArr);
         }
     };

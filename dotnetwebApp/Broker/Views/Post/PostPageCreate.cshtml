@@ -22,6 +22,9 @@
         min-width: 60%;
         margin-left: 20px;
     }
+    .hidden{
+        display: none;
+    }
     .coord-input{
         margin-left: 20px;
     }
@@ -122,6 +125,14 @@
                     </div>
                 </div>
                 <br />
+                <input type="text" name="City" id="city" class="hidden"/>
+                <input type="text" name="Country" id="country" class="hidden"/>
+                <input type="text" name="Neighbourhood" id="neighbourhood" class="hidden"/>
+                <input type="text" name="Road" id="road" class="hidden"/>
+                <input type="text" name="State" id="state" class="hidden"/>
+                <input type="number" name="HouseNumber" id="housenumber" class="hidden"/>
+                <input type="number" name="ZipCode" id="zipcode" class="hidden"/>
+
                 <input type="submit" class="btn btn-primary" value="Submit" />
             </form>
         </div>
@@ -139,20 +150,21 @@
 <div class="coord-input">
 
 <b>Coordinates</b>
+<input type="text" name="latitude" id="lat" size=12 class='form-control' value="">
+<input type="text" name="longitude" id="lon" size=12 class='form-control' value="">
+</div>
+
+
 <form>
-<input type="text" name="lat" id="lat" size=12 class='form-control' value="">
-<input type="text" name="lon" id="lon" size=12 class='form-control' value="">
-
-
 <b>Search Address</b>
 <div id="search">
 <input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
 <button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
+</div>
 </form>
-<div id="results"></div>
-</div>
 
-</div>
+<div id="results"></div>
+
 
 <div style="display: flex;">
 <div id="map"></div>
