@@ -1,0 +1,68 @@
+﻿@model BrokerApp.ViewModel.PostDetailViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<section>
+    <div class="wrapper">
+        <div class="row col-md-8 col-md-offset-2 div-text">
+            <h1>Create post</h1>
+
+            <form method="post" enctype="multipart/form-data" asp-controller="Post" asp-action="Edit" id="myForm">
+                <input name='ownerId' value='2' hidden /><input name='ownerId' value='2' hidden />
+                <input value='@Model.PostId' name='PostId' hidden />
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Title</label>
+                    <input type="text"
+                           name="title"
+                           class="form-control together"
+                           id="exampleInputEmail1"
+                           aria-describedby="emailHelp"
+                           value="@Model.Title" /><br />
+                    <small id="emailHelp" class="form-text text-muted">Please fill your title.</small>
+                </div>
+
+                <div class="custom-file">
+                    <input type="file"
+                           name="image"
+                           multiple
+                           class="custom-file-input together"
+                           id="inputGroupFile01"
+                           aria-describedby="inputGroupFileAddon01" />
+                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                </div>
+                <br />
+                <div class="input-group">
+                    <textarea class="form-control together"
+                              name="description"
+                              aria-label="With textarea"
+                              id="description"
+                              >@Model.Description</textarea>
+                </div>
+                <br />
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Categories</option>
+                    <option value="1">House</option>
+                    <option value="2">Apartment</option>
+                    <option value="3">Office</option>
+                </select>
+                <br />
+                <div class="input-group together">
+                    <input type="text"
+                            value="@Model.Price"
+                            name="price"
+                           class="form-control"
+                           id="price"
+                           aria-label="Dollar amount (with dot and two decimal places)" />
+                    <div class="input-group-append flex">
+                        <span class="input-group-text">$</span>
+                        <span class="input-group-text">0.00</span>
+                    </div>
+                </div>
+                <br />
+                <input type="submit" class="btn btn-primary" value="Update" />
+
+            </form>
+

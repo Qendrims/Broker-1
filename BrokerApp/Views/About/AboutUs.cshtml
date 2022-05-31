@@ -1,0 +1,97 @@
+﻿
+@section Styles{
+    
+    <link rel="stylesheet" href="~/css/AboutUs.css" asp-append-version="true" />
+
+     
+}
+
+
+
+
+
+<section>
+     <div class="Container">
+
+        <div class="FirstSectionContainer">
+            <div class="Text-LeftSide-FirstSection">
+                <h1>Properties<br> Buy & Sell <br>In Your Town</h1>
+                <p class="Contact">CONTACT US</p>
+                <p class="Tekst">Real estate is property consisting of land and the <br> buildings on it, along with its
+                    natural resources</p>
+            </div>
+            <div class="Fotot-RightSide-FirstSection">
+                <img class="foto" src="~/img/AboutUs/Photo1.jpeg">
+                <img class="foto" src="~/img/AboutUs/Photo5.jpg">
+                <img class="foto" src="~/img/AboutUs/Photo6.jpg">
+            </div>
+
+        </div>
+
+        <div class="SecondSectionContainer">
+            <div class="LeftSide-SecondSection">
+                <h1 class="Titulli">Residences can be classified by and how<br> they are connected to neighbouring.</h1>
+
+                <h1 class="Tutulli1">Residences can be classified by and how they are connected to neighbouring.</h1>
+                <img class="Img2" src="~/img/AboutUs/Photo3.jpg">
+            </div>
+            <div class="RightSide-SecondSection">
+                <img class="Img3" src="~/img/AboutUs/Photo1.jpeg">
+                <div class="BodyText-RightSide-SecondContainer">
+                    <p>The size of an apartment or house can be described in square feet or meters.</p>
+                    <br>
+                    <p>This includes the area of "living space", excluding the garage and other.</p>
+                    <br>
+                    <p>It can be described more roughly by the number of rooms</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="ThirdSectionContainer">
+            <div class="BodyText-ThirdSection">
+                <h1>Our Working Process </h1>
+                <p class="Tekst-ThirdSection">In markets where land and buildings are rising, real estate is often
+                    purchased, <br> as an investment,
+                    whether or not the owner intends to use the property</p>
+            </div>
+            <div class="Video-ThirdSection">
+                <video class="video" autoplay="true" muted>
+                    <source src="~/img/AboutUs/Video1.mp4"  type="video/mp4">
+                </video>
+            </div>
+
+
+
+        </div>
+        <div class="FourthSection">
+            <ul>
+                <li>743+ <br> Appartmant Sale</li>
+                <li>345+
+                    <br>Completed Project
+                </li>
+                <li>100+ <br>
+                    Happy Clients</li>
+            </ul>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script>
+        var index = 0;
+var foto = document.getElementsByClassName("foto");
+
+function slideshow() {
+  for (i = 0; i < foto.length; i++) {
+    foto[i].style.display = "none";
+  }
+  index++;
+  if (index > foto.length) {
+    index = 1;
+  }
+  foto[index - 1].style.display = "block";
+  setTimeout(slideshow, 2000);
+}
+window.onload = slideshow;
+    </script>
+}

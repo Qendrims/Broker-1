@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Broker.Models
@@ -21,5 +22,6 @@ namespace Broker.Models
         public bool IsActive { get; set; } = true;
 
         public bool IsDeleted { get; set; } = false;
+        public ICollection<Post> Posts { get; set; }
     }
 }
