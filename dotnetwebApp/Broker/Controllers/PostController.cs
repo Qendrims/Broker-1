@@ -78,11 +78,11 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult PostPageCreate()
         {
-            List<Category> categories = this._Dbcontext.Categories.ToList();
-            return View(categories);
-        }
+           // List<Category> categories = this._Dbcontext.Categories.ToList();
+            return View();
+        } 
         [HttpPost]
-        public async Task<IActionResult> PostPageCreate(IFormFile file, PostViewModel postView)
+        public async Task<IActionResult> PostPageCreate(PostViewModel postView)
         {
 
             string folder = Environment.CurrentDirectory;
@@ -100,7 +100,7 @@ namespace BrokerApp.Controllers
             {
                 string fileName = postView.Title + "-" + DateTime.Now.ToString("MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + ".jpg";
                 string fullFileName = fileName.Replace(":", "-").Replace(" ", "");
-                string filePath = $"{folder}\\UploadFiles\\{fullFileName}";
+                string filePath = $"{folder}\\wwwroot\\UploadFiles\\{fullFileName}";
 
                 //string fileName = Path.GetFileName(postView.Image[0].FileName); 
                 //string webRootPath = _webHostEnvironment.WebRootPath+ "\\Uploads\\"+ fileName;
