@@ -92,8 +92,11 @@ namespace BrokerApp.Controllers
             post.Description = postView.Description;
             post.PostUserId = postView.OwnerId;
             post.City = postView.City;
+            post.State = postView.State;
+            post.Street = postView.Street;
             post.Latitude = postView.Latitude;
             post.Longitude = postView.Longitude;
+            post.ZipCode = postView.ZipCode;
 
             this._Dbcontext.Posts.Add(post);
             foreach (var imageFile in postView.Image)

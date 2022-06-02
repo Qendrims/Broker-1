@@ -230,7 +230,7 @@
                 <label>Neighbourhood</label>
                 <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly />
                 <label>Road</label>
-                <input type="text" name="Road" id="road" class="form-control disabled" readonly />
+                <input type="text" name="Street" id="road" class="form-control disabled" readonly />
                 <label>State</label>
                 <input type="text" name="State" id="state" class="form-control disabled" readonly />
                 <label>House Number</label>
@@ -282,20 +282,28 @@
           }
 
 
-          $.ajax({
-              type: "post",
-              url: "/Post/PostPageCreate",
-              method:"post",
-              data: form,
-              dataType: "json",
-              contentType: "multipart/form-data; charset=utf-8",
-              processData: false,
-              success: function(response){
-                  //if request if made successfully then the response represent the data
-                  console.log('u perfundua me sukses')
-                  $( "#result" ).empty().append( response );
-              }
-    });
+           var req = new XMLHttpRequest();
+  req.open("POST", "/Post/PostPageCreate", true);
+  req.onload = function(oEvent) {
+ console.log(req);
+  };
+
+  req.send(form);
+
+    //      $.ajax({
+    //          type: "post",
+    //          url: "/Post/PostPageCreate",
+    //          method:"post",
+    //          data: form,
+    //          dataType: "json",
+    //          contentType: "multipart/form-data; charset=utf-8",
+    //          processData: false,
+    //          success: function(response){
+    //              //if request if made successfully then the response represent the data
+    //              console.log('u perfundua me sukses')
+    //              $( "#result" ).empty().append( response );
+    //          }
+    //});
           
           return false;
       }
