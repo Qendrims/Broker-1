@@ -2062,5 +2062,5 @@ C:\Users\ADMIN\Desktop\QS\BrokerApp\Broker-1\dotnetwebApp\Broker\obj\Debug\netco
 C:\Users\ADMIN\Desktop\QS\BrokerApp\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Broker.genruntimeconfig.cache
 C:\Users\ADMIN\Desktop\QS\BrokerApp\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Razor\Views\Post\PostPageCreate.cshtml.g.cs
 C:\Users\ADMIN\Desktop\QS\BrokerApp\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Razor\Views\Post\Detail.cshtml.g.cs
-C:\Users\ADMIN\Desktop\QS\BrokerApp\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Broker.csproj.AssemblyReference.cache
 C:\Users\ADMIN\Desktop\QS\BrokerApp\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Razor\Views\Post\Edit.cshtml.g.cs
+C:\Users\ADMIN\Desktop\QS\BrokerApp\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Broker.csproj.AssemblyReference.cache

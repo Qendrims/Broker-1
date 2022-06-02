@@ -34,7 +34,7 @@
                 @Model.Description
             </td>
             <td>
-                <img src="~/UploadFiles/@Model.Image.ImageName" class="" height="80px" width="80px" />
+                <img src="~/UploadFiles/@Model.Image.FirstOrDefault().ImageName" class="" height="80px" width="80px" />
             </td>
             <td>
                 @Model.Price
