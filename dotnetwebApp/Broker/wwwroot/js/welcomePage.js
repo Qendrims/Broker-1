@@ -127,6 +127,7 @@ navHeader.innerHTML +=
     <li><a class="dropdown-item" href="/Post/Postpagecreate">Create Post</a></li>
     <li><a class="dropdown-item" href="/Post/MyPosts">My posts</a></li>
     <li><a class="dropdown-item" href="/Home/Postpage">All posts</a></li>
+    <li><a class="dropdown-item" href="/Post/ArchivedPosts">Archived posts</a></li>
     <li><hr class="dropdown-divider"></li>
     <li id="LogOut"><a class="dropdown-item" href="#">Log Out</a></li>
   </ul>

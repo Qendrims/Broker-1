@@ -2485,3 +2485,6 @@ C:\Users\Mejreme Halilaj\Desktop\BROKER APP TETE\Broker-1\dotnetwebApp\Broker\ob
 C:\Users\Mejreme Halilaj\Desktop\BROKER APP TETE\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Broker.pdb
 C:\Users\Mejreme Halilaj\Desktop\BROKER APP TETE\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Broker.genruntimeconfig.cache
 C:\Users\Mejreme Halilaj\Desktop\BROKER APP TETE\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Razor\Views\Post\MyPosts.cshtml.g.cs
+C:\Users\PBCA\Desktop\BROKER-APP\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Razor\Views\Home\Register.cshtml.g.cs
+C:\Users\PBCA\Desktop\BROKER-APP\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Razor\Views\Post\MyPosts.cshtml.g.cs
+C:\Users\PBCA\Desktop\BROKER-APP\Broker-1\dotnetwebApp\Broker\obj\Debug\netcoreapp3.1\Razor\Views\Post\ArchivedPosts.cshtml.g.cs
