@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "PostPageCreate";
 }
+@model List<Category>;
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
       integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
@@ -178,12 +179,19 @@
                               placeholder="description"></textarea>
                 </div>
                 <br />
-                <select class="form-select" aria-label="Default select example">
+              @*  <select class="form-select" aria-label="Default select example">
                     <option selected>Categories</option>
                     <option value="1">House</option>
                     <option value="2">Apartment</option>
                     <option value="3">Office</option>
-                </select>
+                </select>*@
+
+                <label>Choose Categories</label>
+                <br />
+                @foreach(var cat in @Model)
+                {
+                    <input name="CategoryId" type="checkbox" value="@cat.CategoryId" /> @cat.CategoryName
+                }
                 <br />
                 <div class="input-group together">
                     <input type="text"
@@ -275,10 +283,26 @@
           var els=document.querySelectorAll('input, textarea');
 
           for(var el of els){
-           if(el.type == "submit" || el.name == "Image"){
+           if(el.type == "submit" || el.name == "Image" || el.id == "addr"){
                continue;
            }
+
+           if(el.name == "CategoryId"){
+               if(el.checked)
+                form.append(el.name,el.value);
+                else if(!el.checked)
+                continue;
+           } else {
                form.append(el.name,el.value);
+           }
+
+           //if(el.name == "CategoryId" && el.checked){
+           //    form.append(el.name,el.value);
+           //}else if(el.name == "CategoryId" && !el.checked){
+           //    continue;
+           //}
+
+           //    form.append(el.name,el.value);
           }
 
 
@@ -338,20 +362,7 @@
                   if(!fileAlreadyUploaded){
                   allFilesList.push(i)
                   }
-                  //let reader = new FileReader();
-                  //let figure = document.createElement("figure");
-                  //let figCap = document.createElement("figcaption");
-
-                  //figCap.innerText = i.name;
-                  //figure.appendChild(figCap);
-                  //reader.onload=()=>{
-                  //    let img = document.createElement("img");
-
-                  //    img.setAttribute("src",reader.result);
-                  //    figure.insertBefore(img,figCap);
-                  //}
-                  //imgContainer.appendChild(figure);
-                  //reader.readAsDataURL(i);
+ 
               }
 
               numOfFiles.textContent = `${allFilesList.length} Files Selected`;
@@ -359,10 +370,7 @@
               for(i of fileList){
                    let reader = new FileReader();
                   let figure = document.createElement("figure");
-                  //let figCap = document.createElement("figcaption");
 
-                 // figCap.innerText = i.name;
-                 // figure.appendChild(figCap);
                   reader.onload=()=>{
 
                       let img = document.createElement("img");
@@ -376,25 +384,5 @@
 
           }
 
-
-
-      //            var data=[];
-      //            let title = document.getElementById('exampleInputEmail1');
-      //            let file = document.getElementById('inputGroupFile01');
-      //            let description = document.getElementById('description');
-      //            var body = document.getElementById("post-preview");
-      //            let price= document.getElementById("price")
-      //            function postPreview(e){
-      //                e.preventDefault();
-      //                var text=`
-      //                <h1>Post Preview</h1>
-      //                 <div id="inner-posts">
-      //                    <h1>${title.value}</h1>
-      //                <p>${description.value}</p>
-      //                <p>${price.value}</p>
-      //            </div>`;
-      //                body.innerHTML +=text;
-      //}
-      //document.getElementById("myForm").addEventListener("submit",e=>postPreview(e));
 </script>
 }

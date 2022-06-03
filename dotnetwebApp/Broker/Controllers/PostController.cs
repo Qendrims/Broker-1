@@ -78,8 +78,8 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult PostPageCreate()
         {
-           // List<Category> categories = this._Dbcontext.Categories.ToList();
-            return View();
+            List<Category> categories = this._Dbcontext.Categories.ToList();
+            return View(categories);
         } 
         [HttpPost]
         public async Task<IActionResult> PostPageCreate(PostViewModel postView)
@@ -96,6 +96,7 @@ namespace BrokerApp.Controllers
             post.Street = postView.Street;
             post.Latitude = postView.Latitude;
             post.Longitude = postView.Longitude;
+            post.PostUserId = postView.OwnerId;
             post.ZipCode = postView.ZipCode;
 
             this._Dbcontext.Posts.Add(post);
@@ -120,25 +121,32 @@ namespace BrokerApp.Controllers
                 this._Dbcontext.PostImages.Add(image);
             }
 
+            foreach(var catId in postView.CategoryId)
+            {
+                PostCategory postCategory = new PostCategory();
+                postCategory.CategoryId = catId;
+                postCategory.Post = post;
+            }
+
             await _Dbcontext.SaveChangesAsync();
 
             //File newimage = new File(postView.Title+ "- 1");
-            if (postView.Title == "")
-            {
-                return NotFound();
-            }
-            if (postView.Image == null)
-            {
-                return NotFound();
-            }
-            if (postView.Description == "")
-            {
-                return NotFound();
-            }
-            if (postView.Price <= 0)
-            {
-                return NotFound();
-            }
+            //if (postView.Title == "")
+            //{
+            //    return NotFound();
+            //}
+            //if (postView.Image == null)
+            //{
+            //    return NotFound();
+            //}
+            //if (postView.Description == "")
+            //{
+            //    return NotFound();
+            //}
+            //if (postView.Price <= 0)
+            //{
+            //    return NotFound();
+            //}
 
             //Post newPost = new Post();
             //post.Title = postView.Title;
@@ -148,7 +156,7 @@ namespace BrokerApp.Controllers
             //this._Dbcontext.Posts.Add(newPost);
             //_Dbcontext.SaveChanges();
 
-            return RedirectToAction("DetailAll", "Post");
+            return RedirectToAction("Home", "Index");
         }
 
         public IActionResult Edit(int? id)

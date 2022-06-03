@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Broker.Models;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 
 namespace Broker.ViewModels
@@ -12,13 +13,14 @@ namespace Broker.ViewModels
         public string Description { get; set; }
 
         public double Price { get; set; }
-        public int OwnerId { get; set; }
+        public int OwnerId { get; set; } = 2;
         public string City { get; set; }
         public string State { get; set; }
         public string Street { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public int ZipCode { get; set; }
+        public List<int> CategoryId { get; set; }
     }
     
 }
