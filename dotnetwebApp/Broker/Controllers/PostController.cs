@@ -78,8 +78,10 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult PostPageCreate()
         {
-            List<Category> categories = this._Dbcontext.Categories.ToList();
-            return View(categories);
+            CreatePostViewModel createPostView = new CreatePostViewModel();
+            createPostView.categories = this._Dbcontext.Categories.ToList();
+            createPostView.agents = this._Dbcontext.Agents.ToList();
+            return View(createPostView);
         } 
         [HttpPost]
         public async Task<IActionResult> PostPageCreate(PostViewModel postView)
@@ -98,6 +100,7 @@ namespace BrokerApp.Controllers
             post.Longitude = postView.Longitude;
             post.PostUserId = postView.OwnerId;
             post.ZipCode = postView.ZipCode;
+           
 
             this._Dbcontext.Posts.Add(post);
             foreach (var imageFile in postView.Image)
@@ -126,6 +129,14 @@ namespace BrokerApp.Controllers
                 PostCategory postCategory = new PostCategory();
                 postCategory.CategoryId = catId;
                 postCategory.Post = post;
+            } 
+
+            foreach(var agent in postView.AgentsInvited)
+            {
+                Invite inv = new Invite();
+                inv.Post = post;
+                inv.SentBy = post.PostUserId;
+                inv.SentTo = agent;
             }
 
             await _Dbcontext.SaveChangesAsync();

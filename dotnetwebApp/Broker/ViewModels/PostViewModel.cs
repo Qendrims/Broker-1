@@ -21,6 +21,7 @@ namespace Broker.ViewModels
         public double Longitude { get; set; }
         public int ZipCode { get; set; }
         public List<int> CategoryId { get; set; }
+        public List<int> AgentsInvited{ get; set; }
     }
     
 }
