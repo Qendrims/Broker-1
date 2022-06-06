@@ -1,0 +1,280 @@
+﻿@using Broker.ViewModels
+@using Broker.Models
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model FilteredPostViewModel;
+@{
+    Pagination pager = new Pagination();
+   
+    if(ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+    }
+}
+
+<link href="@Url.Content("~/css/UserPostPage.css")" rel="stylesheet" type="text/css" />
+
+
+
+<div class="container">
+
+    <div class="search-products">
+        <form class="search-form" method='get' asp-action="PostPage">
+          
+
+            <select id="select-category" name='category'>
+               <option value="">Select Category</option>
+                @foreach(var cat in Model.FilteredCategories)
+                {
+       <option selected="@(Model.Category == @cat.CategoryName)" value="@cat.CategoryName">@cat.CategoryName</option>             
+                }
+            </select>
+
+            
+            <select id="select-city" name='city'>
+                <option value="">Select City</option>
+                <option value="Prishtine">Prishtine</option>
+                <option value="Gjilan">Gjilan</option>
+                <option value="Ferizaj">Ferizaj</option>
+                }
+            </select>
+             <input id="btn-submit" type='submit' value='Search' />
+        </form>
+        
+
+    </div>
+    <a href="/Archive/Index" class="btn btn-primary">Archived Posts</a>
+
+    <div id="products-container" class="products-container">
+        @foreach (var post in @Model.FilteredPosts)
+        {
+            @if(post.IsArchived==false){
+            int index = @Model.FilteredPosts.IndexOf(post) + 1;
+            <div class="product" data-name="p-@index">
+                
+                <img src="~/Assets/Images/grid1.jpg" alt="">
+                <h3>@post.Title</h3>
+                <div class="price">$110,000</div>
+                <a href="~/post/ArchivePost/@post.PostId" class="btn btn-primary">Archive</a>
+            
+                
+                </div>
+            }
+
+        }
+
+
+        @* <div class="product" data-name="p-1">
+            <img src="~/Assets/ImagePostPage/house1.jpg" alt="">
+            <h3>House 1</h3>
+            <div class="price">$110,000</div>
+            </div>
+
+            <div class="product" data-name="p-2">
+            <img src="~/Assets/ImagePostPage/house2.jpg" alt="">
+            <h3>House 2</h3>
+            <div class="price">$80,000</div>
+            </div>
+
+            <div class="product" data-name="p-3">
+            <img src="~/Assets/ImagePostPage/house3.jpg" alt="">
+            <h3>House 3</h3>
+            <div class="price">$100,000</div>
+            </div>
+
+            <div class="product" data-name="p-4">
+            <img src="~/Assets/ImagePostPage/house4.jpg" alt="">
+            <h3>House 4</h3>
+            <div class="price">$90,000</div>
+            </div>
+
+            <div class="product" data-name="p-5">
+            <img src="~/Assets/ImagePostPage/house5.jpg" alt="">
+            <h3>House 5</h3>
+            <div class="price">$200,000</div>
+            </div>
+
+            <div class="product" data-name="p-6">
+            <img src="~/Assets/ImagePostPage/house6.jpg" alt="">
+            <h3>House 6</h3>
+            <div class="price">$150,000</div>
+            </div>*@
+
+    </div>
+
+</div>
+
+@*<div class="products-preview">*@
+
+    @*<div class="preview" data-target="p-1">
+        <i class="fas fa-times"></i>
+        <img src="~/Assets/ImagePostPage/house1.jpg" alt="">
+        <h3>House 1</h3>
+        <div class="stars">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star-half-alt"></i>
+        <span>( 250 )</span>
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
+        <h3>Alban Selmanaj</h3>
+        <div class="price">$110,000</div>
+        <div class="buttons">
+        <a href="#" class="buy">contact agent</a>
+        <a href="#" class="cart">schedule tour</a>
+        </div>
+        </div>
+
+        <div class="preview" data-target="p-2">
+        <i class="fas fa-times"></i>
+        <img src="~/Assets/ImagePostPage/house2.jpg" alt="">
+        <h3>House 2</h3>
+        <div class="stars">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star-half-alt"></i>
+        <span>( 250 )</span>
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
+        <h3>Adhurim Krasniqi</h3>
+        <div class="price">$80,000</div>
+        <div class="buttons">
+        <a href="#" class="buy">contact agent</a>
+        <a href="#" class="cart">schedule tour</a>
+        </div>
+        </div>
+
+        <div class="preview" data-target="p-3">
+        <i class="fas fa-times"></i>
+        <img src="~/Assets/ImagePostPage/house3.jpg" alt="">
+        <h3>House 3</h3>
+        <div class="stars">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star-half-alt"></i>
+        <span>( 250 )</span>
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
+        <h3>Lir Ballata</h3>
+        <div class="price">$100,000</div>
+        <div class="buttons">
+        <a href="#" class="buy">contact agent</a>
+        <a href="#" class="cart">schedule tour</a>
+        </div>
+        </div>
+
+        <div class="preview" data-target="p-4">
+        <i class="fas fa-times"></i>
+        <img src="~/Assets/ImagePostPage/house4.jpg" alt="">
+        <h3>House 4</h3>
+        <div class="stars">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star-half-alt"></i>
+        <span>( 250 )</span>
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
+        <h3>Qendrim Sadrija</h3>
+        <div class="price">$90,000</div>
+        <div class="buttons">
+        <a href="#" class="buy">contact agent</a>
+        <a href="#" class="cart">schedule tour</a>
+        </div>
+        </div>
+
+        <div class="preview" data-target="p-5">
+        <i class="fas fa-times"></i>
+        <img src="~/Assets/ImagePostPage/house5.jpg" alt="">
+        <h3>House 5</h3>
+        <div class="stars">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star-half-alt"></i>
+        <span>( 250 )</span>
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
+        <h3>Bleona Curri</h3>
+        <div class="price">$200,000</div>
+        <div class="buttons">
+        <a href="#" class="buy">contact agent</a>
+        <a href="#" class="cart">schedule tour</a>
+        </div>
+        </div>
+
+        <div class="preview" data-target="p-6">
+        <i class="fas fa-times"></i>
+        <img src="~/Assets/ImagePostPage/house6.jpg" alt="">
+        <h3>House 6</h3>
+        <div class="stars">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star-half-alt"></i>
+        <span>( 250 )</span>
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
+        <h3>Ibrahim Ejupi</h3>
+        <div class="price">$150,000</div>
+        <div class="buttons">
+        <a href="#" class="buy">contact agent</a>
+        <a href="#" class="cart">schedule tour</a>
+        </div>
+        </div>*@
+
+@*</div>*@
+
+<div class="container">
+
+
+    @if(pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-center"> 
+
+     @if(pager.CurrentPage > 1)
+    {
+        <li class="page-item ">
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-pg="1">First</a>
+                </li>
+                <li class="page-item ">
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-pg="@(pager.CurrentPage - 1)">Previous</a>
+                </li>
+    }
+
+            @for (var page = pager.StartPage; page <= pager.EndPage; page++)
+            {
+                <li class="page-item @(page == pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-pg="@(page)">@(page)</a>
+                </li>
+            }
+
+                @if(pager.CurrentPage < pager.TotalPages)
+    {
+        <li class="page-item ">
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-pg="@(pager.CurrentPage + 1)">Next</a>
+                </li>
+                <li class="page-item ">
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-pg="@(pager.TotalPages)">Last</a>
+                </li>
+    }
+
+        </ul>
+    }
+
+
+</div>
+
+
+<script src="@Url.Content("~/js/UserPostPage.js")"></script>

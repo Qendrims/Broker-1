@@ -3,11 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Broker.Models
 {
-    public class PostCategory
+    public class PostImage
     {
-        public int? CategoryId { get; set; }
-        [ForeignKey("CategoryId")]
-        public Category Category { get; set; }
+        [Key]
+        public int PostImageId { get; set; }
+        public string ImageName { get; set; }
+        public long Size { get; set; }
+        public string Type { get; set; }
         public int? PostId { get; set; }
         [ForeignKey("PostId")]
         public Post Post { get; set; }

@@ -1,17 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Broker.Models
 {
-    public class Feedback
+    public class FeedBack
     {
-        public string PermbajtjaFeedBackut { get; set; }
-        public int? UserId { get; set; }
-        [ForeignKey("UserId")]
-        public User user { get; set; }
+        [Key]
+        public int FeedbackId { get; set; }
+        public string Comment { get; set; }
+        public DateTime CreatedAt { get; } = DateTime.Now;
+        public DateTime UpdatedAt { get; set; }
+        public int? SentBy { get; set; }
+        [ForeignKey("SentBy")]
+        public User User { get; set; }
+        public int? SentTo { get; set; }
+        [ForeignKey("SentTo")]
+        public Agent Agent { get; set; }
+
+        
 
     }
 }
