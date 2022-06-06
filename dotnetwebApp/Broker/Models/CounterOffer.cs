@@ -1,7 +1,7 @@
-﻿namespace BrokerApp.Models
+﻿namespace Broker.Models
 {
     public class CounterOffer
     {
-        public int Id { get; set; } 
+
     }
 }
