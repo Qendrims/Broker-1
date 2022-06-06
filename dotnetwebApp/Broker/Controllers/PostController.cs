@@ -67,5 +67,19 @@ namespace Broker.Controllers
 
             return View("PostPage", posts);
         }
+
+        public IActionResult PostPageCreate()
+        {
+
+            return View();
+        }
+
+        public IActionResult DeleteAgent(int? id)
+        {
+            var agent = _db.Agents.Find(id);
+            _db.Agents.Remove(agent);
+            _db.SaveChanges();
+            return View();
+        }
     }
 }

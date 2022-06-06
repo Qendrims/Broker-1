@@ -29,7 +29,7 @@ namespace Broker.ApplicationDB
                 .HasValue<Agent>("Agent")
                 .HasValue<SimpleUser>("SimpleUser");
 
-           
+                
 
                  
 
@@ -79,12 +79,7 @@ namespace Broker.ApplicationDB
 
                 modelBuilder.Entity<Agent>().Property(a => a.AgentId)
                 .IsRequired();
-
-
-                modelBuilder.Entity<Agent>().Property(a => a.AccountNr)
-                .IsRequired();
-
-                
+        
 
                 modelBuilder.Entity<Post>().Property(p => p.Title)
                 .HasMaxLength(100)
@@ -116,6 +111,8 @@ namespace Broker.ApplicationDB
 
                 modelBuilder.Entity<PostImage>().Property(pi => pi.ImageName)
                 .IsRequired();
+
+               
         }
     
     }

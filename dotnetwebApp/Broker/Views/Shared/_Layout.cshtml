@@ -9,23 +9,33 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/views/welcomePage.css"/>
     <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-   
+    @RenderSection("Styles",required: false);
 
 </head>
 <body>
     <header>
-        <div class="homepage-header" id="homepageHeader">
-       <ul class="nav-list" id="list1">
-           <li id="Home"><a href="#">Home</a></li>
-           <li id="About"><a href="#">About</a></li>
-           <li id="Contact"><a href="#">Contact</a></li>
-           <!-- shtohet login ose largohet -->
-       </ul>
-       <img src="~/Assets/Images/logo.jpg" alt="logo">
+            <div class="homepage-header" id="homepageHeader">
+               <ul class="nav-list" id="list1">
+                   <li id="Home"><a href="/Home/Index">Home</a></li>
+                   <li id="AboutUs"><a href="/Home/AboutUs">AboutUs</a></li>
+                   <li id="Contact"><a href="/Home/ContactUs">Contact</a></li>
+                   
+                   <!-- shtohet login ose largohet -->
+               </ul>
+                
+               <img src="~/Assets/Images/logo.jpg" alt="logo">
+
+               <ul class="nav-list" id="list1">
+                   <li id="Posts"><a href="/Post/PostPage">Posts</a></li>
+                   
+                   <li id="SignIn" ><a href="/Home/Login" >Sign In</a></li>
+               </ul>
+
+               
       
-       <!-- shtohet njw button ose nje list -->
+           <!-- shtohet njw button ose nje list -->
         
-   </div>
+         </div>
     </header>
   
             @RenderBody()
@@ -70,7 +80,7 @@
    </div>
    </div>
   <!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

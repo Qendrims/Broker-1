@@ -101,21 +101,12 @@ window.onscroll = function () {
 }
 
 //change the inner html of navbar based on whether the user is logged in or not
-navListLeft.innerHTML +=
-    username == null
-        ? `
-<li id="SignIn" ><a href="#" >Sign In</a></li>`
-        : ``;
+
 
 navHeader.innerHTML +=
     username == null
         ? `
-    <ul class="nav-list" id="list2">
-      <li id="Buy" ><a href="Post/PostPage">Posts</a></li>
-      <li id="Sell"><a href="#">Sell</a></li>
-      <li id="Rent"><a href="#">Rent</a></li>
-      <li id="Agents"><a href="#">Agents</a></li>
-</ul>
+    
 `
         : `
 <div class="dropdown">
