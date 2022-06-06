@@ -108,6 +108,10 @@
         align-items: center;
     }
 
+    .hidden{
+        display: none;
+    }
+
     #results {
         background-color: #fff;
         width: 80%;
@@ -264,13 +268,16 @@
                         </button>
                       </div>
                       <div class="modal-body">
+                          <input type="text" class="form-control" id="searchAgents" />
                         @foreach(var ag in @Model.agents){
-                            <input type="checkbox" name="agentsInvited" value="@ag.UserId" /><span>@ag.Name @ag.LastName - @ag.City</span>
+                            <div>
+                            <input type="checkbox" name="agentsInvited" class="agentList" value="@ag.UserId" /><span>@ag.Name @ag.LastName - @ag.City</span>
+                        </div>
                         }
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-primary">Send invite</button>
                       </div>
                     </div>
                   </div>
@@ -295,6 +302,9 @@
 <script>
 
       $(document).ready(()=>{
+
+          document.getElementById('searchAgents').addEventListener('keyup',searchAgents)
+
               document.querySelectorAll('input, textarea').forEach(inp => {
               inp.addEventListener('change',onChange)
           })
@@ -303,6 +313,21 @@
 
 
       })
+
+      function searchAgents(e){
+          var searchText = e.target.value;
+
+          //if(e.target.value == ""){
+          //    return;
+          //} 
+          var elements = document.querySelectorAll('.agentList');
+          elements.forEach(el => {
+              el.parentElement.classList.remove('hidden')
+              if(!el.nextElementSibling.innerHTML.match(searchText)){
+                  el.parentElement.classList.add('hidden')
+              }
+          })
+      }
 
 
       const handleSubmit=(e)=>{

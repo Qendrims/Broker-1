@@ -30,6 +30,8 @@ namespace BrokerApp.Controllers
 
             FilteredPostViewModel posts = new FilteredPostViewModel();
             posts.FilteredCategories = _Dbcontext.Categories.ToList();
+            posts.Cities =  _Dbcontext.Posts.Where(p=> !string.IsNullOrEmpty(p.City)).Select(m => m.City).Distinct().ToList();
+
             Category cat = new Category();
             if (category != null)
             {
