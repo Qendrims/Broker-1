@@ -19,6 +19,18 @@ namespace Broker.Controllers
             var archived = _context.Posts.Where(p => p.IsArchived == true).ToList();
             return View(archived);
         }
+
+        public IActionResult ArchivePost(int id)
+        {
+
+            var posts = _context.Posts.Where(p => p.PostId == id).FirstOrDefault();
+            posts.IsArchived = true;
+            _context.Posts.Update(posts);
+            _context.SaveChanges();
+
+            return RedirectToAction("Postpage","Post");
+
+        }
         public IActionResult Unarchive(int id)
         {
        

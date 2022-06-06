@@ -25,6 +25,16 @@ namespace BrokerApp.Controllers
             this._webHostEnvironment = _webHostEnvironment;
         }
 
+        public IActionResult Archive(int id)
+        {
+            var post = _Dbcontext.Posts.Where(p => p.PostId == id).FirstOrDefault();
+            post.IsArchived = true;
+            _Dbcontext.Posts.Update(post);
+            _Dbcontext.SaveChanges();
+
+            return RedirectToAction("PostPage");
+        }
+
         public IActionResult PostPage(string category, string city, int pg = 1)
         {
 
@@ -38,7 +48,7 @@ namespace BrokerApp.Controllers
                 cat = _Dbcontext.Categories.First(c => c.CategoryName == category);
             }
             var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
-                .Where(p => city == null || p.City.ToLower() == city.ToLower()).ToList();
+                .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => p.IsArchived == false).ToList();
             posts.FilteredPosts = result;
             posts.Category = category;
             posts.City = city;
@@ -94,13 +104,12 @@ namespace BrokerApp.Controllers
             Post post = new Post();
             post.Title = postView.Title;
             post.Description = postView.Description;
-            post.PostUserId = postView.OwnerId;
+            post.PostUserId = postView.PostUserId;
             post.City = postView.City;
             post.State = postView.State;
             post.Street = postView.Street;
             post.Latitude = postView.Latitude;
             post.Longitude = postView.Longitude;
-            post.PostUserId = postView.OwnerId;
             post.ZipCode = postView.ZipCode;
            
 

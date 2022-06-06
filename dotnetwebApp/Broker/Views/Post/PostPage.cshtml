@@ -14,7 +14,7 @@
     }
 }
 
-<link href="@Url.Content('~/css/UserPostPage.css')" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/css/UserPostPage.css")" rel="stylesheet" type="text/css" />
 
 
 
@@ -37,7 +37,7 @@
                 <option value="">Select City</option>
                 @foreach(var city in @Model.Cities)
                 {
-                    <option value="@city">@city</option>
+                    <option selected="@(Model.City == city)" value="@city">@city</option>
                 }
             </select>
 
@@ -45,6 +45,7 @@
         </form>
 
     </div>
+    <a href="/Archive/Index" class="btn btn-primary">Archived posts</a>
 
     <div id="products-container" class="products-container">
         @foreach (var post in @Model.FilteredPosts)
@@ -56,7 +57,7 @@
                 <img src="~/Assets/Images/grid1.jpg" alt="">
                 <h3>@post.Title</h3>
                 <div class="price">$110,000</div>
-                <a href="~/post/ArchivePost/@post.PostId" class="btn btn-primary">Archive</a>
+                <a href="~/Archive/ArchivePost/@post.PostId" class="btn btn-primary">Archive</a>
             
                 
                 </div>
@@ -118,27 +119,27 @@
      @if(pager.CurrentPage > 1)
     {
         <li class="page-item ">
-                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-pg="1">First</a>
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-city=@Model.City asp-route-pg="1">First</a>
                 </li>
                 <li class="page-item ">
-                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-pg="@(pager.CurrentPage - 1)">Previous</a>
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-city=@Model.City asp-route-pg="@(pager.CurrentPage - 1)">Previous</a>
                 </li>
     }
 
             @for (var page = pager.StartPage; page <= pager.EndPage; page++)
             {
                 <li class="page-item @(page == pager.CurrentPage ? "active" : "")">
-                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-pg="@(page)">@(page)</a>
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-city=@Model.City asp-route-pg="@(page)">@(page)</a>
                 </li>
             }
 
                 @if(pager.CurrentPage < pager.TotalPages)
     {
         <li class="page-item ">
-                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-pg="@(pager.CurrentPage + 1)">Next</a>
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-city=@Model.City asp-route-pg="@(pager.CurrentPage + 1)">Next</a>
                 </li>
                 <li class="page-item ">
-                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-pg="@(pager.TotalPages)">Last</a>
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-city=@Model.City asp-route-pg="@(pager.TotalPages)">Last</a>
                 </li>
     }
 
