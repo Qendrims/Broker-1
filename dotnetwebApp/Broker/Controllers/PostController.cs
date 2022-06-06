@@ -13,7 +13,7 @@ namespace Broker.Controllers
 
         public PostController(ApplicationDbContext applicationDb)
         {
-                this._db = applicationDb;
+            this._db = applicationDb;
         }
 
         //public IActionResult PostPage(int pg =1)
@@ -36,16 +36,16 @@ namespace Broker.Controllers
         //    return View(posts);
         //   // return View(posts);
         //}
-         
-        public IActionResult PostPage(string category, string city,int pg=1)
+
+        public IActionResult PostPage(string category, string city, int pg = 1)
         {
 
             FilteredPostViewModel posts = new FilteredPostViewModel();
-            posts.FilteredCategories = _db.Categories.ToList();  
+            posts.FilteredCategories = _db.Categories.ToList();
             Category cat = new Category();
-            if(category != null)
+            if (category != null)
             {
-             cat = _db.Categories.First(c => c.CategoryName == category);
+                cat = _db.Categories.First(c => c.CategoryName == category);
             }
             var result = _db.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
                 .Where(p => city == null || p.City.ToLower() == city.ToLower()).ToList();
@@ -66,6 +66,22 @@ namespace Broker.Controllers
             this.ViewBag.Pager = pager;
 
             return View("PostPage", posts);
+        }
+
+        [HttpGet]
+        public IActionResult Ads(int? id)
+        {
+            var post = this._db.Posts.Where(p => p.PostId == id).FirstOrDefault();
+            return View(post);
+        }
+
+        [HttpPost]
+        public IActionResult Ads(AdsPayments model)
+        {
+            this._db.AdsPaymentcs.Add(model);
+            this._db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }

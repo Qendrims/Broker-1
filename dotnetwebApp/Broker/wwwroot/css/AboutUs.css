@@ -20,9 +20,9 @@
     align-items: center;
 }
 
-    .Text-LeftSide-FirstSection h1 {
-        font-size: 42px;
-    }
+.Text-LeftSide-FirstSection h1 {
+ font-size: 42px;
+}
 
 .Contact {
     display: flex;

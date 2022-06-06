@@ -20,7 +20,7 @@ namespace Broker.ApplicationDB
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Invite> Invites { get; set; }
         public DbSet<FeedBack> FeedBacks { get; set; }
-
+        public DbSet<AdsPayments> AdsPaymentcs { get; set; }
         public DbSet<Tags> Tags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
