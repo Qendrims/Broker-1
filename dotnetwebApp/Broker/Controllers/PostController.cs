@@ -25,6 +25,50 @@ namespace BrokerApp.Controllers
             this._Dbcontext = _context;
             this._webHostEnvironment = _webHostEnvironment;
         }
+
+        public IActionResult Archive(int id)
+        {
+            var post = _Dbcontext.Posts.Where(p => p.PostId == id).FirstOrDefault();
+            post.IsArchived = true;
+            _Dbcontext.Posts.Update(post);
+            _Dbcontext.SaveChanges();
+
+            return RedirectToAction("PostPage");
+        }
+
+        public IActionResult PostPage(string category, string city, int pg = 1)
+        {
+
+            FilteredPostViewModel posts = new FilteredPostViewModel();
+            posts.FilteredCategories = _Dbcontext.Categories.ToList();
+            posts.Cities =  _Dbcontext.Posts.Where(p=> !string.IsNullOrEmpty(p.City)).Select(m => m.City).Distinct().ToList();
+
+            Category cat = new Category();
+            if (category != null)
+            {
+                cat = _Dbcontext.Categories.First(c => c.CategoryName == category);
+            }
+            var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
+                .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => p.IsArchived == false).ToList();
+            posts.FilteredPosts = result;
+            posts.Category = category;
+            posts.City = city;
+
+            const int postPerPage = 2;
+            if (pg < 1)
+                pg = 1;
+
+            int postCount = posts.FilteredPosts.Count();
+            var pager = new Pagination(postCount, pg, postPerPage);
+
+            int postSkip = (pg - 1) * postPerPage;
+
+            posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
+            this.ViewBag.Pager = pager;
+
+            return View("PostPage", posts);
+        }
+
         [HttpGet]
         public IActionResult Detail(int? id)
         {
@@ -47,11 +91,13 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult PostPageCreate()
         {
-            List<Category> categories = this._Dbcontext.Categories.ToList();
-            return View(categories);
-        }
+            CreatePostViewModel createPostView = new CreatePostViewModel();
+            createPostView.categories = this._Dbcontext.Categories.ToList();
+            createPostView.agents = this._Dbcontext.Agents.ToList();
+            return View(createPostView);
+        } 
         [HttpPost]
-        public async Task<IActionResult> PostPageCreate(IFormFile file, PostViewModel postView)
+        public async Task<IActionResult> PostPageCreate(PostViewModel postView)
         {
 
 
@@ -59,22 +105,19 @@ namespace BrokerApp.Controllers
             Post post = new Post();
             post.Title = postView.Title;
             post.Description = postView.Description;
-            post.PostUserId = postView.OwnerId;
+            post.PostUserId = postView.PostUserId;
+            post.City = postView.City;
+            post.State = postView.State;
+            post.Street = postView.Street;
+            post.Latitude = postView.Latitude;
+            post.Longitude = postView.Longitude;
+            post.ZipCode = postView.ZipCode;
+           
+
             this._Dbcontext.Posts.Add(post);
             foreach (var imageFile in postView.Image)
             {
                 string fullFileName = MethodHelper.FileToBeSaved(postView.Title, imageFile).Result;
-                //    string fileName = postView.Title + "-" + DateTime.Now.ToString("MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + ".jpg";
-                //    string fullFileName = fileName.Replace(":", "-").Replace(" ", "");
-                //    string filePath = $"{folder}\\wwwroot\\UploadFiles\\{fullFileName}";
-
-                //    //string fileName = Path.GetFileName(postView.Image[0].FileName); 
-                //    //string webRootPath = _webHostEnvironment.WebRootPath+ "\\Uploads\\"+ fileName;
-
-                //    using (var stream = System.IO.File.Create(filePath))
-                //    {
-                //        await imageFile.CopyToAsync(stream);
-                //    }
 
                 PostImage image = new PostImage();
                 image.ImageName = fullFileName;
@@ -83,25 +126,40 @@ namespace BrokerApp.Controllers
                 this._Dbcontext.PostImages.Add(image);
             }
 
+            foreach(var catId in postView.CategoryId)
+            {
+                PostCategory postCategory = new PostCategory();
+                postCategory.CategoryId = catId;
+                postCategory.Post = post;
+            } 
+
+            foreach(var agent in postView.AgentsInvited)
+            {
+                Invite inv = new Invite();
+                inv.Post = post;
+                inv.SentBy = post.PostUserId;
+                inv.SentTo = agent;
+            }
+
             await _Dbcontext.SaveChangesAsync();
 
             //File newimage = new File(postView.Title+ "- 1");
-            if (postView.Title == "")
-            {
-                return NotFound();
-            }
-            if (postView.Image == null)
-            {
-                return NotFound();
-            }
-            if (postView.Description == "")
-            {
-                return NotFound();
-            }
-            if (postView.Price <= 0)
-            {
-                return NotFound();
-            }
+            //if (postView.Title == "")
+            //{
+            //    return NotFound();
+            //}
+            //if (postView.Image == null)
+            //{
+            //    return NotFound();
+            //}
+            //if (postView.Description == "")
+            //{
+            //    return NotFound();
+            //}
+            //if (postView.Price <= 0)
+            //{
+            //    return NotFound();
+            //}
 
             //Post newPost = new Post();
             //post.Title = postView.Title;
@@ -113,8 +171,6 @@ namespace BrokerApp.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-
 
         public IActionResult Edit(int? id)
         {
@@ -130,6 +186,24 @@ namespace BrokerApp.Controllers
                 postViewModel.Description = post.Description;
                 postViewModel.Price = post.Price;
                 postViewModel.Image = post.Images.ToList();
+                return View(postViewModel);
+
+            }
+        }
+        public IActionResult EditView(int? id)
+        {
+            if (id == 0)
+            {
+                return View(new Post());
+            }
+            else
+            {
+                var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(x => x.Images).FirstOrDefault();
+                PostDetailViewModel postViewModel = new PostDetailViewModel();
+                postViewModel.Title = post.Title;
+                postViewModel.Description = post.Description;
+                postViewModel.Price = post.Price;
+                postViewModel.Image = post.Images.FirstOrDefault();
                 return View(postViewModel);
 
             }

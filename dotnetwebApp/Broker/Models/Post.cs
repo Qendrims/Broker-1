@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using BrokerApp.Models;
 using System.Collections;
-using System.Collections.Generic;
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using BrokerApp.Models;
 
 namespace Broker.Models
 {
@@ -24,7 +24,6 @@ namespace Broker.Models
         public string City { get; set; }
         public string State { get; set; }
         public int ZipCode { get; set; }
-
         public int? PostUserId { get; set; }
         [ForeignKey("PostUserId")]
         public User User { get; set; }

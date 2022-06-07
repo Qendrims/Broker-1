@@ -9,16 +9,16 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/views/welcomePage.css"/>
     <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-   @RenderSection("Styles", required: false)
+   @RenderSection("Styles",required: false);
 
 </head>
 <body>
     <header>
         <div class="homepage-header" id="homepageHeader">
        <ul class="nav-list" id="list1">
-           <li id="Home"><a href="#">Home</a></li>
+           <li id="Home"><a href="/Home/Index">Home</a></li>
            <li id="About"><a href="#">About</a></li>
-           <li id="Contact"><a href="#">Contact</a></li>
+           <li id="Contact"><a href="/Home/ContactUs">Contact</a></li>
            <!-- shtohet login ose largohet -->
        </ul>
        <img src="~/Assets/Images/logo.jpg" alt="logo">

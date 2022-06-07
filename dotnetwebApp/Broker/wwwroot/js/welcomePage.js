@@ -134,7 +134,7 @@ navHeader.innerHTML +=
 
 let signIn = document.getElementById("SignIn");
 signIn?.addEventListener("click", () => {
-    location.href = ("Home/Login");
+    location.href = ("/Home/Login");
 });
 
 let logout = document.getElementById('LogOut');

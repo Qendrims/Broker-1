@@ -75,6 +75,11 @@ namespace Broker.Controllers
             return View(homeViewModels);
         }
 
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
+
         public IActionResult Login()
         {
             return View();
@@ -94,5 +99,10 @@ namespace Broker.Controllers
         {
             return View();
         }
+        public IActionResult PostPageDetails()
+        {
+            return View();
+        }
+        
     }
 }
