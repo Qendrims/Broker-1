@@ -14,9 +14,6 @@ namespace Broker.FileHelper
             string fullFileName = fileName.Replace(":", "-").Replace(" ", "");
             string filePath = $"{RootToBroker()}\\wwwroot\\UploadFiles\\{fullFileName}";
 
-            //string fileName = Path.GetFileName(postView.Image[0].FileName); 
-            //string webRootPath = _webHostEnvironment.WebRootPath+ "\\Uploads\\"+ fileName;
-
             using (var stream = System.IO.File.Create(filePath))
             {
                 try
@@ -37,5 +34,8 @@ namespace Broker.FileHelper
         {
             return Environment.CurrentDirectory;
         }
+
+
+        
     }
 }

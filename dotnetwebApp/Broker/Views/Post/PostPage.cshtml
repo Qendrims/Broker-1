@@ -53,10 +53,12 @@
             if(post.IsArchived==false){
             int index = @Model.FilteredPosts.IndexOf(post) + 1;
             <div class="product" data-name="p-@index">
-                
-                <img src="~/Assets/Images/grid1.jpg" alt="">
+                    @if(post.Images != null)
+                    {          
+                    <img src="~/UploadFiles/@post.Images.FirstOrDefault().ImageName" alt="">
+                    }
                 <h3>@post.Title</h3>
-                <div class="price">$110,000</div>
+                <div class="price">$@post.Price</div>
                 <a href="~/Archive/ArchivePost/@post.PostId" class="btn btn-primary">Archive</a>
             
                 

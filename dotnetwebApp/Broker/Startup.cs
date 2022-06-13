@@ -29,11 +29,11 @@ namespace Broker
             services.AddControllersWithViews();
            
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
-             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+            services.AddAutoMapper(typeof(Startup));
            
         }
 
