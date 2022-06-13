@@ -6,7 +6,7 @@ namespace Broker.Models
 {
     public class FeedBack
     {
-        [Key]  
+        [Key]
         public int FeedbackId { get; set; }
         public string Comment { get; set; }
         public DateTime CreatedAt { get; } = DateTime.Now;

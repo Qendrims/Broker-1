@@ -53,7 +53,7 @@ namespace BrokerApp.Controllers
             posts.Category = category;
             posts.City = city;
 
-            const int postPerPage = 2;
+            const int postPerPage = 20;
             if (pg < 1)
                 pg = 1;
 
@@ -102,6 +102,7 @@ namespace BrokerApp.Controllers
             string folder = Environment.CurrentDirectory;
 
             Post post = new Post();
+
             post.Title = postView.Title;
             post.Description = postView.Description;
             post.PostUserId = postView.PostUserId;
@@ -151,32 +152,6 @@ namespace BrokerApp.Controllers
             }
 
             await _Dbcontext.SaveChangesAsync();
-
-            //File newimage = new File(postView.Title+ "- 1");
-            //if (postView.Title == "")
-            //{
-            //    return NotFound();
-            //}
-            //if (postView.Image == null)
-            //{
-            //    return NotFound();
-            //}
-            //if (postView.Description == "")
-            //{
-            //    return NotFound();
-            //}
-            //if (postView.Price <= 0)
-            //{
-            //    return NotFound();
-            //}
-
-            //Post newPost = new Post();
-            //post.Title = postView.Title;
-            //post.Description = postView.Description;
-            //post.Price = postView.Price;
-
-            //this._Dbcontext.Posts.Add(newPost);
-            //_Dbcontext.SaveChanges();
 
             return RedirectToAction("Home", "Index");
         }
