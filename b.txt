@@ -1,8 +1,0 @@
-1. pjesa e tesktit duhet te jete nje div, pjesa e imazhit/slider duhet te jete nje div tjeter
-2. te perdoret flex/grid row ne xmadhesi te desktop ( >768px )
-3. nen 768px width duhet te perdoret flex column ose grid 
-
-
-
-
-
