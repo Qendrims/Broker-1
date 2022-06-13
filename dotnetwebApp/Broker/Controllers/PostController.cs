@@ -96,7 +96,7 @@ namespace BrokerApp.Controllers
             return View(createPostView);
         } 
         [HttpPost]
-        public async Task<IActionResult> PostPageCreate(PostViewModel postView)
+        public  JsonResult PostPageCreate(PostViewModel postView,string message)
         {
 
             string folder = Environment.CurrentDirectory;
@@ -112,9 +112,15 @@ namespace BrokerApp.Controllers
             post.Latitude = postView.Latitude;
             post.Longitude = postView.Longitude;
             post.ZipCode = postView.ZipCode;
-           
+            post.PostUserId = 2;
 
-            this._Dbcontext.Posts.Add(post);
+
+            ViewBag.Message = message;
+            if (ModelState.IsValid)
+            {
+                this._Dbcontext.Posts.Add(post);
+
+
             foreach (var imageFile in postView.Image)
             {
                 string fileName = postView.Title + "-" + DateTime.Now.ToString("MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + ".jpg";
@@ -126,7 +132,7 @@ namespace BrokerApp.Controllers
 
                 using (var stream = System.IO.File.Create(filePath))
                 {
-                    await imageFile.CopyToAsync(stream);
+                     imageFile.CopyTo(stream);
                 }
 
                 PostImage image = new PostImage();
@@ -136,12 +142,19 @@ namespace BrokerApp.Controllers
                 this._Dbcontext.PostImages.Add(image);
             }
 
+            if(postView.CategoryId != null)
+                {
             foreach(var catId in postView.CategoryId)
             {
                 PostCategory postCategory = new PostCategory();
                 postCategory.CategoryId = catId;
                 postCategory.Post = post;
+                this._Dbcontext.PostCategories.Add(postCategory);
             } 
+                }
+
+            if(postView.AgentsInvited != null)
+                {
 
             foreach(var agent in postView.AgentsInvited)
             {
@@ -149,11 +162,19 @@ namespace BrokerApp.Controllers
                 inv.Post = post;
                 inv.SentBy = post.PostUserId;
                 inv.SentTo = agent;
+
+                this._Dbcontext.Invites.Add(inv);
+            }
+                }
+
+
+             _Dbcontext.SaveChanges();
+
+                return Json(new { status=200, message="Post created successfully" });
             }
 
-            await _Dbcontext.SaveChangesAsync();
 
-            return RedirectToAction("Home", "Index");
+            return Json(new { status = 400, message = "Something went wrong" });
         }
 
         public IActionResult Edit(int? id)

@@ -53,7 +53,7 @@ namespace Broker.Controllers
         //    return Json(data);
         //}
 
-        public IActionResult Index()
+        public IActionResult Index(string message)
         {
 
             List<HomeViewModel> homeViewModels = new List<HomeViewModel>();
@@ -72,6 +72,7 @@ namespace Broker.Controllers
                 homeViewModels.Add(model);
                 }
             }
+            ViewBag.Message = message;
             return View(homeViewModels);
         }
 
