@@ -16,27 +16,6 @@ namespace Broker.Controllers
             this._db = applicationDb;
         }
 
-        //public IActionResult PostPage(int pg =1)
-        //{
-        //    FilteredPostViewModel posts = new FilteredPostViewModel();
-        //    posts.FilteredPosts = _db.Posts.ToList();
-        //    posts.FilteredCategories = _db.Categories.ToList();
-
-        //    const int pageSize = 2;
-        //    if (pg < 1)
-        //        pg = 1;
-
-        //    int postCount = posts.FilteredPosts.Count();
-        //    var pager = new Pagination(postCount, pg, pageSize);
-
-        //    int postSkip = (pg - 1) * pageSize;
-
-        //    posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
-        //    this.ViewBag.Pager = pager;
-        //    return View(posts);
-        //   // return View(posts);
-        //}
-
         public IActionResult PostPage(string category, string city, int pg = 1)
         {
 
@@ -92,11 +71,10 @@ namespace Broker.Controllers
         public IActionResult ArchivedPosts(int id=1, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
-            //var posts=this._db.Posts.Where(x => x.PostId== id && x.IsArchived==true).ToList();
             posts.FilteredPosts= _db.Posts.Where(x => x.PostId == id && x.IsArchived == true).ToList();
 
 
-            const int postPerPage = 2;
+            const int postPerPage = 2; 
             if (pg < 1)
                 pg = 1;
 
@@ -110,7 +88,6 @@ namespace Broker.Controllers
 
             return View(posts);
 
-            return View();
         }
     }
 }
