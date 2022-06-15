@@ -1,132 +1,40 @@
-*{
-    padding: 0;
-    margin: 0;
-}
-/*
-body{
-
-   
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}
-.container{
-    display: grid;
-    place-content: center;
-    margin-top: 3%;
-}
-form{
-    padding: 3rem;
-    width: 500px;
-    border: 3px solid rgba(234,234,232,255);
-}
-form:hover{
-    box-shadow: 15px -21px 111px 36px rgba(63,56,44,0.69);
-    -webkit-box-shadow: 15px -21px 111px 36px rgba(63,56,44,0.69);
-    -moz-box-shadow: 15px -21px 111px 36px rgba(63,56,44,0.69);
-}
-form h1{
-    text-align: center;
-    padding-bottom: 35px;
-    color: #21130d;
-    font-size: 35px;
-
-}
-::placeholder{
-    color: rgb(63,56,44);
-    font-weight: 600;
-}
-.labels{
-    font-size: 20px;
-    color: #21130d;
-    margin-left: 3%;
-    margin-top: 1%;
-    font-weight: 600;
-    
-}
-form input{
-    width: 90%;
-    padding: 10px 20px;
-    background: none;
-    border: none;
-    border-bottom: 1px solid white;
-    margin:1%;
-}
-button{
-    padding: 10px 20px;
-    margin-top:15px;
-    width: 99%;
-    background-color: rgb(63,56,44);
-    border: none;
-    color: antiquewhite;
-}
-button:hover{
-    background-color: #21130d;
-    color: rgb(231, 226, 220);
-  
-}
-.error{
-    color: red;
-    font-size: 15px;
-    
-}
-.hidden{
-    display: none;
-}
-#sumbit-btn{
-    cursor: not-allowed;
+* {
+  padding: 0;
+  margin: 0;
 }
 
-    */
-
+body {
+  height: 100vh;
+  background-color: aliceblue;
+}
 
 .container {
-    width: 40%;
-    display: flex;
-    margin: 5% auto;
-    flex-direction: column;
-    background-color: #9aafd6;
-    -webkit-box-shadow: 10px -9px 48px 22px rgba(214,214,240,1);
-    -moz-box-shadow: 10px -9px 48px 22px rgba(214,214,240,1);
-    box-shadow: 10px -9px 48px 22px rgba(214,214,240,1);
+  margin-top: 5%;
+  margin-bottom: 5%;
+  display: grid;
+  place-content: center;
 }
+
 form {
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    margin: 5% auto;
+  padding: 3rem;
+  width: 500px;
+  border: 3px solid rgba(234, 234, 232, 255);
 }
-h1{
-    font-size:24px;
-    text-align:center;
-    color:darkblue;
+
+::placeholder {
+  color: rgb(63, 56, 44);
+  font-weight: 400;
+  font-size: large;
 }
-.labels {
-    margin-left: 15%;
-    margin-bottom: 2%;
-    margin-top: 2%;
-    color: white;
-    font-size: 20px;
+
+#registerHeader {
+  margin-bottom: 30px;
 }
-.error {
-    margin-left: 15%;
-    margin-bottom: 2%;
-    color:darkred;
-    display:none;
-}
-input{
-    width:70%;
-    height:50px;
-    margin:auto;
-    border:none;
-}
-#sumbit-btn {
-    margin-bottom: 2%;
-    margin-top: 5%;
-    background-color: #f39f59;
-    color: #063970;
-    font-size: 22px;
-}
-#sumbit-btn:hover {
-    color: rgba(225,101,37,255);
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
 }
