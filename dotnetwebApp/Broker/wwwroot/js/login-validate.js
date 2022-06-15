@@ -32,18 +32,6 @@ var users=[
         email:'lir@gmail.com',
         password:"liriballata"   
     },
-    {
-        username:"meli",
-        email: "meli@gmail.com",
-        password: "123123123",
-
-    },
-    {
-        username: "nora",
-        email: "nora@gmail.com",
-        password: "123123123",
-
-    },
 ]; 
 
 var verifyUsername = function (e) {
