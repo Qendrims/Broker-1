@@ -40,7 +40,7 @@ namespace BrokerApp.Controllers
 
             FilteredPostViewModel posts = new FilteredPostViewModel();
             posts.FilteredCategories = _Dbcontext.Categories.ToList();
-            posts.Cities =  _Dbcontext.Posts.Where(p=> !string.IsNullOrEmpty(p.City)).Select(m => m.City).Distinct().ToList();
+            posts.Cities = _Dbcontext.Posts.Where(p => !string.IsNullOrEmpty(p.City)).Select(m => m.City).Distinct().ToList();
 
             Category cat = new Category();
             if (category != null)
@@ -90,16 +90,19 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult PostPageCreate()
         {
-            CreatePostViewModel createPostView = new CreatePostViewModel();
+            PostViewModel createPostView = new PostViewModel();
+
+
             createPostView.categories = this._Dbcontext.Categories.ToList();
             createPostView.agents = this._Dbcontext.Agents.ToList();
             return View(createPostView);
-        } 
+        }
         [HttpPost]
-        public  JsonResult PostPageCreate(PostViewModel postView,string message)
+        public JsonResult PostPageCreate(PostViewModel postView)
         {
-
             string folder = Environment.CurrentDirectory;
+
+
 
             Post post = new Post();
 
@@ -113,68 +116,81 @@ namespace BrokerApp.Controllers
             post.Longitude = postView.Longitude;
             post.ZipCode = postView.ZipCode;
             post.PostUserId = 2;
-
-
-            ViewBag.Message = message;
             if (ModelState.IsValid)
             {
                 this._Dbcontext.Posts.Add(post);
 
 
-            foreach (var imageFile in postView.Image)
-            {
-                string fileName = postView.Title + "-" + DateTime.Now.ToString("MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + ".jpg";
-                string fullFileName = fileName.Replace(":", "-").Replace(" ", "");
-                string filePath = $"{folder}\\wwwroot\\UploadFiles\\{fullFileName}";
-
-                //string fileName = Path.GetFileName(postView.Image[0].FileName); 
-                //string webRootPath = _webHostEnvironment.WebRootPath+ "\\Uploads\\"+ fileName;
-
-                using (var stream = System.IO.File.Create(filePath))
+                foreach (var imageFile in postView.Image)
                 {
-                     imageFile.CopyTo(stream);
+                    string fileName = postView.Title + "-" + DateTime.Now.ToString("MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + ".jpg";
+                    string fullFileName = fileName.Replace(":", "-").Replace(" ", "");
+                    string filePath = $"{folder}\\wwwroot\\UploadFiles\\{fullFileName}";
+
+                    //string fileName = Path.GetFileName(postView.Image[0].FileName); 
+                    //string webRootPath = _webHostEnvironment.WebRootPath+ "\\Uploads\\"+ fileName;
+
+                    using (var stream = System.IO.File.Create(filePath))
+                    {
+                        imageFile.CopyTo(stream);
+                    }
+
+                    PostImage image = new PostImage();
+                    image.ImageName = fullFileName;
+                    image.Post = post;
+                    image.Type = "jpg";
+                    this._Dbcontext.PostImages.Add(image);
                 }
 
-                PostImage image = new PostImage();
-                image.ImageName = fullFileName;
-                image.Post = post;
-                image.Type = "jpg";
-                this._Dbcontext.PostImages.Add(image);
-            }
-
-            if(postView.CategoryId != null)
+                if (postView.CategoryId != null)
                 {
-            foreach(var catId in postView.CategoryId)
-            {
-                PostCategory postCategory = new PostCategory();
-                postCategory.CategoryId = catId;
-                postCategory.Post = post;
-                this._Dbcontext.PostCategories.Add(postCategory);
-            } 
+                    foreach (var catId in postView.CategoryId)
+                    {
+                        PostCategory postCategory = new PostCategory();
+                        postCategory.CategoryId = catId;
+                        postCategory.Post = post;
+                        this._Dbcontext.PostCategories.Add(postCategory);
+                    }
                 }
 
-            if(postView.AgentsInvited != null)
+                if (postView.AgentsInvited != null)
                 {
 
-            foreach(var agent in postView.AgentsInvited)
-            {
-                Invite inv = new Invite();
-                inv.Post = post;
-                inv.SentBy = post.PostUserId;
-                inv.SentTo = agent;
+                    foreach (var agent in postView.AgentsInvited)
+                    {
+                        Invite inv = new Invite();
+                        inv.Post = post;
+                        inv.SentBy = post.PostUserId;
+                        inv.SentTo = agent;
 
-                this._Dbcontext.Invites.Add(inv);
-            }
+                        this._Dbcontext.Invites.Add(inv);
+                    }
                 }
 
 
-             _Dbcontext.SaveChanges();
+                _Dbcontext.SaveChanges();
 
-                return Json(new { status=200, message="Post created successfully" });
+                return Json(new { status = 200, message = "Post created successfully" });
+            } else
+            {
+                Dictionary<string,string> data=new Dictionary<string,string>();
+                if (string.IsNullOrEmpty(postView.Title))
+                    data.Add("Title", "Title cant be empty");
+                
+                if (string.IsNullOrEmpty(postView.Description))
+                    data.Add("Description", "Description cant be empty");
+                
+                if (string.IsNullOrEmpty(postView.City))
+                    data.Add("City", "City cant be empty");
+                
+                if (string.IsNullOrEmpty(postView.State))
+                    data.Add("State", "State cant be empty");
+               
+
+                return Json(new { status = 400, message = "Something went wrong",data });
             }
 
 
-            return Json(new { status = 400, message = "Something went wrong" });
         }
 
         public IActionResult Edit(int? id)
@@ -185,7 +201,7 @@ namespace BrokerApp.Controllers
             }
             else
             {
-                var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(x=>x.Images).FirstOrDefault();
+                var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(x => x.Images).FirstOrDefault();
                 PostDetailViewModel postViewModel = new PostDetailViewModel();
                 postViewModel.Title = post.Title;
                 postViewModel.Description = post.Description;
@@ -218,7 +234,7 @@ namespace BrokerApp.Controllers
         [HttpPost]
         public IActionResult Edit(int id, PostDetailViewModel ViewModel)
         {
-            var post= this._Dbcontext.Posts.Where(x=>x.PostId == id).Include(e=>e.Images).FirstOrDefault();
+            var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(e => e.Images).FirstOrDefault();
 
 
 
@@ -229,7 +245,7 @@ namespace BrokerApp.Controllers
 
             this._Dbcontext.Update(post);
             this._Dbcontext.SaveChanges();
-            return View("Detail",ViewModel);
+            return View("Detail", ViewModel);
 
         }
         public IActionResult Delete()
@@ -243,7 +259,7 @@ namespace BrokerApp.Controllers
             var postToDelete = this._Dbcontext.Posts.Where(x => x.PostId == id).FirstOrDefault();
             this._Dbcontext.Posts.Remove(postToDelete);
             this._Dbcontext.SaveChanges();
-     
+
             return RedirectToAction("PostPageCreate");
         }
 
