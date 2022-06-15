@@ -1,0 +1,88 @@
+﻿@using Broker.ViewModels
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model FilteredPostViewModel;
+@{
+    Pagination pager = new Pagination();
+   
+    if(ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+    }
+}
+<link href="@Url.Content("~/css/UserPostPage.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/css/MyPosts.css")" rel="stylesheet" type="text/css" />
+
+ <div id="posts-container" class="posts-container">
+        @foreach (var post in @Model.FilteredPosts)
+        {
+            int index = @Model.FilteredPosts.IndexOf(post) + 1;
+            <div class="post" data-name="p-@index">
+                <img src="~/Assets/Images/grid1.jpg" alt="">
+                <h3>@post.Title</h3>
+                <div class="price"><p>Price: @post.Price €</p></div>
+                <div class="myPostOptions">
+                    <a href="#">Sponsor Now</a>
+                    <div class="icons">
+                        <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                           <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                        </svg>
+                        </a>
+                         <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
+                           <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                        </a>
+                         <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                           <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                         </svg>
+                         </a>
+                    </div>
+                </div>
+            </div>
+        }
+ </div>
+
+ <div class="container">
+
+
+    @if(pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-center"> 
+
+     @if(pager.CurrentPage > 1)
+    {
+        <li class="page-item ">
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-pg="1">First</a>
+                </li>
+                <li class="page-item ">
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-pg="@(pager.CurrentPage - 1)">Previous</a>
+                </li>
+    }
+
+            @for (var page = pager.StartPage; page <= pager.EndPage; page++)
+            {
+                <li class="page-item @(page == pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-category=@Model.Category asp-route-pg="@(page)">@(page)</a>
+                </li>
+            }
+
+                @if(pager.CurrentPage < pager.TotalPages)
+    {
+        <li class="page-item ">
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-pg="@(pager.CurrentPage + 1)">Next</a>
+                </li>
+                <li class="page-item ">
+                    <a class="page-link" asp-controller="Post" asp-action="PostPage" asp-route-pg="@(pager.TotalPages)">Last</a>
+                </li>
+    }
+
+        </ul>
+    }
+
+
+</div>
