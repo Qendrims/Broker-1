@@ -171,23 +171,17 @@ namespace BrokerApp.Controllers
                 _Dbcontext.SaveChanges();
 
                 return Json(new { status = 200, message = "Post created successfully" });
-            } else
+            }
+            else
             {
-                Dictionary<string,string> data=new Dictionary<string,string>();
+                Dictionary<string, string> data = new Dictionary<string, string>();
                 if (string.IsNullOrEmpty(postView.Title))
-                    data.Add("Title", "Title cant be empty");
-                
-                if (string.IsNullOrEmpty(postView.Description))
-                    data.Add("Description", "Description cant be empty");
-                
-                if (string.IsNullOrEmpty(postView.City))
-                    data.Add("City", "City cant be empty");
-                
-                if (string.IsNullOrEmpty(postView.State))
-                    data.Add("State", "State cant be empty");
-               
+                    data.Add("TitleError", "Title cant be empty");
 
-                return Json(new { status = 400, message = "Something went wrong",data });
+                if (string.IsNullOrEmpty(postView.Description))
+                    data.Add("DescriptionError", "Description cant be empty");
+
+                return Json(new { status = 400, message = "Something went wrong", data });
             }
 
 

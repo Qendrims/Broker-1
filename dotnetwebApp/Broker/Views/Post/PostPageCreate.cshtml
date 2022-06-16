@@ -67,12 +67,12 @@
     }
 
     .wrapper {
-        margin-top: 10px;
+        margin: 10px;
+
         width: 100%;
-        display: flex;
+     /*   display: flex;
         justify-content: center;
-        align-items: center;
-        background-image: url(../../wwwroot/Assets/Images/grid1.jpg);
+        align-items: center;*/
     }
 
     .post-preview {
@@ -85,7 +85,7 @@
         justify-content: center;
         align-items: center;
         background-color: #5885AF;
-        width: 45%;
+        width: 90%;
         border-radius: 5px;
     }
 
@@ -111,11 +111,6 @@
             padding: 2% 2%;
         }
 
-    #search {
-        display: flex;
-        align-items: center;
-    }
-
     .hidden {
         display: none;
     }
@@ -123,7 +118,7 @@
     #results {
         background-color: #fff;
         width: 80%;
-        margin-top: -8px;
+        margin-top: 8px;
         border-radius: 5px;
         padding-left: 5px;
     }
@@ -137,7 +132,7 @@
         position: relative;
         margin: auto;
         display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         gap: 15px;
     }
 
@@ -149,16 +144,38 @@
         width: 100%;
         height: 100px;
     }
+
+    .error {
+        color: red;
+    }
+    h1{
+        text-align: center;
+    }
+    form{
+        display: flex;
+        gap: 10px;
+        width: 100%;
+    }
+    .form-location{
+
+        width: 45%;
+
+    }
+    .form-attr{
+        width: 45%;
+    }
 </style>
 }
 
 
 <section>
     <div class="wrapper">
-        <div class="row col-md-8 col-md-offset-2 div-text">
+        
             <h1>Create post</h1>
-
+            <div style="display: flex; justify-content:center; align-items: center">
             <form id="myForm" method="post" enctype="multipart/form-data" asp-controller="Post" asp-action="PostPageCreate">
+                <div class="form-attr">
+
                 <div class="form-group">
                     <label for="post.Title">Title</label>
                     <input type="text"
@@ -166,10 +183,10 @@
                            class="form-control together"
                            id="exampleInputEmail1"
                            aria-describedby="emailHelp"
-                           placeholder="Enter title" /><br />
-                    @*<small id="emailHelp" class="form-text text-muted">Please fill your title.</small>*@
+                           placeholder="Enter title" />
+
+                    <p class="error" id="TitleError"></p>
                 </div>
-                <span asp-validation-for="Title"></span>
 
                 <div class="custom-file">
                     <input type="file"
@@ -191,14 +208,9 @@
                               id="description"
                               placeholder="description"></textarea>
                 </div>
+                <p class="error" id="DescriptionError"></p>
 
                 <br />
-                @*  <select class="form-select" aria-label="Default select example">
-                    <option selected>Categories</option>
-                    <option value="1">House</option>
-                    <option value="2">Apartment</option>
-                    <option value="3">Office</option>
-                    </select>*@
 
                 <label>Choose Categories</label>
                 <br />
@@ -216,50 +228,90 @@
                            aria-label="Dollar amount (with dot and two decimal places)" />
                     <div class="input-group-append flex">
                         <span class="input-group-text">$</span>
-                        <span class="input-group-text">0.00</span>
                     </div>
                 </div>
                 <br />
 
 
-                <b>Search Address</b>
-                <div id="search">
-                    <input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
-                    <button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
+                 <div class="row">
+                    
+                    <div class="form-group col-6">
+                     <b>Latitude</b>
+                    <input type="text" name="Latitude" id="lat" size=12 class='form-control' value="" readonly>
+                    </div>
+                    
+                    <div class="form-group col-6">
+                        <b>Longitude</b>
+                    <input type="text" name="Longitude" id="lon" size=12 class='form-control' value="" readonly>
+                    </div>
+                </div>
+             
+
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label>City</label>
+                        <input type="text" name="City" id="city" class="form-control disabled" readonly />                        
+                        <p class="error" id="CityError"></p>
+                    </div>
+                    
+                    <div class="form-group col-6">
+                        <label>Country</label>
+                        <input type="text" name="Country" id="country" class="form-control disabled " readonly />
+                    </div>
                 </div>
 
+                <div class="row">
+                    <div class="form-group col-6">
 
+                          <label>Zip Code</label>
+                <input type="number" name="ZipCode" id="zipcode" class="form-control disabled" readonly />
+                        
+                    </div>
+
+                     <div class="form-group col-6">
+                 <label>Road</label>
+                <input type="text" name="Street" id="road" class="form-control disabled" readonly />
+                    </div>
+                </div>
+
+                  <div class="row">
+                    <div class="form-group col-6">
+                   <label>State</label>
+                <input type="text" name="State" id="state" class="form-control disabled" readonly />
+                <p class="error" id="StateError"></p>
+                    </div>
+
+                     <div class="form-group col-6">
+                    <label>House Number</label>
+                <input type="number" name="HouseNumber" id="housenumber" class="form-control disabled" readonly />
+                    </div>
+                </div>
+              
+             <label>Neighbourhood</label>
+                <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly />
+
+                </div>
+
+                <div class="form-location">
+                    <div class="form-group">
+
+                <label>Search Address</label>
+                <div id="search">
+                    <input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
+                </div>
                 <div id="results"></div>
+                    <button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
+                    </div>
 
 
-                <div style="display: flex; flex-direction: column;">
-                    <p>Please mark the address on map</p>
+
+
+                <div style="display: flex; flex-direction: column; width: 500px; height: 400px; overflow: hidden">
+                    <p style="margin-left: 20px">Please mark the address on map</p>
                     <div id="map"></div>
                     <h4 style="text-align: center" id="currAddress"></h4>
                 </div>
-
-                <div class="coord-input">
-
-                    <b>Coordinates</b>
-                    <input type="text" name="Latitude" id="lat" size=12 class='form-control' value="" readonly>
-                    <input type="text" name="Longitude" id="lon" size=12 class='form-control' value="" readonly>
-                </div>
-
-
-                <label>City</label>
-                <input type="text" name="City" id="city" class="form-control disabled" readonly />
-                <label>Country</label>
-                <input type="text" name="Country" id="country" class="form-control disabled" readonly />
-                <label>Neighbourhood</label>
-                <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly />
-                <label>Road</label>
-                <input type="text" name="Street" id="road" class="form-control disabled" readonly />
-                <label>State</label>
-                <input type="text" name="State" id="state" class="form-control disabled" readonly />
-                <label>House Number</label>
-                <input type="number" name="HouseNumber" id="housenumber" class="form-control disabled" readonly />
-                <label>Zip Code</label>
-                <input type="number" name="ZipCode" id="zipcode" class="form-control disabled" readonly />
 
                 <br />
                 <!-- Button trigger modal -->
@@ -294,13 +346,13 @@
                     </div>
                 </div>
 
-                <br />
-
                 <input type="submit" class="btn btn-primary" value="Submit" />
-            </form>
+                </div>
 
+            </form>
+                  </div>
         </div>
-    </div>
+ 
 </section>
 
 
@@ -315,129 +367,95 @@
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
 <script>
-
-        $(document).ready(()=>{
-            toastr.options.closeDuration = 5000;
-            document.getElementById('searchAgents').addEventListener('keyup',searchAgents)
-
-                document.querySelectorAll('input, textarea').forEach(inp => {
-                inp.addEventListener('change',onChange)
+            $(document).ready(()=>{
+                toastr.options.closeDuration = 5000;
+                document.getElementById('searchAgents').addEventListener('keyup',searchAgents)
+                    document.querySelectorAll('input, textarea').forEach(inp => {
+                    inp.addEventListener('change',onChange)
+                })
+                document.querySelector('form').addEventListener('submit',handleSubmit)
             })
-
-            document.querySelector('form').addEventListener('submit',handleSubmit)
-        })
-
-    function searchAgents(e){
-        var searchText = e.target.value;
-
-        var elements = document.querySelectorAll('.agentList');
-        elements.forEach(el => {
-            el.parentElement.classList.remove('hidden')
-            if(!el.nextElementSibling.innerHTML.match(searchText)){
-                el.parentElement.classList.add('hidden')
-            }
-        })
-        }
-
-
-        const handleSubmit=(e)=>{
-           e.preventDefault()
-           var form = new FormData();
-           for(var file of allFilesList){
-               form.append("image",file);
-            }
-            var els=document.querySelectorAll('input, textarea');
-
-             for(var el of els){
-               if(el.type == "submit" || el.name == "Image" || el.id == "addr"){
-                continue;
-              }
-              if(el.name == "CategoryId" || el.name == "agentsInvited"){
-                if(el.checked)
-                 form.append(el.name,el.value);
-                 }
-                  else {
-                   form.append(el.name,el.value);
-                    }
-            }
-
-
-            var req = new XMLHttpRequest();
-            req.open("POST", "/Post/PostPageCreate", true);
-            req.onload = function(oEvent)
-            {
-
-                let res=JSON.parse(req.response)
-
-
-
-                if(res.status === 200){
-                      toastr.success('Post created successfully!')
+        function searchAgents(e){
+            var searchText = e.target.value;
+            var elements = document.querySelectorAll('.agentList');
+            elements.forEach(el => {
+                el.parentElement.classList.remove('hidden')
+                if(!el.nextElementSibling.innerHTML.match(searchText)){
+                    el.parentElement.classList.add('hidden')
                 }
-                else if(res.status == 400){
-            for (const [key, value] of Object.entries(res.data)) {
-  console.log(`${key}: ${value}`);
-}
-                    toastr.error('Something went wrong!')
-                } 
-            };
-
-          req.send(form);
-
-             return false;
-         }
-
-
-                var data = {};
-
-
-
-                function onChange(e){
-                    e.preventDefault();
-                    data = {
-                        ...data,
-                        [e.target.name]: e.target.value
-                    }
-
+            })
+            }
+            const handleSubmit=(e)=>{
+               e.preventDefault()
+               var form = new FormData();
+               for(var file of allFilesList){
+                   form.append("image",file);
                 }
-
-                    let fileInput = document.getElementById('inputGroupFile01');
-                    let imgContainer = document.getElementById('uploadedImages');
-                    let numOfFiles = document.getElementById('filesNumber');
-                        imgContainer.innerHTML = "";
-                        let allFilesList = [];
-
-                    function preview(){
-                    let fileList = [];
-
-                        for(i of fileInput.files){
-                            fileList.push(i);
-                            let fileAlreadyUploaded = allFilesList.some(file => file.name == i.name);
-
-                            if(!fileAlreadyUploaded){
-                            allFilesList.push(i)
-                            }
-
+                var els=document.querySelectorAll('input, textarea');
+                 for(var el of els){
+                   if(el.type == "submit" || el.name == "Image" || el.id == "addr"){
+                    continue;
+                  }
+                  if(el.name == "CategoryId" || el.name == "agentsInvited"){
+                    if(el.checked)
+                     form.append(el.name,el.value);
+                     }
+                      else {
+                       form.append(el.name,el.value);
                         }
-
-                        numOfFiles.textContent = `${allFilesList.length} Files Selected`;
-
-                        for(i of fileList){
-                            let reader = new FileReader();
-                            let figure = document.createElement("figure");
-
-                            reader.onload=()=>{
-
-                                let img = document.createElement("img");
-
-                                img.setAttribute("src",reader.result);
-                                figure.appendChild(img);
-                            }
-                            imgContainer.appendChild(figure);
-                            reader.readAsDataURL(i);
-                        }
-
+                }
+                var req = new XMLHttpRequest();
+                req.open("POST", "/Post/PostPageCreate", true);
+                req.onload = function(oEvent)
+                {
+                    let res=JSON.parse(req.response)
+                    if(res.status === 200){
+                          toastr.success('Post created successfully!')
                     }
-
+                    else if(res.status == 400){
+                for (const [key, value] of Object.entries(res.data)) {
+      document.getElementById(`${key}`).innerHTML = value;
+    }
+                        toastr.error('Something went wrong!')
+                    }
+                };
+              req.send(form);
+                 return false;
+             }
+                    var data = {};
+                    function onChange(e){
+                        e.preventDefault();
+                        data = {
+                            ...data,
+                            [e.target.name]: e.target.value
+                        }
+                    }
+                        let fileInput = document.getElementById('inputGroupFile01');
+                        let imgContainer = document.getElementById('uploadedImages');
+                        let numOfFiles = document.getElementById('filesNumber');
+                            imgContainer.innerHTML = "";
+                            let allFilesList = [];
+                        function preview(){
+                        let fileList = [];
+                            for(i of fileInput.files){
+                                fileList.push(i);
+                                let fileAlreadyUploaded = allFilesList.some(file => file.name == i.name);
+                                if(!fileAlreadyUploaded){
+                                allFilesList.push(i)
+                                }
+                            }
+                            numOfFiles.textContent = `${allFilesList.length} Files Selected`;
+                            for(i of fileList){
+                                let reader = new FileReader();
+                                let figure = document.createElement("figure");
+                                reader.onload=()=>{
+                                    let img = document.createElement("img");
+                                    img.setAttribute("src",reader.result);
+                                    figure.appendChild(img);
+                                }
+                                imgContainer.appendChild(figure);
+                                reader.readAsDataURL(i);
+                            }
+                        }
 </script>
 }
