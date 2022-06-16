@@ -244,19 +244,22 @@ namespace BrokerApp.Controllers
             {
                 return View("Error");
             }
+        }
         public IActionResult Ads(int? id)
         {
-            var post = this._db.Posts.Where(p => p.PostId == id).FirstOrDefault();
+            var post = this._Dbcontext.Posts.Where(p => p.PostId == id).FirstOrDefault();
             return View(post);
         }
 
         [HttpPost]
-        public IActionResult Ads(AdsPayments model)
+        public IActionResult Ads(AdsPaymentViewModel viewModel)
         {
-            this._db.AdsPaymentcs.Add(model);
-            this._db.SaveChanges();
+            AdsPayments ads = new AdsPayments();
+            var saveMapper = _mapper.Map<AdsPayments>(viewModel);
+            this._Dbcontext.AdsPaymentcs.Add(saveMapper);
+            this._Dbcontext.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Home");
         }
     }
 }

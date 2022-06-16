@@ -10,7 +10,7 @@
 <section>
     <div class="container">
 
-    <form action="">
+    <form method="post" asp-controller="Post" asp-action="Ads">
 
         <div class="row">
 
@@ -22,29 +22,29 @@
 
                 <div class="inputBox">
                     <span>full name :</span>
-                    <input type="text" name="name" placeholder="John Deo">
+                    <input type="text" name="fullName" placeholder="John Deo">
                 </div>
                 <div class="inputBox">
                     <span>email :</span>
                     <input type="email" name="email" placeholder="example@example.com">
                 </div>
-                <div class="inputBox">
+                <div class="inputBox" hidden>
                     <span>Id Post :</span>
-                    <input type="number" name="postId" value="@Model.PostId" disabled placeholder="#123">
+                    <input type="number" name="PostId" value="@Model.PostId" readonly placeholder="#123">
                 </div>
                 <div class="inputBox">
                     <span>How many people  :</span>
-                    <input type="number" placeholder="1 2 3 4">
+                    <input type="number" name="HowManyPeople" placeholder="1 2 3 4">
                 </div>
 
                 <div class="flex">
                     <div class="inputBox">
                         <span>Price :</span>
-                        <input type="number" placeholder="Euro">
+                        <input type="number" name="Price" placeholder="Euro">
                     </div>
                     <div class="inputBox">
                         <span>Days :</span>
-                        <input type="number" placeholder="1 2 3 4 ">
+                        <input type="number" name="Days" placeholder="Days">
                     </div>
                 </div>
 
@@ -60,25 +60,25 @@
                 </div>
                 <div class="inputBox">
                     <span>name on card :</span>
-                    <input type="text" placeholder="Mr. John Deo">
+                    <input type="text" name="NameOnCard" placeholder="Mr. John Deo">
                 </div>
                 <div class="inputBox">
                     <span>credit card number :</span>
-                    <input type="number" placeholder="1111-2222-3333-4444">
+                    <input type="number" name="CreditCardNumber" placeholder="1111-2222-3333-4444">
                 </div>
                 <div class="inputBox">
                     <span>exp month :</span>
-                    <input type="text" placeholder="january">
+                    <input type="text" name="ExpMonth" placeholder="january">
                 </div>
 
                 <div class="flex">
                     <div class="inputBox">
                         <span>exp year :</span>
-                        <input type="number" placeholder="2022">
+                        <input type="number" name="ExpYear" placeholder="2022">
                     </div>
                     <div class="inputBox">
                         <span>CVV :</span>
-                        <input type="text" placeholder="1234">
+                        <input type="text" name="CVV" placeholder="1234">
                     </div>
                 </div>
 
