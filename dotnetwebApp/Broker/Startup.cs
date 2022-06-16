@@ -29,7 +29,7 @@ namespace Broker
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("Lir"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
         }
 

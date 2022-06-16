@@ -108,47 +108,9 @@ namespace Broker.Controllers
             return View("PostPage", posts);
         }
 
-        public IActionResult MyPosts(int UseriId = 1, int pg = 1)
-        {
-            FilteredPostViewModel posts = new FilteredPostViewModel();
+        
 
-            posts.FilteredPosts = _db.Posts.Where(p => p.PostUserId == UseriId).ToList();
-
-            const int postPerPage = 2;
-            if (pg < 1)
-                pg = 1;
-
-            int postCount = posts.FilteredPosts.Count();
-            var pager = new Pagination(postCount, pg, postPerPage);
-
-            int postSkip = (pg - 1) * postPerPage;
-
-            posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
-            this.ViewBag.Pager = pager;
-
-            return View(posts);
-        }
-
-        public IActionResult ArchivedPosts(int id = 1, int pg = 1)
-        {
-            FilteredPostViewModel posts = new FilteredPostViewModel();
-            posts.FilteredPosts = _db.Posts.Where(x => x.PostId == id && x.IsArchived == true).ToList();
-
-
-            const int postPerPage = 2;
-            if (pg < 1)
-                pg = 1;
-
-            int postCount = posts.FilteredPosts.Count();
-            var pager = new Pagination(postCount, pg, postPerPage);
-
-            int postSkip = (pg - 1) * postPerPage;
-
-            posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
-            this.ViewBag.Pager = pager;
-
-            return View(posts);
-        }
+      
         public IActionResult PostPageCreate()
         {
 
