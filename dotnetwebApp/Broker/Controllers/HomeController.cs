@@ -4,12 +4,14 @@ using Broker.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Org.BouncyCastle.Crypto.Generators;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Bc=BCrypt.Net.BCrypt;
+using Bc = BCrypt.Net.BCrypt;
+
 
 namespace Broker.Controllers
 {
