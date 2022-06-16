@@ -25,7 +25,7 @@ namespace BrokerApp.Controllers
             this._webHostEnvironment = _webHostEnvironment;
         }
 
-        public IActionResult Archive(int id)
+        public IActionResult Archive(int? id)
         {
             var post = _Dbcontext.Posts.Where(p => p.PostId == id).FirstOrDefault();
             post.IsArchived = true;
