@@ -3,8 +3,9 @@ var startLong = -73.98545321;
 
 var options = {
     center: [startLat, startLong],
-    zoom: 14
+    zoom: 12
 }
+
 
 
 document.getElementById('lat').value = startLat;
@@ -21,12 +22,11 @@ var myMarker = L.marker([startLat, startLong], { title: "Coordinates", alt: "Coo
     document.getElementById('lat').value = lat;
     document.getElementById('lon').value = lon;
     latlongSearch(lat,lon)
+
 });
 
-
-function chooseAddr(lat1, lng1, address) {
-    console.log(address);
-    map.setView([lat1, lng1], 14);
+function chooseAddr(lat1, lng1) {
+    map.setView([lat1, lng1], 12);
     myMarker.setLatLng([lat1, lng1]);
     lat = lat1.toFixed(8);
     lon = lng1.toFixed(8);

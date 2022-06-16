@@ -101,11 +101,7 @@ window.onscroll = function () {
 }
 
 //change the inner html of navbar based on whether the user is logged in or not
-navListLeft.innerHTML +=
-    username == null
-        ? `
-<li id="SignIn" ><a href="#" >Sign In</a></li>`
-        : ``;
+
 
 navHeader.innerHTML +=
     username == null
@@ -124,8 +120,10 @@ navHeader.innerHTML +=
   </button>
   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
     <li><a class="dropdown-item active" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="Post/Postpagecreate">Create Post</a></li>
-    <li><a class="dropdown-item" href="Home/Postpage">All posts</a></li>
+    <li><a class="dropdown-item" href="/Post/Postpagecreate">Create Post</a></li>
+    <li><a class="dropdown-item" href="/Post/MyPosts">My posts</a></li>
+    <li><a class="dropdown-item" href="/Home/Postpage">All posts</a></li>
+    <li><a class="dropdown-item" href="/Post/ArchivedPosts">Archived posts</a></li>
     <li><hr class="dropdown-divider"></li>
     <li id="LogOut"><a class="dropdown-item" href="#">Log Out</a></li>
   </ul>
@@ -165,8 +163,8 @@ const nextBtn = document.querySelectorAll('.next');
 var indexes = {};
 
 //fetch('https://localhost:44359/Home/GetSomething').then(res => res.json()).then(data => {
-    //const prevBtn = document.querySelectorAll('.prev');
-    //const nextBtn = document.querySelectorAll('.next');
+//const prevBtn = document.querySelectorAll('.prev');
+//const nextBtn = document.querySelectorAll('.next');
 
 nextBtn.forEach(next => {
     next.addEventListener('click', e => switchSlide(e, 'next'));
@@ -209,7 +207,7 @@ function switchSlide(e, arg) {
     const gap = parentEl.offsetWidth / 20;
 
     if (slidesLength != 0) {
-        if (arg == 'next') { 
+        if (arg == 'next') {
             parentEl.style.left = `${(parentEl.offsetLeft - slideWidth) - gap}px`
             indexes[currentBtn]++;
         } else {

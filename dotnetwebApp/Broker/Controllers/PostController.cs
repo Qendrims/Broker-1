@@ -1,4 +1,4 @@
-﻿using Broker.ApplicationDB;
+using Broker.ApplicationDB;
 using Broker.Models;
 using Broker.ViewModels;
 using Microsoft.AspNetCore.Hosting;
@@ -16,38 +16,89 @@ namespace BrokerApp.Controllers
 {
     public class PostController : Controller
     {
-        private readonly ApplicationDbContext _Dbcontext;
+        private readonly ApplicationDbContext _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment)
         {
-            this._Dbcontext = _context;
+            this._db = _context;
             this._webHostEnvironment = _webHostEnvironment;
         }
 
         public IActionResult Archive(int? id)
         {
-            var post = _Dbcontext.Posts.Where(p => p.PostId == id).FirstOrDefault();
+            var post = _db.Posts.Where(p => p.PostId == id).FirstOrDefault();
             post.IsArchived = true;
-            _Dbcontext.Posts.Update(post);
-            _Dbcontext.SaveChanges();
+            _db.Posts.Update(post);
+            _db.SaveChanges();
 
             return RedirectToAction("PostPage");
+        }
+
+        //    int postCount = posts.FilteredPosts.Count();
+        //    var pager = new Pagination(postCount, pg, pageSize);
+
+        //    int postSkip = (pg - 1) * pageSize;
+
+        //    posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
+        //    this.ViewBag.Pager = pager;
+        //    return View(posts);
+        //   // return View(posts);
+        //}
+        public IActionResult MyPosts(int UseriId = 1, int pg = 1)
+        {
+            FilteredPostViewModel posts = new FilteredPostViewModel();
+
+            posts.FilteredPosts = _db.Posts.Where(p => p.PostUserId == UseriId).ToList();
+
+            const int postPerPage = 2;
+            if (pg < 1)
+                pg = 1;
+
+            int postCount = posts.FilteredPosts.Count();
+            var pager = new Pagination(postCount, pg, postPerPage);
+
+            int postSkip = (pg - 1) * postPerPage;
+
+            posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
+            this.ViewBag.Pager = pager;
+
+            return View(posts);
+        }
+        public IActionResult ArchivedPosts(int id = 1, int pg = 1)
+        {
+            FilteredPostViewModel posts = new FilteredPostViewModel();
+            posts.FilteredPosts = _db.Posts.Where(x => x.PostId == id && x.IsArchived == true).ToList();
+
+
+            const int postPerPage = 2;
+            if (pg < 1)
+                pg = 1;
+
+            int postCount = posts.FilteredPosts.Count();
+            var pager = new Pagination(postCount, pg, postPerPage);
+
+            int postSkip = (pg - 1) * postPerPage;
+
+            posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
+            this.ViewBag.Pager = pager;
+
+            return View(posts);
         }
 
         public IActionResult PostPage(string category, string city, int pg = 1)
         {
 
             FilteredPostViewModel posts = new FilteredPostViewModel();
-            posts.FilteredCategories = _Dbcontext.Categories.ToList();
-            posts.Cities = _Dbcontext.Posts.Where(p => !string.IsNullOrEmpty(p.City)).Select(m => m.City).Distinct().ToList();
+            posts.FilteredCategories = _db.Categories.ToList();
+            posts.Cities = _db.Posts.Where(p => !string.IsNullOrEmpty(p.City)).Select(m => m.City).Distinct().ToList();
 
             Category cat = new Category();
             if (category != null)
             {
-                cat = _Dbcontext.Categories.First(c => c.CategoryName == category);
+                cat = _db.Categories.First(c => c.CategoryName == category);
             }
-            var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
+            var result = _db.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
                 .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => p.IsArchived == false).ToList();
             posts.FilteredPosts = result;
             posts.Category = category;
@@ -71,7 +122,7 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult Detail(int? id)
         {
-            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
+            var post1 = this._db.Posts.Where(p => p.PostId == id).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
 
             //Image img = this._Dbcontext.Images.Where(i => i.PostId == id).FirstOrDefault();
 
@@ -93,8 +144,8 @@ namespace BrokerApp.Controllers
             PostViewModel createPostView = new PostViewModel();
 
 
-            createPostView.categories = this._Dbcontext.Categories.ToList();
-            createPostView.agents = this._Dbcontext.Agents.ToList();
+            createPostView.categories = this._db.Categories.ToList();
+            createPostView.agents = this._db.Agents.ToList();
             return View(createPostView);
         }
         [HttpPost]
@@ -118,7 +169,7 @@ namespace BrokerApp.Controllers
             post.PostUserId = 2;
             if (ModelState.IsValid)
             {
-                this._Dbcontext.Posts.Add(post);
+                this._db.Posts.Add(post);
 
 
                 foreach (var imageFile in postView.Image)
@@ -139,7 +190,7 @@ namespace BrokerApp.Controllers
                     image.ImageName = fullFileName;
                     image.Post = post;
                     image.Type = "jpg";
-                    this._Dbcontext.PostImages.Add(image);
+                    this._db.PostImages.Add(image);
                 }
 
                 if (postView.CategoryId != null)
@@ -149,7 +200,7 @@ namespace BrokerApp.Controllers
                         PostCategory postCategory = new PostCategory();
                         postCategory.CategoryId = catId;
                         postCategory.Post = post;
-                        this._Dbcontext.PostCategories.Add(postCategory);
+                        this._db.PostCategories.Add(postCategory);
                     }
                 }
 
@@ -163,12 +214,12 @@ namespace BrokerApp.Controllers
                         inv.SentBy = post.PostUserId;
                         inv.SentTo = agent;
 
-                        this._Dbcontext.Invites.Add(inv);
+                        this._db.Invites.Add(inv);
                     }
                 }
 
 
-                _Dbcontext.SaveChanges();
+                _db.SaveChanges();
 
                 return Json(new { status = 200, message = "Post created successfully" });
             } else
@@ -201,7 +252,7 @@ namespace BrokerApp.Controllers
             }
             else
             {
-                var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(x => x.Images).FirstOrDefault();
+                var post = this._db.Posts.Where(x => x.PostId == id).Include(x => x.Images).FirstOrDefault();
                 PostDetailViewModel postViewModel = new PostDetailViewModel();
                 postViewModel.Title = post.Title;
                 postViewModel.Description = post.Description;
@@ -219,7 +270,7 @@ namespace BrokerApp.Controllers
             }
             else
             {
-                var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(x => x.Images).FirstOrDefault();
+                var post = this._db.Posts.Where(x => x.PostId == id).Include(x => x.Images).FirstOrDefault();
                 PostDetailViewModel postViewModel = new PostDetailViewModel();
                 postViewModel.Title = post.Title;
                 postViewModel.Description = post.Description;
@@ -234,7 +285,7 @@ namespace BrokerApp.Controllers
         [HttpPost]
         public IActionResult Edit(int id, PostDetailViewModel ViewModel)
         {
-            var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(e => e.Images).FirstOrDefault();
+            var post = this._db.Posts.Where(x => x.PostId == id).Include(e => e.Images).FirstOrDefault();
 
 
 
@@ -243,8 +294,8 @@ namespace BrokerApp.Controllers
             ViewModel.Image = post.Images.FirstOrDefault();
             post.Price = ViewModel.Price;
 
-            this._Dbcontext.Update(post);
-            this._Dbcontext.SaveChanges();
+            this._db.Update(post);
+            this._db.SaveChanges();
             return View("Detail", ViewModel);
 
         }
@@ -256,13 +307,19 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var postToDelete = this._Dbcontext.Posts.Where(x => x.PostId == id).FirstOrDefault();
-            this._Dbcontext.Posts.Remove(postToDelete);
-            this._Dbcontext.SaveChanges();
+            var postToDelete = this._db.Posts.Where(x => x.PostId == id).FirstOrDefault();
+            this._db.Posts.Remove(postToDelete);
+            this._db.SaveChanges();
 
             return RedirectToAction("PostPageCreate");
         }
 
-
+        public IActionResult DeleteAgent(int? id)
+        {
+            var agent = _db.Agents.Find(id);
+            _db.Agents.Remove(agent);
+            _db.SaveChanges();
+            return View();
+        }
     }
 }
