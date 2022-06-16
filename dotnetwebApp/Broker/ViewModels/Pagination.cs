@@ -14,7 +14,7 @@ namespace Broker.ViewModels
         {
 
         }
-        public Pagination(int totalItems, int page, int pageSize = 5)
+        public Pagination(int totalItems, int page, int pageSize)
         {
             int totalPages = (int)Math.Ceiling((decimal)totalItems / (decimal)pageSize);
             int currentPage = page;

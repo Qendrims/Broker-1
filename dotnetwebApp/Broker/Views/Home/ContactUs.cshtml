@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+ <link href="@Url.Content("~/css/contact-us.css")" rel="stylesheet" type="text/css" />
+
+ <div class="contact">
+        <h1>Contact us</h1>
+        <form action="" class="forma">
+            <label for="emri">Emri</label>
+            <input name="emri" type="text" id="name-input" placeholder="Emri" class="form-control"/>
+            <p id="name-error"></p>
+            <label for="mbiemri">Mbiemri</label>
+            <input name="mbiemri" type="text" id="lastname-input" placeholder="Mbiemri" class="form-control"/>
+            <p id="lastname-error"></p>
+            <label for="email">Email</label>
+            <input name="email" type="email" id="email-input" placeholder="Email" class="form-control"/>
+            <p id="email-error"></p>
+            <label for="koment">Komenti juaj</label>
+            <textarea name="koment" id="koment-input" style="resize: none"></textarea>
+            <p id="koment-error"></p>
+            <button type="submit">Submit</button>
+            <p id="form-error"></p>
+        </form> 
+    </div>
+
+    <script src=~/js/contact-us.js></script>

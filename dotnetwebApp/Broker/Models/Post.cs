@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using BrokerApp.Models;
 using System.Collections;
-using System.Collections.Generic;
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -36,7 +37,9 @@ namespace Broker.Models
 
         public bool IsActive { get; set; } = true;
 
-        
+        public virtual ICollection<PostImage> Images { get; set; }
+
+
 
     }
 }
