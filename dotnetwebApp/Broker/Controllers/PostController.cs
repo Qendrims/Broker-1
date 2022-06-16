@@ -36,16 +36,56 @@ namespace Broker.Controllers
         //    return View(posts);
         //   // return View(posts);
         //}
-         
-        public IActionResult PostPage(string category, string city,int pg=1)
+        public IActionResult MyPosts(int UseriId = 1, int pg = 1)
+        {
+            FilteredPostViewModel posts = new FilteredPostViewModel();
+
+            posts.FilteredPosts = _db.Posts.Where(p => p.PostUserId == UseriId).ToList();
+
+            const int postPerPage = 2;
+            if (pg < 1)
+                pg = 1;
+
+            int postCount = posts.FilteredPosts.Count();
+            var pager = new Pagination(postCount, pg, postPerPage);
+
+            int postSkip = (pg - 1) * postPerPage;
+
+            posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
+            this.ViewBag.Pager = pager;
+
+            return View(posts);
+        }
+        public IActionResult ArchivedPosts(int id = 1, int pg = 1)
+        {
+            FilteredPostViewModel posts = new FilteredPostViewModel();
+            posts.FilteredPosts = _db.Posts.Where(x => x.PostId == id && x.IsArchived == true).ToList();
+
+
+            const int postPerPage = 2;
+            if (pg < 1)
+                pg = 1;
+
+            int postCount = posts.FilteredPosts.Count();
+            var pager = new Pagination(postCount, pg, postPerPage);
+
+            int postSkip = (pg - 1) * postPerPage;
+
+            posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
+            this.ViewBag.Pager = pager;
+
+            return View(posts);
+        }
+
+        public IActionResult PostPage(string category, string city, int pg = 1)
         {
 
             FilteredPostViewModel posts = new FilteredPostViewModel();
-            posts.FilteredCategories = _db.Categories.ToList();  
+            posts.FilteredCategories = _db.Categories.ToList();
             Category cat = new Category();
-            if(category != null)
+            if (category != null)
             {
-             cat = _db.Categories.First(c => c.CategoryName == category);
+                cat = _db.Categories.First(c => c.CategoryName == category);
             }
             var result = _db.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
                 .Where(p => city == null || p.City.ToLower() == city.ToLower()).ToList();
