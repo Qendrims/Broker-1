@@ -13,7 +13,12 @@ namespace Broker.Mapping
                 .ForMember(x => x.Image, y => y.MapFrom(b => b.Images))
                 .ForMember(x => x.OwnerId, y => y.MapFrom(b => b.PostUserId))
                 .ForMember(x => x.OwnerName, y => y.MapFrom(b => b.User.Name + " " + b.User.LastName));
-            CreateMap<Post, PostViewModel>();
+            
+            CreateMap<PostViewModel, Post>();
         }
     }
 }
+
+//.ForMember(x=>x.Title,y=>y.MapFrom(b=>b.Title))
+               //.ForMember(x => x.Description, y => y.MapFrom(b => b.Description))
+                //.ForMember(x => x.Price, y => y.MapFrom(b => b.Price))

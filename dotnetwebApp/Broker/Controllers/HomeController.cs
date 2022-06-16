@@ -15,43 +15,11 @@ namespace Broker.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
-        public HomeController(ILogger<HomeController> logger,ApplicationDbContext db)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
         {
             _logger = logger;
             _db = db;
         }
-
-        //[HttpGet]
-        //public JsonResult GetSomething()
-        //{
-
-
-        //    List<PostViewModel> posts = new List<PostViewModel>();
-        //    PostViewModel post = new PostViewModel("Home");
-        //    PostViewModel post1 = new PostViewModel("Flat");
-        //    PostViewModel post2 = new PostViewModel("Office");
-        //    PostViewModel post3 = new PostViewModel("Home");
-        //    PostViewModel post4 = new PostViewModel("Flat");
-        //    PostViewModel post5 = new PostViewModel("Home");
-        //    PostViewModel post6 = new PostViewModel("Flat");
-        //    PostViewModel post7 = new PostViewModel("Flat");
-        //    posts.Add(post);
-        //    posts.Add(post1);
-        //    posts.Add(post2);
-        //    posts.Add(post3);
-        //    posts.Add(post4);
-        //    posts.Add(post5);
-        //    posts.Add(post6);
-        //    posts.Add(post7);
-
-
-        //    //HomeViewModel HomeModel = new HomeViewModel();
-        //    //HomeModel.posts = posts;
-        //    //HomeModel.categories = new HashSet<string>(posts.Select(x => x.Category)).ToList();
-        //    //var data = JsonConvert.SerializeObject(HomeModel.categories);
-
-        //    return Json(data);
-        //}
 
         public IActionResult Index()
         {
@@ -60,16 +28,16 @@ namespace Broker.Controllers
 
             var categories = this._db.Categories.ToList();
 
-            foreach(var category in categories)
+            foreach (var category in categories)
             {
                 HomeViewModel model = new HomeViewModel();
 
                 model.category = category;
                 model.posts = this._db.Posts.Where(p => p.PostCategories.Any(x => x.CategoryId == category.CategoryId)).ToList();
 
-               if(model.posts.Count != 0)
+                if (model.posts.Count != 0)
                 {
-                homeViewModels.Add(model);
+                    homeViewModels.Add(model);
                 }
             }
             return View(homeViewModels);
@@ -103,6 +71,6 @@ namespace Broker.Controllers
         {
             return View();
         }
-        
+
     }
 }
