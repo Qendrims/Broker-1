@@ -68,13 +68,13 @@ namespace Broker.Controllers
             return View(posts);
         }
 
-        public IActionResult ArchivedPosts(int id=1, int pg = 1)
+        public IActionResult ArchivedPosts(int id = 1, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
-            posts.FilteredPosts= _db.Posts.Where(x => x.PostId == id && x.IsArchived == true).ToList();
+            posts.FilteredPosts = _db.Posts.Where(x => x.PostId == id && x.IsArchived == true).ToList();
 
 
-            const int postPerPage = 2; 
+            const int postPerPage = 2;
             if (pg < 1)
                 pg = 1;
 
@@ -87,7 +87,7 @@ namespace Broker.Controllers
             this.ViewBag.Pager = pager;
 
             return View(posts);
-
+        }
         public IActionResult PostPageCreate()
         {
 
