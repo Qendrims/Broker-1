@@ -1,0 +1,444 @@
+﻿@{
+    ViewData["Title"] = "PostPageCreate";
+}
+@model CreatePostViewModel;
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+      crossorigin="" />
+
+<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+        crossorigin=""></script>
+
+@section Styles
+{
+
+<style type="text/css">
+    #lat, #lon {
+        text-align: right
+    }
+
+    .address {
+        cursor: pointer;
+    }
+
+        .address:not(:last-child) {
+            border-bottom: 1px solid black
+        }
+
+        .address:hover {
+            color: #AA0000;
+            text-decoration: underline
+        }
+
+    #map {
+        height: 400px;
+        min-width: 70%;
+        margin-left: 20px;
+    }
+
+    #addr {
+        width: 80% !important;
+    }
+
+        #addr:focus {
+            outline: none !important;
+        }
+
+    .btn {
+        margin: 5px !important;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    input {
+        margin-bottom: 5px;
+    }
+
+    .wrapper {
+        margin-top: 10px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url(../../wwwroot/Assets/Images/grid1.jpg);
+    }
+
+    .post-preview {
+        width: 45%;
+        height: 90vh;
+    }
+
+    .div-text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #5885AF;
+        width: 45%;
+        border-radius: 5px;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    .btn-primary {
+        margin: 20px 40px;
+    }
+
+    #inner-posts {
+        border: 1px solid black;
+    }
+
+        #inner-posts h1 {
+            font-size: 20px;
+            padding: 2% 2%;
+        }
+
+        #inner-posts p {
+            font-size: 15px;
+            padding: 2% 2%;
+        }
+
+    #search {
+        display: flex;
+        align-items: center;
+    }
+
+    .hidden{
+        display: none;
+    }
+
+    #results {
+        background-color: #fff;
+        width: 80%;
+        margin-top: -8px;
+        border-radius: 5px;
+        padding-left: 5px;
+    }
+
+    .custom-file {
+        height: auto !important;
+    }
+
+    #uploadedImages {
+        width: 90%;
+        position: relative;
+        margin: auto;
+        display: flex;
+        justify-content: space-evenly;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    figure {
+        width: 45%;
+    }
+
+    img {
+        width: 100%;
+    }
+</style>
+}
+
+
+<section>
+    <div class="wrapper">
+        <div class="row col-md-8 col-md-offset-2 div-text">
+            <h1>Create post</h1>
+
+            <form id="myForm" method="post" enctype="multipart/form-data" asp-controller="Post" asp-action="PostPageCreate">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Title</label>
+                    <input type="text"
+                           name="title"
+                           class="form-control together"
+                           id="exampleInputEmail1"
+                           aria-describedby="emailHelp"
+                           placeholder="Enter title" /><br />
+                    @*<small id="emailHelp" class="form-text text-muted">Please fill your title.</small>*@
+                </div>
+
+                <div class="custom-file">
+                    <input type="file"
+                           name="Image"
+                           class="custom-file-input together"
+                           id="inputGroupFile01"
+                           onchange="preview()"
+                           multiple
+                           aria-describedby="inputGroupFileAddon01" />
+                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    <p id="filesNumber">No files chosen</p>
+                    <div id="uploadedImages"></div>
+                </div>
+                <br />
+                <div class="input-group">
+                    <textarea class="form-control together"
+                              name="description"
+                              aria-label="With textarea"
+                              id="description"
+                              placeholder="description"></textarea>
+                </div>
+                <br />
+              @*  <select class="form-select" aria-label="Default select example">
+                    <option selected>Categories</option>
+                    <option value="1">House</option>
+                    <option value="2">Apartment</option>
+                    <option value="3">Office</option>
+                </select>*@
+
+                <label>Choose Categories</label>
+                <br />
+                @foreach(var cat in @Model.categories)
+                {
+                   
+                    <input name="CategoryId" type="checkbox" value="@cat.CategoryId" /> @cat.CategoryName
+                }
+                <br />
+                <div class="input-group together">
+                    <input type="text"
+                           class="form-control"
+                           id="price"
+                           name="Price"
+                           aria-label="Dollar amount (with dot and two decimal places)" />
+                    <div class="input-group-append flex">
+                        <span class="input-group-text">$</span>
+                        <span class="input-group-text">0.00</span>
+                    </div>
+                </div>
+                <br />
+
+
+                <b>Search Address</b>
+                <div id="search">
+                    <input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
+                    <button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
+                </div>
+
+
+                <div id="results"></div>
+
+
+                <div style="display: flex; flex-direction: column;">
+                    <p>Please mark the address on map</p>
+                    <div id="map"></div>
+                    <h4 style="text-align: center" id="currAddress"></h4>
+                </div>
+
+                <div class="coord-input">
+
+                    <b>Coordinates</b>
+                    <input type="text" name="Latitude" id="lat" size=12 class='form-control' value="" readonly>
+                    <input type="text" name="Longitude" id="lon" size=12 class='form-control' value="" readonly>
+                </div>
+
+
+                <label>City</label>
+                <input type="text" name="City" id="city" class="form-control disabled" readonly />
+                <label>Country</label>
+                <input type="text" name="Country" id="country" class="form-control disabled" readonly />
+                <label>Neighbourhood</label>
+                <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly />
+                <label>Road</label>
+                <input type="text" name="Street" id="road" class="form-control disabled" readonly />
+                <label>State</label>
+                <input type="text" name="State" id="state" class="form-control disabled" readonly />
+                <label>House Number</label>
+                <input type="number" name="HouseNumber" id="housenumber" class="form-control disabled" readonly />
+                <label>Zip Code</label>
+                <input type="number" name="ZipCode" id="zipcode" class="form-control disabled" readonly />
+
+                 <br />
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
+                  Send Invitation
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Agents</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                          <input type="text" class="form-control" id="searchAgents" />
+                        @foreach(var ag in @Model.agents){
+                            <div>
+                            <input type="checkbox" name="agentsInvited" class="agentList" value="@ag.UserId" /><span>@ag.Name @ag.LastName - @ag.City</span>
+                        </div>
+                        }
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Send invite</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                 <br />
+
+                <input type="submit" class="btn btn-primary" value="Submit" />
+            </form>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+@section Scripts{
+<script src="~/js/CreatePostMap.js"></script>
+<script>
+
+      $(document).ready(()=>{
+
+          document.getElementById('searchAgents').addEventListener('keyup',searchAgents)
+
+              document.querySelectorAll('input, textarea').forEach(inp => {
+              inp.addEventListener('change',onChange)
+          })
+
+          document.querySelector('form').addEventListener('submit',handleSubmit)
+
+
+      })
+
+      function searchAgents(e){
+          var searchText = e.target.value;
+
+          //if(e.target.value == ""){
+          //    return;
+          //} 
+          var elements = document.querySelectorAll('.agentList');
+          elements.forEach(el => {
+              el.parentElement.classList.remove('hidden')
+              if(!el.nextElementSibling.innerHTML.match(searchText)){
+                  el.parentElement.classList.add('hidden')
+              }
+          })
+      }
+
+
+      const handleSubmit=(e)=>{
+          e.preventDefault()
+          var form = new FormData();
+          for(var file of allFilesList){
+
+              form.append("image",file);
+          }
+          var els=document.querySelectorAll('input, textarea');
+
+          for(var el of els){
+           if(el.type == "submit" || el.name == "Image" || el.id == "addr"){
+               continue;
+           }
+
+           if(el.name == "CategoryId" || el.name == "agentsInvited"){
+               if(el.checked)
+                form.append(el.name,el.value);
+           } 
+           else {
+               form.append(el.name,el.value);
+           }
+
+           //if(el.name == "CategoryId" && el.checked){
+           //    form.append(el.name,el.value);
+           //}else if(el.name == "CategoryId" && !el.checked){
+           //    continue;
+           //}
+
+           //    form.append(el.name,el.value);
+          }
+
+
+           var req = new XMLHttpRequest();
+  req.open("POST", "/Post/PostPageCreate", true);
+  req.onload = function(oEvent) {
+ console.log(req);
+  };
+
+  req.send(form);
+
+    //      $.ajax({
+    //          type: "post",
+    //          url: "/Post/PostPageCreate",
+    //          method:"post",
+    //          data: form,
+    //          dataType: "json",
+    //          contentType: "multipart/form-data; charset=utf-8",
+    //          processData: false,
+    //          success: function(response){
+    //              //if request if made successfully then the response represent the data
+    //              console.log('u perfundua me sukses')
+    //              $( "#result" ).empty().append( response );
+    //          }
+    //});
+          
+          return false;
+      }
+
+
+      var data = {};
+
+
+
+      function onChange(e){
+          e.preventDefault();
+          data = {
+              ...data,
+              [e.target.name]: e.target.value
+          }
+
+      }
+
+          let fileInput = document.getElementById('inputGroupFile01');
+          let imgContainer = document.getElementById('uploadedImages');
+          let numOfFiles = document.getElementById('filesNumber');
+              imgContainer.innerHTML = "";
+              let allFilesList = [];
+
+          function preview(){
+          let fileList = [];
+
+              for(i of fileInput.files){
+                  fileList.push(i);
+                  let fileAlreadyUploaded = allFilesList.some(file => file.name == i.name);
+
+                  if(!fileAlreadyUploaded){
+                  allFilesList.push(i)
+                  }
+ 
+              }
+
+              numOfFiles.textContent = `${allFilesList.length} Files Selected`;
+
+              for(i of fileList){
+                   let reader = new FileReader();
+                  let figure = document.createElement("figure");
+
+                  reader.onload=()=>{
+
+                      let img = document.createElement("img");
+
+                      img.setAttribute("src",reader.result);
+                      figure.appendChild(img);
+                  }
+                  imgContainer.appendChild(figure);
+                  reader.readAsDataURL(i);
+              }
+
+          }
+
+</script>
+}

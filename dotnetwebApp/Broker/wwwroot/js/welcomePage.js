@@ -111,7 +111,7 @@ navHeader.innerHTML +=
     username == null
         ? `
     <ul class="nav-list" id="list2">
-      <li id="Buy" ><a href="Post/PostPage">Posts</a></li>
+      <li id="Buy" ><a href="/Post/PostPage">Posts</a></li>
       <li id="Sell"><a href="#">Sell</a></li>
       <li id="Rent"><a href="#">Rent</a></li>
       <li id="Agents"><a href="#">Agents</a></li>
@@ -134,7 +134,7 @@ navHeader.innerHTML +=
 
 let signIn = document.getElementById("SignIn");
 signIn?.addEventListener("click", () => {
-    location.href = ("Home/Login");
+    location.href = ("/Home/Login");
 });
 
 let logout = document.getElementById('LogOut');
