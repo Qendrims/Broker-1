@@ -13,7 +13,7 @@ namespace Broker.Models
         public string Email { get; set; }
         public DateTime Birthday { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } 
         public string Telephone { get; set; }
         public string Street { get; set; }
         public string City { get; set; }

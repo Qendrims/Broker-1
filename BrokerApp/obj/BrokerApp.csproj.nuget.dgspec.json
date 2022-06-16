@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HP\\Desktop\\Broker-1\\BrokerApp\\BrokerApp.csproj": {}
+    "C:\\Users\\alban\\OneDrive\\Documents\\Broker-1\\BrokerApp\\BrokerApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HP\\Desktop\\Broker-1\\BrokerApp\\BrokerApp.csproj": {
+    "C:\\Users\\alban\\OneDrive\\Documents\\Broker-1\\BrokerApp\\BrokerApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Desktop\\Broker-1\\BrokerApp\\BrokerApp.csproj",
+        "projectUniqueName": "C:\\Users\\alban\\OneDrive\\Documents\\Broker-1\\BrokerApp\\BrokerApp.csproj",
         "projectName": "BrokerApp",
-        "projectPath": "C:\\Users\\HP\\Desktop\\Broker-1\\BrokerApp\\BrokerApp.csproj",
-        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Desktop\\Broker-1\\BrokerApp\\obj\\",
+        "projectPath": "C:\\Users\\alban\\OneDrive\\Documents\\Broker-1\\BrokerApp\\BrokerApp.csproj",
+        "packagesPath": "C:\\Users\\alban\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\alban\\OneDrive\\Documents\\Broker-1\\BrokerApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\alban\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -39,30 +39,6 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "dependencies": {
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[6.0.5, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[6.0.5, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[6.0.5, )"
-            },
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
-              "target": "Package",
-              "version": "[6.0.5, )"
-            },
-            "Swashbuckle.AspNetCore": {
-              "target": "Package",
-              "version": "[6.3.0, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -73,15 +49,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
         }
       }
     }

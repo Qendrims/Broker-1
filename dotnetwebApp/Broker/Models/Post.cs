@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using BrokerApp.Models;
+using Broker.Models;
 using System.Collections;
 
 using System.ComponentModel.DataAnnotations;
