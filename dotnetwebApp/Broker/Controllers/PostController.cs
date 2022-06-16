@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Broker.ApplicationDB;
 using Broker.FileHelper;
 using Broker.Models;
@@ -244,6 +244,19 @@ namespace BrokerApp.Controllers
             {
                 return View("Error");
             }
+        public IActionResult Ads(int? id)
+        {
+            var post = this._db.Posts.Where(p => p.PostId == id).FirstOrDefault();
+            return View(post);
+        }
+
+        [HttpPost]
+        public IActionResult Ads(AdsPayments model)
+        {
+            this._db.AdsPaymentcs.Add(model);
+            this._db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }
