@@ -158,8 +158,8 @@ const nextBtn = document.querySelectorAll('.next');
 var indexes = {};
 
 //fetch('https://localhost:44359/Home/GetSomething').then(res => res.json()).then(data => {
-    //const prevBtn = document.querySelectorAll('.prev');
-    //const nextBtn = document.querySelectorAll('.next');
+//const prevBtn = document.querySelectorAll('.prev');
+//const nextBtn = document.querySelectorAll('.next');
 
 nextBtn.forEach(next => {
     next.addEventListener('click', e => switchSlide(e, 'next'));
@@ -202,7 +202,7 @@ function switchSlide(e, arg) {
     const gap = parentEl.offsetWidth / 20;
 
     if (slidesLength != 0) {
-        if (arg == 'next') { 
+        if (arg == 'next') {
             parentEl.style.left = `${(parentEl.offsetLeft - slideWidth) - gap}px`
             indexes[currentBtn]++;
         } else {

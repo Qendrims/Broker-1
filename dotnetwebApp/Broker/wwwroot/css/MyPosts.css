@@ -16,12 +16,14 @@ html {
     font-size: 62.5%;
     overflow-x: hidden;
 }
+
 .posts-container {
-    margin-top:2%;
+    margin-top: 2%;
     display: grid;
-    grid-template-columns:1fr 1fr 1fr;
-    grid-gap:2%;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 2%;
 }
+
 .post {
     display: flex;
     flex-direction: column;
@@ -31,31 +33,38 @@ html {
     align-items: center;
     padding: 5%;
 }
+
     .post:hover {
         transition: 3s step-start;
         -webkit-box-shadow: inset 13px 165px 211px 188px rgba(211,216,232,1);
         -moz-box-shadow: inset 13px 165px 211px 188px rgba(211,216,232,1);
         box-shadow: inset 13px 165px 211px 188px rgba(211,216,232,1);
     }
-.post img{
-    width:350px;
-}
-.post h3{
-    color:darkblue;
-    margin:2%;
-}
-.post p{
-    color:orangered;
-    font-size:12px;
-}
-.post a{
-    text-decoration:none;
-    font-size:14px;
-    color:darkolivegreen;
-}
-.post a:hover {
-    color:darkgreen;
- }
+
+    .post img {
+        width: 350px;
+    }
+
+    .post h3 {
+        color: darkblue;
+        margin: 2%;
+    }
+
+    .post p {
+        color: orangered;
+        font-size: 12px;
+    }
+
+    .post a {
+        text-decoration: none;
+        font-size: 14px;
+        color: darkolivegreen;
+    }
+
+        .post a:hover {
+            color: darkgreen;
+        }
+
 .icons {
     margin-left: 18px;
 }

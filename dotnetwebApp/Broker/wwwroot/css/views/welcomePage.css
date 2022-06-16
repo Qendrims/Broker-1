@@ -247,12 +247,9 @@
 
 /*Pjesa e footer balline*/
 
-
-
-
 .homepage-footer{
     width: 100%;
-    height: 45vh;
+    height: 65vh;
     background-color: #52688F;
 }
 .homepage-footer-grid{
@@ -269,12 +266,26 @@
     margin-top: 5%;
     margin-left: 9%;
 }
-.sectionFirstItem{
+#sectionFirstItem{
     text-decoration: none;
     color: var(--hoverBlue);
     font-size: 28px;
     text-align: left;
     margin: 2%;
+}
+.section1 h1{
+    color: var(--hoverBlue);
+    font-size: 22px;
+    font-weight: 500;
+    text-align: left;
+    margin: 2%;
+}
+.section1 p{
+    color: var(--hoverBlue);
+    font-size: 16px;
+    text-align: justify;
+    margin: 2%;
+    font-weight: 200;
 }
 .section1 a, .section2 a{
     text-decoration: none;
@@ -282,10 +293,10 @@
     color: #063970;
 }
 
-.section2 p, .section1 p {
+.section2 p{
     color: var(--hoverBlue);
-    letter-spacing: 1px;
-    margin: 2%;
+   letter-spacing: 1px;
+   margin: 2%;
 }
 #newsletterInput{
     width: 65%;
@@ -344,220 +355,3 @@
     font-weight: 100;
     text-align: center;
 }
-
-
-    
-
-
-
-/*
-
-    .homepage-footer-grid {
-    widht: 100%;
-    height: 30vh;
-    background-color: #3d5a80;
-}
-.homepage-footer-grid ul{
-    display:flex;
-    flex-direction:row;
-}
-.homepage-footer-grid li{
-    list-style:none;
-    margin:2%;
-}
-.homepage-footer-grid a{
-    text-decoration:none;
-}
-*/
-
-
-/* BLEONA
-
-
-html, body, div, p, h1, h2, h3, h4, h5, h6,
-ul, ol, li, dl, dt, dd,
-form, fieldset, caption, table, tr, td, th,
-address, blockquote, img {
-    margin: 0;
-    padding: 0;
-}
-
-img, fieldset {
-    border: none;
-}
-
-*, *:after, *:before {
-    box-sizing: border-box;
-    flex: 1 0 auto;
-}
-
-hr {
-    display: none;
-}
-
-html, body {
-    height: 100%;
-}
-
-body, button, input, table, textarea, select {
-    font: normal 1em/1.5 "poppins",arial,helvetica,sans-serif;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-}
-
-    h1,
-    body > footer {
-        flex-grow: 0;
-        background: #121315;
-        color: #AAA;
-    }
-
-h1 {
-    text-align: center;
-    padding: 0.5rem;
-}
-
-.footerExtras {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: clamp(1rem, 4vw, 3rem);
-    gap: clamp(1.5rem, 4vw, 3rem);
-}
-
-    .footerExtras h2 {
-        padding-bottom: 0.5em;
-        font-size: clamp(1.25em, 2.5vw, 1.5em);
-        color: #FFF;
-    }
-
-body > footer ul {
-    list-style: none;
-}
-
-body > footer a {
-    text-decoration: none;
-    color: #ABC;
-}
-
-body > footer p {
-    text-align: justify;
-    padding-bottom: 1.5rem;
-}
-
-body > footer .links {
-    flex-grow: 0;
-}
-
-.aboutAndSocial,
-.newsletterSignup {
-    width: 25%;
-    min-width: 18em;
-    max-width: 24em;
-}
-
-    .newsletterSignup input {
-        width: 100%;
-    }
-
-.footerMenu {
-    display: flex;
-    width: 100%;
-    text-align: right;
-    padding: 1rem clamp(1rem, 3vw, 2rem);
-    background: #222;
-}
-
-    .footerMenu ul {
-        flex-grow: 0;
-    }
-
-    .footerMenu li {
-        display: inline;
-        margin-right: 0.5rem;
-    }
-
-.footerSocial {
-    text-align: center;
-    white-space: nowrap;
-}
-
-    .footerSocial li {
-        display: inline;
-        margin: 0 min(1rem, 2vw);
-    }
-
-
-    .footerSocial a {
-        position: relative;
-        color: #BCD;
-    }
-
-    .footerSocial i {
-        font-size: 2rem;
-    }
-
-    .footerSocial span {
-        position: absolute;
-        left: -999em;
-    }
-
-
-.newsletterSignup input,
-.newsletterSignup button {
-    display: block;
-    width: 100%;
-    padding: 0.25em 0.5em;
-    border: 0;
-    border-radius: 0.25em;
-}
-
-.newsletterSignup input {
-    margin-top: 0.5em;
-    background: #606668;
-    color: #FFF;
-}
-
-.newsletterSignup button {
-    margin-top: -0.75em;
-}
-
-@media (max-width:40em) {
-    body > footer,
-    body > footer p {
-        text-align: center;
-    }
-
-    .footerExtras section:first-child,
-    .newsletterSignup {
-        width: 100%;
-        padding: 0 clamp(1rem, 4vw, 3rem);
-    }
-
-    .links {
-        flex-grow: 1;
-        width: 34%;
-        min-width: 10em;
-    }
-}
-
-@media (max-width:30em) {
-    .footerMenu {
-        display: block;
-        text-align: center;
-    }
-
-        .footerMenu ul {
-            padding-bottom: 0.5rem;
-        }
-
-        .footerMenu li:last-child {
-            margin-right: 0;
-        }
-}
-
-
-    */
