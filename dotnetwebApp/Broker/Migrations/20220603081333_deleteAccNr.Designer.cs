@@ -4,14 +4,16 @@ using Broker.ApplicationDB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Broker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220603081333_deleteAccNr")]
+    partial class deleteAccNr
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,6 +29,7 @@ namespace Broker.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CategoryName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
@@ -150,11 +153,9 @@ namespace Broker.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -189,10 +190,12 @@ namespace Broker.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("State")
+                        .IsRequired()
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
                     b.Property<string>("Street")
+                        .IsRequired()
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
@@ -304,8 +307,13 @@ namespace Broker.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
+
+                    b.Property<string>("ConfirmationPassword")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -332,9 +340,11 @@ namespace Broker.Migrations
                         .HasMaxLength(200);
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
+                        .IsRequired()
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
@@ -364,9 +374,6 @@ namespace Broker.Migrations
             modelBuilder.Entity("Broker.Models.Agent", b =>
                 {
                     b.HasBaseType("Broker.Models.User");
-
-                    b.Property<long>("AccountNr")
-                        .HasColumnType("bigint");
 
                     b.Property<int>("AgentId")
                         .HasColumnType("int");
@@ -427,7 +434,7 @@ namespace Broker.Migrations
             modelBuilder.Entity("Broker.Models.Post", b =>
                 {
                     b.HasOne("Broker.Models.User", "User")
-                        .WithMany("Posts")
+                        .WithMany()
                         .HasForeignKey("PostUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -455,7 +462,7 @@ namespace Broker.Migrations
             modelBuilder.Entity("Broker.Models.PostImage", b =>
                 {
                     b.HasOne("Broker.Models.Post", "Post")
-                        .WithMany("Images")
+                        .WithMany()
                         .HasForeignKey("PostId");
                 });
 
