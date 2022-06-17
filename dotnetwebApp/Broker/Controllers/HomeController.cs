@@ -25,37 +25,7 @@ namespace Broker.Controllers
             _db = db;
         }
 
-        //[HttpGet]
-        //public JsonResult GetSomething()
-        //{
-
-
-        //    List<PostViewModel> posts = new List<PostViewModel>();
-        //    PostViewModel post = new PostViewModel("Home");
-        //    PostViewModel post1 = new PostViewModel("Flat");
-        //    PostViewModel post2 = new PostViewModel("Office");
-        //    PostViewModel post3 = new PostViewModel("Home");
-        //    PostViewModel post4 = new PostViewModel("Flat");
-        //    PostViewModel post5 = new PostViewModel("Home");
-        //    PostViewModel post6 = new PostViewModel("Flat");
-        //    PostViewModel post7 = new PostViewModel("Flat");
-        //    posts.Add(post);
-        //    posts.Add(post1);
-        //    posts.Add(post2);
-        //    posts.Add(post3);
-        //    posts.Add(post4);
-        //    posts.Add(post5);
-        //    posts.Add(post6);
-        //    posts.Add(post7);
-
-
-        //    //HomeViewModel HomeModel = new HomeViewModel();
-        //    //HomeModel.posts = posts;
-        //    //HomeModel.categories = new HashSet<string>(posts.Select(x => x.Category)).ToList();
-        //    //var data = JsonConvert.SerializeObject(HomeModel.categories);
-
-        //    return Json(data);
-        //}
+       
 
         public IActionResult Index()
         {

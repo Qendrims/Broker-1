@@ -17,6 +17,10 @@ namespace Broker.Controllers
         public IActionResult Index()
         {
             var archived = _context.Posts.Where(p => p.IsArchived == true).ToList();
+            if(archived.Count() == 0){
+                return View("NoArchivedPostsFound");
+            }
+
             return View(archived);
         }
 
@@ -41,6 +45,10 @@ namespace Broker.Controllers
 
             return RedirectToAction("Index");
             
+        }
+        public IActionResult NoArchivedPostsFound()
+        {
+            return View();
         }
     }
 }
