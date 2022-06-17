@@ -155,5 +155,9 @@ namespace Broker.Controllers
             return View();
         }
 
+        public IActionResult Agents()
+        {
+            return View();
+        }
     }
 }
