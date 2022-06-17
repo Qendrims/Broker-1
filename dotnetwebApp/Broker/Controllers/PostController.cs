@@ -59,7 +59,7 @@ namespace BrokerApp.Controllers
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
 
-            posts.FilteredPosts = _db.Posts.Where(p => p.PostUserId == UseriId).ToList();
+            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == UseriId).ToList();
 
             const int postPerPage = 2;
             if (pg < 1)
@@ -78,7 +78,7 @@ namespace BrokerApp.Controllers
         public IActionResult ArchivedPosts(int id = 1, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
-            posts.FilteredPosts = _db.Posts.Where(x => x.PostId == id && x.IsArchived == true).ToList();
+            posts.FilteredPosts = _Dbcontext.Posts.Where(x => x.PostId == id && x.IsArchived == true).ToList();
 
 
             const int postPerPage = 2;
@@ -129,20 +129,11 @@ namespace BrokerApp.Controllers
             return View("PostPage", posts);
         }
 
-        
-
-      
-        public IActionResult PostPageCreate()
-        {
-
-            return View();
-        }
-
         public IActionResult DeleteAgent(int? id)
         {
-            var agent = _db.Agents.Find(id);
-            _db.Agents.Remove(agent);
-            _db.SaveChanges();
+            var agent = _Dbcontext.Agents.Find(id);
+            _Dbcontext.Agents.Remove(agent);
+            _Dbcontext.SaveChanges();
             return View();
         }
         [HttpGet]
@@ -179,7 +170,7 @@ namespace BrokerApp.Controllers
             try
             {
 
-                postView.PostUserId = 3;
+                postView.PostUserId = 2;
                 var saveMapper = _mapper.Map<Post>(postView);
 
                 this._Dbcontext.Posts.Add(saveMapper);

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Bc=BCrypt.Net.BCrypt;
+using B = BCrypt.Net;
 
 namespace Broker.Controllers
 {
@@ -94,7 +94,7 @@ namespace Broker.Controllers
         {
             if (ModelState.IsValid)
             {
-                agent.Password = Bc.HashPassword(agent.Password);
+                agent.Password = B.BCrypt.HashPassword(agent.Password);
                 _db.Agents.Add(agent);
                 _db.SaveChanges();
 
@@ -119,7 +119,7 @@ namespace Broker.Controllers
         {
             if (ModelState.IsValid)
             {
-                simpleUser.Password = Bc.HashPassword(simpleUser.Password);
+                simpleUser.Password = B.BCrypt.HashPassword(simpleUser.Password);
                 _db.SimpleUsers.Add(simpleUser);
                 _db.SaveChanges();
 

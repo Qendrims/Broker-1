@@ -64,10 +64,6 @@ namespace Broker.ApplicationDB
             modelBuilder.Entity<Agent>().Property(a => a.AgentId)
             .IsRequired();
 
-
-            modelBuilder.Entity<Agent>().Property(a => a.AccountNr)
-            .IsRequired();
-
             modelBuilder.Entity<Post>().Property(p => p.Title)
             .HasMaxLength(100)
             .IsRequired();
