@@ -6,10 +6,11 @@ using System.Linq;
 
 namespace Broker.Controllers
 {
-    public class SimpleUserController : Controller
+    public class AgentUserController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public SimpleUserController(ApplicationDbContext db)
+
+        public AgentUserController(ApplicationDbContext db)
         {
             _db = db;
         }
@@ -32,32 +33,6 @@ namespace Broker.Controllers
                 }
             }
             return View(homeViewModels);
-        }
-
-
-        public IActionResult GetSUById(int id)
-        {
-            var simpleUser = _db.SimpleUsers.Find(id);
-            return View(simpleUser);
-        }
-
-
-        public IActionResult DeleteSU(int id) {
-           
-                var simpleUser = _db.SimpleUsers.Find(id);
-                _db.SimpleUsers.Remove(simpleUser);
-                _db.SaveChanges();
-                return RedirectToAction("Index","Home");
-
-        }
-
-        [HttpGet]
-        public IActionResult UpdateUS(int id)
-        {
-
-            var simpleUser = _db.SimpleUsers.Find(id);
-            return View(simpleUser);
-
         }
     }
 }

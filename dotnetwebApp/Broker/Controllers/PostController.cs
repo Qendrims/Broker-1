@@ -113,13 +113,5 @@ namespace Broker.Controllers
 
             return View();
         }
-
-        public IActionResult DeleteAgent(int? id)
-        {
-            var agent = _db.Agents.Find(id);
-            _db.Agents.Remove(agent);
-            _db.SaveChanges();
-            return View();
-        }
     }
 }
