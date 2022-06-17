@@ -15,9 +15,9 @@
                     natural resources</p>
             </div>
             <div class="Fotot-RightSide-FirstSection">
-                <img class="foto" src="~/Assets/AboutUsImg/Photo1.jpeg">
-                <img class="foto" src="~/Assets/AboutUsImg/Photo5.jpg">
-                <img class="foto" src="~/Assets/AboutUsImg/Photo6.jpg">
+                <img class="foto" src="~/assets/AboutUsImages/Photo1.jpeg">
+                <img class="foto" src="~/assets/AboutUsImages/Photo5.jpg">
+                <img class="foto" src="~/assets/AboutUsImages/Photo6.jpg">
             </div>
 
         </div>
@@ -27,17 +27,10 @@
                 <h1 class="Titulli">Residences can be classified by and how<br> they are connected to neighbouring.</h1>
 
                 <h1 class="Tutulli1">Residences can be classified by and how they are connected to neighbouring.</h1>
-                <img class="Img2" src="~/Assets/AboutUsImg/Photo3.jpg">
             </div>
             <div class="RightSide-SecondSection">
-                <img class="Img3" src="~/Assets/AboutUsImg/Photo1.jpeg">
+                <img class="Img3" src="~/assets/AboutUsImages/Photo1.jpeg">
                 <div class="BodyText-RightSide-SecondContainer">
-                    <p>The size of an apartment or house can be described in square feet or meters.</p>
-                    <br>
-                    <p>This includes the area of "living space", excluding the garage and other.</p>
-                    <br>
-                    <p>It can be described more roughly by the number of rooms</p>
-                </div>
             </div>
 
         </div>
@@ -51,7 +44,7 @@
             </div>
             <div class="Video-ThirdSection">
                 <video class="video" autoplay="true" muted>
-                    <source src="~/Assets/AboutUsImg/Video1.mp4"  type="video/mp4">
+                    <source src="~/assets/AboutUsImages/Video1.mp4"  type="video/mp4">
                 </video>
             </div>
 
@@ -71,20 +64,20 @@
     </div>
 </section>
 
-@section Scripts{
-            <script>
-                var index = 0;
-                var foto = document.getElementsByClassName("foto");
-                function slideshow() {
-                  for (i = 0; i < foto.length; i++) {
-                    foto[i].style.display = "none";
-                  }
-                  index++;
-                  if (index > foto.length) {
-                    index = 1;
-                  }
-                  foto[index - 1].style.display = "block";
-                  setTimeout(slideshow, 2000);
-                }
-           window.onload = slideshow;
-</script>}
+    <script>
+        var index = 0;
+var foto = document.getElementsByClassName("foto");
+
+function slideshow() {
+  for (i = 0; i < foto.length; i++) {
+    foto[i].style.display = "none";
+  }
+  index++;
+  if (index > foto.length) {
+    index = 1;
+  }
+  foto[index - 1].style.display = "block";
+  setTimeout(slideshow, 2000);
+}
+window.onload = slideshow;
+    </script>}

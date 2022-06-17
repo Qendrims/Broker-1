@@ -1,92 +1,91 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Broker</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/views/welcomePage.css"/>
-    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    @RenderSection("Styles",required: false);
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - Broker</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+	<link rel="stylesheet" href="~/css/site.css" />
+	<link rel="stylesheet" href="~/css/views/welcomePage.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+	@RenderSection("Styles",required:false);
 
 </head>
 <body>
-    <header>
+<header>
             <div class="homepage-header" id="homepageHeader">
                <ul class="nav-list" id="list1">
                    <li id="Home"><a href="/Home/Index">Home</a></li>
                    <li id="AboutUs"><a href="/Home/AboutUs">AboutUs</a></li>
                    <li id="Contact"><a href="/Home/ContactUs">Contact</a></li>
-                   
+
                    <!-- shtohet login ose largohet -->
                </ul>
-                
-               <img src="~/Assets/Images/logo.jpg" alt="logo">
+
+               <img src="~/Assets/Images/logo.jpg" alt="logo" />
 
                <ul class="nav-list" id="list1">
                    <li id="Posts"><a href="/Post/PostPage">Posts</a></li>
-                   
+
                    <li id="SignIn" ><a href="/Home/Login" >Sign In</a></li>
                </ul>
 
-               
-      
+
+
            <!-- shtohet njw button ose nje list -->
-        
+
          </div>
-    </header>
-  
-            @RenderBody()
-  
-
-   <div class="homepage-footer">
-
-       <div class="homepage-footer-grid">
-           <div class="footer-grid section1">
-               <p id="sectionFirstItem">About</p>
-               <h1 class="sectionSecondItem">Broker App</h1>
-               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora quibusdam quasi, atque dolor laborum placeat magni! Voluptas ratione incidunt delectus quidem repellendus voluptate corrupti consequuntur, sapiente quisquam cum ut cupiditate.</p>
-               <a href="#">Read more</a>
-           </div>
-           <div class="footer-grid section2">
-               <p id="sectionFirstItem">Contact</p>
-               <p>Broadway 10012, New York, NY, USA</p>
-               <p>Call us FREE + (800) 990 8877</p>
-               <p>broker@pbc.com</p>
-               <a href="#">Contact us</a>
-           </div>
-           <div class="footer-grid section3">
-               <p id="sectionFirstItem">Newsletter Sign Up</p>
-               <input id="newsletterInput" type="email" placeholder="Enter your email">
-               <button id="newsletterButton" type="submit">Submit</button>
-           </div>
-       </div>
+         </header>
+@RenderBody()
 
 
-       <div class="homepage-footer-box">
-                   <h3>Broker App</h3>               
-                   <a href="#">Privacy terms and Conditions</a>
-                   <div class="icons">
-                    <i class="fab fa-facebook-square"></i>
-                    <i class="fab fa-instagram-square"></i>
-                    <i class="fab fa-twitter"></i>
-                    <i class="fab fa-linkedin-in"></i>
-                    <i class="fas fa-paper-plane"></i>
-                    <i class="fab fa-youtube"></i>
-       </div>
-       <p id="copyright">© Broker App | All rights reserved</p>
-   </div>
-   </div>
-  <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+<div class="homepage-footer">
+
+	<div class="homepage-footer-grid">
+		<div class="footer-grid section1">
+			<p id="sectionFirstItem">About</p>
+			<h1 class="sectionSecondItem">Broker App</h1>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora quibusdam quasi, atque dolor laborum placeat magni! Voluptas ratione incidunt delectus quidem repellendus voluptate corrupti consequuntur, sapiente quisquam cum ut cupiditate.</p>
+			<a href="#">Read more</a>
+		</div>
+		<div class="footer-grid section2">
+			<p id="sectionFirstItem">Contact</p>
+			<p>Broadway 10012, New York, NY, USA</p>
+			<p>Call us FREE + (800) 990 8877</p>
+			<p>broker@pbc.com</p>
+			<a href="#">Contact us</a>
+		</div>
+		<div class="footer-grid section3">
+			<p id="sectionFirstItem">Newsletter Sign Up</p>
+			<input id="newsletterInput" type="email" placeholder="Enter your email">
+			<button id="newsletterButton" type="submit">Submit</button>
+		</div>
+	</div>
 
 
-    
+	<div class="homepage-footer-box">
+		<h3>Broker App</h3>
+		<a href="#">Privacy terms and Conditions</a>
+		<div class="icons">
+			<i class="fab fa-facebook-square"></i>
+			<i class="fab fa-instagram-square"></i>
+			<i class="fab fa-twitter"></i>
+			<i class="fab fa-linkedin-in"></i>
+			<i class="fas fa-paper-plane"></i>
+			<i class="fab fa-youtube"></i>
+		</div>
+		<p id="copyright">© Broker App | All rights reserved</p>
+	</div>
+</div>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
