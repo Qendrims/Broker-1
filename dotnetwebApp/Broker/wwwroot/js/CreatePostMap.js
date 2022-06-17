@@ -1,14 +1,22 @@
-var startLat = 40.75637123;
-var startLong = -73.98545321;
+
+var startLat;
+var startLong;
+
+if (document.getElementById('lat').value == "") {
+
+    var startLat = 40.75637123;
+    var startLong = -73.98545321;
+} else {
+    startLat = document.getElementById('lat').value;
+    startLong = document.getElementById('lon').value;
+}
+
 
 var options = {
     center: [startLat, startLong],
     zoom: 14
 }
 
-
-document.getElementById('lat').value = startLat;
-document.getElementById('lon').value = startLong;
 
 var map = L.map('map', options);
 

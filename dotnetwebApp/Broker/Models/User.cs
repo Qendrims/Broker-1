@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Broker.Models
 {
@@ -25,6 +26,7 @@ namespace Broker.Models
         [RegularExpression(@"^.*(?=.*\d)(?=.*[A-Za-z])(?=.*[.-_@%&#]{0,}).*$", ErrorMessage = "Password must contain at least one letter, number and special character")]
         public string Password { get; set; }
 
+        [NotMapped]
         [Required(ErrorMessage = "Please enter Confirmation Password")]
         [Display(Name = "Confirmation Password")]
         [Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
