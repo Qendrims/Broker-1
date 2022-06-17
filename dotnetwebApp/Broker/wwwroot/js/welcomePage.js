@@ -162,11 +162,12 @@ const nextBtn = document.querySelectorAll('.next');
 
 //create objects where key is the category and value is index of slider
 
-var indexes = {};
 
 //fetch('https://localhost:44359/Home/GetSomething').then(res => res.json()).then(data => {
     //const prevBtn = document.querySelectorAll('.prev');
     //const nextBtn = document.querySelectorAll('.next');
+
+var indexes = {};
 
 nextBtn.forEach(next => {
     next.addEventListener('click', e => switchSlide(e, 'next'));
@@ -180,17 +181,19 @@ fetch('https://localhost:44359/Home/GetSomething').then(res => res.json()).then(
     data = JSON.parse(data);
 
     for (let cat of data) {
-        indexes[cat] = 0;
+        indexes[cat.CategoryName] = 0;
     }
+
 })
 
 
 
 function switchSlide(e, arg) {
 
-    if (indexes.Home == undefined) {
+    if (indexes.House == undefined) {
         return;
     }
+       
 
     // select category next/prev button
     let currentBtn = e.currentTarget.getAttribute('data-category-btn')
@@ -203,6 +206,10 @@ function switchSlide(e, arg) {
     // if there are 3 or less slides set length to 0 so there is no need to slide because the container fits 3 elements
     //if there are more than 3 slides set length to -3 because container fits 3 elements
     let slidesLength = allSlides.length <= 3 ? 0 : allSlides.length - 3;
+
+
+    //console.log(indexes, currentBtn, parentEl, allSlides, slidesLength)
+
 
     parentEl.classList.add('transition')
     // gap is 5% of parent element width so  divide it by 20
@@ -226,4 +233,5 @@ function switchSlide(e, arg) {
         indexes[currentBtn] = 0;
     }
 
+    console.log(indexes[currentBtn])
 }

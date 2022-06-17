@@ -155,7 +155,6 @@ namespace BrokerApp.Controllers
 
                 if (postView.AgentsInvited != null)
                 {
-
                     foreach (var agent in postView.AgentsInvited)
                     {
                         Invite inv = new Invite();

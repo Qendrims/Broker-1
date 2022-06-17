@@ -1,5 +1,15 @@
-var startLat = 40.75637123;
-var startLong = -73.98545321;
+
+var startLat;
+var startLong;
+
+if (document.getElementById('lat').value == "") {
+    startLat = 40.75637123;
+    startLong = -73.98545321;
+} else {
+    startLat = document.getElementById('lat').value;
+    startLong = document.getElementById('lon').value;
+}
+
 
 var options = {
     center: [startLat, startLong],
@@ -7,8 +17,6 @@ var options = {
 }
 
 
-document.getElementById('lat').value = startLat;
-document.getElementById('lon').value = startLong;
 
 var map = L.map('map', options);
 
@@ -85,6 +93,8 @@ map.on('click', e => {
 
     document.getElementById('lat').value = lat;
     document.getElementById('lon').value = long;
+
+
 })
 
 // search address with text input
