@@ -1,4 +1,3 @@
-using AutoMapper;
 using Broker.ApplicationDB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,14 +26,11 @@ namespace Broker
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-           
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("Lir"));
             });
-            services.AddAutoMapper(typeof(Startup));
-           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,7 +57,7 @@ namespace Broker
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Post}/{action=PostPageCreate}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

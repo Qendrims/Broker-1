@@ -1,0 +1,77 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+
+   
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.container{
+    display: grid;
+    place-content: center;
+    margin-top: 3%;
+}
+form{
+    padding: 3rem;
+    width: 500px;
+    border: 3px solid rgba(234,234,232,255);
+}
+form:hover{
+    box-shadow: 15px -21px 111px 36px rgba(63,56,44,0.69);
+    -webkit-box-shadow: 15px -21px 111px 36px rgba(63,56,44,0.69);
+    -moz-box-shadow: 15px -21px 111px 36px rgba(63,56,44,0.69);
+}
+form h1{
+    text-align: center;
+    padding-bottom: 35px;
+    color: #21130d;
+    font-size: 35px;
+
+}
+::placeholder{
+    color: rgb(63,56,44);
+    font-weight: 600;
+}
+.labels{
+    font-size: 20px;
+    color: #21130d;
+    margin-left: 3%;
+    margin-top: 1%;
+    font-weight: 600;
+    
+}
+form input{
+    width: 90%;
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid white;
+    margin:1%;
+}
+button{
+    padding: 10px 20px;
+    margin-top:15px;
+    width: 99%;
+    background-color: rgb(63,56,44);
+    border: none;
+    color: antiquewhite;
+}
+button:hover{
+    background-color: #21130d;
+    color: rgb(231, 226, 220);
+  
+}
+.error{
+    color: red;
+    font-size: 15px;
+    
+}
+.hidden{
+    display: none;
+}
+#sumbit-btn{
+    cursor: not-allowed;
+}
