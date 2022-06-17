@@ -25,7 +25,7 @@ namespace BrokerApp.Controllers
             this._webHostEnvironment = _webHostEnvironment;
         }
 
-        public IActionResult Archive(int id)
+        public IActionResult Archive(int? id)
         {
             var post = _db.Posts.Where(p => p.PostId == id).FirstOrDefault();
             post.IsArchived = true;
@@ -222,23 +222,17 @@ namespace BrokerApp.Controllers
                 _db.SaveChanges();
 
                 return Json(new { status = 200, message = "Post created successfully" });
-            } else
+            }
+            else
             {
-                Dictionary<string,string> data=new Dictionary<string,string>();
+                Dictionary<string, string> data = new Dictionary<string, string>();
                 if (string.IsNullOrEmpty(postView.Title))
-                    data.Add("Title", "Title cant be empty");
-                
-                if (string.IsNullOrEmpty(postView.Description))
-                    data.Add("Description", "Description cant be empty");
-                
-                if (string.IsNullOrEmpty(postView.City))
-                    data.Add("City", "City cant be empty");
-                
-                if (string.IsNullOrEmpty(postView.State))
-                    data.Add("State", "State cant be empty");
-               
+                    data.Add("TitleError", "Title cant be empty");
 
-                return Json(new { status = 400, message = "Something went wrong",data });
+                if (string.IsNullOrEmpty(postView.Description))
+                    data.Add("DescriptionError", "Description cant be empty");
+
+                return Json(new { status = 400, message = "Something went wrong", data });
             }
 
 
