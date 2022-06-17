@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+
+using AutoMapper;
 using Broker.ApplicationDB;
 using Broker.FileHelper;
 using Broker.Models;
@@ -44,6 +45,57 @@ namespace BrokerApp.Controllers
             return RedirectToAction("PostPage");
         }
 
+        //    int postCount = posts.FilteredPosts.Count();
+        //    var pager = new Pagination(postCount, pg, pageSize);
+
+        //    int postSkip = (pg - 1) * pageSize;
+
+        //    posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
+        //    this.ViewBag.Pager = pager;
+        //    return View(posts);
+        //   // return View(posts);
+        //}
+        public IActionResult MyPosts(int UseriId = 1, int pg = 1)
+        {
+            FilteredPostViewModel posts = new FilteredPostViewModel();
+
+            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == UseriId).ToList();
+
+            const int postPerPage = 2;
+            if (pg < 1)
+                pg = 1;
+
+            int postCount = posts.FilteredPosts.Count();
+            var pager = new Pagination(postCount, pg, postPerPage);
+
+            int postSkip = (pg - 1) * postPerPage;
+
+            posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
+            this.ViewBag.Pager = pager;
+
+            return View(posts);
+        }
+        public IActionResult ArchivedPosts(int id = 1, int pg = 1)
+        {
+            FilteredPostViewModel posts = new FilteredPostViewModel();
+            posts.FilteredPosts = _Dbcontext.Posts.Where(x => x.PostId == id && x.IsArchived == true).ToList();
+
+
+            const int postPerPage = 2;
+            if (pg < 1)
+                pg = 1;
+
+            int postCount = posts.FilteredPosts.Count();
+            var pager = new Pagination(postCount, pg, postPerPage);
+
+            int postSkip = (pg - 1) * postPerPage;
+
+            posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
+            this.ViewBag.Pager = pager;
+
+            return View(posts);
+        }
+
         public IActionResult PostPage(string category, string city, int pg = 1)
         {
 
@@ -77,6 +129,13 @@ namespace BrokerApp.Controllers
             return View("PostPage", posts);
         }
 
+        public IActionResult DeleteAgent(int? id)
+        {
+            var agent = _Dbcontext.Agents.Find(id);
+            _Dbcontext.Agents.Remove(agent);
+            _Dbcontext.SaveChanges();
+            return View();
+        }
         [HttpGet]
         public IActionResult Detail(int? id)
         {
@@ -111,7 +170,7 @@ namespace BrokerApp.Controllers
             try
             {
 
-                postView.PostUserId = 3;
+                postView.PostUserId = 2;
                 var saveMapper = _mapper.Map<Post>(postView);
 
                 this._Dbcontext.Posts.Add(saveMapper);
@@ -244,6 +303,22 @@ namespace BrokerApp.Controllers
             {
                 return View("Error");
             }
+        }
+        public IActionResult Ads(int? id)
+        {
+            var post = this._Dbcontext.Posts.Where(p => p.PostId == id).FirstOrDefault();
+            return View(post);
+        }
+
+        [HttpPost]
+        public IActionResult Ads(AdsPaymentViewModel viewModel)
+        {
+            AdsPayments ads = new AdsPayments();
+            var saveMapper = _mapper.Map<AdsPayments>(viewModel);
+            this._Dbcontext.AdsPaymentcs.Add(saveMapper);
+            this._Dbcontext.SaveChanges();
+
+            return RedirectToAction("Index","Home");
         }
     }
 }

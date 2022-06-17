@@ -15,6 +15,7 @@ namespace Broker.Mapping
                 .ForMember(x => x.OwnerName, y => y.MapFrom(b => b.User.Name + " " + b.User.LastName));
             
             CreateMap<PostViewModel, Post>();
+            CreateMap<AdsPaymentViewModel, AdsPayments>();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Broker.ApplicationDB
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Invite> Invites { get; set; }
         public DbSet<FeedBack> FeedBacks { get; set; }
-
+        public DbSet<AdsPayments> AdsPaymentcs { get; set; }
         public DbSet<Tags> Tags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -52,8 +52,7 @@ namespace Broker.ApplicationDB
             .HasMaxLength(200)
             .IsRequired();
 
-            modelBuilder.Entity<User>().Property(u => u.Street)
-            .IsRequired();
+            modelBuilder.Entity<User>().Property(u => u.Street);
 
 
             modelBuilder.Entity<User>().Property(u => u.City)
@@ -63,10 +62,6 @@ namespace Broker.ApplicationDB
             .HasMaxLength(200);
 
             modelBuilder.Entity<Agent>().Property(a => a.AgentId)
-            .IsRequired();
-
-
-            modelBuilder.Entity<Agent>().Property(a => a.AccountNr)
             .IsRequired();
 
             modelBuilder.Entity<Post>().Property(p => p.Title)

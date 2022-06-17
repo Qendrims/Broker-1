@@ -1,0 +1,468 @@
+﻿* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  background-color: whitesmoke;
+}
+
+.FirstSectionContainer {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
+.Text-LeftSide-FirstSection {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  height: 50%;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.Text-LeftSide-FirstSection h1 {
+  font-size: 42px;
+}
+
+.Contact {
+  display: flex;
+  font-size: 23px;
+  width: 37%;
+  justify-content: flex-end;
+  padding-top: 5px;
+}
+
+.Tekst {
+  display: flex;
+  width: 88%;
+  justify-content: flex-end;
+  padding-top: 5px;
+}
+
+.Fotot-RightSide-FirstSection {
+  display: flex;
+  flex-direction: column;
+  width: 56%;
+  height: 70%;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.Contact:before {
+  content: "";
+  display: flex;
+  width: 88px;
+  height: 1px;
+  background: #000;
+  left: 0;
+  top: 50%;
+  margin: 10px;
+  text-align: center;
+}
+
+.SecondSectionContainer {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
+.Tutulli1 {
+  display: none;
+}
+
+.LeftSide-SecondSection {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 95%;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+
+.Img2 {
+  display: flex;
+  width: 45%;
+  height: auto;
+  margin-top: 20px;
+}
+
+.RightSide-SecondSection {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 110%;
+  justify-content: center;
+  align-items: center;
+}
+
+.BodyText-RightSide-SecondContainer {
+  margin: 40px;
+  font-size: 20px;
+  justify-content: center;
+  text-align: center;
+}
+
+.ThirdSectionContainer {
+  width: 100%;
+  height: 90vh;
+  display: block;
+}
+
+.BodyText-ThirdSection {
+  text-align: center;
+  padding-top: 30px;
+}
+
+.BodyText-ThirdSection p {
+  font-size: 20px;
+  padding: 10px;
+}
+
+.Video-ThirdSection {
+  text-align: center;
+}
+
+.Video-ThirdSection video {
+  width: 750px;
+  height: 450px;
+}
+
+.FourthSection ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border: 1px solid;
+}
+
+.FourthSection ul li {
+  margin: 3% 3% 4% 0%;
+  font-size: 34px;
+  list-style: none;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+  .FirstSectionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Contact {
+    display: flex;
+    font-size: 18px;
+    width: 80%;
+    justify-content: flex-start;
+    padding-top: 5px;
+  }
+
+  .SecondSectionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .LeftSide-SecondSection {
+    display: flex;
+    padding-left: 35px;
+    margin-top: 120px;
+    font-size: 9px;
+  }
+
+  .BodyText-RightSide-SecondContainer {
+    display: inline;
+    text-align: center;
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .ThirdSectionContainer {
+    width: 100%;
+    height: 70vh;
+    display: block;
+  }
+
+  .RightSide-SecondSection {
+    margin: 30px;
+  }
+
+  .Tekst,
+  .Img2,
+  .Titulli1,
+  .Tekst-ThirdSection {
+    display: none;
+  }
+
+  .BodyText-ThirdSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .Fotot-RightSide-FirstSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Video-ThirdSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50vh;
+    margin: auto;
+  }
+
+  .Video-ThirdSection video {
+    width: 560px;
+    height: 320px;
+  }
+
+  .FourthSection {
+    flex-direction: column;
+    display: flex;
+  }
+
+  .FourthSection ul li {
+    font-size: 18px;
+  }
+}
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  background-color: whitesmoke;
+}
+
+.FirstSectionContainer {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
+.Text-LeftSide-FirstSection {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  height: 50%;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.Text-LeftSide-FirstSection h1 {
+  font-size: 42px;
+}
+
+.Contact {
+  display: flex;
+  font-size: 23px;
+  width: 37%;
+  justify-content: flex-end;
+  padding-top: 5px;
+}
+
+.Tekst {
+  display: flex;
+  width: 88%;
+  justify-content: flex-end;
+  padding-top: 5px;
+}
+
+.Fotot-RightSide-FirstSection {
+  display: flex;
+  flex-direction: column;
+  width: 56%;
+  height: 70%;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.Contact:before {
+  content: "";
+  display: flex;
+  width: 88px;
+  height: 1px;
+  background: #000;
+  left: 0;
+  top: 50%;
+  margin: 10px;
+  text-align: center;
+}
+
+.SecondSectionContainer {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
+.Tutulli1 {
+  display: none;
+}
+
+.LeftSide-SecondSection {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 95%;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+
+.Img2 {
+  display: flex;
+  width: 45%;
+  height: auto;
+  margin-top: 20px;
+}
+
+.RightSide-SecondSection {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 110%;
+  justify-content: center;
+  align-items: center;
+}
+
+.BodyText-RightSide-SecondContainer {
+  margin: 40px;
+  font-size: 20px;
+  justify-content: center;
+  text-align: center;
+}
+
+.ThirdSectionContainer {
+  width: 100%;
+  height: 90vh;
+  display: block;
+}
+
+.BodyText-ThirdSection {
+  text-align: center;
+  padding-top: 30px;
+}
+
+.BodyText-ThirdSection p {
+  font-size: 20px;
+  padding: 10px;
+}
+
+.Video-ThirdSection {
+  text-align: center;
+}
+
+.Video-ThirdSection video {
+  width: 750px;
+  height: 450px;
+}
+
+.FourthSection ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border: 1px solid;
+}
+
+.FourthSection ul li {
+  margin: 3% 3% 4% 0%;
+  font-size: 34px;
+  list-style: none;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+  .FirstSectionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Contact {
+    display: flex;
+    font-size: 18px;
+    width: 80%;
+    justify-content: flex-start;
+    padding-top: 5px;
+  }
+
+  .SecondSectionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .LeftSide-SecondSection {
+    display: flex;
+    padding-left: 35px;
+    margin-top: 120px;
+    font-size: 9px;
+  }
+
+  .BodyText-RightSide-SecondContainer {
+    display: inline;
+    text-align: center;
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .ThirdSectionContainer {
+    width: 100%;
+    height: 70vh;
+    display: block;
+  }
+
+  .RightSide-SecondSection {
+    margin: 30px;
+  }
+
+  .Tekst,
+  .Img2,
+  .Titulli1,
+  .Tekst-ThirdSection {
+    display: none;
+  }
+
+  .BodyText-ThirdSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .Fotot-RightSide-FirstSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Video-ThirdSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50vh;
+    margin: auto;
+  }
+
+  .Video-ThirdSection video {
+    width: 560px;
+    height: 320px;
+  }
+
+  .FourthSection {
+    flex-direction: column;
+    display: flex;
+  }
+
+  .FourthSection ul li {
+    font-size: 18px;
+  }
+}
