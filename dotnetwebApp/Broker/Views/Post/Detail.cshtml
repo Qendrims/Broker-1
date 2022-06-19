@@ -3,52 +3,109 @@
     ViewData["Title"] = "Detail";
 }
 
-<h1>Post Details</h1>
 
-<table border="1px solid balck">
+<link href="@Url.Content("~/css/detail.css")" rel="stylesheet" type="text/css" />
+
+<body>
+    <h1>Post Details</h1>
+
+    <div class="small-container single-product">
+        <div class="row">
+            @for (int i = 0; i < Model.Image.Count; i++)
+            {
+                @if (i == 0)
+                {
+                    <div class"big-img">
+                        <img src="~/UploadFiles/@Model.Image[i].ImageName" id="ProductImg" height="300px" />
+                    </div>
+                    continue;
+                }
+                <div class="small-img-row">
+                    <div class="small-img-col">
+                        <img src="~/UploadFiles/@Model.Image[i].ImageName" width="100%" id="ProductImg" />
+                    </div>
+                </div>
+
+            }
+         </div>
+    </div>
+    <div class="text-div">
+        <div>
+            <label>Location:</label>
+            <p>@Model.Country,@Model.City,@Model.Street,@Model.ZipCode</p>
+        </div>
+        <div>
+            <label>Price:</label>
+            <p>@Model.Price</p>
+        </div>
+        <div>
+            
+            <label>CategoryType:</label>
+            @foreach(var cat in @Model.PostCategories)
+            {
+                <p>@cat.Category.CategoryName</p>
+            }
+        </div>
+        <div>
+            <label>Owner:</label>
+            <p>@Model.OwnerName</p>
+        </div>
+        <div>
+            <label>Description:</label>
+            <p>@Model.Description</p>
+        </div>
+
+
+    </div>
+
+</body>
+@*<table border="1px solid balck">
     <thead>
-        <tr>
-            <th>
-                Title
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Image
-            </th>
-            <th>
-                Price
-            </th>
-            <th>
-                Owner
-            </th>
-        </tr>
+    <tr>
+    <th>
+    Title
+    </th>
+    <th>
+    Description
+    </th>
+    <th>
+    Image
+    </th>
+    <th>
+    Price
+    </th>
+    <th>
+    Owner
+    </th>
+    </tr>
     </thead>
     <tbody>
-         <tr>
-            <td>
-                @Model.Title
-            </td>
-            <td>
-                @Model.Description
-            </td>
-            <td>
-                <img src="~/UploadFiles/@Model.Image.FirstOrDefault().ImageName" class="" height="80px" width="80px" />
-            </td>
-            <td>
-                @Model.Price
-            </td>
-            <td>
-                @Model.OwnerName
-            </td>
-            <td>
-                <a type="submit" class="btn-primary" asp-action="Edit" asp-controller="Post" asp-route-id="@Model.PostId" value="Edit">Edit </a>
-                <a type="submit" class="btn-primary" asp-action="Delete" asp-route-id="@Model.PostId">Delete </a>
+    <tr>
+    <td>
+    @Model.Title
+    </td>
+    <td>
+    @Model.Description
+    </td>
+    @foreach (var img in Model.Image)
+    {
+    <td>
+    <img src="~/UploadFiles/@img.ImageName" class="" height="80px" width="80px" />
+    </td>
+    }
+    <td>
+    @Model.Price
+    </td>
+    <td>
+    @Model.OwnerName
+    </td>
+    <td>
+    <a type="submit" class="btn-primary" asp-action="Edit" asp-controller="Post" asp-route-id="@Model.PostId" value="Edit">Edit </a>
+    <a type="submit" class="btn-primary" asp-action="Delete" asp-route-id="@Model.PostId">Delete </a>
 
-            </td>
-        </tr>
-
+    </td>
+    </tr>
+*@
 
     </tbody>
 </table>

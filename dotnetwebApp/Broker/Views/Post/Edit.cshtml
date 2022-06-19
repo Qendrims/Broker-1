@@ -1,147 +1,71 @@
+
 @{
     ViewData["Title"] = "PostPageCreate";
 }
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-      crossorigin="" />
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+   integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+   crossorigin=""/>
 
-<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-        crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+   integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+   crossorigin=""></script>
 
 @section Styles {
-
+    
 }
 
 
 <style type="text/css">
-    #lat, #lon {
-        text-align: right
-    }
-
-    .address {
-        cursor: pointer;
-    }
-
-        .address:not(:last-child) {
-            border-bottom: 1px solid black
-        }
-
-        .address:hover {
-            color: #AA0000;
-            text-decoration: underline
-        }
-
-    #map {
+    #lat, #lon { text-align:right }
+.address { cursor:pointer }
+.address:hover { color:#AA0000;text-decoration:underline }
+    #map{
         height: 400px;
-        min-width: 70%;
+        width: 60%;
         margin-left: 20px;
     }
-
-    #addr {
-        width: 80% !important;
+    .coord-input{
+        margin-left: 20px;
     }
-
-        #addr:focus {
-            outline: none !important;
-        }
-
-    .btn {
-        margin: 5px !important;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    input {
-        margin-bottom: 5px;
-    }
-
     .wrapper {
-        margin-top: 10px;
         width: 100%;
+        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-image: url(../../wwwroot/Assets/Images/grid1.jpg);
     }
-
     .post-preview {
         width: 45%;
         height: 90vh;
     }
-
     .div-text {
         display: flex;
         justify-content: center;
         align-items: center;
         background-color: #5885AF;
         width: 45%;
-        border-radius: 5px;
+        border-radius: 5%;
+        color: white;
     }
-
     .flex {
         display: flex;
     }
-
     .btn-primary {
         margin: 20px 40px;
     }
-
+    
     #inner-posts {
         border: 1px solid black;
     }
-
         #inner-posts h1 {
             font-size: 20px;
             padding: 2% 2%;
         }
-
         #inner-posts p {
             font-size: 15px;
             padding: 2% 2%;
         }
-
-    #search {
-        display: flex;
-        align-items: center;
-    }
-
-    .hidden{
-        display: none;
-    }
-
-    #results {
-        background-color: #fff;
-        width: 80%;
-        margin-top: -8px;
-        border-radius: 5px;
-        padding-left: 5px;
-    }
-
-    .custom-file {
-        height: auto !important;
-    }
-
-    #uploadedImages {
-        width: 90%;
-        position: relative;
-        margin: auto;
-        display: flex;
-        justify-content: space-evenly;
-        gap: 15px;
-        flex-wrap: wrap;
-    }
-
-    figure {
-        width: 45%;
-    }
-
-    img {
-        width: 100%;
-    }
 </style>
 
 
@@ -157,8 +81,8 @@
         <div class="row col-md-8 col-md-offset-2 div-text">
             <h1>Create post</h1>
 
-            <form method="post" enctype="multipart/form-data" asp-action="Edit" asp-controller="Post"  id="myForm">
-                <input name='ownerId' value='1' hidden />
+            <form method="post" enctype="multipart/form-data" asp-controller="Post" asp-action="Edit" id="myForm">
+                <input name='ownerId' value='2' hidden /><input name='ownerId' value='2' hidden />
                 <input value='@Model.PostId' name='PostId' hidden />
                 <div class="form-group">
                     <label for="exampleInputEmail1">Title</label>
@@ -180,11 +104,10 @@
                            aria-describedby="inputGroupFileAddon01" />
                     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                 </div>
-                <div>
-                    @foreach (var image in Model.Image)
-                    {
+            <div>
+                @foreach(var image in Model.Image){
                         <div>
-                            <img src="~/UploadFiles/@image.ImageName" />
+                            <img src ="~/UploadFiles/@image.ImageName" />
                         </div>
                     }
                 </div>
@@ -215,48 +138,6 @@
                         <span class="input-group-text">0.00</span>
                     </div>
                 </div>
-                <div class="coord-input">
-
-                    <b>Coordinates</b>
-                  
-                        <input type="text" name="lat" id="lat" value="@Model.Latitude" size=12 >
-                        <input type="text" name="lon" id="lon" value="@Model.Longitude" size=12 >
-                  
-
-                    <b>Search Address</b>
-                    <div id="search">
-                        <input type="text" name="addr" value="" id="addr" size="58" />
-                        <button type="button" onclick="addr_search();">Search</button>
-                        <div id="results"></div>
-                    </div>
-
-                </div>
-
-                <div style="display: flex;">
-                    <div id="map"></div>
-                    <h3 style="text-align: center" id="currAddress"></h3>
-                </div>
-                <label>City</label>
-                <input type="text" name="City" id="city" value = "@Model.City" class="form-control disabled" readonly />
-                <label>Country</label>
-                <input type="text" name="Country" id="country" value = "@Model.Country" class="form-control disabled" readonly />
-                <label>Neighbourhood</label>
-                <input type="text" name="Neighbourhood" id="neighbourhood"  class="form-control disabled" readonly />
-                <label>Road</label>
-                <input type="text" name="Street" id="road" value = "@Model.Street" class="form-control disabled" readonly />
-                <label>State</label>
-                <input type="text" name="State" id="state" value = "@Model.State" class="form-control disabled" readonly />
-                <label>House Number</label>
-                <input type="number" name="HouseNumber" id="housenumber" class="form-control disabled" readonly />
-                <label>Zip Code</label>
-                <input type="number" name="ZipCode" id="zipcode" value = "@Model.ZipCode" class="form-control disabled" readonly />
-
-                 <br />
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
-                  Send Invitation
-                </button>
-
                 <br />
                 <input type="submit" class="btn btn-primary" value="Update" />
 
@@ -264,15 +145,52 @@
         </div>
     </div>
 </section>
+<<<<<<<< HEAD:dotnetwebApp/Broker/Views/Post/PostPageCreate.cshtml
 
+<div class="coord-input">
 
+<b>Coordinates</b>
+<form>
+<input type="text" name="lat" id="lat" size=12 value="">
+<input type="text" name="lon" id="lon" size=12 value="">
+</form>
+
+<b>Search Address</b>
+<div id="search">
+<input type="text" name="addr" value="" id="addr" size="58" />
+<button type="button" onclick="addr_search();">Search</button>
+<div id="results"></div>
+</div>
+
+</div>
+
+<div style="display: flex;">
+<div id="map"></div>
+ <h3 style="text-align: center" id="currAddress"></h3>
+</div>
 
 
 @section Scripts{
-<script src="~/js/CreatePostMap.js"></script>
+    <script src="~/js/CreatePostMap.js"></script>
 <script>
-   startLat = document.getElementById('lat').value;
-   startLong = document.getElementById('lon').value;
+            var data=[];
+            let title = document.getElementById('exampleInputEmail1');
+            let file = document.getElementById('inputGroupFile01');
+            let description = document.getElementById('description');
+            var body = document.getElementById("post-preview");
+            let price= document.getElementById("price")
+            function postPreview(e){
+                e.preventDefault();
+                var text=`
+                <h1>Post Preview</h1>
+                 <div id="inner-posts">
+                    <h1>${title.value}</h1>
+                <p>${description.value}</p>
+                <p>${price.value}</p>
+            </div>`;
+                body.innerHTML +=text;
+}
+document.getElementById("myForm").addEventListener("submit",e=>postPreview(e));
 </script>
 }
 
