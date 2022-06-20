@@ -3,110 +3,71 @@
     ViewData["Title"] = "Detail";
 }
 
-
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 <link href="@Url.Content("~/css/detail.css")" rel="stylesheet" type="text/css" />
 
+
 <body>
-    <h1>Post Details</h1>
+	
+	<div class="container">
+		<div class="card">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+						
+						<div class="preview-pic tab-content">
+							@for(int i = 0; i< @Model.Image.Count; i++)
+							{
+								@if(i==0){
+									<div class="tab-pane active" id="pic-@i">
+									<img src="~/UploadFiles/@Model.Image[i].ImageName"/>
+									
+									</div>
+								} else
+								{
+									
+								<div class="tab-pane" id="pic-@i">
+									<img src="~/UploadFiles/@Model.Image[i].ImageName"/>
+									
+								</div>
+								}
+								
+							}
+							<ul class="preview-thumbnail nav nav-tabs">
+								@for(int i = 0; i< @Model.Image.Count; i++)
+								{
+									@if(i==0)
+									{
+										<li class="active"><a data-target="#pic-@i" data-toggle="tab"><img src="~/UploadFiles/@Model.Image[i].ImageName"/></a></li>
+									
+									}
+									else{
+										<li><a data-target="#pic-@i" data-toggle="tab"><img src="~/UploadFiles/@Model.Image[i].ImageName"/></a></li>
+									}
+								}
+							</ul>
+						</div>
+						
+						
+					</div>
+					<div class="details col-md-6">
+						<h3 class="product-title">@Model.Title</h3>
+						<h4>Location: @Model.Country,@Model.State,@Model.City,@Model.Street,@Model.ZipCode.</h4>
+						<p class="product-description">@Model.Description</p>
+						<h4 class="price">Price: <span>$@Model.Price</span></h4>
+						<p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+						<div class="action">
+							<button class="add-to-cart btn btn-default" type="button">Take this Job</button>
+							<button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  </body>
 
-    <div class="small-container single-product">
-        <div class="row">
-            @for (int i = 0; i < Model.Image.Count; i++)
-            {
-                @if (i == 0)
-                {
-                    <div class"big-img">
-                        <img src="~/UploadFiles/@Model.Image[i].ImageName" id="ProductImg" height="300px" />
-                    </div>
-                    continue;
-                }
-                <div class="small-img-row">
-                    <div class="small-img-col">
-                        <img src="~/UploadFiles/@Model.Image[i].ImageName" width="100%" id="ProductImg" />
-                    </div>
-                </div>
-
-            }
-         </div>
-    </div>
-    <div class="text-div">
-        <div>
-            <label>Location:</label>
-            <p>@Model.Country,@Model.State,@Model.City,@Model.Street,@Model.ZipCode</p>
-        </div>
-        <div>
-            <label>Price:</label>
-            <p>@Model.Price</p>
-        </div>
-        <div>
-            
-            <label>CategoryType:</label>
-            @foreach(var cat in @Model.PostCategories)
-            {
-                <p>@cat.Category.CategoryName,</p>
-            }
-        </div>
-        <div>
-            <label>Owner:</label>
-            <p>@Model.OwnerName</p>
-        </div>
-        <div>
-            <label>Description:</label>
-            <p>@Model.Description</p>
-        </div>
 
 
-    </div>
-
-</body>
-@*<table border="1px solid balck">
-    <thead>
-    <tr>
-    <th>
-    Title
-    </th>
-    <th>
-    Description
-    </th>
-    <th>
-    Image
-    </th>
-    <th>
-    Price
-    </th>
-    <th>
-    Owner
-    </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-    <td>
-    @Model.Title
-    </td>
-    <td>
-    @Model.Description
-    </td>
-    @foreach (var img in Model.Image)
-    {
-    <td>
-    <img src="~/UploadFiles/@img.ImageName" class="" height="80px" width="80px" />
-    </td>
-    }
-    <td>
-    @Model.Price
-    </td>
-    <td>
-    @Model.OwnerName
-    </td>
-    <td>
-    <a type="submit" class="btn-primary" asp-action="Edit" asp-controller="Post" asp-route-id="@Model.PostId" value="Edit">Edit </a>
-    <a type="submit" class="btn-primary" asp-action="Delete" asp-route-id="@Model.PostId">Delete </a>
-
-    </td>
-    </tr>
-*@
-
-    </tbody>
-</table>
 
