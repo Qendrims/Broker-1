@@ -230,5 +230,3 @@ function switchSlide(e, arg) {
     }
   }
 
-    console.log(indexes[currentBtn])
-}
