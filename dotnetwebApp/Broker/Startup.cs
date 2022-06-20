@@ -29,11 +29,11 @@ namespace Broker
             services.AddControllersWithViews();
            
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
-             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+            services.AddAutoMapper(typeof(Startup));
            
         }
 
@@ -61,7 +61,7 @@ namespace Broker
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Post}/{action=postpagecreate}/{id?}");
+                    pattern: "{controller=Post}/{action=PostPageCreate}/{id?}");
             });
         }
     }

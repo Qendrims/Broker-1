@@ -1,13 +1,10 @@
 ﻿@using Broker.ViewModels
 @using Broker.Models
-@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
 @model FilteredPostViewModel;
 @{
-    Pagination pager = new Pagination();
    
+        var pager = new Pagination();
     if(ViewBag.Pager != null)
     {
         pager = ViewBag.Pager;

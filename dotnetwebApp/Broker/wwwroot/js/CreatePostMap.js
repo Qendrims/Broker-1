@@ -3,6 +3,7 @@ var startLat;
 var startLong;
 
 if (document.getElementById('lat').value == "") {
+
     startLat = 40.75637123;
     startLong = -73.98545321;
 } else {
@@ -15,7 +16,6 @@ var options = {
     center: [startLat, startLong],
     zoom: 14
 }
-
 
 
 var map = L.map('map', options);

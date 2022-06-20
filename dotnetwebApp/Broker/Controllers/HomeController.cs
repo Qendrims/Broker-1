@@ -1,5 +1,6 @@
 ﻿using Broker.ApplicationDB;
 using Broker.Models;
+using Broker.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using B = BCrypt.Net;
 
 namespace Broker.Controllers
 {
@@ -15,7 +17,7 @@ namespace Broker.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
-        public HomeController(ILogger<HomeController> logger,ApplicationDbContext db)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
         {
             _logger = logger;
             _db = db;
@@ -37,16 +39,16 @@ namespace Broker.Controllers
 
             var categories = this._db.Categories.ToList();
 
-            foreach(var category in categories)
+            foreach (var category in categories)
             {
                 HomeViewModel model = new HomeViewModel();
 
                 model.category = category;
                 model.posts = this._db.Posts.Where(p => p.PostCategories.Any(x => x.CategoryId == category.CategoryId)).Take(10).ToList();
 
-               if(model.posts.Count != 0)
+                if (model.posts.Count != 0)
                 {
-                homeViewModels.Add(model);
+                    homeViewModels.Add(model);
                 }
             }
         
@@ -63,7 +65,88 @@ namespace Broker.Controllers
             return View();
         }
 
-        public IActionResult Register()
+        [HttpPost]
+        public IActionResult Login(LoginUserModel loginUser)
+        {
+
+            var user = this._db.Users.Where(u => u.Email == loginUser.Email).FirstOrDefault();
+            bool validUser =false;
+
+            if (user != null)
+            {
+                validUser = BCrypt.Net.BCrypt.Verify(loginUser.Password, user.Password);
+            }
+            else {
+                ViewBag.Message = "Username or Password is incorrect";
+                return View();
+            }
+
+            if (!validUser)
+            {
+                ViewBag.Message = "Username or Password is incorrect";
+                return View();
+            }
+            else {
+                return RedirectToAction("Index");
+            }
+
+        }
+
+        public IActionResult RegisterAsAgent()
+        {
+
+            return View();
+
+        }
+
+        [HttpPost]
+        public IActionResult RegisterAsAgent(Agent agent)
+        {
+            if (ModelState.IsValid)
+            {
+                agent.Password = B.BCrypt.HashPassword(agent.Password);
+                _db.Agents.Add(agent);
+                _db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            else { 
+                return View();
+            }
+
+        }
+
+
+        public IActionResult RegisterAsSimpleUser()
+        {
+
+            return View();
+
+        }
+
+        [HttpPost]
+        public IActionResult RegisterAsSimpleUser(SimpleUser simpleUser)
+        {
+            if (ModelState.IsValid)
+            {
+                simpleUser.Password = B.BCrypt.HashPassword(simpleUser.Password);
+                _db.SimpleUsers.Add(simpleUser);
+                _db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
+
+        }
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
+        public IActionResult AdsPayment()
         {
             return View();
         }
@@ -81,6 +164,6 @@ namespace Broker.Controllers
         {
             return View();
         }
-        
+
     }
 }
