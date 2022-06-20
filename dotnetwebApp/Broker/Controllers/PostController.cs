@@ -193,7 +193,7 @@ namespace BrokerApp.Controllers
                     {
                         PostCategory postCategory = new PostCategory();
                         postCategory.CategoryId = catId;
-                        postCategory.Post = post;
+                        postCategory.Post = saveMapper;
                         this._Dbcontext.PostCategories.Add(postCategory);
                     }
                 }
@@ -203,8 +203,8 @@ namespace BrokerApp.Controllers
                     foreach (var agent in postView.AgentsInvited)
                     {
                         Invite inv = new Invite();
-                        inv.Post = post;
-                        inv.SentBy = post.PostUserId;
+                        inv.Post = saveMapper;
+                        inv.SentBy = saveMapper.PostUserId;
                         inv.SentTo = agent;
 
                         this._Dbcontext.Invites.Add(inv);
@@ -216,7 +216,7 @@ namespace BrokerApp.Controllers
 
                 return Json(new { status = 200, message = "Post created successfully" });
             }
-            else
+            catch (Exception ex)
             {
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 if (string.IsNullOrEmpty(postView.Title))
@@ -227,7 +227,6 @@ namespace BrokerApp.Controllers
 
                 return Json(new { status = 400, message = "Something went wrong", data });
             }
-
 
         }
         [HttpGet]
