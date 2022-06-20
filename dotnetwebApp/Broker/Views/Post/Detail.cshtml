@@ -32,7 +32,7 @@
     <div class="text-div">
         <div>
             <label>Location:</label>
-            <p>@Model.Country,@Model.City,@Model.Street,@Model.ZipCode</p>
+            <p>@Model.Country,@Model.State,@Model.City,@Model.Street,@Model.ZipCode</p>
         </div>
         <div>
             <label>Price:</label>
@@ -43,7 +43,7 @@
             <label>CategoryType:</label>
             @foreach(var cat in @Model.PostCategories)
             {
-                <p>@cat.Category.CategoryName</p>
+                <p>@cat.Category.CategoryName,</p>
             }
         </div>
         <div>
