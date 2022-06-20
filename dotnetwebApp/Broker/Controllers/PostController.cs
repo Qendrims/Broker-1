@@ -139,7 +139,9 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult Detail(int? id)
         {
-            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).Where(y=>y.PostId==id).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
+            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).ThenInclude(x=>x.Category).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
+            //var postCategories = this._Dbcontext.PostCategories.Where(p => p.PostId == id).Include(y => y.Category).Include(y => y.Post).ToList();
+            //var post1 = postCategories.
 
             PostDetailViewModel postViewModel = new PostDetailViewModel();
             try
@@ -170,7 +172,7 @@ namespace BrokerApp.Controllers
             try
             {
 
-                postView.PostUserId = 2;
+                postView.PostUserId = 1;
                 var saveMapper = _mapper.Map<Post>(postView);
 
                 this._Dbcontext.Posts.Add(saveMapper);
@@ -190,6 +192,7 @@ namespace BrokerApp.Controllers
                     PostCategory postCategory = new PostCategory();
                     postCategory.CategoryId = catId;
                     postCategory.Post = saveMapper;
+                    this._Dbcontext.PostCategories.Add(postCategory);
                 }
                 if (postView.AgentsInvited != null)
                 {
@@ -204,7 +207,7 @@ namespace BrokerApp.Controllers
 
                 _Dbcontext.SaveChanges();
 
-                return View("PostPage", "Home");
+                return View("Index", "Home");
             }
             catch (Exception ex)
             {
@@ -239,11 +242,12 @@ namespace BrokerApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, PostDetailViewModel ViewModel)
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(PostDetailViewModel ViewModel)
         {
 
-            var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(e => e.Images).FirstOrDefault();
-            var ImageToDelete = post.Images.Where(x => x.PostId == id).FirstOrDefault();
+            var post = this._Dbcontext.Posts.Where(x => x.PostId == ViewModel.PostId).Include(e => e.Images).FirstOrDefault();
+            var ImageToDelete = post.Images.Where(x => x.PostId == ViewModel.PostId).FirstOrDefault();
 
             try
             {
@@ -268,7 +272,6 @@ namespace BrokerApp.Controllers
                     ViewModel.Image = post.Images.ToList();
                 }
 
-                ViewModel.PostId = id;
 
                 this._Dbcontext.Update(post);
                 this._Dbcontext.SaveChanges();
