@@ -44,54 +44,40 @@
     </div>
     <a href="/Archive/Index" class="btn btn-primary">Archived posts</a>
 
-    <div id="products-container" class="products-container">
-        @foreach (var post in @Model.FilteredPosts)
-        {
-            if(post.IsArchived==false){
-            int index = @Model.FilteredPosts.IndexOf(post) + 1;
-            <div class="product" data-name="p-@index">
-                    @if(post.Images != null)
-                    {          
-                    <img src="~/UploadFiles/@post.Images.FirstOrDefault().ImageName" alt="">
-                    }
-                <h3>@post.Title</h3>
-                <a href="~/Archive/ArchivePost/@post.PostId" class="btn btn-primary">Archive</a>
-            
+   <div class="container">
+        <div class="row">
+            @foreach(var post in @Model.FilteredPosts)
+            {
                 
-                </div>
+            <div class="col-4">
+
+                <article class="post-card">
+                    <div class="post-card-img">
+                       <img src="~/Assets//Images/grid1.jpg" />
+                    </div>
+                    <div class="post-card-info">
+                        <div class="post-card-info-address">
+                            
+                            <h3>@post.Country</h3>
+                            <p>@post.City</p>
+                            <hr />
+                            <h3>@post.Title</h3>
+                            <p>@post.Description</p>
+                            <hr />
+                            <div class="post-price-btns">
+                                <h3>$@post.Price</h3>
+                                <a href="#" class="btn btn-outline-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
             }
-
-        }
-
-
-        @* <div class="product" data-name="p-1">
-            <img src="~/Assets/ImagePostPage/house1.jpg" alt="">
-            <h3>House 1</h3>
-            <div class="price">$110,000</div>
-            </div>
-            <div class="product" data-name="p-2">
-            <img src="~/Assets/ImagePostPage/house2.jpg" alt="">
-            <h3>House 2</h3>
-            <h3>House 4</h3>
-            <div class="price">$90,000</div>
-            </div>
-            <div class="product" data-name="p-5">
-            <img src="~/Assets/ImagePostPage/house5.jpg" alt="">
-            <h3>House 5</h3>
-            <div class="price">$200,000</div>
-            </div>
-            <div class="product" data-name="p-6">
-            <img src="~/Assets/ImagePostPage/house6.jpg" alt="">
-            <h3>House 6</h3>
-            <div class="price">$150,000</div>
-            </div>*@
-
-    </div>
+             </div>
+              </div>
 
 </div>
 
-
-</div>
 
 <div class="container">
 

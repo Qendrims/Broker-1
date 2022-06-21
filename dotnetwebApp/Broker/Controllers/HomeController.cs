@@ -23,6 +23,15 @@ namespace Broker.Controllers
             _db = db;
         }
 
+        [HttpGet]
+        public JsonResult GetSomething()
+        {
+            var categories = _db.Categories.ToList();
+            var data = JsonConvert.SerializeObject(categories);
+
+            return Json(data);
+        }
+
         public IActionResult Index()
         {
 
@@ -35,13 +44,14 @@ namespace Broker.Controllers
                 HomeViewModel model = new HomeViewModel();
 
                 model.category = category;
-                model.posts = this._db.Posts.Where(p => p.PostCategories.Any(x => x.CategoryId == category.CategoryId)).ToList();
+                model.posts = this._db.Posts.Where(p => p.PostCategories.Any(x => x.CategoryId == category.CategoryId)).Take(10).ToList();
 
                 if (model.posts.Count != 0)
                 {
                     homeViewModels.Add(model);
                 }
             }
+        
             return View(homeViewModels);
         }
 

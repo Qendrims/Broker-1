@@ -114,7 +114,7 @@ namespace BrokerApp.Controllers
             posts.Category = category;
             posts.City = city;
 
-            const int postPerPage = 2;
+            const int postPerPage = 20;
             if (pg < 1)
                 pg = 1;
 
@@ -157,7 +157,9 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult PostPageCreate()
         {
-            CreatePostViewModel createPostView = new CreatePostViewModel();
+            PostViewModel createPostView = new PostViewModel();
+
+
             createPostView.categories = this._Dbcontext.Categories.ToList();
             createPostView.agents = this._Dbcontext.Agents.ToList();
             return View(createPostView);
@@ -187,13 +189,17 @@ namespace BrokerApp.Controllers
                     this._Dbcontext.PostImages.Add(image);
                 }
 
-                foreach (var catId in postView.CategoryId)
+                if (postView.CategoryId != null)
                 {
-                    PostCategory postCategory = new PostCategory();
-                    postCategory.CategoryId = catId;
-                    postCategory.Post = saveMapper;
-                    this._Dbcontext.PostCategories.Add(postCategory);
+                    foreach (var catId in postView.CategoryId)
+                    {
+                        PostCategory postCategory = new PostCategory();
+                        postCategory.CategoryId = catId;
+                        postCategory.Post = saveMapper;
+                        this._Dbcontext.PostCategories.Add(postCategory);
+                    }
                 }
+
                 if (postView.AgentsInvited != null)
                 {
                     foreach (var agent in postView.AgentsInvited)
@@ -202,17 +208,28 @@ namespace BrokerApp.Controllers
                         inv.Post = saveMapper;
                         inv.SentBy = saveMapper.PostUserId;
                         inv.SentTo = agent;
+
+                        this._Dbcontext.Invites.Add(inv);
                     }
                 }
 
+
                 _Dbcontext.SaveChanges();
 
-                return View("Index", "Home");
+                return Json(new { status = 200, message = "Post created successfully" });
             }
             catch (Exception ex)
             {
-                return View("Error", ex);
+                Dictionary<string, string> data = new Dictionary<string, string>();
+                if (string.IsNullOrEmpty(postView.Title))
+                    data.Add("TitleError", "Title cant be empty");
+
+                if (string.IsNullOrEmpty(postView.Description))
+                    data.Add("DescriptionError", "Description cant be empty");
+
+                return Json(new { status = 400, message = "Something went wrong", data });
             }
+
         }
         [HttpGet]
         public IActionResult Edit(int? id)

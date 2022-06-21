@@ -18,7 +18,7 @@ namespace Broker.Models
         public string Description { get; set; }
         public decimal Price { get; set; }
         public double Latitude { get; set; }
-        public double Longitude { get; set; }
+        public double Longitude { get; set; } = 0;
         public bool IsArchived { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime MeetingDate { get; set; }
@@ -35,5 +35,9 @@ namespace Broker.Models
         public Agent Agent { get; set; }
 
         public virtual ICollection<PostCategory> PostCategories { get; set; }
+
+
+        public List<Category> categories { get; set; }
+        public List<Agent> agents { get; set; }
     }
 }
