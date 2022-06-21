@@ -20,9 +20,9 @@
     align-items: center;
 }
 
-.Text-LeftSide-FirstSection h1 {
- font-size: 42px;
-}
+    .Text-LeftSide-FirstSection h1 {
+        font-size: 42px;
+    }
 
 .Contact {
     display: flex;
@@ -233,6 +233,7 @@
             font-size: 18px;
         }
 }
+
 * {
     margin: 0px;
     padding: 0px;
