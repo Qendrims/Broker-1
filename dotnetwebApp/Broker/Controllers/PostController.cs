@@ -45,16 +45,6 @@ namespace BrokerApp.Controllers
             return RedirectToAction("PostPage");
         }
 
-        //    int postCount = posts.FilteredPosts.Count();
-        //    var pager = new Pagination(postCount, pg, pageSize);
-
-        //    int postSkip = (pg - 1) * pageSize;
-
-        //    posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
-        //    this.ViewBag.Pager = pager;
-        //    return View(posts);
-        //   // return View(posts);
-        //}
         public IActionResult MyPosts(int UseriId = 1, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
