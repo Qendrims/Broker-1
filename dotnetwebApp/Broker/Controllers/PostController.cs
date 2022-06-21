@@ -177,6 +177,9 @@ namespace BrokerApp.Controllers
                 postView.PostUserId = 1;
                 var saveMapper = _mapper.Map<Post>(postView);
 
+                if (ModelState.IsValid)
+                {
+
                 this._Dbcontext.Posts.Add(saveMapper);
                 foreach (var imageFile in postView.Image)
                 {
@@ -217,17 +220,22 @@ namespace BrokerApp.Controllers
                 _Dbcontext.SaveChanges();
 
                 return Json(new { status = 200, message = "Post created successfully" });
-            }
-            catch (Exception ex)
-            {
+                }
+
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 if (string.IsNullOrEmpty(postView.Title))
                     data.Add("TitleError", "Title cant be empty");
 
                 if (string.IsNullOrEmpty(postView.Description))
                     data.Add("DescriptionError", "Description cant be empty");
+                if (postView.CategoryId == null)
+                    data.Add("CategoryError", "Choose at least one category");
 
                 return Json(new { status = 400, message = "Something went wrong", data });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = 400, message = ex.Message});
             }
 
         }
