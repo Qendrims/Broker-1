@@ -11,10 +11,10 @@ namespace Broker.Models
         public string Comment { get; set; }
         public DateTime CreatedAt { get; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; }
-        public int? SentBy { get; set; }
+        public string SentBy { get; set; }
         [ForeignKey("SentBy")]
         public User User { get; set; }
-        public int? SentTo { get; set; }
+        public string SentTo { get; set; }
         [ForeignKey("SentTo")]
         public Agent Agent { get; set; }
 

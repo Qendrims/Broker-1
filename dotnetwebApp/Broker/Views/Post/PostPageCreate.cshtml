@@ -335,7 +335,7 @@
                                 @foreach (var ag in @Model.agents)
                                 {
                                     <div>
-                                        <input type="checkbox" name="agentsInvited" class="agentList" value="@ag.UserId" /><span>@ag.Name @ag.LastName - @ag.City</span>
+                                        <input type="checkbox" name="agentsInvited" class="agentList" value="@ag.Id" /><span>@ag.Name @ag.LastName - @ag.City</span>
                                     </div>
                                 }
                             </div>
@@ -410,6 +410,7 @@
                 req.onload = function(oEvent)
                 {
                     let res=JSON.parse(req.response)
+                    console.log(res);
                     if(res.status === 200){
                           toastr.success('Post created successfully!')
                     }

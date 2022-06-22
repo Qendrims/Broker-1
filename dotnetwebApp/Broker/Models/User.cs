@@ -1,14 +1,15 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Broker.Models
 {
-    public class User
+    public class User : IdentityUser
     {
-        [Key]
-        public int UserId { get; set; }
+        //[Key]
+        //public int UserId { get; set; }
 
         [Required(ErrorMessage = "Please enter name")]
         public string Name { get; set; }
@@ -16,15 +17,6 @@ namespace Broker.Models
         [Required(ErrorMessage = "Please enter last name")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-
-        [Required(ErrorMessage = "Please enter email")]
-        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Please enter a valid e-mail adress")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "Please enter Password")]
-        [MinLength(8,ErrorMessage ="Password must contain at least {1} characters")]
-        [RegularExpression(@"^.*(?=.*\d)(?=.*[A-Za-z])(?=.*[.-_@%&#]{0,}).*$", ErrorMessage = "Password must contain at least one letter, number and special character")]
-        public string Password { get; set; }
 
         [NotMapped]
         [Required(ErrorMessage = "Please enter Confirmation Password")]
@@ -35,10 +27,6 @@ namespace Broker.Models
         [Required(ErrorMessage = "Please enter birthday")]
         public DateTime Birthday { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-        [Required(ErrorMessage = "Please enter phone number")]
-        [Display(Name = "Phone Number")]
-        public string Telephone { get; set; }
 
         [Required(ErrorMessage = "Please enter street")]
         public string Street { get; set; }
@@ -52,8 +40,6 @@ namespace Broker.Models
         [Required(ErrorMessage = "Please enter zip code")]
         public int ZipCode { get; set; }
         public bool IsActive { get; set; } = true;
-
-
         public bool IsDeleted { get; set; } = false;
         public ICollection<Post> Posts { get; set; }
     }

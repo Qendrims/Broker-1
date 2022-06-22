@@ -1,6 +1,8 @@
-﻿using Broker.ApplicationDB;
+﻿using AutoMapper;
+using Broker.ApplicationDB;
 using Broker.Models;
 using Broker.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -17,10 +19,14 @@ namespace Broker.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
+        private readonly IMapper _mapper;
+        private readonly UserManager<Agent> _userManager;
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, IMapper mapper, UserManager<Agent> userManager)
         {
             _logger = logger;
             _db = db;
+            _mapper = mapper;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -74,7 +80,7 @@ namespace Broker.Controllers
 
             if (user != null)
             {
-                validUser = BCrypt.Net.BCrypt.Verify(loginUser.Password, user.Password);
+                //validUser = BCrypt.Net.BCrypt.Verify(loginUser.Password, user.Password);
             }
             else {
                 ViewBag.Message = "Username or Password is incorrect";
@@ -100,19 +106,36 @@ namespace Broker.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegisterAsAgent(Agent agent)
+        public async Task<IActionResult> RegisterAsAgent(RegisterAgentViewModel agent)
         {
-            if (ModelState.IsValid)
-            {
-                agent.Password = B.BCrypt.HashPassword(agent.Password);
-                _db.Agents.Add(agent);
-                _db.SaveChanges();
+            //if (ModelState.IsValid)
+            //{
+            //    //agent.Password = B.BCrypt.HashPassword(agent.Password);
+            //   // _db.Agents.Add(agent);
+            //    _db.SaveChanges();
 
-                return RedirectToAction("Index");
+            //    return RedirectToAction("Index");
+            //}
+            //else { 
+            //    return View();
+            //}
+
+            if (!ModelState.IsValid)
+            {
+                return View(agent);
             }
-            else { 
-                return View();
+            var user = _mapper.Map<Agent>(agent);
+            var result = await _userManager.CreateAsync(user, agent.Password);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+                return View(agent);
             }
+            await _userManager.AddToRoleAsync(user, "Agent");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
 
         }
 
@@ -129,7 +152,7 @@ namespace Broker.Controllers
         {
             if (ModelState.IsValid)
             {
-                simpleUser.Password = B.BCrypt.HashPassword(simpleUser.Password);
+                //simpleUser.Password = B.BCrypt.HashPassword(simpleUser.Password);
                 _db.SimpleUsers.Add(simpleUser);
                 _db.SaveChanges();
 

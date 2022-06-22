@@ -55,7 +55,7 @@ namespace BrokerApp.Controllers
         //    return View(posts);
         //   // return View(posts);
         //}
-        public IActionResult MyPosts(int UseriId = 1, int pg = 1)
+        public IActionResult MyPosts(string UseriId, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
 
@@ -174,7 +174,7 @@ namespace BrokerApp.Controllers
             try
             {
 
-                postView.PostUserId = 1;
+                postView.PostUserId = "730051ba-7fe4-43f4-ac3a-7555f9ff654b";
                 var saveMapper = _mapper.Map<Post>(postView);
 
                 if (ModelState.IsValid)
@@ -210,7 +210,7 @@ namespace BrokerApp.Controllers
                         Invite inv = new Invite();
                         inv.Post = saveMapper;
                         inv.SentBy = saveMapper.PostUserId;
-                        inv.SentTo = agent;
+                        inv.SentTo = agent.ToString();
 
                         this._Dbcontext.Invites.Add(inv);
                     }
@@ -235,6 +235,7 @@ namespace BrokerApp.Controllers
             }
             catch (Exception ex)
             {
+                
                 return Json(new { status = 400, message = ex.Message});
             }
 
