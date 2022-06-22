@@ -12,7 +12,7 @@ namespace Broker.Models
 
 
         public List<int> CategoryId { get; set; }
-        public List<int> AgentsInvited{ get; set; }
+        public List<string> AgentsInvited{ get; set; }
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
@@ -26,11 +26,11 @@ namespace Broker.Models
         public string City { get; set; }
         public string State { get; set; }
         public int ZipCode { get; set; }
-        public int? PostUserId { get; set; }
+        public string PostUserId { get; set; }
         [ForeignKey("PostUserId")]
         public User User { get; set; }
 
-        public int? TakenBy { get; set; }
+        public string TakenBy { get; set; }
         [ForeignKey("TakenBy")]
         public Agent Agent { get; set; }
 

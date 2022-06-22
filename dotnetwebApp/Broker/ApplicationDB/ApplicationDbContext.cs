@@ -1,9 +1,10 @@
 ﻿using Broker.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Broker.ApplicationDB
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> option) : base(option)
         {
@@ -23,8 +24,11 @@ namespace Broker.ApplicationDB
         public DbSet<AdsPayments> AdsPaymentcs { get; set; }
         public DbSet<Tags> Tags { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<User>().HasDiscriminator<string>("type")
            .HasValue<Agent>("Agent")
            .HasValue<SimpleUser>("SimpleUser");

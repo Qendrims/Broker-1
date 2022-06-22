@@ -45,11 +45,11 @@ namespace BrokerApp.Controllers
             return RedirectToAction("PostPage");
         }
 
-        public IActionResult MyPosts(int UseriId = 1, int pg = 1)
+        public IActionResult MyPosts(string id, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
 
-            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == UseriId).ToList();
+            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == id).ToList();
 
             const int postPerPage = 2;
             if (pg < 1)
@@ -164,7 +164,7 @@ namespace BrokerApp.Controllers
             try
             {
 
-                postView.PostUserId = 1;
+                //postView.PostUserId = 1;
                 var saveMapper = _mapper.Map<Post>(postView);
 
                 this._Dbcontext.Posts.Add(saveMapper);

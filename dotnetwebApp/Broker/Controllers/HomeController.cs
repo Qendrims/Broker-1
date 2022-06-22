@@ -1,6 +1,7 @@
 ﻿using Broker.ApplicationDB;
 using Broker.Models;
 using Broker.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -15,12 +16,19 @@ namespace Broker.Controllers
 {
     public class HomeController : Controller
     {
+      
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, SignInManager<User> signInManager, UserManager<User> userManager)
+
         {
-            _logger = logger;
-            _db = db;
+            this._logger = logger;
+            this._db = db;
+            this._signInManager = signInManager;
+            this._userManager = userManager;
+
         }
 
         [HttpGet]
@@ -66,15 +74,16 @@ namespace Broker.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginUserModel loginUser)
+        public async Task<IActionResult> Login(LoginUserModel loginUser)
         {
+            await this._signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false,false);
 
             var user = this._db.Users.Where(u => u.Email == loginUser.Email).FirstOrDefault();
             bool validUser =false;
 
             if (user != null)
             {
-                validUser = BCrypt.Net.BCrypt.Verify(loginUser.Password, user.Password);
+                //validUser = BCrypt.Net.BCrypt.Verify(loginUser.Password, user.PasswordHash);
             }
             else {
                 ViewBag.Message = "Username or Password is incorrect";
@@ -102,16 +111,16 @@ namespace Broker.Controllers
         [HttpPost]
         public IActionResult RegisterAsAgent(Agent agent)
         {
+            agent.UserName = agent.Email;
+            _userManager.CreateAsync(agent, agent.Password);
+            var result = _signInManager.PasswordSignInAsync(agent.Email, agent.PasswordHash, false, false);
             if (ModelState.IsValid)
             {
-                agent.Password = B.BCrypt.HashPassword(agent.Password);
-                _db.Agents.Add(agent);
-                _db.SaveChanges();
-
-                return RedirectToAction("Index");
+                return View("Index");
             }
-            else { 
-                return View();
+            else
+            {
+                return View("Error", "Post");
             }
 
         }

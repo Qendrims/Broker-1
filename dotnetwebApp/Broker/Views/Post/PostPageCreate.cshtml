@@ -334,7 +334,7 @@
                                 @foreach (var ag in @Model.agents)
                                 {
                                     <div>
-                                        <input type="checkbox" name="agentsInvited" class="agentList" value="@ag.UserId" /><span>@ag.Name @ag.LastName - @ag.City</span>
+                                        <input type="checkbox" name="agentsInvited" class="agentList" @*value="@ag.UserId"*@ /><span>@ag.Name @ag.LastName - @ag.City</span>
                                     </div>
                                 }
                             </div>
