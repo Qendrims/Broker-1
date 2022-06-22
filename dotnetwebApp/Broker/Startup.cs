@@ -61,7 +61,7 @@ namespace Broker
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Post}/{action=PostPageCreate}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

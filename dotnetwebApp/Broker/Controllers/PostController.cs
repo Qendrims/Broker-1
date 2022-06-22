@@ -129,13 +129,7 @@ namespace BrokerApp.Controllers
             return View("PostPage", posts);
         }
 
-        public IActionResult DeleteAgent(int? id)
-        {
-            var agent = _Dbcontext.Agents.Find(id);
-            _Dbcontext.Agents.Remove(agent);
-            _Dbcontext.SaveChanges();
-            return View();
-        }
+
         [HttpGet]
         public IActionResult Detail(int? id)
         {

@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20220617085459_merge1.cs" />
+    <Compile Remove="Migrations\20220617085459_merge1.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\UploadFiles\asdasfa-05-3011-15-20.831.jpg" />
     <Content Remove="wwwroot\UploadFiles\Livadh-05-3110-07-21.367.jpg" />
     <Content Remove="wwwroot\UploadFiles\sdasdgfsdfghasdf-05-3011-12-42.607.jpg" />
@@ -39,6 +44,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="BCrypt.Net-Next" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.25" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.25" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="2.9.4">
       <PrivateAssets>all</PrivateAssets>
