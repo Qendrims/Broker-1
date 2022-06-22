@@ -1,6 +1,8 @@
-﻿using Broker.ApplicationDB;
+﻿using AutoMapper;
+using Broker.ApplicationDB;
 using Broker.Models;
 using Broker.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,18 +18,20 @@ namespace Broker.Controllers
 {
     public class HomeController : Controller
     {
-      
+
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, SignInManager<User> signInManager, UserManager<User> userManager)
+        private IMapper _mapper;
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper)
 
         {
             this._logger = logger;
             this._db = db;
             this._signInManager = signInManager;
             this._userManager = userManager;
+            this._mapper = mapper;
 
         }
 
@@ -59,7 +63,7 @@ namespace Broker.Controllers
                     homeViewModels.Add(model);
                 }
             }
-        
+
             return View(homeViewModels);
         }
 
@@ -74,30 +78,20 @@ namespace Broker.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginUserModel loginUser)
         {
-            await this._signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false,false);
-
-            var user = this._db.Users.Where(u => u.Email == loginUser.Email).FirstOrDefault();
-            bool validUser =false;
-
-            if (user != null)
+            if (ModelState.IsValid)
             {
-                //validUser = BCrypt.Net.BCrypt.Verify(loginUser.Password, user.PasswordHash);
+                var result = await this._signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
             }
-            else {
-                ViewBag.Message = "Username or Password is incorrect";
-                return View();
-            }
+            return View(loginUser);
 
-            if (!validUser)
-            {
-                ViewBag.Message = "Username or Password is incorrect";
-                return View();
-            }
-            else {
-                return RedirectToAction("Index");
-            }
 
         }
 
@@ -109,19 +103,32 @@ namespace Broker.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegisterAsAgent(Agent agent)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterAsAgent(LoginUserModel model)
         {
-            agent.UserName = agent.Email;
-            _userManager.CreateAsync(agent, agent.Password);
-            var result = _signInManager.PasswordSignInAsync(agent.Email, agent.PasswordHash, false, false);
             if (ModelState.IsValid)
             {
-                return View("Index");
+                var user = _mapper.Map<User>(model);
+                var result = await _userManager.CreateAsync(user, model.Password);
+                //var result = _signInManager.PasswordSignInAsync(agent.Email, agent.PasswordHash, false, false);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    //return RedirectToAction("Index");
+                    //await _userManager.AddToRoleAsync(user, "Visitor");
+                    //Generate Email Confirmation token
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //Generate Email Confrimation Link
+                    var confrimationLink = Url.Action("ConfirmEmail", "Account",
+                        new { userid = user.Id, token = token }, Request.Scheme);
+
+                    //Log confirmation lint to a file
+                    _logger.Log(LogLevel.Warning, confrimationLink);
+                }
+
             }
-            else
-            {
-                return View("Error", "Post");
-            }
+
+            return View(model);
 
         }
 

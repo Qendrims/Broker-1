@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Broker.Models;
 using Broker.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace Broker.Mapping
 {
@@ -16,6 +17,8 @@ namespace Broker.Mapping
             
             CreateMap<PostViewModel, Post>();
             CreateMap<AdsPaymentViewModel, AdsPayments>();
+            CreateMap<LoginUserModel, User>()
+                .ForMember(u=>u.UserName,o=>o.MapFrom(x=>x.Email));
         }
     }
 }
