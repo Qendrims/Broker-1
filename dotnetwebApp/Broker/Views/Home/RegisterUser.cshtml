@@ -1,9 +1,14 @@
-﻿@model Broker.ViewModels.RegisterUserViewModel 
+﻿@model Broker.ViewModels.RegisterAgentViewModel 
 @{
 	ViewData["Title"] = "RegisterAsAgent";
 }
 
 <link href="@Url.Content("~/css/register-page.css")" rel="stylesheet" type="text/css" />
+<style>
+.hidden{
+    display: none;
+}
+</style>
 
 
     <div class="container">
@@ -36,22 +41,11 @@
             </div>
 
             <div class="form-outline mb-4">
-            <label class="labels" asp-for="Password"></label>
-            <input type="password" id="password"  asp-for="Password" placeholder="Password" class="form-control form-control-lg">
+            <label class="labels" asp-for="Password"></label>                        
+            <input type="password" id="Password"  asp-for="Password" placeholder="Password*" class="form-control form-control-lg">
             <span asp-validation-for="Password" class="text-danger"></span> 
             </div>
 
-            <div class="form-outline mb-4">
-            <label class="labels" asp-for="ConfirmationPassword"></label>
-            <input type="password" id="confirmationPassword"  asp-for="ConfirmationPassword" placeholder="Confirmation Password*" class="form-control form-control-lg">
-            <span asp-validation-for="ConfirmationPassword" class="text-danger"></span> 
-            </div>
-
-            <div class="form-outline mb-4">
-            <label class="labels" asp-for="Telephone"></label>
-            <input type="number" id="telephone"  asp-for="Telephone" placeholder="Telephone" class="form-control form-control-lg">
-            <span asp-validation-for="Telephone" class="text-danger"></span> 
-            </div>
 
             <div class="form-outline mb-4">
             <label class="labels" asp-for="Street"></label>
@@ -71,25 +65,23 @@
             <span asp-validation-for="City" class="text-danger"></span> 
             </div>
 
+
             <div class="form-outline mb-4">
             <label class="labels" asp-for="ZipCode"></label>
             <input type="number" id="zipCode"  asp-for="ZipCode" placeholder="ZipCode" class="form-control form-control-lg">
             <span asp-validation-for="ZipCode" class="text-danger"></span> 
             </div>
 
-            <div class="form-check form-check-inline">
-            <input class="form-check-input" value="simpleUser" type="radio" id="inlineRadio1" asp-for="Type">
-            <label class="form-check-label" for="inlineRadio1">As Simple User</label>
+             <div class="form-outline mb-4">
+              <p>Register as</p>
+            <input type="radio"  asp-for="Type" class="type" value="SimpleUser">
+            <label class="labels" asp-for="Type">Simple User</label>
+            <input type="radio"  asp-for="Type" class="type" value="Agent">
+             <label class="labels" asp-for="Type">Agent</label>
             <span asp-validation-for="Type" class="text-danger"></span> 
             </div>
 
-            <div class="form-check form-check-inline">
-            <input class="form-check-input" value="agent" type="radio" id="inlineRadio2" asp-for="Type">
-            <label class="form-check-label" for="inlineRadio2">As Agent</label>
-            <span asp-validation-for="Type" class="text-danger"></span> 
-            </div>
-
-            <div class="form-outline mb-4 hidden" id="agentIdDiv">
+            <div class="form-outline mb-4 hidden" id="agent-id">
             <label class="labels" asp-for="AgentId"></label>
             <input type="number" id="agentid"  asp-for="AgentId" placeholder="AgentId" class="form-control form-control-lg">
             <span asp-validation-for="AgentId" class="text-danger"></span> 
@@ -99,8 +91,18 @@
         </form>
         </div>
 
-        @*@section Scripts{ 
+        @section Scripts{ 
             @{ <partial name="_ValidationScriptsPartial"/>}
-        }*@
-
-        <script src="@Url.Content("~/js/register.js")"></script>
+            <script>
+           agentIdInput = document.getElementById('agent-id');
+           document.querySelectorAll('.type').forEach(inp => {
+               inp.addEventListener('change',e => {
+                   if(e.target.value == "Agent"){
+                       agentIdInput.classList.remove('hidden');
+                   }else if(e.target.value == "SimpleUser"){
+                       agentIdInput.classList.add('hidden');
+                   }
+               })
+           })
+            </script>
+        }

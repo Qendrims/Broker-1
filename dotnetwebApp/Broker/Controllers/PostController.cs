@@ -55,7 +55,7 @@ namespace BrokerApp.Controllers
         //    return View(posts);
         //   // return View(posts);
         //}
-        public IActionResult MyPosts(int UseriId = 1, int pg = 1)
+        public IActionResult MyPosts(string UseriId, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
 
@@ -114,7 +114,7 @@ namespace BrokerApp.Controllers
             posts.Category = category;
             posts.City = city;
 
-            const int postPerPage = 2;
+            const int postPerPage = 20;
             if (pg < 1)
                 pg = 1;
 
@@ -133,7 +133,9 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult Detail(int? id)
         {
-            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
+            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).ThenInclude(x=>x.Category).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
+            //var postCategories = this._Dbcontext.PostCategories.Where(p => p.PostId == id).Include(y => y.Category).Include(y => y.Post).ToList();
+            //var post1 = postCategories.
 
             PostDetailViewModel postViewModel = new PostDetailViewModel();
             try
@@ -149,7 +151,9 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult PostPageCreate()
         {
-            CreatePostViewModel createPostView = new CreatePostViewModel();
+            PostViewModel createPostView = new PostViewModel();
+
+
             createPostView.categories = this._Dbcontext.Categories.ToList();
             createPostView.agents = this._Dbcontext.Agents.ToList();
             return View(createPostView);
@@ -164,8 +168,11 @@ namespace BrokerApp.Controllers
             try
             {
 
-                postView.PostUserId = 2;
+                postView.PostUserId = "730051ba-7fe4-43f4-ac3a-7555f9ff654b";
                 var saveMapper = _mapper.Map<Post>(postView);
+
+                if (ModelState.IsValid)
+                {
 
                 this._Dbcontext.Posts.Add(saveMapper);
                 foreach (var imageFile in postView.Image)
@@ -179,12 +186,17 @@ namespace BrokerApp.Controllers
                     this._Dbcontext.PostImages.Add(image);
                 }
 
-                foreach (var catId in postView.CategoryId)
+                if (postView.CategoryId != null)
                 {
-                    PostCategory postCategory = new PostCategory();
-                    postCategory.CategoryId = catId;
-                    postCategory.Post = saveMapper;
+                    foreach (var catId in postView.CategoryId)
+                    {
+                        PostCategory postCategory = new PostCategory();
+                        postCategory.CategoryId = catId;
+                        postCategory.Post = saveMapper;
+                        this._Dbcontext.PostCategories.Add(postCategory);
+                    }
                 }
+
                 if (postView.AgentsInvited != null)
                 {
                     foreach (var agent in postView.AgentsInvited)
@@ -192,18 +204,35 @@ namespace BrokerApp.Controllers
                         Invite inv = new Invite();
                         inv.Post = saveMapper;
                         inv.SentBy = saveMapper.PostUserId;
-                        inv.SentTo = agent;
+                        inv.SentTo = agent.ToString();
+
+                        this._Dbcontext.Invites.Add(inv);
                     }
                 }
 
+
                 _Dbcontext.SaveChanges();
 
-                return RedirectToAction("Index", "Home");
+                return Json(new { status = 200, message = "Post created successfully" });
+                }
+
+                Dictionary<string, string> data = new Dictionary<string, string>();
+                if (string.IsNullOrEmpty(postView.Title))
+                    data.Add("TitleError", "Title cant be empty");
+
+                if (string.IsNullOrEmpty(postView.Description))
+                    data.Add("DescriptionError", "Description cant be empty");
+                if (postView.CategoryId == null)
+                    data.Add("CategoryError", "Choose at least one category");
+
+                return Json(new { status = 400, message = "Something went wrong", data });
             }
             catch (Exception ex)
             {
-                return View("Error", ex);
+                
+                return Json(new { status = 400, message = ex.Message});
             }
+
         }
         [HttpGet]
         public IActionResult Edit(int? id)
@@ -233,11 +262,12 @@ namespace BrokerApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, PostDetailViewModel ViewModel)
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(PostDetailViewModel ViewModel)
         {
 
-            var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(e => e.Images).FirstOrDefault();
-            var ImageToDelete = post.Images.Where(x => x.PostId == id).FirstOrDefault();
+            var post = this._Dbcontext.Posts.Where(x => x.PostId == ViewModel.PostId).Include(e => e.Images).FirstOrDefault();
+            var ImageToDelete = post.Images.Where(x => x.PostId == ViewModel.PostId).FirstOrDefault();
 
             try
             {
@@ -262,7 +292,6 @@ namespace BrokerApp.Controllers
                     ViewModel.Image = post.Images.ToList();
                 }
 
-                ViewModel.PostId = id;
 
                 this._Dbcontext.Update(post);
                 this._Dbcontext.SaveChanges();
