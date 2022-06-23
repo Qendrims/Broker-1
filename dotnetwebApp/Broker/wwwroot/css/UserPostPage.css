@@ -21,6 +21,35 @@ body {
     background: #eee;
 }
 
+.post-card {
+    width: 100%;
+    border: 1px solid #999;
+    margin-bottom: 10px;
+}
+
+    .post-card p {
+        font-size: 14px;
+    }
+
+.post-card-img {
+    width: 100%;
+}
+
+.post-card img {
+    width: 100%;
+}
+
+.post-card-info-address {
+    padding: 5px;
+}
+
+.post-price-btns {
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .search-form{
     display:flex;
     align-items: center;

@@ -1,7 +1,11 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
 
-/.vs/BrokerApp
-/BrokerApp
-/dotnetwebApp/Broker/Migrations
+dotnetwebApp/Broker/.vs/
+dotnetwebApp/Broker/bin/
+dotnetwebApp/Broker/obj/
+dotnetwebApp/Broker/[mM]igrations/
+
+
+
+
+dotnetwebApp/Broker/obj/Debug/netcoreapp3.1/apphost.exe
+dotnetwebApp/Broker/Broker.csproj

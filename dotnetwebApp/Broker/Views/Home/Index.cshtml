@@ -27,16 +27,35 @@
     {
         <h1>@m.category.CategoryName</h1>
         <div class="slider">
-            <div class="homepage-posts-container slides" data-category="@m.category.CategoryName" id="slides">
-            @foreach(var posts in @m.posts)
+            <div class="homepage-posts-container slides " data-category="@m.category.CategoryName" id="slides">
+
+            @foreach(var post in @m.posts)
             {
-                 <div class="homepage-post-cards content slide">
-                <img src="../../Assets/Images/grid1.jpg" alt="Home">
-                <h1>@posts.Title</h1>
-                <p>@posts.Description</p>
-                <a class="btn btn-primary" href="#">Show Details</a>
+               <div class="homepage-post-cards content slide">
+
+                <article class="post-card">
+                    <div class="post-card-img">
+                       <img src="~/Assets//Images/grid1.jpg" />
+                    </div>
+                    <div class="post-card-info">
+                        <div class="post-card-info-address">
+                            
+                            <h3>@post.Country</h3>
+                            <p>@post.City</p>
+                            <hr />
+                            <h3>@post.Title</h3>
+                            <p>@post.Description</p>
+                            <hr />
+                            <div class="post-price-btns">
+                                <h3>$@post.Price</h3>
+                                <a href="#" class="btn btn-outline-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
             </div>
             }
+
             </div>
             <div class="prev" id="prev" data-category-btn=@m.category.CategoryName>
                 <i class="fas fa-caret-left"></i>

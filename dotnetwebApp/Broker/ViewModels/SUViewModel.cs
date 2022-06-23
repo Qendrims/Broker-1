@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Broker.Models
+namespace Broker.ViewModels
 {
-    public class User:IdentityUser
+    public class SUViewModel
     {
+        public int UserId { get; set; }
 
         [Required(ErrorMessage = "Please enter name")]
         public string Name { get; set; }
@@ -16,11 +15,16 @@ namespace Broker.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [Required(ErrorMessage = "Please enter email")]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Please enter a valid e-mail adress")]
+        public string Email { get; set; }
 
         [Required(ErrorMessage = "Please enter birthday")]
         public DateTime Birthday { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
+        [Required(ErrorMessage = "Please enter phone number")]
+        [Display(Name = "Phone Number")]
+        public string Telephone { get; set; }
 
         [Required(ErrorMessage = "Please enter street")]
         public string Street { get; set; }
@@ -33,9 +37,5 @@ namespace Broker.Models
 
         [Required(ErrorMessage = "Please enter zip code")]
         public int ZipCode { get; set; }
-        public bool IsActive { get; set; } = true;
-
-        public bool IsDeleted { get; set; } = false;
-        public ICollection<Post> Posts { get; set; }
     }
 }
