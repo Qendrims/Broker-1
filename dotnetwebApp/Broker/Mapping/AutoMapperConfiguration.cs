@@ -19,6 +19,10 @@ namespace Broker.Mapping
             CreateMap<AdsPaymentViewModel, AdsPayments>();
             CreateMap<LoginUserModel, User>()
                 .ForMember(u=>u.UserName,o=>o.MapFrom(x=>x.Email));
+            CreateMap<LoginUserModel, Agent>()
+                .ForMember(u => u.UserName, o => o.MapFrom(x => x.Email));
+            CreateMap<LoginUserModel, SimpleUser>()
+                .ForMember(u => u.UserName, o => o.MapFrom(x => x.Email));
         }
     }
 }

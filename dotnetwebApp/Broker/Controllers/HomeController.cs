@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Broker.ApplicationDB;
+using Broker.Mailing;
 using Broker.Models;
 using Broker.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -24,15 +25,16 @@ namespace Broker.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private IMapper _mapper;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper)
+        private IEmailSender _emailSender;
 
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IEmailSender emailSender)
         {
             this._logger = logger;
             this._db = db;
             this._signInManager = signInManager;
             this._userManager = userManager;
             this._mapper = mapper;
-
+            _emailSender = emailSender;
         }
 
         [HttpGet]
@@ -83,6 +85,7 @@ namespace Broker.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 var result = await this._signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, false);
                 if (result.Succeeded)
                 {
@@ -101,29 +104,43 @@ namespace Broker.Controllers
             return View();
 
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterAsAgent(LoginUserModel model)
         {
+
             if (ModelState.IsValid)
             {
-                var user = _mapper.Map<User>(model);
+                User user;
+                if (model.Type == "agent")
+                {
+                    user = _mapper.Map<Agent>(model);
+                }
+                else if (model.Type == "simpleUser")
+                {
+                    user = _mapper.Map<SimpleUser>(model);
+                }
+                else 
+                { 
+                   user = _mapper.Map<User>(model); 
+                }
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 //var result = _signInManager.PasswordSignInAsync(agent.Email, agent.PasswordHash, false, false);
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    //return RedirectToAction("Index");
-                    //await _userManager.AddToRoleAsync(user, "Visitor");
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    
                     //Generate Email Confirmation token
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    await _userManager.ConfirmEmailAsync(user, token);
                     //Generate Email Confrimation Link
-                    var confrimationLink = Url.Action("ConfirmEmail", "Account",
-                        new { userid = user.Id, token = token }, Request.Scheme);
-
+                    var confrimationLink = Url.Action("Index", "Home",
+                        new { token = token }, Request.Scheme);
+                    await _emailSender.SendEmailAsync(model.Email, "Confirm email", "Confirm email by pressing this link: <a href=\"" + confrimationLink + "\">link</a>");
                     //Log confirmation lint to a file
                     _logger.Log(LogLevel.Warning, confrimationLink);
+                    //await _userManager.AddToRoleAsync(user, "Visitor");
                 }
 
             }
@@ -143,18 +160,7 @@ namespace Broker.Controllers
         [HttpPost]
         public IActionResult RegisterAsSimpleUser(SimpleUser simpleUser)
         {
-            if (ModelState.IsValid)
-            {
-                simpleUser.Password = B.BCrypt.HashPassword(simpleUser.Password);
-                _db.SimpleUsers.Add(simpleUser);
-                _db.SaveChanges();
-
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return View();
-            }
+            return View();
 
         }
         public IActionResult AboutUs()

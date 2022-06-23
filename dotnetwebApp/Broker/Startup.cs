@@ -1,5 +1,6 @@
 using AutoMapper;
 using Broker.ApplicationDB;
+using Broker.Mailing;
 using Broker.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,12 @@ namespace Broker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var emailConfig = Configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfig>();
+            services.AddSingleton(emailConfig);
+
+
             services.AddControllersWithViews();
            
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
@@ -35,6 +42,7 @@ namespace Broker
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+            services.AddScoped<IEmailSender, EmailSender>();
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             services.Configure<IdentityOptions>(options =>
             {

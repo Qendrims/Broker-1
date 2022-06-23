@@ -41,9 +41,5 @@ namespace Broker.Models
         public ICollection<Post> Posts { get; set; }
 
 
-        //this is used only for registering
-        [NotMapped]
-        public string Password { get; set; }
-
     }
 }

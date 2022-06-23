@@ -28,7 +28,7 @@ namespace Broker.ApplicationDB
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+;
             modelBuilder.Entity<User>().HasDiscriminator<string>("type")
            .HasValue<Agent>("Agent")
            .HasValue<SimpleUser>("SimpleUser");

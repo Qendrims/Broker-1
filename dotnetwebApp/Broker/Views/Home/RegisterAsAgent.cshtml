@@ -43,7 +43,14 @@
             <span asp-validation-for="Password" class="text-danger"></span> 
             </div>
 
-
+            <div class="form-outline mb-4">
+            <label class="labels" asp-for="Type"></label>
+            <input type="radio" asp-for="Type" value="agent" />
+            <label for="agent">Agent</label>
+            <input type="radio" asp-for="Type" value="simpleUser" />
+            <label for="simpleUser">Simple User</label>
+            
+            </div>
 
 
             @*<div class="form-outline mb-4">
