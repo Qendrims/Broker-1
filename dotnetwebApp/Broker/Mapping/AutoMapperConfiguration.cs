@@ -17,10 +17,18 @@ namespace Broker.Mapping
             CreateMap<PostViewModel, Post>();
             CreateMap<AdsPaymentViewModel, AdsPayments>();
 
-            CreateMap<RegisterAgentViewModel, Agent>()
+            CreateMap<RegisterAgentViewModel, User>()
            .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
+
+            CreateMap<RegisterAgentViewModel, Agent>()
+         .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
+
+            CreateMap<RegisterAgentViewModel, SimpleUser>()
+         .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
         }
-    }
+
+       
+}
 }
 
 //.ForMember(x=>x.Title,y=>y.MapFrom(b=>b.Title))

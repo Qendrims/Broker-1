@@ -20,8 +20,8 @@ namespace Broker.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
         private readonly IMapper _mapper;
-        private readonly UserManager<Agent> _userManager;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, IMapper mapper, UserManager<Agent> userManager)
+        private readonly UserManager<User> _userManager;
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, IMapper mapper, UserManager<User> userManager)
         {
             _logger = logger;
             _db = db;
@@ -106,35 +106,38 @@ namespace Broker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterAsAgent(RegisterAgentViewModel agent)
+        public async Task<IActionResult> RegisterAsAgent(RegisterAgentViewModel userRegistered)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    //agent.Password = B.BCrypt.HashPassword(agent.Password);
-            //   // _db.Agents.Add(agent);
-            //    _db.SaveChanges();
 
-            //    return RedirectToAction("Index");
-            //}
-            //else { 
-            //    return View();
-            //}
+            User user;
 
             if (!ModelState.IsValid)
             {
-                return View(agent);
+                return View(userRegistered);
             }
-            var user = _mapper.Map<Agent>(agent);
-            var result = await _userManager.CreateAsync(user, agent.Password);
+
+            if(userRegistered.Type == "SimpleUser")
+            {
+               userRegistered.AgentId = null;
+             user = _mapper.Map<SimpleUser>(userRegistered);
+            } else if(userRegistered.Type == "Agent")
+            {
+                user = _mapper.Map<Agent>(userRegistered);
+            } else
+            {
+                user = _mapper.Map<User>(userRegistered);
+            }
+
+            var result = await _userManager.CreateAsync(user, userRegistered.Password);
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
                 {
                     ModelState.TryAddModelError(error.Code, error.Description);
                 }
-                return View(agent);
+                return View(userRegistered);
             }
-            await _userManager.AddToRoleAsync(user, "Agent");
+           // await _userManager.AddToRoleAsync(user, "Agent");
             return RedirectToAction(nameof(HomeController.Index), "Home");
 
         }

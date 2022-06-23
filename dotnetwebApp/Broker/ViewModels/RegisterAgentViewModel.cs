@@ -13,7 +13,8 @@ namespace Broker.ViewModels
         public string City { get; set; }
         public string State { get; set; }
         public int ZipCode { get; set; }
-        public int AgentId { get; set; }
+        public string Type { get; set; }
+        public int? AgentId { get; set; }
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
