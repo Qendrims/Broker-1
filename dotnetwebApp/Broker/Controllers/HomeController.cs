@@ -106,7 +106,7 @@ namespace Broker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterAsAgent(RegisterAgentViewModel userRegistered)
+        public async Task<IActionResult> RegisterAsAgent(RegisterUserViewModel userRegistered)
         {
 
             User user;
@@ -142,31 +142,6 @@ namespace Broker.Controllers
 
         }
 
-
-        public IActionResult RegisterAsSimpleUser()
-        {
-
-            return View();
-
-        }
-
-        [HttpPost]
-        public IActionResult RegisterAsSimpleUser(SimpleUser simpleUser)
-        {
-            if (ModelState.IsValid)
-            {
-                //simpleUser.Password = B.BCrypt.HashPassword(simpleUser.Password);
-                _db.SimpleUsers.Add(simpleUser);
-                _db.SaveChanges();
-
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return View();
-            }
-
-        }
         public IActionResult AboutUs()
         {
             return View();

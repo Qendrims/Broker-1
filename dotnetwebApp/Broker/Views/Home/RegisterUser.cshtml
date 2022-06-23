@@ -1,6 +1,6 @@
-﻿@model Broker.ViewModels.RegisterAgentViewModel 
+﻿@model Broker.ViewModels.RegisterUserViewModel
 @{
-	ViewData["Title"] = "RegisterAsAgent";
+	ViewData["Title"] = "Register";
 }
 
 <link href="@Url.Content("~/css/register-page.css")" rel="stylesheet" type="text/css" />
@@ -13,7 +13,7 @@
 
     <div class="container">
 
-        <form method="post" asp-action="RegisterAsAgent" autocomplete="off" id="form">
+        <form method="post" asp-action="RegisterUser" autocomplete="off" id="form">
             <h2 id="registerHeader">Create Account</h2>
 
             <div class="form-outline mb-4">

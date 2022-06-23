@@ -6,11 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20220617085459_merge1.cs" />
-    <Compile Remove="Migrations\20220617085459_merge1.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="wwwroot\UploadFiles\asdasfa-05-3011-15-20.831.jpg" />
     <Content Remove="wwwroot\UploadFiles\Livadh-05-3110-07-21.367.jpg" />
     <Content Remove="wwwroot\UploadFiles\sdasdgfsdfghasdf-05-3011-12-42.607.jpg" />

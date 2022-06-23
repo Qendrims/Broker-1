@@ -26,6 +26,8 @@ namespace Broker.ApplicationDB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<User>().HasDiscriminator<string>("type")
            .HasValue<Agent>("Agent")
            .HasValue<SimpleUser>("SimpleUser");
@@ -49,11 +51,9 @@ namespace Broker.ApplicationDB
             .IsRequired();
 
 
-            modelBuilder.Entity<User>().Property(u => u.PhoneNumber)
-            .HasMaxLength(200)
-            .IsRequired();
+            
 
-            modelBuilder.Entity<User>().Property(u => u.Street);
+           
 
 
             modelBuilder.Entity<User>().Property(u => u.City)
@@ -62,8 +62,7 @@ namespace Broker.ApplicationDB
             modelBuilder.Entity<User>().Property(u => u.State)
             .HasMaxLength(200);
 
-            modelBuilder.Entity<Agent>().Property(a => a.AgentId)
-            .IsRequired();
+            
 
             modelBuilder.Entity<Post>().Property(p => p.Title)
             .HasMaxLength(100)
@@ -81,8 +80,7 @@ namespace Broker.ApplicationDB
             modelBuilder.Entity<Post>().Property(p => p.City)
             .HasMaxLength(200);
 
-            modelBuilder.Entity<Post>().Property(p => p.PostUserId)
-            .IsRequired();
+            
 
             modelBuilder.Entity<PostCategory>().HasKey(pc => new { pc.CategoryId, pc.PostId });
 

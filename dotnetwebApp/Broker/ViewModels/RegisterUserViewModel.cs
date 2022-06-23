@@ -49,7 +49,6 @@ namespace Broker.ViewModels
         [Required(ErrorMessage ="Please select type")]
         public string Type { get; set; }
 
-        [Required(ErrorMessage = "Please enter AgentId")]
-        public int AgentId { get; set; }
+        public int? AgentId { get; set; }
     }
 }

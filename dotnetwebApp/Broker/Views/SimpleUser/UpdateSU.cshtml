@@ -14,8 +14,8 @@
             <h2 id="deleteHeader">Update Account</h2>
 
             <div class="form-outline mb-4">
-            <label class="labels" asp-for="UserId"></label>
-            <input type="text" id="firstname" asp-for="UserId" readonly hidden value="@Model.UserId" class="form-control form-control-lg">
+            <label class="labels" asp-for="Id"></label>
+            <input type="text" id="firstname" asp-for="Id" readonly hidden value="@Model.Id" class="form-control form-control-lg">
             </div>
 
             <div class="form-outline mb-4">
@@ -44,9 +44,9 @@
 
 
             <div class="form-outline mb-4">
-            <label class="labels" asp-for="Telephone"></label>
-            <input type="number" id="telephone"  asp-for="Telephone" value="@Model.Telephone" class="form-control form-control-lg">
-            <span asp-validation-for="Telephone" class="text-danger"></span> 
+            <label class="labels" asp-for="PhoneNumber"></label>
+            <input type="number" id="telephone"  asp-for="PhoneNumber" value="@Model.PhoneNumber" class="form-control form-control-lg">
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span> 
             </div>
 
             <div class="form-outline mb-4">
