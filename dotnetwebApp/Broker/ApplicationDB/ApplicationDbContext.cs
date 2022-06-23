@@ -1,9 +1,10 @@
 ﻿using Broker.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Broker.ApplicationDB
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> option) : base(option)
         {
@@ -48,7 +49,7 @@ namespace Broker.ApplicationDB
             .IsRequired();
 
 
-            modelBuilder.Entity<User>().Property(u => u.Telephone)
+            modelBuilder.Entity<User>().Property(u => u.PhoneNumber)
             .HasMaxLength(200)
             .IsRequired();
 

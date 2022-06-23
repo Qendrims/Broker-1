@@ -7,10 +7,10 @@ namespace Broker.Models
     {
         [Key]
         public int PaymentId { get; set; }
-        public int? SentBy { get; set; }
+        public string SentBy { get; set; }
         [ForeignKey("SentBy")]
         public User User { get; set; }
-        public int? SentTo { get; set; }
+        public string SentTo { get; set; }
         [ForeignKey("SentTo")]
         public Agent Agent { get; set; }
         public double Price { get; set; }

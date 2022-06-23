@@ -1,4 +1,5 @@
-﻿using Broker.ApplicationDB;
+﻿using AutoMapper;
+using Broker.ApplicationDB;
 using Broker.Models;
 using Broker.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +18,12 @@ namespace Broker.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
+        private IMapper _mapper;
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db,IMapper mapper)
         {
             _logger = logger;
             _db = db;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -64,7 +67,7 @@ namespace Broker.Controllers
 
             if (user != null)
             {
-                validUser = BCrypt.Net.BCrypt.Verify(loginUser.Password, user.Password);
+                validUser = BCrypt.Net.BCrypt.Verify(loginUser.Password, user.PasswordHash);
             }
             else {
                 ViewBag.Message = "Username or Password is incorrect";
@@ -82,7 +85,7 @@ namespace Broker.Controllers
 
         }
 
-        public IActionResult RegisterAsAgent()
+        public IActionResult RegisterUser()
         {
 
             return View();
@@ -90,13 +93,25 @@ namespace Broker.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegisterAsAgent(Agent agent)
+        public IActionResult RegisterUser(RegisterUserViewModel user)
         {
             if (ModelState.IsValid)
             {
-                agent.Password = B.BCrypt.HashPassword(agent.Password);
-                _db.Agents.Add(agent);
-                _db.SaveChanges();
+                if (user.Type == "agent")
+                {
+                    Agent a = new Agent();
+                    a = _mapper.Map<Agent>(user);
+                    a.AgentId = user.AgentId;
+                    _db.Agents.Add(a);
+                    _db.SaveChanges();
+                }
+                else {
+                    SimpleUser su = new SimpleUser();
+                    su = _mapper.Map<SimpleUser>(user);
+                    _db.SimpleUsers.Add(su);
+                    _db.SaveChanges();
+                }
+                
 
                 return RedirectToAction("Index");
             }
@@ -106,31 +121,6 @@ namespace Broker.Controllers
 
         }
 
-
-        public IActionResult RegisterAsSimpleUser()
-        {
-
-            return View();
-
-        }
-
-        [HttpPost]
-        public IActionResult RegisterAsSimpleUser(SimpleUser simpleUser)
-        {
-            if (ModelState.IsValid)
-            {
-                simpleUser.Password = B.BCrypt.HashPassword(simpleUser.Password);
-                _db.SimpleUsers.Add(simpleUser);
-                _db.SaveChanges();
-
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return View();
-            }
-
-        }
         public IActionResult AboutUs()
         {
             return View();

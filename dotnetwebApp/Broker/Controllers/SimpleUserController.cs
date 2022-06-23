@@ -67,21 +67,21 @@ namespace Broker.Controllers
 
         }
 
-        [HttpPost]
-        public IActionResult UpdateSU(SUViewModel suvm,int id)
-        {
+        //[HttpPost]
+        //public IActionResult UpdateSU(SUViewModel suvm,int id)
+        //{
 
-            var simpleUser = _db.SimpleUsers.Find(id);
-            var password = simpleUser.Password; 
-            simpleUser = _mapper.Map<SimpleUser>(suvm);
-            simpleUser.Password = password;
+        //    var simpleUser = _db.SimpleUsers.Find(id);
+        //    var password = simpleUser.Password; 
+        //    simpleUser = _mapper.Map<SimpleUser>(suvm);
+        //    simpleUser.Password = password;
 
-            if (ModelState.IsValid) {
-                _db.SimpleUsers.Update(simpleUser);
-                _db.SaveChanges();
-                return RedirectToAction("HomePage","SimpleUser");
-            }
-            return View(suvm);
-        }
+        //    if (ModelState.IsValid) {
+        //        _db.SimpleUsers.Update(simpleUser);
+        //        _db.SaveChanges();
+        //        return RedirectToAction("HomePage","SimpleUser");
+        //    }
+        //    return View(suvm);
+        //}
     }
 }

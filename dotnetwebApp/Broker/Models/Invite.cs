@@ -11,10 +11,10 @@ namespace Broker.Models
         public int? PostId { get; set; }
         [ForeignKey("PostId")]
         public Post Post { get; set; } 
-        public int? SentBy { get; set;} 
+        public string SentBy { get; set;} 
         [ForeignKey("SentBy")]
         public User User { get; set; }
-        public int? SentTo { get; set; }
+        public string SentTo { get; set; }
         [ForeignKey("SentTo")]
         public Agent Agent { get; set; }
         public bool IsAccepted { get; set; } = false;
