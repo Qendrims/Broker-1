@@ -55,7 +55,7 @@ namespace BrokerApp.Controllers
         //    return View(posts);
         //   // return View(posts);
         //}
-        public IActionResult MyPosts(int UseriId = 1, int pg = 1)
+        public IActionResult MyPosts(int UseriId = 4, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
 
@@ -137,7 +137,7 @@ namespace BrokerApp.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult Detail(int? id)
+        public IActionResult Detail(int id=6)
         {
             var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
 
