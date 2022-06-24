@@ -55,7 +55,7 @@ namespace BrokerApp.Controllers
         //    return View(posts);
         //   // return View(posts);
         //}
-        public IActionResult MyPosts(string UseriId, int pg = 1)
+        public IActionResult MyPosts(string id, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
 

@@ -104,40 +104,40 @@ window.onscroll = function () {
 
 //change the inner html of navbar based on whether the user is logged in or not
 
-navHeader.innerHTML +=
-  username == null
-    ? `
-    <ul class="nav-list" id="list1">
+//navHeader.innerHTML +=
+//  username == null
+//    ? `
+//    <ul class="nav-list" id="list1">
      
-</ul>
-`
-    : `
-<div class="dropdown">
-  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-    Welcome ${username}
-  </button>
-  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-    <li><a class="dropdown-item active" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="/Post/Postpagecreate">Create Post</a></li>
-    <li><a class="dropdown-item" href="/Post/MyPosts">My posts</a></li>
-    <li><a class="dropdown-item" href="/Home/Postpage">All posts</a></li>
-    <li><a class="dropdown-item" href="/Post/ArchivedPosts">Archived posts</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li id="LogOut"><a class="dropdown-item" href="#">Log Out</a></li>
-  </ul>
-</div>
-`;
+//</ul>
+//`
+//    : `
+//<div class="dropdown">
+//  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+//    Welcome ${username}
+//  </button>
+//  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+//    <li><a class="dropdown-item active" href="#">Action</a></li>
+//    <li><a class="dropdown-item" href="/Post/Postpagecreate">Create Post</a></li>
+//    <li><a class="dropdown-item" href="/Post/MyPosts">My posts</a></li>
+//    <li><a class="dropdown-item" href="/Home/Postpage">All posts</a></li>
+//    <li><a class="dropdown-item" href="/Post/ArchivedPosts">Archived posts</a></li>
+//    <li><hr class="dropdown-divider"></li>
+//    <li id="LogOut"><a class="dropdown-item" href="#">Log Out</a></li>
+//  </ul>
+//</div>
+//`;
 
-let signIn = document.getElementById("SignIn");
-signIn?.addEventListener("click", () => {
-  location.href = "/Home/Login";
-});
+//let signIn = document.getElementById("SignIn");
+//signIn?.addEventListener("click", () => {
+//  location.href = "/Home/Login";
+//});
 
-let logout = document.getElementById("LogOut");
-logout?.addEventListener("click", () => {
-  localStorage.removeItem("broker-username");
-  location.reload();
-});
+//let logout = document.getElementById("LogOut");
+//logout?.addEventListener("click", () => {
+//  localStorage.removeItem("broker-username");
+//  location.reload();
+//});
 
 // get data from backend to create a set with unique categories
 
