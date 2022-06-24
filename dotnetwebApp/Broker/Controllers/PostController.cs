@@ -6,10 +6,12 @@ using Broker.Models;
 using Broker.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using System;
+using System.Security.Claims;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -19,16 +21,17 @@ namespace BrokerApp.Controllers
 {
     public class PostController : Controller
     {
-
+        private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _Dbcontext;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private IMapper _mapper;
 
-        public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper)
+        public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager)
         {
             this._Dbcontext = _context;
             this._webHostEnvironment = _webHostEnvironment;
             this._mapper = mapper;
+            _userManager = userManager;
         }
 
         public IActionResult Archive(int id)
@@ -163,7 +166,7 @@ namespace BrokerApp.Controllers
         {
             try
             {
-
+                postView.PostUserId = _userManager.GetUserId(HttpContext.User);
                 //postView.PostUserId = 1;
                 var saveMapper = _mapper.Map<Post>(postView);
 

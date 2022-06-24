@@ -11,7 +11,6 @@ namespace Broker.ApplicationDB
 
         }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<SimpleUser> SimpleUsers { get; set; }
         public DbSet<Agent> Agents { get; set; }
         public DbSet<Post> Posts { get; set; }
