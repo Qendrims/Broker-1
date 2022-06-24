@@ -45,21 +45,11 @@ namespace BrokerApp.Controllers
             return RedirectToAction("PostPage");
         }
 
-        //    int postCount = posts.FilteredPosts.Count();
-        //    var pager = new Pagination(postCount, pg, pageSize);
-
-        //    int postSkip = (pg - 1) * pageSize;
-
-        //    posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
-        //    this.ViewBag.Pager = pager;
-        //    return View(posts);
-        //   // return View(posts);
-        //}
-        public IActionResult MyPosts(string UseriId  , int pg = 1)
+        public IActionResult MyPosts(string id, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
 
-            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == UseriId).ToList();
+            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == id).ToList();
 
             const int postPerPage = 2;
             if (pg < 1)
@@ -181,9 +171,13 @@ namespace BrokerApp.Controllers
 
                 foreach (var catId in postView.CategoryId)
                 {
-                    PostCategory postCategory = new PostCategory();
-                    postCategory.CategoryId = catId;
-                    postCategory.Post = saveMapper;
+                    foreach (var catId in postView.CategoryId)
+                    {
+                        PostCategory postCategory = new PostCategory();
+                        postCategory.CategoryId = catId;
+                        postCategory.Post = saveMapper;
+                        this._Dbcontext.PostCategories.Add(postCategory);
+                    }
                 }
                 if (postView.AgentsInvited != null)
                 {
@@ -198,7 +192,7 @@ namespace BrokerApp.Controllers
 
                 _Dbcontext.SaveChanges();
 
-                return RedirectToAction("Index", "Home");
+                return Json(new { status = 200, message = "Post created successfully" });
             }
             catch (Exception ex)
             {

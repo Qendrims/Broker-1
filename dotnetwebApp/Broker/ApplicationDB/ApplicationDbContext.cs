@@ -24,10 +24,11 @@ namespace Broker.ApplicationDB
         public DbSet<AdsPayments> AdsPaymentcs { get; set; }
         public DbSet<Tags> Tags { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+;
             modelBuilder.Entity<User>().HasDiscriminator<string>("type")
            .HasValue<Agent>("Agent")
            .HasValue<SimpleUser>("SimpleUser");

@@ -30,7 +30,7 @@ namespace Broker.Models
         [ForeignKey("PostUserId")]
         public User User { get; set; }
         
-        public string? TakenBy { get; set; }
+        public string TakenBy { get; set; }
         [ForeignKey("TakenBy")]
         public Agent Agent { get; set; }
 

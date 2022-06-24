@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Broker.ApplicationDB;
+using Broker.Mailing;
 using Broker.Models;
 using Broker.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,16 +19,22 @@ namespace Broker.Controllers
 {
     public class HomeController : Controller
     {
+
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
-        private readonly IMapper _mapper;
+        private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, IMapper mapper, UserManager<User> userManager)
+        private IMapper _mapper;
+        private IEmailSender _emailSender;
+
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IEmailSender emailSender)
         {
-            _logger = logger;
-            _db = db;
-            _mapper = mapper;
-            _userManager = userManager;
+            this._logger = logger;
+            this._db = db;
+            this._signInManager = signInManager;
+            this._userManager = userManager;
+            this._mapper = mapper;
+            _emailSender = emailSender;
         }
 
         [HttpGet]
@@ -57,7 +65,7 @@ namespace Broker.Controllers
                     homeViewModels.Add(model);
                 }
             }
-        
+
             return View(homeViewModels);
         }
 
@@ -72,29 +80,21 @@ namespace Broker.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginUserModel loginUser)
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginUserModel loginUser)
         {
-
-            var user = this._db.Users.Where(u => u.Email == loginUser.Email).FirstOrDefault();
-            bool validUser =false;
-
-            if (user != null)
+            if (ModelState.IsValid)
             {
-                validUser = BCrypt.Net.BCrypt.Verify(loginUser.Password, user.PasswordHash);
-            }
-            else {
-                ViewBag.Message = "Username or Password is incorrect";
-                return View();
-            }
 
-            if (!validUser)
-            {
-                ViewBag.Message = "Username or Password is incorrect";
-                return View();
+                var result = await this._signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
             }
-            else {
-                return RedirectToAction("Index");
-            }
+            return View(loginUser);
+
 
         }
 
@@ -104,44 +104,65 @@ namespace Broker.Controllers
             return View();
 
         }
-
         [HttpPost]
-        public async Task<IActionResult> RegisterAsAgent(RegisterUserViewModel userRegistered)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterAsAgent(LoginUserModel model)
         {
 
-            User user;
-
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(userRegistered);
-            }
-
-            if(userRegistered.Type == "SimpleUser")
-            {
-               userRegistered.AgentId = null;
-             user = _mapper.Map<SimpleUser>(userRegistered);
-            } else if(userRegistered.Type == "Agent")
-            {
-                user = _mapper.Map<Agent>(userRegistered);
-            } else
-            {
-                user = _mapper.Map<User>(userRegistered);
-            }
-
-            var result = await _userManager.CreateAsync(user, userRegistered.Password);
-            if (!result.Succeeded)
-            {
-                foreach (var error in result.Errors)
+                User user;
+                if (model.Type == "agent")
                 {
-                    ModelState.TryAddModelError(error.Code, error.Description);
+                    user = _mapper.Map<Agent>(model);
                 }
-                return View(userRegistered);
+                else if (model.Type == "simpleUser")
+                {
+                    user = _mapper.Map<SimpleUser>(model);
+                }
+                else 
+                { 
+                   user = _mapper.Map<User>(model); 
+                }
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+                //var result = _signInManager.PasswordSignInAsync(agent.Email, agent.PasswordHash, false, false);
+                if (result.Succeeded)
+                {
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    
+                    //Generate Email Confirmation token
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    await _userManager.ConfirmEmailAsync(user, token);
+                    //Generate Email Confrimation Link
+                    var confrimationLink = Url.Action("Index", "Home",
+                        new { token = token }, Request.Scheme);
+                    await _emailSender.SendEmailAsync(model.Email, "Confirm email", "Confirm email by pressing this link: <a href=\"" + confrimationLink + "\">link</a>");
+                    //Log confirmation lint to a file
+                    _logger.Log(LogLevel.Warning, confrimationLink);
+                    //await _userManager.AddToRoleAsync(user, "Visitor");
+                }
+
             }
-           // await _userManager.AddToRoleAsync(user, "Agent");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+
+            return View(model);
 
         }
 
+
+        public IActionResult RegisterAsSimpleUser()
+        {
+
+            return View();
+
+        }
+
+        [HttpPost]
+        public IActionResult RegisterAsSimpleUser(SimpleUser simpleUser)
+        {
+            return View();
+
+        }
         public IActionResult AboutUs()
         {
             return View();

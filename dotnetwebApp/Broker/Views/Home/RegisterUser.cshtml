@@ -1,4 +1,4 @@
-﻿@model Broker.ViewModels.RegisterUserViewModel
+﻿@model LoginUserModel
 @{
 	ViewData["Title"] = "Register";
 }
@@ -13,7 +13,7 @@
 
     <div class="container">
 
-        <form method="post" asp-action="RegisterUser" autocomplete="off" id="form">
+        <form method="post" autocomplete="off">
             <h2 id="registerHeader">Create Account</h2>
 
             <div class="form-outline mb-4">
@@ -34,6 +34,8 @@
             <span asp-validation-for="Birthday" class="text-danger"></span> 
             </div>
 
+
+
             <div class="form-outline mb-4">
             <label class="labels" asp-for="Email"></label>
             <input type="text" id="email"  asp-for="Email" placeholder="Email" class="form-control form-control-lg">
@@ -46,6 +48,27 @@
             <span asp-validation-for="Password" class="text-danger"></span> 
             </div>
 
+            <div class="form-outline mb-4">
+            <label class="labels" asp-for="Type"></label>
+            <input type="radio" asp-for="Type" value="agent" />
+            <label for="agent">Agent</label>
+            <input type="radio" asp-for="Type" value="simpleUser" />
+            <label for="simpleUser">Simple User</label>
+            
+            </div>
+
+
+            @*<div class="form-outline mb-4">
+            <label class="labels" asp-for="ConfirmationPassword"></label>
+            <input type="password" id="confirmationPassword"  asp-for="ConfirmationPassword" placeholder="Confirmation Password*" class="form-control form-control-lg">
+            <span asp-validation-for="ConfirmationPassword" class="text-danger"></span> 
+            </div>*@
+
+            <div class="form-outline mb-4">
+            <label class="labels" asp-for="Telephone"></label>
+            <input type="number" id="telephone"  asp-for="Telephone" placeholder="Telephone" class="form-control form-control-lg">
+            <span asp-validation-for="Telephone" class="text-danger"></span> 
+            </div>
 
             <div class="form-outline mb-4">
             <label class="labels" asp-for="Street"></label>

@@ -6,16 +6,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Broker.Models
 {
-    public class User:IdentityUser
+    public class User : IdentityUser
     {
-
         [Required(ErrorMessage = "Please enter name")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Please enter last name")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-
 
         [Required(ErrorMessage = "Please enter birthday")]
         public DateTime Birthday { get; set; }
@@ -37,5 +35,7 @@ namespace Broker.Models
 
         public bool IsDeleted { get; set; } = false;
         public ICollection<Post> Posts { get; set; }
+
+
     }
 }

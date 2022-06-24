@@ -13,7 +13,7 @@ namespace Broker.Models
 
         [Required]
         public List<int> CategoryId { get; set; }
-        public List<int> AgentsInvited{ get; set; }
+        public List<string> AgentsInvited{ get; set; }
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
