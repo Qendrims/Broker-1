@@ -98,7 +98,14 @@ namespace Broker.Controllers
 
         }
 
-        public IActionResult RegisterUser()
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult RegisterAsAgent()
         {
 
             return View();

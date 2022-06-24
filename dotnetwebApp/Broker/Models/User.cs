@@ -15,6 +15,12 @@ namespace Broker.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [NotMapped]
+        [Required(ErrorMessage = "Please enter Confirmation Password")]
+        [Display(Name = "Confirmation Password")]
+        [Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
+        public string ConfirmationPassword { get; set; }
+
         [Required(ErrorMessage = "Please enter birthday")]
         public DateTime Birthday { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;

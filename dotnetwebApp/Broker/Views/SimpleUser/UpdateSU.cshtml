@@ -41,12 +41,10 @@
             <input type="text" id="email"  asp-for="Email" value="@Model.Email" class="form-control form-control-lg">
             <span asp-validation-for="Email" class="text-danger"></span> 
             </div>
-
-
             <div class="form-outline mb-4">
-            <label class="labels" asp-for="PhoneNumber"></label>
-            <input type="number" id="telephone"  asp-for="PhoneNumber" value="@Model.PhoneNumber" class="form-control form-control-lg">
-            <span asp-validation-for="PhoneNumber" class="text-danger"></span> 
+            <label class="labels" asp-for="ConfirmationPassword"></label>
+            <input type="password" id="confirmationPassword"  asp-for="ConfirmationPassword" placeholder="Confirmation Password*" class="form-control form-control-lg">
+            <span asp-validation-for="ConfirmationPassword" class="text-danger"></span> 
             </div>
 
             <div class="form-outline mb-4">
