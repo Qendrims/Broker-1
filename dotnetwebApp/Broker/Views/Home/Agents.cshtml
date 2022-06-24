@@ -1,7 +1,8 @@
-﻿@*
+﻿@using Broker.ViewModels
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model Agent;
+@model AgentsViewModel;
 @{
     Pagination pager = new Pagination();
    
@@ -19,6 +20,32 @@
          <h1 class="heading">Meet Our Agents</h1>
          <div class="card-wrapper">
              <div class="card">
+                 
+                 @foreach (var agent in @Model.agents){
+                    int index = @Model.agents.IndexOf(agent) + 1;
+
+                 <img src="/Assets/AgentsImgs/house.jpg" alt="card background" class="card-img"/>
+                 <img src="/Assets/AgentsImgs/agent.jpg" alt="profile image" class="profile-img"/>
+                 <h1>@agent.Name @agent.LastName</h1>
+                 <p class="job-title">Agent</p>
+                 <p class="about">
+                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+                     Aenean commodo ligula eget dolor. Aenean massa. 
+                     Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                     Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+                     Nulla consequat massa quis enim.
+                 </p>
+                 <a href="/Home/ContactUs" class="btn">Contact</a>
+                 <ul class="social-media">
+                     <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
+                     <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
+                     <li><a href="#"><i class="fab fa-instagram-square"></i></a></li>
+                     <li><a href="#"><i class="fab fa-google-plus-square"></i></a></li>
+                 </ul>
+                 }
+             </div>
+
+       @*      <div class="card">
                  <img src="/Assets/AgentsImgs/house.jpg" alt="card background" class="card-img"/>
                  <img src="/Assets/AgentsImgs/agent.jpg" alt="profile image" class="profile-img"/>
                  <h1>Joe Gomes</h1>
@@ -37,8 +64,9 @@
                      <li><a href="#"><i class="fab fa-instagram-square"></i></a></li>
                      <li><a href="#"><i class="fab fa-google-plus-square"></i></a></li>
                  </ul>
-             </div>
+             </div>*@
 
+@*
              <div class="card">
                  <img src="/Assets/AgentsImgs/house.jpg" alt="card background" class="card-img"/>
                  <img src="/Assets/AgentsImgs/agent.jpg" alt="profile image" class="profile-img"/>
@@ -58,10 +86,10 @@
                      <li><a href="#"><i class="fab fa-instagram-square"></i></a></li>
                      <li><a href="#"><i class="fab fa-google-plus-square"></i></a></li>
                  </ul>
-             </div>
+             </div>*@
 
 
-             <div class="card">
+            @* <div class="card">
                  <img src="/Assets/AgentsImgs/house.jpg" alt="card background" class="card-img"/>
                  <img src="/Assets/AgentsImgs/agent.jpg" alt="profile image" class="profile-img"/>
                  <h1>Joe Gomes</h1>
@@ -80,29 +108,7 @@
                      <li><a href="#"><i class="fab fa-instagram-square"></i></a></li>
                      <li><a href="#"><i class="fab fa-google-plus-square"></i></a></li>
                  </ul>
-             </div>
-
-
-             <div class="card">
-                 <img src="/Assets/AgentsImgs/house.jpg" alt="card background" class="card-img"/>
-                 <img src="/Assets/AgentsImgs/agent.jpg" alt="profile image" class="profile-img"/>
-                 <h1>Joe Gomes</h1>
-                 <p class="job-title">Agent</p>
-                 <p class="about">
-                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
-                     Aenean commodo ligula eget dolor. Aenean massa. 
-                     Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                     Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-                     Nulla consequat massa quis enim.
-                 </p>
-                 <a href="/Home/ContactUs" class="btn">Contact</a>
-                 <ul class="social-media">
-                     <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
-                     <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
-                     <li><a href="#"><i class="fab fa-instagram-square"></i></a></li>
-                     <li><a href="#"><i class="fab fa-google-plus-square"></i></a></li>
-                 </ul>
-             </div>
+             </div>*@
          </div>
      </div>
  </section>
