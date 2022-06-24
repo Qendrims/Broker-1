@@ -8,9 +8,6 @@ namespace Broker.Models
 {
     public class User : IdentityUser
     {
-        //[Key]
-        //public int UserId { get; set; }
-
         [Required(ErrorMessage = "Please enter name")]
         public string Name { get; set; }
 
@@ -42,5 +39,7 @@ namespace Broker.Models
         public bool IsActive { get; set; } = true;
         public bool IsDeleted { get; set; } = false;
         public ICollection<Post> Posts { get; set; }
+
+
     }
 }

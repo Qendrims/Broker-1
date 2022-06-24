@@ -59,7 +59,7 @@ namespace BrokerApp.Controllers
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
 
-            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == UseriId).ToList();
+            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == id).ToList();
 
             const int postPerPage = 2;
             if (pg < 1)

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Broker.Models;
 using Broker.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace Broker.Mapping
 {
@@ -16,15 +17,12 @@ namespace Broker.Mapping
             
             CreateMap<PostViewModel, Post>();
             CreateMap<AdsPaymentViewModel, AdsPayments>();
-
-            CreateMap<RegisterAgentViewModel, User>()
-           .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
-
-            CreateMap<RegisterAgentViewModel, Agent>()
-         .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
-
-            CreateMap<RegisterAgentViewModel, SimpleUser>()
-         .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
+            CreateMap<LoginUserModel, User>()
+                .ForMember(u=>u.UserName,o=>o.MapFrom(x=>x.Email));
+            CreateMap<LoginUserModel, Agent>()
+                .ForMember(u => u.UserName, o => o.MapFrom(x => x.Email));
+            CreateMap<LoginUserModel, SimpleUser>()
+                .ForMember(u => u.UserName, o => o.MapFrom(x => x.Email));
         }
 
        
