@@ -167,42 +167,49 @@ namespace BrokerApp.Controllers
                 postView.PostUserId = "730051ba-7fe4-43f4-ac3a-7555f9ff654b";
                 var saveMapper = _mapper.Map<Post>(postView);
 
-                this._Dbcontext.Posts.Add(saveMapper);
-                foreach (var imageFile in postView.Image)
+                if (ModelState.IsValid)
                 {
-                    string fullFileName = MethodHelper.FileToBeSaved(postView.Title, imageFile).Result;
 
-                    PostImage image = new PostImage();
-                    image.ImageName = fullFileName;
-                    image.Post = saveMapper;
-                    image.Type = "jpg";
-                    this._Dbcontext.PostImages.Add(image);
-                }
-
-                foreach (var catId in postView.CategoryId)
-                {
-                    foreach (var catId in postView.CategoryId)
+                    this._Dbcontext.Posts.Add(saveMapper);
+                    foreach (var imageFile in postView.Image)
                     {
-                        PostCategory postCategory = new PostCategory();
-                        postCategory.CategoryId = catId;
-                        postCategory.Post = saveMapper;
-                        this._Dbcontext.PostCategories.Add(postCategory);
+                        string fullFileName = MethodHelper.FileToBeSaved(postView.Title, imageFile).Result;
+
+                        PostImage image = new PostImage();
+                        image.ImageName = fullFileName;
+                        image.Post = saveMapper;
+                        image.Type = "jpg";
+                        this._Dbcontext.PostImages.Add(image);
                     }
-                }
-                if (postView.AgentsInvited != null)
-                {
-                    foreach (var agent in postView.AgentsInvited)
+
+                    if (postView.CategoryId != null)
                     {
-                        Invite inv = new Invite();
-                        inv.Post = saveMapper;
-                        inv.SentBy = saveMapper.PostUserId;
-                        inv.SentTo = agent.ToString();
+                        foreach (var catId in postView.CategoryId)
+                        {
+                            PostCategory postCategory = new PostCategory();
+                            postCategory.CategoryId = catId;
+                            postCategory.Post = saveMapper;
+                            this._Dbcontext.PostCategories.Add(postCategory);
+                        }
                     }
-                }
 
-                _Dbcontext.SaveChanges();
+                    if (postView.AgentsInvited != null)
+                    {
+                        foreach (var agent in postView.AgentsInvited)
+                        {
+                            Invite inv = new Invite();
+                            inv.Post = saveMapper;
+                            inv.SentBy = saveMapper.PostUserId;
+                            inv.SentTo = agent.ToString();
 
-                return Json(new { status = 200, message = "Post created successfully" });
+                            this._Dbcontext.Invites.Add(inv);
+                        }
+                    }
+
+
+                    _Dbcontext.SaveChanges();
+
+                    return Json(new { status = 200, message = "Post created successfully" });
                 }
 
                 Dictionary<string, string> data = new Dictionary<string, string>();
@@ -216,9 +223,16 @@ namespace BrokerApp.Controllers
 
                 return Json(new { status = 400, message = "Something went wrong", data });
             }
+            catch (Exception ex)
+            {
+
+                return Json(new { status = 400, message = ex.Message });
+            }
+
         }
+        
         [HttpGet]
-        public IActionResult Edit(int? id)
+    public IActionResult Edit(int? id)
         {
             try
             {
@@ -245,10 +259,10 @@ namespace BrokerApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, PostDetailViewModel ViewModel)
+    public IActionResult Edit(int id, PostDetailViewModel ViewModel)
         {
 
-            var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(e => e.Images).FirstOrDefault();
+        var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(e => e.Images).FirstOrDefault();
             var ImageToDelete = post.Images.Where(x => x.PostId == id).FirstOrDefault();
 
             try
