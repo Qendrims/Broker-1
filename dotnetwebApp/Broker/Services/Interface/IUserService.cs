@@ -1,4 +1,4 @@
-﻿namespace Broker.Services
+﻿namespace Broker.Services.Interface
 {
     public interface IUserService
     {

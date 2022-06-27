@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Broker.Services.Interface;
+using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
-namespace Broker.Services
+namespace Broker.Services.Implementation
 {
     public class UserService : IUserService
     {

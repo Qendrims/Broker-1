@@ -48,16 +48,6 @@ namespace BrokerApp.Controllers
             return RedirectToAction("PostPage");
         }
 
-        //    int postCount = posts.FilteredPosts.Count();
-        //    var pager = new Pagination(postCount, pg, pageSize);
-
-        //    int postSkip = (pg - 1) * pageSize;
-
-        //    posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
-        //    this.ViewBag.Pager = pager;
-        //    return View(posts);
-        //   // return View(posts);
-        //}
         public IActionResult MyPosts(string id, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
@@ -114,6 +104,7 @@ namespace BrokerApp.Controllers
             var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
                 .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => p.IsArchived == false).Include(p => p.Images).ToList();
             posts.FilteredPosts = result;
+            posts.Image = result.FirstOrDefault().Images;
             posts.Category = category;
             posts.City = city;
 
@@ -142,7 +133,7 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult Detail(int? id)
         {
-            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).ThenInclude(x=>x.Category).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
+            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).ThenInclude(x => x.Category).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
             //var postCategories = this._Dbcontext.PostCategories.Where(p => p.PostId == id).Include(y => y.Category).Include(y => y.Post).ToList();
             //var post1 = postCategories.
 
@@ -178,9 +169,6 @@ namespace BrokerApp.Controllers
                 //postView.PostUserId = 1;
                 var saveMapper = _mapper.Map<Post>(postView);
 
-                if (ModelState.IsValid)
-                {
-
                 this._Dbcontext.Posts.Add(saveMapper);
                 foreach (var imageFile in postView.Image)
                 {
@@ -211,7 +199,7 @@ namespace BrokerApp.Controllers
                         Invite inv = new Invite();
                         inv.Post = saveMapper;
                         inv.SentBy = saveMapper.PostUserId;
-                        inv.SentTo = agent.ToString();
+                        inv.SentTo = agent;
 
                         this._Dbcontext.Invites.Add(inv);
                     }
@@ -221,29 +209,23 @@ namespace BrokerApp.Controllers
                 _Dbcontext.SaveChanges();
 
                 return Json(new { status = 200, message = "Post created successfully" });
-                }
-
+            }
+            catch (Exception ex)
+            {
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 if (string.IsNullOrEmpty(postView.Title))
                     data.Add("TitleError", "Title cant be empty");
 
                 if (string.IsNullOrEmpty(postView.Description))
                     data.Add("DescriptionError", "Description cant be empty");
-                if (postView.CategoryId == null)
-                    data.Add("CategoryError", "Choose at least one category");
 
-                if(postView.categories == null || postView.categories.Count < 1)
+                if (postView.categories == null || postView.categories.Count < 1)
                     data.Add("CategoryError", "Category is not selected!");
 
-                if (postView.Image.Count < 1 || postView.Image == null)
+                if (postView.Image == null || postView.Image.Count < 1)
                     data.Add("ImageError", "Please Add a photo");
 
                 return Json(new { status = 400, message = "Something went wrong", data });
-            }
-            catch (Exception ex)
-            {
-                
-                return Json(new { status = 400, message = ex.Message});
             }
 
         }
@@ -260,7 +242,7 @@ namespace BrokerApp.Controllers
                     var saveMapper = _mapper.Map<PostDetailViewModel>(post);
                     return View(saveMapper);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return View("Error");
                 }
@@ -354,7 +336,7 @@ namespace BrokerApp.Controllers
             this._Dbcontext.AdsPaymentcs.Add(saveMapper);
             this._Dbcontext.SaveChanges();
 
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
