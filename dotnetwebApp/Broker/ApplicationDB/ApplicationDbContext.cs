@@ -6,7 +6,7 @@ namespace Broker.ApplicationDB
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> option) : base(option)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
         }
@@ -19,7 +19,7 @@ namespace Broker.ApplicationDB
         public DbSet<PostImage> PostImages { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Invite> Invites { get; set; }
-        public DbSet<FeedBack> FeedBacks { get; set; }
+        public DbSet<FeedBack> FeedBacks { get; set; }  
         public DbSet<AdsPayments> AdsPaymentcs { get; set; }
         public DbSet<Tags> Tags { get; set; }
 
@@ -50,10 +50,6 @@ namespace Broker.ApplicationDB
             .HasMaxLength(300)
             .IsRequired();
 
-
-            modelBuilder.Entity<User>().Property(u => u.Telephone)
-            .HasMaxLength(200)
-            .IsRequired();
 
             modelBuilder.Entity<User>().Property(u => u.Street);
 

@@ -48,6 +48,16 @@ namespace BrokerApp.Controllers
             return RedirectToAction("PostPage");
         }
 
+        //    int postCount = posts.FilteredPosts.Count();
+        //    var pager = new Pagination(postCount, pg, pageSize);
+
+        //    int postSkip = (pg - 1) * pageSize;
+
+        //    posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
+        //    this.ViewBag.Pager = pager;
+        //    return View(posts);
+        //   // return View(posts);
+        //}
         public IActionResult MyPosts(string id, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
@@ -168,6 +178,9 @@ namespace BrokerApp.Controllers
                 //postView.PostUserId = 1;
                 var saveMapper = _mapper.Map<Post>(postView);
 
+                if (ModelState.IsValid)
+                {
+
                 this._Dbcontext.Posts.Add(saveMapper);
                 foreach (var imageFile in postView.Image)
                 {
@@ -198,7 +211,7 @@ namespace BrokerApp.Controllers
                         Invite inv = new Invite();
                         inv.Post = saveMapper;
                         inv.SentBy = saveMapper.PostUserId;
-                        inv.SentTo = agent;
+                        inv.SentTo = agent.ToString();
 
                         this._Dbcontext.Invites.Add(inv);
                     }
@@ -208,15 +221,16 @@ namespace BrokerApp.Controllers
                 _Dbcontext.SaveChanges();
 
                 return Json(new { status = 200, message = "Post created successfully" });
-            }
-            catch (Exception ex)
-            {
+                }
+
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 if (string.IsNullOrEmpty(postView.Title))
                     data.Add("TitleError", "Title cant be empty");
 
                 if (string.IsNullOrEmpty(postView.Description))
                     data.Add("DescriptionError", "Description cant be empty");
+                if (postView.CategoryId == null)
+                    data.Add("CategoryError", "Choose at least one category");
 
                 if(postView.categories == null || postView.categories.Count < 1)
                     data.Add("CategoryError", "Category is not selected!");
@@ -225,6 +239,11 @@ namespace BrokerApp.Controllers
                     data.Add("ImageError", "Please Add a photo");
 
                 return Json(new { status = 400, message = "Something went wrong", data });
+            }
+            catch (Exception ex)
+            {
+                
+                return Json(new { status = 400, message = ex.Message});
             }
 
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Broker.Models
@@ -10,7 +11,7 @@ namespace Broker.Models
 
         public List<IFormFile> Image { get; set; }
 
-
+        [Required]
         public List<int> CategoryId { get; set; }
         public List<string> AgentsInvited{ get; set; }
         public int Id { get; set; }
@@ -25,6 +26,7 @@ namespace Broker.Models
         public string Street { get; set; }
         public string City { get; set; }
         public string State { get; set; }
+        public string Country { get; set; }
         public int ZipCode { get; set; }
         public string PostUserId { get; set; }
         [ForeignKey("PostUserId")]

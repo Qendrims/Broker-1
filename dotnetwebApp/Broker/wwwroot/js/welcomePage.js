@@ -104,43 +104,40 @@ window.onscroll = function () {
 
 //change the inner html of navbar based on whether the user is logged in or not
 
-navHeader.innerHTML +=
-  username == null
-    ? `
-    <ul class="nav-list" id="list2">
-      <li id="Buy" ><a href="/Post/PostPage">Posts</a></li>
-      <li id="Sell"><a href="#">Sell</a></li>
-      <li id="Rent"><a href="#">Rent</a></li>
-      <li id="Agents"><a href="#">Agents</a></li>
-</ul>
-`
-    : `
-<div class="dropdown">
-  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-    Welcome ${username}
-  </button>
-  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-    <li><a class="dropdown-item active" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="/Post/Postpagecreate">Create Post</a></li>
-    <li><a class="dropdown-item" href="/Post/MyPosts">My posts</a></li>
-    <li><a class="dropdown-item" href="/Home/Postpage">All posts</a></li>
-    <li><a class="dropdown-item" href="/Post/ArchivedPosts">Archived posts</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li id="LogOut"><a class="dropdown-item" href="#">Log Out</a></li>
-  </ul>
-</div>
-`;
+//navHeader.innerHTML +=
+//  username == null
+//    ? `
+//    <ul class="nav-list" id="list1">
+     
+//</ul>
+//`
+//    : `
+//<div class="dropdown">
+//  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+//    Welcome ${username}
+//  </button>
+//  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+//    <li><a class="dropdown-item active" href="#">Action</a></li>
+//    <li><a class="dropdown-item" href="/Post/Postpagecreate">Create Post</a></li>
+//    <li><a class="dropdown-item" href="/Post/MyPosts">My posts</a></li>
+//    <li><a class="dropdown-item" href="/Home/Postpage">All posts</a></li>
+//    <li><a class="dropdown-item" href="/Post/ArchivedPosts">Archived posts</a></li>
+//    <li><hr class="dropdown-divider"></li>
+//    <li id="LogOut"><a class="dropdown-item" href="#">Log Out</a></li>
+//  </ul>
+//</div>
+//`;
 
-let signIn = document.getElementById("SignIn");
-signIn?.addEventListener("click", () => {
-  location.href = "/Home/Login";
-});
+//let signIn = document.getElementById("SignIn");
+//signIn?.addEventListener("click", () => {
+//  location.href = "/Home/Login";
+//});
 
-let logout = document.getElementById("LogOut");
-logout?.addEventListener("click", () => {
-  localStorage.removeItem("broker-username");
-  location.reload();
-});
+//let logout = document.getElementById("LogOut");
+//logout?.addEventListener("click", () => {
+//  localStorage.removeItem("broker-username");
+//  location.reload();
+//});
 
 // get data from backend to create a set with unique categories
 
@@ -164,31 +161,24 @@ prevBtn.forEach(prev => {
     prev.addEventListener('click', e => switchSlide(e, 'prev'));
 });
 
-prevBtn.forEach((prev) => {
-  prev.addEventListener("click", (e) => switchSlide(e, "prev"));
-});
 
 fetch("https://localhost:44359/Home/GetSomething")
   .then((res) => res.json())
   .then((data) => {
     data = JSON.parse(data);
-
     for (let cat of data) {
         indexes[cat.CategoryName] = 0;
     }
 
 })
 
-
+console.log(indexes)
 
 function switchSlide(e, arg) {
-  if (indexes.Home == undefined) {
-    return;
-  }
-
-    if (indexes.House == undefined) {
+    if (indexes.house == undefined) {
         return;
     }
+
        
 
     // select category next/prev button
@@ -204,7 +194,7 @@ function switchSlide(e, arg) {
     let slidesLength = allSlides.length <= 3 ? 0 : allSlides.length - 3;
 
 
-    //console.log(indexes, currentBtn, parentEl, allSlides, slidesLength)
+    //console.log(indexes, indexes[currentBtn], currentBtn, parentEl, allSlides, slidesLength)
 
 
     parentEl.classList.add('transition')
@@ -230,5 +220,3 @@ function switchSlide(e, arg) {
     }
   }
 
-    console.log(indexes[currentBtn])
-}

@@ -94,7 +94,7 @@ map.on('click', e => {
     document.getElementById('lat').value = lat;
     document.getElementById('lon').value = long;
 
-
+      
 })
 
 // search address with text input

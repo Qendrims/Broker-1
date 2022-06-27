@@ -98,6 +98,13 @@ namespace Broker.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
         public IActionResult RegisterAsAgent()
         {
 
@@ -187,5 +194,9 @@ namespace Broker.Controllers
             return View();
         }
 
+        public IActionResult Agents()
+        {
+            return View();
+        }
     }
 }

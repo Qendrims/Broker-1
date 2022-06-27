@@ -24,7 +24,9 @@ namespace Broker.Mapping
             CreateMap<LoginUserModel, SimpleUser>()
                 .ForMember(u => u.UserName, o => o.MapFrom(x => x.Email));
         }
-    }
+
+       
+}
 }
 
 //.ForMember(x=>x.Title,y=>y.MapFrom(b=>b.Title))

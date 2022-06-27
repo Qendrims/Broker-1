@@ -138,6 +138,7 @@
 
     figure {
         height: 100px;
+        position: relative;
     }
 
     img {
@@ -163,6 +164,13 @@
     }
     .form-attr{
         width: 45%;
+    }
+    .remove-btn{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 0 5px;
+        color: #dc3545;
     }
 </style>
 }
@@ -337,7 +345,7 @@
                                 @foreach (var ag in @Model.agents)
                                 {
                                     <div>
-                                        <input type="checkbox" name="agentsInvited" class="agentList" @*value="@ag.UserId"*@ /><span>@ag.Name @ag.LastName - @ag.City</span>
+                                        <input type="checkbox" name="agentsInvited" class="agentList" value="@ag.Id" /><span>@ag.Name @ag.LastName - @ag.City</span>
                                     </div>
                                 }
                             </div>
@@ -412,6 +420,7 @@
                 req.onload = function(oEvent)
                 {
                     let res=JSON.parse(req.response)
+                    console.log(res);
                     if(res.status === 200){
                           toastr.success('Post created successfully!')
                     }
@@ -433,32 +442,95 @@
                             [e.target.name]: e.target.value
                         }
                     }
-                        let fileInput = document.getElementById('inputGroupFile01');
-                        let imgContainer = document.getElementById('uploadedImages');
-                        let numOfFiles = document.getElementById('filesNumber');
-                            imgContainer.innerHTML = "";
-                            let allFilesList = [];
-                        function preview(){
-                        let fileList = [];
-                            for(i of fileInput.files){
-                                fileList.push(i);
-                                let fileAlreadyUploaded = allFilesList.some(file => file.name == i.name);
-                                if(!fileAlreadyUploaded){
-                                allFilesList.push(i)
-                                }
+
+
+        let fileInput = document.getElementById('inputGroupFile01');
+        let imgContainer = document.getElementById('uploadedImages');
+        let numOfFiles = document.getElementById('filesNumber');
+        imgContainer.innerHTML = "";
+        let allFilesList = [];
+
+        function SetNumberFilesUploaded(textElement,number){
+            textElement.textContent = `${number} Files Selected`;
+        }
+
+          function preview(){
+              let fileList = [];
+
+
+               for(i of fileInput.files){
+                 let fileAlreadyUploaded = allFilesList.some(file => file.name == i.name);
+                 if(!fileAlreadyUploaded){
+                  allFilesList.push(i)
+                 fileList.push(i);
+                     }
+                }
+
+                SetNumberFilesUploaded(numOfFiles,allFilesList.length)
+              //numOfFiles.textContent = `${allFilesList.length} Files Selected`;
+            
+              for(let i =0;i<fileList.length;i++){
+                  let reader = new FileReader();
+                   let figure = document.createElement("figure");
+
+                     reader.onload=()=>{
+                     let img = document.createElement("img");
+                     let btn = document.createElement("button");
+                     btn.innerHTML = 'x';         
+                     btn.setAttribute("class","remove-btn");
+                     btn.setAttribute("id","remove-btn");
+                     btn.setAttribute("type","button");
+                      img.setAttribute("src",reader.result);
+                      img.setAttribute("id",i);
+                     figure.appendChild(img);
+                     figure.appendChild(btn);
+                     
+                     btn.addEventListener('click',e=>{
+                        let img = e.target.previousElementSibling.getAttribute('id');
+
+                        document.querySelectorAll('img').forEach(image => {
+                            if(image.id > img){
+                                image.id--;
                             }
-                            numOfFiles.textContent = `${allFilesList.length} Files Selected`;
-                            for(i of fileList){
-                                let reader = new FileReader();
-                                let figure = document.createElement("figure");
-                                reader.onload=()=>{
-                                    let img = document.createElement("img");
-                                    img.setAttribute("src",reader.result);
-                                    figure.appendChild(img);
-                                }
-                                imgContainer.appendChild(figure);
-                                reader.readAsDataURL(i);
-                            }
-                        }
+                        })
+
+                       fileList = fileList.filter((file, index) => index != img);
+                       allFilesList = fileList;
+                      SetNumberFilesUploaded(numOfFiles,allFilesList.length)
+                       e.target.parentElement.remove();
+                   })
+
+                      }
+
+                    imgContainer.appendChild(figure);
+                 reader.readAsDataURL(fileList[i]);
+
+                    
+
+
+              }
+               //  let btnRemovePhoto = document.querySelectorAll('.remove-btn');
+               //  console.log(btnRemovePhoto)
+               //btnRemovePhoto?.forEach(btn => {
+               //    btn.addEventListener('click',e=>{
+               //        console.log(e.target.parentElement)
+               //    })
+               //})
+
+
+               //for(i of fileList){
+               //     let reader = new FileReader();
+               //    let figure = document.createElement("figure");
+               //      reader.onload=()=>{
+               //      let img = document.createElement("img");
+               //       img.setAttribute("src",reader.result);
+               //      figure.appendChild(img);
+               //        }
+               //     imgContainer.appendChild(figure);
+               //  reader.readAsDataURL(i);
+               //     }
+               }
+
+           
 </script>
 }

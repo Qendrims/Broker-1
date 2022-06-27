@@ -15,13 +15,15 @@ namespace Broker.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [NotMapped]
+        [Required(ErrorMessage = "Please enter Confirmation Password")]
+        [Display(Name = "Confirmation Password")]
+        [Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
+        public string ConfirmationPassword { get; set; }
+
         [Required(ErrorMessage = "Please enter birthday")]
         public DateTime Birthday { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-        [Required(ErrorMessage = "Please enter phone number")]
-        [Display(Name = "Phone Number")]
-        public string Telephone { get; set; }
 
         [Required(ErrorMessage = "Please enter street")]
         public string Street { get; set; }
@@ -35,8 +37,6 @@ namespace Broker.Models
         [Required(ErrorMessage = "Please enter zip code")]
         public int ZipCode { get; set; }
         public bool IsActive { get; set; } = true;
-
-
         public bool IsDeleted { get; set; } = false;
         public ICollection<Post> Posts { get; set; }
 
