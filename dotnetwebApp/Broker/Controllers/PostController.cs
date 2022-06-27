@@ -159,8 +159,6 @@ namespace BrokerApp.Controllers
         }
 
 
-
-
         [HttpPost]
         public IActionResult PostPageCreate(PostViewModel postView)
         {
@@ -219,6 +217,12 @@ namespace BrokerApp.Controllers
 
                 if (string.IsNullOrEmpty(postView.Description))
                     data.Add("DescriptionError", "Description cant be empty");
+
+                if(postView.categories == null || postView.categories.Count < 1)
+                    data.Add("CategoryError", "Category is not selected!");
+
+                if (postView.Image.Count < 1 || postView.Image == null)
+                    data.Add("ImageError", "Please Add a photo");
 
                 return Json(new { status = 400, message = "Something went wrong", data });
             }

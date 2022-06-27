@@ -199,6 +199,8 @@
                     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                     <p id="filesNumber">No files chosen</p>
                     <div id="uploadedImages"></div>
+
+                    <p class="error" id="ImageError"></p>
                 </div>
                 <br />
                 <div class="input-group">
@@ -219,6 +221,7 @@
 
                     <input name="CategoryId" type="checkbox" value="@cat.CategoryId" /> @cat.CategoryName
                 }
+                <p class="error" id="CategoryError"></p>
                 <br />
                 <div class="input-group together">
                     <input type="text"
