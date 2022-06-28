@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Broker.Services.Repository.IRepository;
 
 namespace BrokerApp.Controllers
 {
@@ -25,6 +26,7 @@ namespace BrokerApp.Controllers
         private readonly ApplicationDbContext _Dbcontext;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private IMapper _mapper;
+        
 
         public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager)
         {
@@ -163,6 +165,7 @@ namespace BrokerApp.Controllers
         [HttpPost]
         public IActionResult PostPageCreate(PostViewModel postView)
         {
+
             try
             {
                 postView.PostUserId = _userManager.GetUserId(HttpContext.User);

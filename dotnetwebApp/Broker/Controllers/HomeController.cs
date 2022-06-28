@@ -2,6 +2,7 @@
 using Broker.ApplicationDB;
 using Broker.Mailing;
 using Broker.Models;
+using Broker.Services.Interface;
 using Broker.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -26,6 +27,7 @@ namespace Broker.Controllers
         private readonly UserManager<User> _userManager;
         private IMapper _mapper;
         private IEmailSender _emailSender;
+        private readonly IUserService userService;
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IEmailSender emailSender)
         {
@@ -83,17 +85,25 @@ namespace Broker.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginUserModel loginUser)
         {
-            if (ModelState.IsValid)
-            {
 
-                var result = await this._signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, false);
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+            if (userService.IsLoggedIn(loginUser))
+            {
+                return RedirectToAction("Index", "Home");
             }
-            return View(loginUser);
+            else
+            {
+                return View("Login", "Home");
+            }
+            //if (ModelState.IsValid)
+            //{
+            //    var result = await this._signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, false);
+            //    if (result.Succeeded)
+            //    {
+            //        return RedirectToAction("Index", "Home");
+            //    }
+            //    ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+            //}
+            //return View(loginUser);
 
 
         }
@@ -116,8 +126,8 @@ namespace Broker.Controllers
         public async Task<IActionResult> RegisterAsAgent(LoginUserModel model)
         {
 
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            
                 User user;
                 if (model.Type == "agent")
                 {
@@ -150,7 +160,7 @@ namespace Broker.Controllers
                     //await _userManager.AddToRoleAsync(user, "Visitor");
                 }
 
-            }
+            
 
             return View(model);
 
