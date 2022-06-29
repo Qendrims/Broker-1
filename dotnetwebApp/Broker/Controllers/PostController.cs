@@ -127,8 +127,6 @@ namespace BrokerApp.Controllers
 
         public IActionResult DeleteAgent(int? id)
         {
-            var agent = _Dbcontext.Agents.Find(id);
-            _Dbcontext.Agents.Remove(agent);
             _Dbcontext.SaveChanges();
             return View();
         }
@@ -157,7 +155,6 @@ namespace BrokerApp.Controllers
 
 
             createPostView.categories = this._Dbcontext.Categories.ToList();
-            createPostView.agents = this._Dbcontext.Agents.ToList();
             return View(createPostView);
         }
 
@@ -202,7 +199,6 @@ namespace BrokerApp.Controllers
                         Invite inv = new Invite();
                         inv.Post = saveMapper;
                         inv.SentBy = saveMapper.PostUserId;
-                        inv.SentTo = agent;
 
                         this._Dbcontext.Invites.Add(inv);
                     }
