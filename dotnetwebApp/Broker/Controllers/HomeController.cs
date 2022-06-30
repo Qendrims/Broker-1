@@ -84,12 +84,20 @@ namespace Broker.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginUserModel loginUser)
+        public async Task<IActionResult> Login(LoginUserModel loginUser, string returnUrl)
         {
-            bool result = _userService.IsLoggedIn(loginUser);
+
+            bool result = _userService.IsLoggedIn(loginUser).Result;
             if (result)
             {
-                return RedirectToAction("Index", "Home");
+                if (returnUrl != null)
+                {
+                    return LocalRedirect(returnUrl);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             else
             {

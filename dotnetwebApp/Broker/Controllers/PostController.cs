@@ -17,6 +17,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Broker.Services.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BrokerApp.Controllers
 {
@@ -148,6 +149,7 @@ namespace BrokerApp.Controllers
                 return View("Error");
             }
         }
+        [Authorize]
         [HttpGet]
         public IActionResult PostPageCreate()
         {

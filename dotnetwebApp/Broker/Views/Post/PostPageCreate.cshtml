@@ -224,11 +224,17 @@
 
                 <label>Choose Categories</label>
                 <br />
+                <select id="select-option" name="CategoryId" >
+                    <option value="">Select category</option>
                 @foreach (var cat in @Model.categories)
                 {
+                    <option value="@cat.CategoryId" >@cat.CategoryName</option>
 
-                    <input name="CategoryId" type="checkbox" value="@cat.CategoryId" /> @cat.CategoryName
                 }
+                    </select>
+                <div id="show-specific-atributes">
+
+                </div>
                 <p class="error" id="CategoryError"></p>
                 <br />
                 <div class="input-group together">
@@ -342,12 +348,12 @@
                             </div>
                             <div class="modal-body">
                                 <input type="text" class="form-control" id="searchAgents" />
-                                @foreach (var ag in @Model.agents)
+                                @*@foreach (var ag in @Model.agents)
                                 {
                                     <div>
                                         <input type="checkbox" name="agentsInvited" class="agentList" value="@ag.Id" /><span>@ag.Name @ag.LastName - @ag.City</span>
                                     </div>
-                                }
+                                }*@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -505,10 +511,20 @@
                     imgContainer.appendChild(figure);
                  reader.readAsDataURL(fileList[i]);
 
-                    
+              }                  
+         }
 
 
-              }
+              let select = document.getElementById("select-option");
+              select.addEventListener('change', showAttribute);
+
+              function showAttribute(){
+                  console.log('select')
+                  let print = document.getElementById("show-specific-atributes");
+                  let selectValue = document.getElementById("select-option").value;
+                  if (selectValue == "1") {
+                      print.innerHTML = `<p>Hello ar</p>`;
+                  }
                //  let btnRemovePhoto = document.querySelectorAll('.remove-btn');
                //  console.log(btnRemovePhoto)
                //btnRemovePhoto?.forEach(btn => {

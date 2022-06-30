@@ -38,17 +38,17 @@ namespace Broker.Services.Implementation
             throw new System.NotImplementedException();
         }
 
-        public bool IsLoggedIn(LoginUserModel loginUser)
+        public async Task<bool> IsLoggedIn(LoginUserModel loginUser)
         {
             if (loginUser != null)
             {
-                var result = _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, false);
-                return true;
+                var result = await _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, false);
+
+                if (result.Succeeded) return true;
+
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         public User RegisterUser(LoginUserModel loginUser)
