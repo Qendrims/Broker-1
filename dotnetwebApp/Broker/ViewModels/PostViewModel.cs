@@ -32,14 +32,10 @@ namespace Broker.Models
         [ForeignKey("PostUserId")]
         public User User { get; set; }
 
-        public string TakenBy { get; set; }
-        [ForeignKey("TakenBy")]
-        public Agent Agent { get; set; }
 
         public virtual ICollection<PostCategory> PostCategories { get; set; }
 
 
         public List<Category> categories { get; set; }
-        public List<Agent> agents { get; set; }
     }
 }

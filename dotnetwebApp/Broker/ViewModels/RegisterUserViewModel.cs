@@ -46,9 +46,6 @@ namespace Broker.ViewModels
         [Required(ErrorMessage = "Please enter zip code")]
         public int ZipCode { get; set; }
 
-        [Required(ErrorMessage ="Please select type")]
-        public string Type { get; set; }
 
-        public int? AgentId { get; set; }
     }
 }

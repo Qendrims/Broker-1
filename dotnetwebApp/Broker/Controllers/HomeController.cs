@@ -66,81 +66,9 @@ namespace Broker.Controllers
             return View();
         }
 
-        public IActionResult Login()
-        {
-            return View();
-        }
+        
 
-        [HttpPost]
-        public IActionResult Login(LoginUserModel loginUser)
-        {
-
-            var user = this._db.Users.Where(u => u.Email == loginUser.Email).FirstOrDefault();
-            bool validUser =false;
-
-            if (user != null)
-            {
-                validUser = BCrypt.Net.BCrypt.Verify(loginUser.Password, user.PasswordHash);
-            }
-            else {
-                ViewBag.Message = "Username or Password is incorrect";
-                return View();
-            }
-
-            if (!validUser)
-            {
-                ViewBag.Message = "Username or Password is incorrect";
-                return View();
-            }
-            else {
-                return RedirectToAction("Index");
-            }
-
-        }
-
-        public IActionResult RegisterUser()
-        {
-
-            return View();
-
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> RegisterAsAgent(RegisterUserViewModel userRegistered)
-        {
-
-            User user;
-
-            if (!ModelState.IsValid)
-            {
-                return View(userRegistered);
-            }
-
-            if(userRegistered.Type == "SimpleUser")
-            {
-               userRegistered.AgentId = null;
-             user = _mapper.Map<SimpleUser>(userRegistered);
-            } else if(userRegistered.Type == "Agent")
-            {
-                user = _mapper.Map<Agent>(userRegistered);
-            } else
-            {
-                user = _mapper.Map<User>(userRegistered);
-            }
-
-            var result = await _userManager.CreateAsync(user, userRegistered.Password);
-            if (!result.Succeeded)
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.TryAddModelError(error.Code, error.Description);
-                }
-                return View(userRegistered);
-            }
-           // await _userManager.AddToRoleAsync(user, "Agent");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
-
-        }
+        
 
         public IActionResult AboutUs()
         {
@@ -166,9 +94,5 @@ namespace Broker.Controllers
             return View();
         }
 
-        public IActionResult Agents()
-        {
-            return View();
-        }
     }
 }

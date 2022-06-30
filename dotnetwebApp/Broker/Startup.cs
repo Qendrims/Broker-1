@@ -1,6 +1,8 @@
 using AutoMapper;
 using Broker.ApplicationDB;
+using Broker.Data;
 using Broker.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,6 +38,16 @@ namespace Broker
 
 
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+            //add cache
+            //services.AddMemoryCache();
+
+            //add Session
+            //services.AddSession();
+
+            services.AddAuthentication(options => {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -95,6 +107,12 @@ namespace Broker
 
             app.UseRouting();
 
+            //use Session
+            //app.UseSession();
+
+            //Authoentication and Authorization
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -103,6 +121,9 @@ namespace Broker
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //Seeding Roles
+            AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
         }
     }
 }

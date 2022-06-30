@@ -330,15 +330,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                <input type="text" class="form-control" id="searchAgents" />
-                                @foreach (var ag in @Model.agents)
-                                {
-                                    <div>
-                                        <input type="checkbox" name="agentsInvited" class="agentList" value="@ag.Id" /><span>@ag.Name @ag.LastName - @ag.City</span>
-                                    </div>
-                                }
-                            </div>
+                            
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="button" class="btn btn-primary">Send invite</button>

@@ -151,7 +151,7 @@ namespace BrokerApp.Controllers
         {
             CreatePostViewModel createPostView = new CreatePostViewModel();
             createPostView.categories = this._Dbcontext.Categories.ToList();
-            createPostView.agents = this._Dbcontext.Agents.ToList();
+            createPostView.users = this._Dbcontext.Users.ToList();
             return View(createPostView);
         }
 
@@ -185,16 +185,7 @@ namespace BrokerApp.Controllers
                     postCategory.CategoryId = catId;
                     postCategory.Post = saveMapper;
                 }
-                if (postView.AgentsInvited != null)
-                {
-                    foreach (var agent in postView.AgentsInvited)
-                    {
-                        Invite inv = new Invite();
-                        inv.Post = saveMapper;
-                        inv.SentBy = saveMapper.PostUserId;
-                        inv.SentTo = agent.ToString();
-                    }
-                }
+                
 
                 _Dbcontext.SaveChanges();
 

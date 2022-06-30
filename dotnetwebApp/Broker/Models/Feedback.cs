@@ -14,11 +14,5 @@ namespace Broker.Models
         public string SentBy { get; set; }
         [ForeignKey("SentBy")]
         public User User { get; set; }
-        public string SentTo { get; set; }
-        [ForeignKey("SentTo")]
-        public Agent Agent { get; set; }
-
-        
-
     }
 }

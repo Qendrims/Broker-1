@@ -39,17 +39,17 @@ namespace Broker.Controllers
         }
 
 
-        public IActionResult GetSUById(int id)
+        public IActionResult GetUserById(int id)
         {
-            var simpleUser = _db.SimpleUsers.Find(id);
-            return View(simpleUser);
+            var User = _db.Users.Find(id);
+            return View(User);
         }
 
 
         public IActionResult DeleteSU(int id) {
            
-                var simpleUser = _db.SimpleUsers.Find(id);
-                _db.SimpleUsers.Remove(simpleUser);
+                var simpleUser = _db.Users.Find(id);
+                _db.Users.Remove(simpleUser);
                 _db.SaveChanges();
                 return RedirectToAction("Index","Home");
 
@@ -59,7 +59,7 @@ namespace Broker.Controllers
         public IActionResult UpdateSU(int id)
         {
 
-            var simpleUser = _db.SimpleUsers.Find(id);
+            var simpleUser = _db.Users.Find(id);
             if (simpleUser == null ) {
                 return RedirectToAction("Error","Home");
             }
