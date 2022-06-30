@@ -14,5 +14,6 @@ namespace Broker.ViewModels
         public ICollection<PostImage> Image { get; set; } = new List<PostImage>();
 
         public ICollection<IFormFile> ImageUploaded { get; set; }
+        public string minPrice { get; set; }
     }
 }

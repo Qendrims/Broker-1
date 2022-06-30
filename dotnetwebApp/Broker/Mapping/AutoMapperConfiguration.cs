@@ -17,7 +17,8 @@ namespace Broker.Mapping
             
             CreateMap<PostViewModel, Post>();
             CreateMap<AdsPaymentViewModel, AdsPayments>();
-            CreateMap<LoginUserModel, User>()
+
+            CreateMap<RegisterViewModel, User>()
                 .ForMember(u=>u.UserName,o=>o.MapFrom(x=>x.Email));
         }
 

@@ -105,7 +105,7 @@ namespace Broker.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet] 
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -120,7 +120,7 @@ namespace Broker.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RegisterAsAgent(LoginUserModel model)
+        public async Task<IActionResult> RegisterAsAgent(RegisterViewModel model)
         {
             var user = _userService.RegisterUser(model);
             if (user != null)
