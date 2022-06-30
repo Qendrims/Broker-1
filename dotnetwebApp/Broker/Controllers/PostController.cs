@@ -3,9 +3,11 @@ using AutoMapper;
 using Broker.ApplicationDB;
 using Broker.FileHelper;
 using Broker.Models;
+using Broker.Services;
 using Broker.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
@@ -23,12 +25,16 @@ namespace BrokerApp.Controllers
         private readonly ApplicationDbContext _Dbcontext;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private IMapper _mapper;
+        private readonly UserManager<User> _userManager;
+        private readonly IPostService _postService;
 
-        public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper)
+        public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
         {
             this._Dbcontext = _context;
             this._webHostEnvironment = _webHostEnvironment;
             this._mapper = mapper;
+            this._userManager = userManager;
+            this._postService = postService;
         }
 
         public IActionResult Archive(int id)
@@ -96,25 +102,30 @@ namespace BrokerApp.Controllers
             return View(posts);
         }
 
-        public IActionResult PostPage(string category, string city, int pg = 1)
+        public IActionResult PostPage(string category, string city,double? minPrice,double? maxPrice, int pg = 1)
         {
-
+          
             FilteredPostViewModel posts = new FilteredPostViewModel();
             posts.FilteredCategories = _Dbcontext.Categories.ToList();
             posts.Cities = _Dbcontext.Posts.Where(p => !string.IsNullOrEmpty(p.City)).Select(m => m.City).Distinct().ToList();
 
+            if (minPrice > maxPrice)
+            {
+                ModelState.AddModelError("minPrice", "Min price must be lower than max price");
+                return View(posts);
+            }
             Category cat = new Category();
             if (category != null)
             {
                 cat = _Dbcontext.Categories.First(c => c.CategoryName == category);
             }
             var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
-                .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => p.IsArchived == false).Include(p => p.Images).ToList();
+                .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => minPrice == null || p.Price >= minPrice).Where(p => maxPrice == null || p.Price <= maxPrice).Where(p => p.IsArchived == false).Include(p => p.Images).ToList();
             posts.FilteredPosts = result;
             posts.Category = category;
             posts.City = city;
-
-            const int postPerPage = 2;
+            
+            const int postPerPage = 20;
             if (pg < 1)
                 pg = 1;
 
@@ -125,6 +136,7 @@ namespace BrokerApp.Controllers
 
             posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
             this.ViewBag.Pager = pager;
+
 
             return View("PostPage", posts);
         }
@@ -149,9 +161,7 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult PostPageCreate()
         {
-            CreatePostViewModel createPostView = new CreatePostViewModel();
-            createPostView.categories = this._Dbcontext.Categories.ToList();
-            createPostView.agents = this._Dbcontext.Agents.ToList();
+            PostViewModel createPostView = _postService.GetCreatePostModel();
             return View(createPostView);
         }
 
@@ -164,50 +174,10 @@ namespace BrokerApp.Controllers
             try
             {
 
-                postView.PostUserId = "730051ba-7fe4-43f4-ac3a-7555f9ff654b";
-                var saveMapper = _mapper.Map<Post>(postView);
-
                 if (ModelState.IsValid)
                 {
 
-                    this._Dbcontext.Posts.Add(saveMapper);
-                    foreach (var imageFile in postView.Image)
-                    {
-                        string fullFileName = MethodHelper.FileToBeSaved(postView.Title, imageFile).Result;
-
-                        PostImage image = new PostImage();
-                        image.ImageName = fullFileName;
-                        image.Post = saveMapper;
-                        image.Type = "jpg";
-                        this._Dbcontext.PostImages.Add(image);
-                    }
-
-                    if (postView.CategoryId != null)
-                    {
-                        foreach (var catId in postView.CategoryId)
-                        {
-                            PostCategory postCategory = new PostCategory();
-                            postCategory.CategoryId = catId;
-                            postCategory.Post = saveMapper;
-                            this._Dbcontext.PostCategories.Add(postCategory);
-                        }
-                    }
-
-                    if (postView.AgentsInvited != null)
-                    {
-                        foreach (var agent in postView.AgentsInvited)
-                        {
-                            Invite inv = new Invite();
-                            inv.Post = saveMapper;
-                            inv.SentBy = saveMapper.PostUserId;
-                            inv.SentTo = agent.ToString();
-
-                            this._Dbcontext.Invites.Add(inv);
-                        }
-                    }
-
-
-                    _Dbcontext.SaveChanges();
+                    _postService.CreatePost(postView, HttpContext);  
 
                     return Json(new { status = 200, message = "Post created successfully" });
                 }

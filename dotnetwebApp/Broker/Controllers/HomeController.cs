@@ -98,7 +98,7 @@ namespace Broker.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet] 
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -113,7 +113,7 @@ namespace Broker.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RegisterAsAgent(LoginUserModel model)
+        public async Task<IActionResult> RegisterAsAgent(RegisterViewModel model)
         {
 
             if (ModelState.IsValid)
@@ -123,7 +123,7 @@ namespace Broker.Controllers
                 {
                     user = _mapper.Map<Agent>(model);
                 }
-                else if (model.Type == "simpleUser")
+                else if (model.Type == "SimpleUser")
                 {
                     user = _mapper.Map<SimpleUser>(model);
                 }

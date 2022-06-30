@@ -127,26 +127,19 @@ prevBtn.forEach((prev) => {
   prev.addEventListener("click", (e) => switchSlide(e, "prev"));
 });
 
-prevBtn.forEach((prev) => {
-  prev.addEventListener("click", (e) => switchSlide(e, "prev"));
-});
-
 fetch("https://localhost:44359/Home/GetSomething")
   .then((res) => res.json())
   .then((data) => {
     data = JSON.parse(data);
-
     for (let cat of data) {
       indexes[cat.CategoryName] = 0;
     }
   });
 
-function switchSlide(e, arg) {
-  if (indexes.Home == undefined) {
-    return;
-  }
+console.log(indexes);
 
-  if (indexes.House == undefined) {
+function switchSlide(e, arg) {
+  if (indexes.house == undefined) {
     return;
   }
 
@@ -164,9 +157,7 @@ function switchSlide(e, arg) {
 
   //console.log(indexes, currentBtn, parentEl, allSlides, slidesLength)
 
-  parentEl.classList.add("transition");
-  // gap is 5% of parent element width so  divide it by 20
-  const gap = parentEl.offsetWidth / 20;
+  //console.log(indexes, indexes[currentBtn], currentBtn, parentEl, allSlides, slidesLength)
 
   if (slidesLength != 0) {
     if (arg == "next") {
