@@ -39,33 +39,33 @@ namespace Broker.Controllers
         }
 
 
-        public IActionResult GetSUById(int id)
-        {
-            var simpleUser = _db.SimpleUsers.Find(id);
-            return View(simpleUser);
-        }
+        //public IActionResult GetSUById(int id)
+        //{
+        //    var simpleUser = _db.SimpleUsers.Find(id);
+        //    return View(simpleUser);
+        //}
 
 
-        public IActionResult DeleteSU(int id) {
+        //public IActionResult DeleteSU(int id) {
            
-                var simpleUser = _db.SimpleUsers.Find(id);
-                _db.SimpleUsers.Remove(simpleUser);
-                _db.SaveChanges();
-                return RedirectToAction("Index","Home");
+        //        var simpleUser = _db.SimpleUsers.Find(id);
+        //        _db.SimpleUsers.Remove(simpleUser);
+        //        _db.SaveChanges();
+        //        return RedirectToAction("Index","Home");
 
-        }
+        //}
 
-        [HttpGet]
-        public IActionResult UpdateSU(int id)
-        {
+        //[HttpGet]
+        //public IActionResult UpdateSU(int id)
+        //{
 
-            var simpleUser = _db.SimpleUsers.Find(id);
-            if (simpleUser == null ) {
-                return RedirectToAction("Error","Home");
-            }
-            return View(simpleUser);
+        //    var simpleUser = _db.SimpleUsers.Find(id);
+        //    if (simpleUser == null ) {
+        //        return RedirectToAction("Error","Home");
+        //    }
+        //    return View(simpleUser);
 
-        }
+        //}
 
         //[HttpPost]
         //public IActionResult UpdateSU(SUViewModel suvm,int id)

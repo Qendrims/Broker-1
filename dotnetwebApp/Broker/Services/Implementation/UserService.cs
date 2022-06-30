@@ -74,6 +74,9 @@ namespace Broker.Services.Implementation
             return token;
         }
 
-
+        public object RegisterUser(RegisterViewModel model)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

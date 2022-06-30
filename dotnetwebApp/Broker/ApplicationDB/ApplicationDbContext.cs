@@ -11,7 +11,7 @@ namespace Broker.ApplicationDB
 
         }
 
-        public DbSet<SimpleUser> SimpleUsers { get; set; }
+       
         public DbSet<Agent> Agents { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostCategory> PostCategories { get; set; }
@@ -19,7 +19,7 @@ namespace Broker.ApplicationDB
         public DbSet<PostImage> PostImages { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Invite> Invites { get; set; }
-        public DbSet<FeedBack> FeedBacks { get; set; }
+      
         public DbSet<AdsPayments> AdsPaymentcs { get; set; }
         public DbSet<Tags> Tags { get; set; }
 
@@ -29,8 +29,8 @@ namespace Broker.ApplicationDB
             base.OnModelCreating(modelBuilder);
 ;
             modelBuilder.Entity<User>().HasDiscriminator<string>("type")
-           .HasValue<Agent>("Agent")
-           .HasValue<SimpleUser>("SimpleUser");
+           .HasValue<Agent>("Agent");
+        
 
             modelBuilder.Entity<Tags>().Property(t => t.TagName)
            .HasMaxLength(100);

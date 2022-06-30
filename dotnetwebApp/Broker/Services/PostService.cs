@@ -24,7 +24,7 @@ namespace Broker.Services
             PostViewModel createPostView = new PostViewModel();
 
             createPostView.categories = this._Dbcontext.Categories.ToList();
-            createPostView.agents = this._Dbcontext.Agents.ToList();
+    
             return createPostView;
         }
 
@@ -36,7 +36,7 @@ namespace Broker.Services
 
             CreatePostImage(postView, saveMapper);
             CreatePostCategory(postView, saveMapper);
-            InviteAgents(postView, saveMapper);
+           // InviteAgents(postView, saveMapper);
             this._Dbcontext.SaveChanges();
         }
 
@@ -68,20 +68,22 @@ namespace Broker.Services
             }
         }
 
-        private void InviteAgents(PostViewModel postView, Post postMapper)
-        {
-            if (postView.AgentsInvited != null)
-            {
-                foreach (var agent in postView.AgentsInvited)
-                {
-                    Invite inv = new Invite();
-                    inv.Post = postMapper;
-                    inv.SentBy = postMapper.PostUserId;
-                    inv.SentTo = agent.ToString();
+    
 
-                    this._Dbcontext.Invites.Add(inv);
-                }
-            }
-        }
+        //private void InviteAgents(PostViewModel postView, Post postMapper)
+        //{
+        //    if (postView.AgentsInvited != null)
+        //    {
+        //        foreach (var agent in postView.AgentsInvited)
+        //        {
+        //            Invite inv = new Invite();
+        //            inv.Post = postMapper;
+        //            inv.SentBy = postMapper.PostUserId;
+        //            inv.SentTo = agent.ToString();
+
+        //            this._Dbcontext.Invites.Add(inv);
+        //        }
+        //    }
+        //}
     }
 }

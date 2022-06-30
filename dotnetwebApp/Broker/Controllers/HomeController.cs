@@ -110,29 +110,29 @@ namespace Broker.Controllers
             return View();
 
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RegisterAsAgent(RegisterViewModel model)
-        {
-            var user = _userService.RegisterUser(model);
-            if (user != null)
-            {
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> RegisterAsAgent(RegisterViewModel model)
+        //{
+        //    var user = _userService.RegisterUser(model);
+        //    if (user != null)
+        //    {
 
-                var token = _userService.GetUserToken(user);
+        //        var token = _userService.GetUserToken(user);
 
-                //Generate Email Confrimation Link
-                var confrimationLink = Url.Action("Index", "Home",
-                    new { token = token }, Request.Scheme);
-                await _emailSender.SendEmailAsync(model.Email, "Confirm email", "Confirm email by pressing this link: <a href=\"" + confrimationLink + "\">link</a>");
-                //Log confirmation lint to a file
-                _logger.Log(LogLevel.Warning, confrimationLink);
-                //await _userManager.AddToRoleAsync(user, "Visitor");
-                return RedirectToAction("Index", "Home");
+        //        //Generate Email Confrimation Link
+        //        var confrimationLink = Url.Action("Index", "Home",
+        //            new { token = token }, Request.Scheme);
+        //        await _emailSender.SendEmailAsync(model.Email, "Confirm email", "Confirm email by pressing this link: <a href=\"" + confrimationLink + "\">link</a>");
+        //        //Log confirmation lint to a file
+        //        _logger.Log(LogLevel.Warning, confrimationLink);
+        //        //await _userManager.AddToRoleAsync(user, "Visitor");
+        //        return RedirectToAction("Index", "Home");
 
-            }
-            return View(model);
+        //    }
+        //    return View(model);
 
-        }
+        //}
 
 
         public IActionResult RegisterAsSimpleUser()
