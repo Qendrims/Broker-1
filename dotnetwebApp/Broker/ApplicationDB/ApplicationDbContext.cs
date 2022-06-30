@@ -6,20 +6,17 @@ namespace Broker.ApplicationDB
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> option) : base(option)
         {
 
         }
 
-        public DbSet<SimpleUser> SimpleUsers { get; set; }
-        public DbSet<Agent> Agents { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostCategory> PostCategories { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<PostImage> PostImages { get; set; }
-        public DbSet<Payment> Payments { get; set; }
-        public DbSet<Invite> Invites { get; set; }
-        public DbSet<FeedBack> FeedBacks { get; set; }  
+        public DbSet<FeedBack> FeedBacks { get; set; }
         public DbSet<AdsPayments> AdsPaymentcs { get; set; }
         public DbSet<Tags> Tags { get; set; }
 
@@ -27,10 +24,6 @@ namespace Broker.ApplicationDB
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-;
-            modelBuilder.Entity<User>().HasDiscriminator<string>("type")
-           .HasValue<Agent>("Agent")
-           .HasValue<SimpleUser>("SimpleUser");
 
             modelBuilder.Entity<Tags>().Property(t => t.TagName)
            .HasMaxLength(100);
@@ -51,17 +44,11 @@ namespace Broker.ApplicationDB
             .IsRequired();
 
 
-            modelBuilder.Entity<User>().Property(u => u.Street);
-
-
             modelBuilder.Entity<User>().Property(u => u.City)
             .HasMaxLength(200);
 
             modelBuilder.Entity<User>().Property(u => u.State)
             .HasMaxLength(200);
-
-            modelBuilder.Entity<Agent>().Property(a => a.AgentId)
-            .IsRequired();
 
             modelBuilder.Entity<Post>().Property(p => p.Title)
             .HasMaxLength(100)
@@ -79,8 +66,7 @@ namespace Broker.ApplicationDB
             modelBuilder.Entity<Post>().Property(p => p.City)
             .HasMaxLength(200);
 
-            modelBuilder.Entity<Post>().Property(p => p.PostUserId)
-            .IsRequired();
+            
 
             modelBuilder.Entity<PostCategory>().HasKey(pc => new { pc.CategoryId, pc.PostId });
 

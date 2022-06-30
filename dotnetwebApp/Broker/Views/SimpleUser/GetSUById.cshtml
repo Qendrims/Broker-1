@@ -1,0 +1,63 @@
+﻿@model User
+@{
+    Layout = "~/Views/Shared/_SimpleUserLayout.cshtml";
+    ViewData["Title"] = "Confirm delete";
+}
+
+<link href="@Url.Content("~/css/deleteUS.css")" rel="stylesheet" type="text/css" />
+
+
+
+        <div class="container">
+
+        <form>
+            <h2 id="deleteHeader">Confirm Delete</h2>
+
+            <div class="form-outline mb-4">
+            <label class="labels" asp-for="Name"></label>
+            <input type="text" id="firstname" readonly value="@Model.Name" class="form-control form-control-lg">
+            </div>
+
+            <div class="form-outline mb-4">
+            <label class="labels" asp-for="LastName"></label>
+            <input type="text" id="lastname" readonly value="@Model.LastName" class="form-control form-control-lg">
+            </div>
+
+            <div class="form-outline mb-4">
+            <label class="labels" asp-for="Birthday"></label>
+            <input type="text" id="birthday" readonly value="@Model.Birthday.ToShortDateString()" class="form-control form-control-lg">
+            </div>
+
+            <div class="form-outline mb-4">
+            <label class="labels" asp-for="Email"></label>
+            <input type="text" id="email"  readonly value="@Model.Email" class="form-control form-control-lg">
+            </div>
+
+            <div class="form-outline mb-4">
+            <label class="labels" asp-for="PhoneNumber"></label>
+            <input type="number" id="telephone"  readonly value="@Model.PhoneNumber" class="form-control form-control-lg">
+            </div>
+
+            <div class="form-outline mb-4">
+            <label class="labels" asp-for="Street"></label>
+            <input type="text" id="street"  readonly value="@Model.Street" class="form-control form-control-lg">
+            </div>
+
+            <div class="form-outline mb-4">
+            <label class="labels" asp-for="State"></label>
+            <input type="text" id="state"  readonly value="@Model.State" class="form-control form-control-lg">
+            </div>
+
+            <div class="form-outline mb-4">
+            <label class="labels" asp-for="City"></label>
+            <input type="text" id="city"  readonly value="@Model.City" class="form-control form-control-lg">
+            </div>
+
+            <div class="form-outline mb-4">
+            <label class="labels" asp-for="ZipCode"></label>
+            <input type="number" id="zipCode"  readonly value="@Model.ZipCode" class="form-control form-control-lg">
+            </div>
+
+            <input id="sumbit-btn" type="submit" asp-controller="SimpleUser" asp-action="DeleteSU" asp-route-id="2002" value="Confirm Delete" class="btn btn-danger btn-lg">
+        </form>
+        </div>

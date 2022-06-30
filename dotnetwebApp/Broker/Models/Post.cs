@@ -21,13 +21,15 @@ namespace Broker.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime MeetingDate { get; set; }
         public string Street { get; set; }
-        public string Country { get; set; }
         public string City { get; set; }
         public string State { get; set; }
+
+        public string Country { get; set; }
         public int ZipCode { get; set; }
         public string PostUserId { get; set; }
         [ForeignKey("PostUserId")]
         public User User { get; set; }
+        
 
         public virtual ICollection<PostCategory> PostCategories { get; set; }
         public bool IsDeleted { get; set; } = false;

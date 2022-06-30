@@ -29,38 +29,7 @@ function nextImage() {
   slideshowImages[currentImageCounter].style.zIndex = -1;
 }
 
-const agents = [
-  {
-    name: "Mark Cetinski",
-    location: "California",
-    languages: "English",
-  },
-  {
-    name: "Maya Huan ",
-    location: "Texas",
-    languages: "Latin",
-  },
-  {
-    name: "Patrick Herman",
-    location: "California",
-    languages: "English",
-  },
-  {
-    name: "Joe Daniel",
-    location: "Texas",
-    languages: "English",
-  },
-  {
-    name: "Roberto Hurley",
-    location: "New York",
-    languages: "English",
-  },
-  {
-    name: "Tracy Daniel",
-    location: "New York",
-    languages: "English",
-  },
-];
+
 
 function clearSearch(e) {
   document.querySelector(".searchResults").innerHTML = "";
@@ -104,40 +73,6 @@ window.onscroll = function () {
 
 //change the inner html of navbar based on whether the user is logged in or not
 
-//navHeader.innerHTML +=
-//  username == null
-//    ? `
-//    <ul class="nav-list" id="list1">
-     
-//</ul>
-//`
-//    : `
-//<div class="dropdown">
-//  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-//    Welcome ${username}
-//  </button>
-//  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-//    <li><a class="dropdown-item active" href="#">Action</a></li>
-//    <li><a class="dropdown-item" href="/Post/Postpagecreate">Create Post</a></li>
-//    <li><a class="dropdown-item" href="/Post/MyPosts">My posts</a></li>
-//    <li><a class="dropdown-item" href="/Home/Postpage">All posts</a></li>
-//    <li><a class="dropdown-item" href="/Post/ArchivedPosts">Archived posts</a></li>
-//    <li><hr class="dropdown-divider"></li>
-//    <li id="LogOut"><a class="dropdown-item" href="#">Log Out</a></li>
-//  </ul>
-//</div>
-//`;
-
-//let signIn = document.getElementById("SignIn");
-//signIn?.addEventListener("click", () => {
-//  location.href = "/Home/Login";
-//});
-
-//let logout = document.getElementById("LogOut");
-//logout?.addEventListener("click", () => {
-//  localStorage.removeItem("broker-username");
-//  location.reload();
-//});
 
 // get data from backend to create a set with unique categories
 
@@ -161,24 +96,31 @@ prevBtn.forEach(prev => {
     prev.addEventListener('click', e => switchSlide(e, 'prev'));
 });
 
+prevBtn.forEach((prev) => {
+  prev.addEventListener("click", (e) => switchSlide(e, "prev"));
+});
 
 fetch("https://localhost:44359/Home/GetSomething")
   .then((res) => res.json())
   .then((data) => {
     data = JSON.parse(data);
+
     for (let cat of data) {
         indexes[cat.CategoryName] = 0;
     }
 
 })
 
-console.log(indexes)
+
 
 function switchSlide(e, arg) {
-    if (indexes.house == undefined) {
+  if (indexes.Home == undefined) {
+    return;
+  }
+
+    if (indexes.House == undefined) {
         return;
     }
-
        
 
     // select category next/prev button
@@ -194,7 +136,7 @@ function switchSlide(e, arg) {
     let slidesLength = allSlides.length <= 3 ? 0 : allSlides.length - 3;
 
 
-    //console.log(indexes, indexes[currentBtn], currentBtn, parentEl, allSlides, slidesLength)
+    //console.log(indexes, currentBtn, parentEl, allSlides, slidesLength)
 
 
     parentEl.classList.add('transition')

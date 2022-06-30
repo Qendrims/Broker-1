@@ -1,10 +1,8 @@
 using AutoMapper;
 using Broker.ApplicationDB;
-using Broker.Mailing;
+using Broker.Data;
 using Broker.Models;
-using Broker.Services.Implementation;
-using Broker.Services.Interface;
-using Broker.Services.Mailing;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,58 +28,65 @@ namespace Broker
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var emailConfig = Configuration
-                .GetSection("EmailConfiguration")
-                .Get<EmailConfig>();
-            services.AddSingleton(emailConfig);
-
-
-            services.AddControllersWithViews();
            
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddScoped<IEmailSender, EmailSender>();
-            services.AddScoped<IUserService, UserService>();
+
+
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+            //add cache
+            //services.AddMemoryCache();
+
+            //add Session
+            //services.AddSession();
+
+            services.AddAuthentication(options => {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
+
             services.Configure<IdentityOptions>(options =>
             {
-                //Password Settings
+                // Password settings.
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequiredLength = 8;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
 
-                //Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan= TimeSpan.FromMinutes(1);
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                 options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.AllowedForNewUsers = false;
+                options.Lockout.AllowedForNewUsers = true;
 
-                options.SignIn.RequireConfirmedEmail = true;
-
-                //User settings
-                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+!";
-                options.User.RequireUniqueEmail = true;
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = false;
             });
-            services.ConfigureApplicationCookie(options => {
-                //Cookie Settings
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
                 options.LoginPath = "/Home/Login";
-                options.AccessDeniedPath = "/Post/Error";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
+
+            services.AddControllersWithViews();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddAutoMapper(typeof(Startup));
-
-            services.AddHttpContextAccessor();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -101,15 +106,24 @@ namespace Broker
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            //use Session
+            //app.UseSession();
+
+            //Authoentication and Authorization
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Post}/{action=PostPageCreate}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //Seeding Roles
+            AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
         }
     }
 }

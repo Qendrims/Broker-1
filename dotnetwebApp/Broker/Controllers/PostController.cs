@@ -6,34 +6,29 @@ using Broker.Models;
 using Broker.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using System;
-using System.Security.Claims;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using Broker.Services.Repository.IRepository;
 
 namespace BrokerApp.Controllers
 {
     public class PostController : Controller
     {
-        private readonly UserManager<User> _userManager;
+
         private readonly ApplicationDbContext _Dbcontext;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private IMapper _mapper;
-        
 
-        public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager)
+        public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper)
         {
             this._Dbcontext = _context;
             this._webHostEnvironment = _webHostEnvironment;
             this._mapper = mapper;
-            _userManager = userManager;
         }
 
         public IActionResult Archive(int id)
@@ -50,11 +45,21 @@ namespace BrokerApp.Controllers
             return RedirectToAction("PostPage");
         }
 
-        public IActionResult MyPosts(string id, int pg = 1)
+        //    int postCount = posts.FilteredPosts.Count();
+        //    var pager = new Pagination(postCount, pg, pageSize);
+
+        //    int postSkip = (pg - 1) * pageSize;
+
+        //    posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
+        //    this.ViewBag.Pager = pager;
+        //    return View(posts);
+        //   // return View(posts);
+        //}
+        public IActionResult MyPosts(string UseriId, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
 
-            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == id).ToList();
+            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == UseriId).ToList();
 
             const int postPerPage = 2;
             if (pg < 1)
@@ -106,11 +111,10 @@ namespace BrokerApp.Controllers
             var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
                 .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => p.IsArchived == false).Include(p => p.Images).ToList();
             posts.FilteredPosts = result;
-            posts.Image = result.FirstOrDefault().Images;
             posts.Category = category;
             posts.City = city;
 
-            const int postPerPage = 20;
+            const int postPerPage = 2;
             if (pg < 1)
                 pg = 1;
 
@@ -125,17 +129,11 @@ namespace BrokerApp.Controllers
             return View("PostPage", posts);
         }
 
-        public IActionResult DeleteAgent(int? id)
-        {
-            _Dbcontext.SaveChanges();
-            return View();
-        }
+
         [HttpGet]
         public IActionResult Detail(int? id)
         {
-            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).ThenInclude(x => x.Category).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
-            //var postCategories = this._Dbcontext.PostCategories.Where(p => p.PostId == id).Include(y => y.Category).Include(y => y.Post).ToList();
-            //var post1 = postCategories.
+            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
 
             PostDetailViewModel postViewModel = new PostDetailViewModel();
             try
@@ -151,22 +149,22 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult PostPageCreate()
         {
-            PostViewModel createPostView = new PostViewModel();
-
-
+            CreatePostViewModel createPostView = new CreatePostViewModel();
             createPostView.categories = this._Dbcontext.Categories.ToList();
+            createPostView.users = this._Dbcontext.Users.ToList();
             return View(createPostView);
         }
+
+
 
 
         [HttpPost]
         public IActionResult PostPageCreate(PostViewModel postView)
         {
-
             try
             {
-                postView.PostUserId = _userManager.GetUserId(HttpContext.User);
-                //postView.PostUserId = 1;
+
+                postView.PostUserId = "2";
                 var saveMapper = _mapper.Map<Post>(postView);
 
                 this._Dbcontext.Posts.Add(saveMapper);
@@ -181,52 +179,22 @@ namespace BrokerApp.Controllers
                     this._Dbcontext.PostImages.Add(image);
                 }
 
-                if (postView.CategoryId != null)
+                foreach (var catId in postView.CategoryId)
                 {
-                    foreach (var catId in postView.CategoryId)
-                    {
-                        PostCategory postCategory = new PostCategory();
-                        postCategory.CategoryId = catId;
-                        postCategory.Post = saveMapper;
-                        this._Dbcontext.PostCategories.Add(postCategory);
-                    }
+                    PostCategory postCategory = new PostCategory();
+                    postCategory.CategoryId = catId;
+                    postCategory.Post = saveMapper;
                 }
-
-                if (postView.AgentsInvited != null)
-                {
-                    foreach (var agent in postView.AgentsInvited)
-                    {
-                        Invite inv = new Invite();
-                        inv.Post = saveMapper;
-                        inv.SentBy = saveMapper.PostUserId;
-
-                        this._Dbcontext.Invites.Add(inv);
-                    }
-                }
-
+                
 
                 _Dbcontext.SaveChanges();
 
-                return Json(new { status = 200, message = "Post created successfully" });
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
             {
-                Dictionary<string, string> data = new Dictionary<string, string>();
-                if (string.IsNullOrEmpty(postView.Title))
-                    data.Add("TitleError", "Title cant be empty");
-
-                if (string.IsNullOrEmpty(postView.Description))
-                    data.Add("DescriptionError", "Description cant be empty");
-
-                if (postView.categories == null || postView.categories.Count < 1)
-                    data.Add("CategoryError", "Category is not selected!");
-
-                if (postView.Image == null || postView.Image.Count < 1)
-                    data.Add("ImageError", "Please Add a photo");
-
-                return Json(new { status = 400, message = "Something went wrong", data });
+                return View("Error", ex);
             }
-
         }
         [HttpGet]
         public IActionResult Edit(int? id)
@@ -241,7 +209,7 @@ namespace BrokerApp.Controllers
                     var saveMapper = _mapper.Map<PostDetailViewModel>(post);
                     return View(saveMapper);
                 }
-                catch (Exception ex)
+                catch(Exception ex)
                 {
                     return View("Error");
                 }
@@ -256,12 +224,11 @@ namespace BrokerApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(PostDetailViewModel ViewModel)
+        public IActionResult Edit(int id, PostDetailViewModel ViewModel)
         {
 
-            var post = this._Dbcontext.Posts.Where(x => x.PostId == ViewModel.PostId).Include(e => e.Images).FirstOrDefault();
-            var ImageToDelete = post.Images.Where(x => x.PostId == ViewModel.PostId).FirstOrDefault();
+            var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(e => e.Images).FirstOrDefault();
+            var ImageToDelete = post.Images.Where(x => x.PostId == id).FirstOrDefault();
 
             try
             {
@@ -286,6 +253,7 @@ namespace BrokerApp.Controllers
                     ViewModel.Image = post.Images.ToList();
                 }
 
+                ViewModel.PostId = id;
 
                 this._Dbcontext.Update(post);
                 this._Dbcontext.SaveChanges();
@@ -335,7 +303,7 @@ namespace BrokerApp.Controllers
             this._Dbcontext.AdsPaymentcs.Add(saveMapper);
             this._Dbcontext.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index","Home");
         }
     }
 }

@@ -1,0 +1,66 @@
+﻿@model Broker.ViewModels.LoginUserModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+ <link href="@Url.Content("~/css/login-page.css")" rel="stylesheet" type="text/css" />
+  
+    <div class="container">
+             
+
+        
+            
+    <form autocomplete="off" asp-action="Login" method="post">
+          
+        <h4 id="registerHeader">Please login to your account</h4>
+              <!-- Email input -->
+         @if(@ViewBag.Message!=null){
+            <div class="col-md-12 alert alert-danger">
+                <span id="errorMessage" class="text-danger">@ViewBag.Message</span>
+            </div>
+         }
+          
+        <div class="form-outline mb-4">
+             <label class="labels" asp-for="Email"></label>
+             <input type="text" id="email"  asp-for="Email" placeholder="Email" class="form-control form-control-lg">
+             <span asp-validation-for="Email" class="text-danger"></span>
+         </div>
+
+          <!-- Password input -->
+        <div class="form-outline mb-4">
+            <label class="labels" asp-for="Password"></label>
+            <input type="password" id="password"  asp-for="Password" placeholder="Password" class="form-control form-control-lg">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        
+       
+          <!-- Submit button -->
+
+          <div class="form-group">
+              <input type="submit" class="btn btn-outline-success float-right" value="SignIn" />
+              <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Cancel</a>
+          </div>
+          @*<button id="loginbtn" type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>*@
+
+          <div class="divider d-flex align-items-center my-4">
+            <p class="text-center fw-bold mx-3 mb-0 text-muted">Not a member!</p>
+          </div>
+
+          
+           <button type="button" class="btn btn-primary btn-lg btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           Register
+           </button>
+           <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/Home/RegisterAsAgent">As Agent</a>
+                    <a class="dropdown-item" href="/Home/RegisterAsSimpleUser">As Simple User</a>
+           </div>
+            
+
+    </form>
+
+            
+
+    </div>
+    <script src="~/js/login-validate.js"></script>
+
