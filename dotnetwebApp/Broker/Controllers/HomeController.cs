@@ -2,6 +2,7 @@
 using Broker.ApplicationDB;
 using Broker.Mailing;
 using Broker.Models;
+using Broker.Services.Interface;
 using Broker.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -26,8 +27,9 @@ namespace Broker.Controllers
         private readonly UserManager<User> _userManager;
         private IMapper _mapper;
         private IEmailSender _emailSender;
+        private readonly IUserService _userService;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IEmailSender emailSender)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IUserService userService, IEmailSender emailSender)
         {
             this._logger = logger;
             this._db = db;
@@ -35,6 +37,7 @@ namespace Broker.Controllers
             this._userManager = userManager;
             this._mapper = mapper;
             _emailSender = emailSender;
+            this._userService = userService;
         }
 
         [HttpGet]
@@ -83,19 +86,15 @@ namespace Broker.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginUserModel loginUser)
         {
-            if (ModelState.IsValid)
+            bool result = _userService.IsLoggedIn(loginUser);
+            if (result)
             {
-
-                var result = await this._signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, false);
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+                return RedirectToAction("Index", "Home");
             }
-            return View(loginUser);
-
-
+            else
+            {
+                return View("Login", "Home");
+            }
         }
 
         [HttpGet] 
@@ -115,43 +114,22 @@ namespace Broker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterAsAgent(RegisterViewModel model)
         {
-
-            if (ModelState.IsValid)
+            var user = _userService.RegisterUser(model);
+            if (user != null)
             {
-                User user;
-                if (model.Type == "agent")
-                {
-                    user = _mapper.Map<Agent>(model);
-                }
-                else if (model.Type == "SimpleUser")
-                {
-                    user = _mapper.Map<SimpleUser>(model);
-                }
-                else 
-                { 
-                   user = _mapper.Map<User>(model); 
-                }
 
-                var result = await _userManager.CreateAsync(user, model.Password);
-                //var result = _signInManager.PasswordSignInAsync(agent.Email, agent.PasswordHash, false, false);
-                if (result.Succeeded)
-                {
-                    //await _signInManager.SignInAsync(user, isPersistent: false);
-                    
-                    //Generate Email Confirmation token
-                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    await _userManager.ConfirmEmailAsync(user, token);
-                    //Generate Email Confrimation Link
-                    var confrimationLink = Url.Action("Index", "Home",
-                        new { token = token }, Request.Scheme);
-                    await _emailSender.SendEmailAsync(model.Email, "Confirm email", "Confirm email by pressing this link: <a href=\"" + confrimationLink + "\">link</a>");
-                    //Log confirmation lint to a file
-                    _logger.Log(LogLevel.Warning, confrimationLink);
-                    //await _userManager.AddToRoleAsync(user, "Visitor");
-                }
+                var token = _userService.GetUserToken(user);
+
+                //Generate Email Confrimation Link
+                var confrimationLink = Url.Action("Index", "Home",
+                    new { token = token }, Request.Scheme);
+                await _emailSender.SendEmailAsync(model.Email, "Confirm email", "Confirm email by pressing this link: <a href=\"" + confrimationLink + "\">link</a>");
+                //Log confirmation lint to a file
+                _logger.Log(LogLevel.Warning, confrimationLink);
+                //await _userManager.AddToRoleAsync(user, "Visitor");
+                return RedirectToAction("Index", "Home");
 
             }
-
             return View(model);
 
         }
@@ -160,13 +138,6 @@ namespace Broker.Controllers
         public IActionResult RegisterAsSimpleUser()
         {
 
-            return View();
-
-        }
-
-        [HttpPost]
-        public IActionResult RegisterAsSimpleUser(SimpleUser simpleUser)
-        {
             return View();
 
         }
