@@ -8,7 +8,6 @@ namespace Broker.Models
 {
     public class User:IdentityUser
     {
-
         [Required(ErrorMessage = "Please enter name")]
         public string Name { get; set; }
 
@@ -37,5 +36,7 @@ namespace Broker.Models
 
         public bool IsDeleted { get; set; } = false;
         public ICollection<Post> Posts { get; set; }
+
+
     }
 }

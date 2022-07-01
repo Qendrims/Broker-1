@@ -10,5 +10,6 @@ namespace Broker.ViewModels
         public List<string> Cities { get; set; }
         public string Category { get; set; }
         public string City { get; set; }
+        public string minPrice { get; set; }
     }
 }

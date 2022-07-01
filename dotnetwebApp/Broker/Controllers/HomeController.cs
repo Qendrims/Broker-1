@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Broker.ApplicationDB;
+using Broker.Mailing;
 using Broker.Models;
 using Broker.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,16 +19,22 @@ namespace Broker.Controllers
 {
     public class HomeController : Controller
     {
+
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
-        private readonly IMapper _mapper;
+        private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, IMapper mapper, UserManager<User> userManager)
+        private IMapper _mapper;
+        private IEmailSender _emailSender;
+
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IEmailSender emailSender)
         {
-            _logger = logger;
-            _db = db;
-            _mapper = mapper;
-            _userManager = userManager;
+            this._logger = logger;
+            this._db = db;
+            this._signInManager = signInManager;
+            this._userManager = userManager;
+            this._mapper = mapper;
+            _emailSender = emailSender;
         }
 
         [HttpGet]
@@ -57,7 +65,7 @@ namespace Broker.Controllers
                     homeViewModels.Add(model);
                 }
             }
-        
+
             return View(homeViewModels);
         }
 

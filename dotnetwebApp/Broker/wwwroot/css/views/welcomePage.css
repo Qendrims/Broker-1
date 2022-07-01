@@ -46,6 +46,7 @@
 }
 .homepage-header img{
     width: 180px;
+    height: auto;
 }
 .dropdown{
     align-self: center;

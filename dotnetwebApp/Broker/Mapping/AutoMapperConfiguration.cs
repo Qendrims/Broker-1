@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Broker.Models;
 using Broker.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace Broker.Mapping
 {

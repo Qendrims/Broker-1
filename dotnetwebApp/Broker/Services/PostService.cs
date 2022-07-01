@@ -51,7 +51,6 @@ namespace Broker.Services
                 this._Dbcontext.PostImages.Add(image);
             }
         }
-
         private void CreatePostCategory(PostViewModel postView, Post postMapper)
         {
             if (postView.CategoryId != null)

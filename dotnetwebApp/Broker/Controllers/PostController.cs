@@ -7,6 +7,7 @@ using Broker.Services;
 using Broker.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
@@ -24,13 +25,15 @@ namespace BrokerApp.Controllers
         private readonly ApplicationDbContext _Dbcontext;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private IMapper _mapper;
+        private readonly UserManager<User> _userManager;
         private readonly IPostService _postService;
 
-        public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, IPostService postService)
+        public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
         {
             this._Dbcontext = _context;
             this._webHostEnvironment = _webHostEnvironment;
             this._mapper = mapper;
+            this._userManager = userManager;
             this._postService = postService;
         }
 
@@ -58,11 +61,11 @@ namespace BrokerApp.Controllers
         //    return View(posts);
         //   // return View(posts);
         //}
-        public IActionResult MyPosts(string UseriId, int pg = 1)
+        public IActionResult MyPosts(string id, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
 
-            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == UseriId).ToList();
+            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == id).ToList();
 
             const int postPerPage = 2;
             if (pg < 1)
@@ -99,25 +102,30 @@ namespace BrokerApp.Controllers
             return View(posts);
         }
 
-        public IActionResult PostPage(string category, string city, int pg = 1)
+        public IActionResult PostPage(string category, string city,double? minPrice,double? maxPrice, int pg = 1)
         {
-
+          
             FilteredPostViewModel posts = new FilteredPostViewModel();
             posts.FilteredCategories = _Dbcontext.Categories.ToList();
             posts.Cities = _Dbcontext.Posts.Where(p => !string.IsNullOrEmpty(p.City)).Select(m => m.City).Distinct().ToList();
 
+            if (minPrice > maxPrice)
+            {
+                ModelState.AddModelError("minPrice", "Min price must be lower than max price");
+                return View(posts);
+            }
             Category cat = new Category();
             if (category != null)
             {
                 cat = _Dbcontext.Categories.First(c => c.CategoryName == category);
             }
             var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
-                .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => p.IsArchived == false).Include(p => p.Images).ToList();
+                .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => minPrice == null || p.Price >= minPrice).Where(p => maxPrice == null || p.Price <= maxPrice).Where(p => p.IsArchived == false).Include(p => p.Images).ToList();
             posts.FilteredPosts = result;
             posts.Category = category;
             posts.City = city;
-
-            const int postPerPage = 2;
+            
+            const int postPerPage = 20;
             if (pg < 1)
                 pg = 1;
 
@@ -128,6 +136,7 @@ namespace BrokerApp.Controllers
 
             posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
             this.ViewBag.Pager = pager;
+
 
             return View("PostPage", posts);
         }
@@ -168,9 +177,9 @@ namespace BrokerApp.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    _postService.CreatePost(postView, HttpContext);
+                    _postService.CreatePost(postView, HttpContext);  
 
-                    return Json(new { status = 200, message = "Post created successfully" });
+                return Json(new { status = 200, message = "Post created successfully" });
                 }
 
                 Dictionary<string, string> data = new Dictionary<string, string>();

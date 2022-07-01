@@ -96,31 +96,24 @@ prevBtn.forEach(prev => {
     prev.addEventListener('click', e => switchSlide(e, 'prev'));
 });
 
-prevBtn.forEach((prev) => {
-  prev.addEventListener("click", (e) => switchSlide(e, "prev"));
-});
 
 fetch("https://localhost:44359/Home/GetSomething")
   .then((res) => res.json())
   .then((data) => {
     data = JSON.parse(data);
-
     for (let cat of data) {
         indexes[cat.CategoryName] = 0;
     }
 
 })
 
-
+console.log(indexes)
 
 function switchSlide(e, arg) {
-  if (indexes.Home == undefined) {
-    return;
-  }
-
-    if (indexes.House == undefined) {
+    if (indexes.house == undefined) {
         return;
     }
+
        
 
     // select category next/prev button
@@ -136,7 +129,7 @@ function switchSlide(e, arg) {
     let slidesLength = allSlides.length <= 3 ? 0 : allSlides.length - 3;
 
 
-    //console.log(indexes, currentBtn, parentEl, allSlides, slidesLength)
+    //console.log(indexes, indexes[currentBtn], currentBtn, parentEl, allSlides, slidesLength)
 
 
     parentEl.classList.add('transition')

@@ -392,6 +392,8 @@
         }
           function preview(){
               let fileList = [];
+
+
                for(i of fileInput.files){
                  let fileAlreadyUploaded = allFilesList.some(file => file.name == i.name);
                  if(!fileAlreadyUploaded){
@@ -405,6 +407,7 @@
               for(let i =0;i<fileList.length;i++){
                   let reader = new FileReader();
                    let figure = document.createElement("figure");
+
                      reader.onload=()=>{
                      let img = document.createElement("img");
                      let btn = document.createElement("button");

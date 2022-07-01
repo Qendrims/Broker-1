@@ -14,10 +14,10 @@
 
 
 
-<div class="container">
+<div class="container" style="display: flex;gap: 10px;">
 
-    <div class="search-products">
-        <form class="search-form" method='get' asp-action="PostPage">
+    
+        <form id="filterForm" class="search-form" method='get' asp-action="PostPage">
           
 
             <select id="select-category" name='category'>
@@ -37,14 +37,31 @@
                 }
             </select>
 
-             <input id="btn-submit" type='submit' value='Search' />
+            <label class="label label-default" for="customRange2">Select price</label>
+            <p>Min Price</p>
+             <input type="range" name="minPrice" class="form-range" min="0" max="100" oninput="num.value = this.value+'$'" id="minPrice" />
+            <output id="num"></output>
+
+             <p>Max Price</p>
+             <input type="range" name="maxPrice" class="form-range" min="0" max="100" oninput="num2.value = this.value+'$'" id="maxPrice" />
+            <output id="num2"></output>
+          
+            <span asp-validation-for="minPrice" class="text-danger"></span>
+
+             <input id="btn-submit" type='submit' class="btn btn-primary" value='Search' />
         </form>
 
-    </div>
-    <a href="/Archive/Index" class="btn btn-primary">Archived posts</a>
+  @*  <a href="/Archive/Index" class="btn btn-primary">Archived posts</a>*@
+   
 
-   <div class="container">
+   <div class="container" style="padding: 0">
         <div class="row">
+            @if(@Model.FilteredPosts == null)
+            {
+                <h3>No posts to show</h3>
+            } else
+            {
+                
             @foreach(var post in @Model.FilteredPosts)
             {
                 
@@ -52,7 +69,7 @@
 
                 <article class="post-card">
                     <div class="post-card-img">
-                       <img src="~/Assets//Images/grid1.jpg" />
+                       <img src="~/UploadFiles/@post.Images.FirstOrDefault().ImageName"/>
                     </div>
                     <div class="post-card-info">
                         <div class="post-card-info-address">
@@ -72,6 +89,7 @@
                 </article>
             </div>
             }
+           }
              </div>
               </div>
 
