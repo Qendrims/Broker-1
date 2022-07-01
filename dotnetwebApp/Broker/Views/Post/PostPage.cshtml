@@ -56,12 +56,7 @@
 
    <div class="container" style="padding: 0">
         <div class="row">
-            @if(@Model.FilteredPosts == null)
-            {
-                <h3>No posts to show</h3>
-            } else
-            {
-                
+ 
             @foreach(var post in @Model.FilteredPosts)
             {
                 
@@ -89,7 +84,7 @@
                 </article>
             </div>
             }
-           }
+           
              </div>
               </div>
 

@@ -111,8 +111,9 @@ namespace BrokerApp.Controllers
 
             if (minPrice > maxPrice)
             {
-                ModelState.AddModelError("minPrice", "Min price must be lower than max price");
-                return View(posts);
+                var newMin = minPrice;
+                minPrice = maxPrice;
+                maxPrice = newMin;
             }
             Category cat = new Category();
             if (category != null)
