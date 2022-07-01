@@ -20,10 +20,6 @@ namespace Broker.Mapping
 
             CreateMap<RegisterViewModel, User>()
                 .ForMember(u=>u.UserName,o=>o.MapFrom(x=>x.Email));
-            CreateMap<RegisterViewModel, Agent>()
-                .ForMember(u => u.UserName, o => o.MapFrom(x => x.Email));
-            CreateMap<RegisterViewModel, SimpleUser>()
-                .ForMember(u => u.UserName, o => o.MapFrom(x => x.Email));
         }
 
        

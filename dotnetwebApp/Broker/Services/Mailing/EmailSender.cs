@@ -1,4 +1,5 @@
-﻿using MailKit.Net.Smtp;
+﻿using Broker.Services.Mailing;
+using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using System.Threading.Tasks;

@@ -1,4 +1,4 @@
-﻿@model Broker.ViewModels.RegisterViewModel 
+﻿@model Broker.ViewModels.LoginUserModel
 @{
     ViewData["Title"] = "RegisterAsAgent";
 }
@@ -82,11 +82,17 @@
 
              <div class="form-outline mb-4">
               <p>Register as</p>
-            <input type="radio"  name="Type" class="type" value="SimpleUser">
+            <input type="radio"  name="Type" class="type" value="simpleUser">
             <label class="labels" asp-for="Type">Simple User</label>
-            <input type="radio"  name="Type" class="type" value="Agent">
+            <input type="radio"  name="Type" class="type" value="agent">
              <label class="labels" asp-for="Type">Agent</label>
             <span asp-validation-for="Type" class="text-danger"></span> 
+            </div>
+
+            <div class="form-outline mb-4 col-6">
+            <label class="labels" asp-for="ZipCode"></label>
+            <input type="tel" id="telephone"  asp-for="Telephone" placeholder="PhoneNumber" class="form-control form-control-lg">
+            <span asp-validation-for="Telephone" class="text-danger"></span> 
             </div>
 
             <div class="form-outline mb-4 hidden" id="agent-id">
@@ -103,11 +109,11 @@
             <span asp-validation-for="Password" class="text-danger"></span> 
             </div>
 
-               <div class="form-outline mb-4 col-6">
+           @*    <div class="form-outline mb-4 col-6">
             <label class="labels" asp-for="ConfirmPassword"></label>                        
             <input type="password" id="ConfirmPassword"  asp-for="ConfirmPassword" placeholder="Confirm password*" class="form-control form-control-lg">
             <span asp-validation-for="ConfirmPassword" class="text-danger"></span> 
-            </div>
+            </div>*@
 
             </div>
 

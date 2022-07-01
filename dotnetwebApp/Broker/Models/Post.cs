@@ -28,10 +28,6 @@ namespace Broker.Models
         public string PostUserId { get; set; }
         [ForeignKey("PostUserId")]
         public User User { get; set; }
-        
-        public string TakenBy { get; set; }
-        [ForeignKey("TakenBy")]
-        public Agent Agent { get; set; }
 
         public virtual ICollection<PostCategory> PostCategories { get; set; }
         public bool IsDeleted { get; set; } = false;

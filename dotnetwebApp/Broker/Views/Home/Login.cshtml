@@ -10,20 +10,21 @@
 
         
             
-    <form autocomplete="off" asp-action="Login" method="post">
+    <form autocomplete="off"  method="post">
           
         <h4 id="registerHeader">Please login to your account</h4>
               <!-- Email input -->
           
         <div class="form-outline mb-4">
              <label class="labels" asp-for="Email"></label>
-             <input type="text" id="email"  asp-for="Email" placeholder="Email" class="form-control form-control-lg">
+             <input type="text" id="email" value="q.sadrija17@gmail.com"  asp-for="Email" placeholder="Email" class="form-control form-control-lg">
         </div>
 
           <!-- Password input -->
         <div class="form-outline mb-4">
             <label class="labels" asp-for="Password"></label>
-            <input type="password" id="password"  asp-for="Password" placeholder="Password" class="form-control form-control-lg">
+            <input type="password" value="Admin123." id="password"  asp-for="Password" placeholder="Password" class="form-control form-control-lg">
+            <p class="error" id="PasswordError"></p>
         </div>
 
         @if(@ViewBag.Message!=null){
@@ -43,15 +44,10 @@
           </div>
 
           
-           <button type="button" class="btn btn-primary btn-lg btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <a class="btn btn-primary btn-lg" href="/Home/RegisterAsAgent">
            Register
-           </button>
-           <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/Home/RegisterAsAgent">As Agent</a>
-                    <a class="dropdown-item" href="/Home/RegisterAsSimpleUser">As Simple User</a>
-           </div>
-            
-
+           </a>
+           
     </form>
 
             

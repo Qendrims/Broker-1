@@ -2,7 +2,9 @@ using AutoMapper;
 using Broker.ApplicationDB;
 using Broker.Mailing;
 using Broker.Models;
-using Broker.Services;
+using Broker.Services.Implementation;
+using Broker.Services.Interface;
+using Broker.Services.Mailing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +29,7 @@ namespace Broker
 
         public IConfiguration Configuration { get; }
 
+        // This method gets called by the runtime. Use this method to add services to the container.
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -106,7 +109,7 @@ namespace Broker
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Post}/{action=PostPageCreate}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

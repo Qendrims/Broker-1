@@ -1,4 +1,5 @@
 ﻿using Broker.Models;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 
 namespace Broker.ViewModels
@@ -11,5 +12,8 @@ namespace Broker.ViewModels
         public string Category { get; set; }
         public string City { get; set; }
         public string minPrice { get; set; }
+        public ICollection<PostImage> Image { get; set; } = new List<PostImage>();
+
+        public ICollection<IFormFile> ImageUploaded { get; set; }
     }
 }

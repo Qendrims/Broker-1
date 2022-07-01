@@ -1,4 +1,4 @@
-﻿namespace Broker.Mailing
+﻿namespace Broker.Services.Mailing
 {
     public class EmailConfig
     {

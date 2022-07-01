@@ -12,29 +12,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using System;
+using System.Security.Claims;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Broker.Services.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BrokerApp.Controllers
 {
     public class PostController : Controller
     {
-
+        private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _Dbcontext;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private IMapper _mapper;
-        private readonly UserManager<User> _userManager;
-        private readonly IPostService _postService;
+        
 
-        public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
+        public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager)
         {
             this._Dbcontext = _context;
             this._webHostEnvironment = _webHostEnvironment;
             this._mapper = mapper;
             this._userManager = userManager;
-            this._postService = postService;
         }
 
         public IActionResult Archive(int id)
@@ -51,16 +52,6 @@ namespace BrokerApp.Controllers
             return RedirectToAction("PostPage");
         }
 
-        //    int postCount = posts.FilteredPosts.Count();
-        //    var pager = new Pagination(postCount, pg, pageSize);
-
-        //    int postSkip = (pg - 1) * pageSize;
-
-        //    posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
-        //    this.ViewBag.Pager = pager;
-        //    return View(posts);
-        //   // return View(posts);
-        //}
         public IActionResult MyPosts(string id, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
@@ -123,6 +114,7 @@ namespace BrokerApp.Controllers
             var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
                 .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => minPrice == null || p.Price >= minPrice).Where(p => maxPrice == null || p.Price <= maxPrice).Where(p => p.IsArchived == false).Include(p => p.Images).ToList();
             posts.FilteredPosts = result;
+            posts.Image = result.FirstOrDefault().Images;
             posts.Category = category;
             posts.City = city;
             
@@ -144,15 +136,13 @@ namespace BrokerApp.Controllers
 
         public IActionResult DeleteAgent(int? id)
         {
-            var agent = _Dbcontext.Agents.Find(id);
-            _Dbcontext.Agents.Remove(agent);
             _Dbcontext.SaveChanges();
             return View();
         }
         [HttpGet]
         public IActionResult Detail(int? id)
         {
-            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).ThenInclude(x=>x.Category).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
+            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).ThenInclude(x => x.Category).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
             //var postCategories = this._Dbcontext.PostCategories.Where(p => p.PostId == id).Include(y => y.Category).Include(y => y.Post).ToList();
             //var post1 = postCategories.
 
@@ -167,6 +157,7 @@ namespace BrokerApp.Controllers
                 return View("Error");
             }
         }
+        [Authorize]
         [HttpGet]
         public IActionResult PostPageCreate()
         {
@@ -175,11 +166,10 @@ namespace BrokerApp.Controllers
         }
 
 
-
-
         [HttpPost]
         public IActionResult PostPageCreate(PostViewModel postView)
         {
+
             try
             {
 
@@ -189,23 +179,23 @@ namespace BrokerApp.Controllers
                     _postService.CreatePost(postView, HttpContext);  
 
                 return Json(new { status = 200, message = "Post created successfully" });
-                }
-
+            }
+            catch (Exception ex)
+            {
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 if (string.IsNullOrEmpty(postView.Title))
                     data.Add("TitleError", "Title cant be empty");
 
                 if (string.IsNullOrEmpty(postView.Description))
                     data.Add("DescriptionError", "Description cant be empty");
-                if (postView.CategoryId == null)
-                    data.Add("CategoryError", "Choose at least one category");
+
+                if (postView.categories == null || postView.categories.Count < 1)
+                    data.Add("CategoryError", "Category is not selected!");
+
+                if (postView.Image == null || postView.Image.Count < 1)
+                    data.Add("ImageError", "Please Add a photo");
 
                 return Json(new { status = 400, message = "Something went wrong", data });
-            }
-            catch (Exception ex)
-            {
-                
-                return Json(new { status = 400, message = ex.Message});
             }
 
         }
@@ -222,7 +212,7 @@ namespace BrokerApp.Controllers
                     var saveMapper = _mapper.Map<PostDetailViewModel>(post);
                     return View(saveMapper);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return View("Error");
                 }
@@ -316,7 +306,7 @@ namespace BrokerApp.Controllers
             this._Dbcontext.AdsPaymentcs.Add(saveMapper);
             this._Dbcontext.SaveChanges();
 
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
