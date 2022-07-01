@@ -2,6 +2,7 @@ using AutoMapper;
 using Broker.ApplicationDB;
 using Broker.Data;
 using Broker.Models;
+using Broker.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,7 +37,8 @@ namespace Broker
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPostService, PostService>();
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
             //add cache

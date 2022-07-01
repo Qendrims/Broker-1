@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Broker.Models
+@{
     ViewData["Title"] = "PostPageCreate";
 }
 @model PostViewModel;
@@ -22,64 +23,50 @@
     #lat, #lon {
         text-align: right
     }
-
     .hidden {
         display: none;
     }
-
     .address {
         cursor: pointer;
     }
-
         .address:not(:last-child) {
             border-bottom: 1px solid black
         }
-
         .address:hover {
             color: #AA0000;
             text-decoration: underline
         }
-
     #map {
         height: 400px;
         min-width: 70%;
         margin-left: 20px;
     }
-
     #addr {
         width: 80% !important;
     }
-
         #addr:focus {
             outline: none !important;
         }
-
     .btn {
         margin: 5px !important;
     }
-
     .hidden {
         display: none;
     }
-
     input {
         margin-bottom: 5px;
     }
-
     .wrapper {
         margin: 10px;
-
         width: 100%;
      /*   display: flex;
         justify-content: center;
         align-items: center;*/
     }
-
     .post-preview {
         width: 45%;
         height: 90vh;
     }
-
     .div-text {
         display: flex;
         justify-content: center;
@@ -88,33 +75,26 @@
         width: 90%;
         border-radius: 5px;
     }
-
     .flex {
         display: flex;
     }
-
     .btn-primary {
         margin: 20px 40px;
     }
-
     #inner-posts {
         border: 1px solid black;
     }
-
         #inner-posts h1 {
             font-size: 20px;
             padding: 2% 2%;
         }
-
         #inner-posts p {
             font-size: 15px;
             padding: 2% 2%;
         }
-
     .hidden {
         display: none;
     }
-
     #results {
         background-color: #fff;
         width: 80%;
@@ -122,11 +102,9 @@
         border-radius: 5px;
         padding-left: 5px;
     }
-
     .custom-file {
         height: auto !important;
     }
-
     #uploadedImages {
         width: 90%;
         position: relative;
@@ -135,16 +113,14 @@
         grid-template-columns: 1fr 1fr 1fr;
         gap: 15px;
     }
-
     figure {
         height: 100px;
+        position: relative;
     }
-
     img {
         width: 100%;
         height: 100px;
     }
-
     .error {
         color: red;
     }
@@ -157,12 +133,17 @@
         width: 100%;
     }
     .form-location{
-
         width: 45%;
-
     }
     .form-attr{
         width: 45%;
+    }
+    .remove-btn{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 0 5px;
+        color: #dc3545;
     }
 </style>
 }
@@ -315,31 +296,8 @@
                 </div>
 
                 <br />
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
-                    Send Invitation
-                </button>
 
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Agents</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Send invite</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <input type="submit" class="btn btn-primary" value="Submit" />
+                <input type="submit" class="btn btn-primary" value="Create Post" />
                 </div>
 
             </form>
@@ -424,13 +382,14 @@
                             [e.target.name]: e.target.value
                         }
                     }
-
-
         let fileInput = document.getElementById('inputGroupFile01');
         let imgContainer = document.getElementById('uploadedImages');
         let numOfFiles = document.getElementById('filesNumber');
         imgContainer.innerHTML = "";
         let allFilesList = [];
+        function SetNumberFilesUploaded(textElement,number){
+            textElement.textContent = `${number} Files Selected`;
+        }
           function preview(){
               let fileList = [];
                for(i of fileInput.files){
@@ -440,18 +399,60 @@
                  fileList.push(i);
                      }
                 }
-              numOfFiles.textContent = `${allFilesList.length} Files Selected`;
-               for(i of fileList){
-                    let reader = new FileReader();
+                SetNumberFilesUploaded(numOfFiles,allFilesList.length)
+              //numOfFiles.textContent = `${allFilesList.length} Files Selected`;
+            
+              for(let i =0;i<fileList.length;i++){
+                  let reader = new FileReader();
                    let figure = document.createElement("figure");
                      reader.onload=()=>{
                      let img = document.createElement("img");
+                     let btn = document.createElement("button");
+                     btn.innerHTML = 'x';         
+                     btn.setAttribute("class","remove-btn");
+                     btn.setAttribute("id","remove-btn");
+                     btn.setAttribute("type","button");
                       img.setAttribute("src",reader.result);
+                      img.setAttribute("id",i);
                      figure.appendChild(img);
-                       }
+                     figure.appendChild(btn);
+                     
+                     btn.addEventListener('click',e=>{
+                        let img = e.target.previousElementSibling.getAttribute('id');
+                        document.querySelectorAll('img').forEach(image => {
+                            if(image.id > img){
+                                image.id--;
+                            }
+                        })
+                       fileList = fileList.filter((file, index) => index != img);
+                       allFilesList = fileList;
+                      SetNumberFilesUploaded(numOfFiles,allFilesList.length)
+                       e.target.parentElement.remove();
+                   })
+                      }
                     imgContainer.appendChild(figure);
-                 reader.readAsDataURL(i);
-                    }
+                 reader.readAsDataURL(fileList[i]);
+                    
+              }
+               //  let btnRemovePhoto = document.querySelectorAll('.remove-btn');
+               //  console.log(btnRemovePhoto)
+               //btnRemovePhoto?.forEach(btn => {
+               //    btn.addEventListener('click',e=>{
+               //        console.log(e.target.parentElement)
+               //    })
+               //})
+               //for(i of fileList){
+               //     let reader = new FileReader();
+               //    let figure = document.createElement("figure");
+               //      reader.onload=()=>{
+               //      let img = document.createElement("img");
+               //       img.setAttribute("src",reader.result);
+               //      figure.appendChild(img);
+               //        }
+               //     imgContainer.appendChild(figure);
+               //  reader.readAsDataURL(i);
+               //     }
                }
+           
 </script>
 }

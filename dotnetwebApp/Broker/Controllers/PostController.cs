@@ -3,6 +3,7 @@ using AutoMapper;
 using Broker.ApplicationDB;
 using Broker.FileHelper;
 using Broker.Models;
+using Broker.Services;
 using Broker.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -23,12 +24,14 @@ namespace BrokerApp.Controllers
         private readonly ApplicationDbContext _Dbcontext;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private IMapper _mapper;
+        private readonly IPostService _postService;
 
-        public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper)
+        public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, IPostService postService)
         {
             this._Dbcontext = _context;
             this._webHostEnvironment = _webHostEnvironment;
             this._mapper = mapper;
+            this._postService = postService;
         }
 
         public IActionResult Archive(int id)
@@ -149,9 +152,7 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult PostPageCreate()
         {
-            CreatePostViewModel createPostView = new CreatePostViewModel();
-            createPostView.categories = this._Dbcontext.Categories.ToList();
-            createPostView.users = this._Dbcontext.Users.ToList();
+            PostViewModel createPostView = _postService.GetCreatePostModel();
             return View(createPostView);
         }
 
@@ -164,37 +165,31 @@ namespace BrokerApp.Controllers
             try
             {
 
-                postView.PostUserId = "2";
-                var saveMapper = _mapper.Map<Post>(postView);
-
-                this._Dbcontext.Posts.Add(saveMapper);
-                foreach (var imageFile in postView.Image)
+                if (ModelState.IsValid)
                 {
-                    string fullFileName = MethodHelper.FileToBeSaved(postView.Title, imageFile).Result;
 
-                    PostImage image = new PostImage();
-                    image.ImageName = fullFileName;
-                    image.Post = saveMapper;
-                    image.Type = "jpg";
-                    this._Dbcontext.PostImages.Add(image);
+                    _postService.CreatePost(postView, HttpContext);
+
+                    return Json(new { status = 200, message = "Post created successfully" });
                 }
 
-                foreach (var catId in postView.CategoryId)
-                {
-                    PostCategory postCategory = new PostCategory();
-                    postCategory.CategoryId = catId;
-                    postCategory.Post = saveMapper;
-                }
-                
+                Dictionary<string, string> data = new Dictionary<string, string>();
+                if (string.IsNullOrEmpty(postView.Title))
+                    data.Add("TitleError", "Title cant be empty");
 
-                _Dbcontext.SaveChanges();
+                if (string.IsNullOrEmpty(postView.Description))
+                    data.Add("DescriptionError", "Description cant be empty");
+                if (postView.CategoryId == null)
+                    data.Add("CategoryError", "Choose at least one category");
 
-                return RedirectToAction("Index", "Home");
+                return Json(new { status = 400, message = "Something went wrong", data });
             }
             catch (Exception ex)
             {
-                return View("Error", ex);
+
+                return Json(new { status = 400, message = ex.Message });
             }
+
         }
         [HttpGet]
         public IActionResult Edit(int? id)
