@@ -173,6 +173,9 @@
         padding: 0 5px;
         color: #dc3545;
     }
+    .hide{
+        display:none !important;
+    }
 </style>
 }
 
@@ -226,15 +229,71 @@
                 <label>Choose Categories</label>
                 <br />
                 <select id="select-option" name="CategoryId" >
-                    <option value="">Select category</option>
-                @foreach (var cat in @Model.categories)
+                    
+                    <option selected value="@Model.categories.Where(c=>c.DefaultActive).FirstOrDefault().CategoryId">@Model.categories.Where(c=>c.DefaultActive).FirstOrDefault().CategoryName</option>
+                @foreach (var cat in @Model.categories.Where(c=>!c.DefaultActive).ToList())
                 {
                     <option value="@cat.CategoryId" >@cat.CategoryName</option>
 
                 }
                     </select>
-                <div id="show-specific-atributes">
 
+                <div id="show-specific-atributes" class="category-inputs">
+
+                    <div class="form-group show">
+                    <label for="post.Rooms">Rooms</label>
+                    <input type="number"
+                           name="rooms"
+                           class="form-control together"
+                           id="exampleInputEmail1"
+                           aria-describedby="emailHelp"
+                           placeholder="Rooms" />
+
+                    <p class="error" id="RoomsError"></p>
+                </div>
+                <div class="form-group show">
+                    <label for="post.BathRooms">Bathrooms</label>
+                    <input type="number"
+                           name="bathRooms"
+                           class="form-control together"
+                           id="exampleInputEmail1"
+                           aria-describedby="emailHelp"
+                           placeholder="Bathrooms" />
+
+                    <p class="error" id="BathRoomError"></p>
+                </div>
+                <div class="form-group show">
+                    <label for="post.Size">Size</label>
+                    <input type="number"
+                           name="size"
+                           class="form-control together"
+                           id="exampleInputEmail1"
+                           aria-describedby="emailHelp"
+                           placeholder="Enter title" />
+
+                    <p class="error" id="SizeError"></p>
+                </div>
+                <div class="form-group show" id="houseFloor">
+                    <label for="post.Floors">Floors</label>
+                    <input type="number"
+                           name="floors"
+                           class="form-control together"
+                           
+                           aria-describedby="emailHelp"
+                           placeholder="Floors" />
+
+                    <p class="error" id="FloorsError"></p>
+                </div>
+                <div class="form-group hide" id="apartmentFloor">
+                    <label for="post.ApartmentFlor">Floor</label>
+                    <input type="number"
+                           name="apartmentFlor"
+                           class="form-control together"
+                           
+                           aria-describedby="emailHelp"
+                           placeholder="kati" />
+
+                    <p class="error" id="FloorsError"></p>
                 </div>
                 <p class="error" id="CategoryError"></p>
                 <br />
@@ -332,10 +391,7 @@
                 </div>
 
                 <br />
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
-                    Send Invitation
-                </button>
+         
 
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -347,15 +403,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                <input type="text" class="form-control" id="searchAgents" />
-                                @*@foreach (var ag in @Model.agents)
-                                {
-                                    <div>
-                                        <input type="checkbox" name="agentsInvited" class="agentList" value="@ag.Id" /><span>@ag.Name @ag.LastName - @ag.City</span>
-                                    </div>
-                                }*@
-                            </div>
+                            
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="button" class="btn btn-primary">Send invite</button>
@@ -521,11 +569,15 @@
 
               function showAttribute(){
                   console.log('select')
-                  let print = document.getElementById("show-specific-atributes");
+                  
                   let selectValue = document.getElementById("select-option").value;
-                  if (selectValue == "1") {
-                      print.innerHTML = `<p>Hello ar</p>`;
+                  if (selectValue == 2) {
+                      document.getElementById('houseFloor').classList.remove('show');
+                      document.getElementById('houseFloor').classList.add('hide');
+                      document.getElementById('apartmentFloor').classList.add('show');
+                      document.getElementById('apartmentFloor').classList.remove('hide');
                   }
+                  //hou
                //  let btnRemovePhoto = document.querySelectorAll('.remove-btn');
                //  console.log(btnRemovePhoto)
                //btnRemovePhoto?.forEach(btn => {
@@ -547,7 +599,7 @@
                //  reader.readAsDataURL(i);
                //     }
                }
-
+            
            
 </script>
 }

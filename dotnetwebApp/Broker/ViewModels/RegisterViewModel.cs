@@ -17,7 +17,7 @@ namespace Broker.ViewModels
         public string State { get; set; }
         public int ZipCode { get; set; }
         [Required]
-        public string Type { get; set; }
+
         public int? AgentId { get; set; }
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]

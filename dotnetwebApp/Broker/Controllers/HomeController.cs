@@ -120,13 +120,13 @@ namespace Broker.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RegisterAsAgent(RegisterViewModel model)
+        public async Task<IActionResult> RegisterAsAgent(LoginUserModel model)
         {
             var user = _userService.RegisterUser(model);
             if (user != null)
             {
 
-                var token = _userService.GetUserToken(user);
+                var token = _userService.GetUserToken(user.Result);
 
                 //Generate Email Confrimation Link
                 var confrimationLink = Url.Action("Index", "Home",
