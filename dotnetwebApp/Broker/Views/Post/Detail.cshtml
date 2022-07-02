@@ -1,4 +1,5 @@
-﻿
+﻿@using Broker.ViewModels
+
 @model PostDetailViewModel
 @{
     ViewData["Title"] = "Detail";
@@ -53,6 +54,10 @@
 						
 					</div>
 					<div class="details col-md-6">
+						<h4 class="room">@Model.Rooms</h4>
+						<h4 class="room">@Model.BathRooms</h4>
+						<h4 class="room">@Model.Size</h4>
+
 						<h3 class="product-title">@Model.Title</h3>
 						<h4>Location: @Model.Country,@Model.State,@Model.City,@Model.Street,@Model.ZipCode.</h4>
 						<p class="product-description">@Model.Description</p>

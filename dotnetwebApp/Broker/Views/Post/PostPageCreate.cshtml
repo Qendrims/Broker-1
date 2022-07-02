@@ -238,42 +238,42 @@
                 }
                     </select>
 
-                <div id="show-specific-atributes" class="category-inputs">
+                <div id="show-specific-atributes">
 
-                    <div class="form-group show">
+                    <div class="form-group category-inputs show" id="room">
                     <label for="post.Rooms">Rooms</label>
                     <input type="number"
                            name="rooms"
-                           class="form-control together"
+                           class="form-control  together"
                            id="exampleInputEmail1"
                            aria-describedby="emailHelp"
                            placeholder="Rooms" />
 
-                    <p class="error" id="RoomsError"></p>
-                </div>
-                <div class="form-group show">
+                        <p class="error" id="RoomsError"></p>
+                    </div>
+                <div class="form-group category-inputs show" id ="bathroom">
                     <label for="post.BathRooms">Bathrooms</label>
                     <input type="number"
                            name="bathRooms"
-                           class="form-control together"
+                           class="form-control  together"
                            id="exampleInputEmail1"
                            aria-describedby="emailHelp"
                            placeholder="Bathrooms" />
 
                     <p class="error" id="BathRoomError"></p>
                 </div>
-                <div class="form-group show">
+                <div class="form-group category-inputs show" id="size">
                     <label for="post.Size">Size</label>
                     <input type="number"
                            name="size"
-                           class="form-control together"
+                           class="form-control  together"
                            id="exampleInputEmail1"
                            aria-describedby="emailHelp"
                            placeholder="Enter title" />
 
                     <p class="error" id="SizeError"></p>
                 </div>
-                <div class="form-group show" id="houseFloor">
+                <div class="form-group category-inputs" id="houseFloor">
                     <label for="post.Floors">Floors</label>
                     <input type="number"
                            name="floors"
@@ -284,7 +284,7 @@
 
                     <p class="error" id="FloorsError"></p>
                 </div>
-                <div class="form-group hide" id="apartmentFloor">
+                <div class="form-group category-inputs hide" id="apartmentFloor">
                     <label for="post.ApartmentFlor">Floor</label>
                     <input type="number"
                            name="apartmentFlor"
@@ -297,7 +297,7 @@
                 </div>
                 <p class="error" id="CategoryError"></p>
                 <br />
-                <div class="input-group together">
+                <div class="input-group  together">
                     <input type="text"
                            class="form-control"
                            id="price"
@@ -365,10 +365,10 @@
                     </div>
                 </div>
               
-             <label>Neighbourhood</label>
-                <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly />
+                    <label>Neighbourhood</label>
+                    <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly />
 
-                </div>
+             </div>
 
                 <div class="form-location">
                     <div class="form-group">
@@ -571,33 +571,36 @@
                   console.log('select')
                   
                   let selectValue = document.getElementById("select-option").value;
-                  if (selectValue == 2) {
-                      document.getElementById('houseFloor').classList.remove('show');
-                      document.getElementById('houseFloor').classList.add('hide');
-                      document.getElementById('apartmentFloor').classList.add('show');
-                      document.getElementById('apartmentFloor').classList.remove('hide');
+                  let allelements = document.getElementsByClassName("category-inputs")
+                  for(let i= 0;i<allelements.length;i++){
+                      allelements[i].classList.add("hide");
                   }
-                  //hou
-               //  let btnRemovePhoto = document.querySelectorAll('.remove-btn');
-               //  console.log(btnRemovePhoto)
-               //btnRemovePhoto?.forEach(btn => {
-               //    btn.addEventListener('click',e=>{
-               //        console.log(e.target.parentElement)
-               //    })
-               //})
-
-
-               //for(i of fileList){
-               //     let reader = new FileReader();
-               //    let figure = document.createElement("figure");
-               //      reader.onload=()=>{
-               //      let img = document.createElement("img");
-               //       img.setAttribute("src",reader.result);
-               //      figure.appendChild(img);
-               //        }
-               //     imgContainer.appendChild(figure);
-               //  reader.readAsDataURL(i);
-               //     }
+                  if (selectValue == "3") {
+                      document.getElementById('apartmentFloor').classList.remove('hide');
+                      document.getElementById('size').classList.remove('hide');
+                      document.getElementById('room').classList.remove('hide');
+                      document.getElementById('bathroom').classList.remove('hide');
+                  }
+                  else if(selectValue=="4"){
+                      document.getElementById('apartmentFloor').classList.remove('hide');
+                      document.getElementById('size').classList.remove('hide');
+                      document.getElementById('room').classList.remove('hide');
+                      document.getElementById('bathroom').classList.remove('hide');
+                  }
+                  else if(selectValue=="5"){
+                      document.getElementById('size').classList.remove('hide');
+                  }
+                  else if(selectValue=="6"){
+                      document.getElementById('apartmentFloor').classList.remove('hide');
+                      document.getElementById('size').classList.remove('hide');
+                  }
+                  else{
+                      document.getElementById('size').classList.remove('hide');   
+                      document.getElementById('room').classList.remove('hide');
+                      document.getElementById('bathroom').classList.remove('hide');
+                      document.getElementById('houseFloor').classList.remove('hide');
+                  }
+                  
                }
             
            
