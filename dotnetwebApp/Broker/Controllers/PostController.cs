@@ -29,7 +29,7 @@ namespace BrokerApp.Controllers
         private readonly ApplicationDbContext _Dbcontext;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private IMapper _mapper;
-        private readonly IPostService _postService;
+        private readonly IPostService _postService; 
 
         public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
         {
@@ -168,8 +168,8 @@ namespace BrokerApp.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult PostPageCreate(PostViewModel postView)
+        [HttpPost] 
+        public JsonResult PostPageCreate(PostViewModel postView)
         {
 
             try

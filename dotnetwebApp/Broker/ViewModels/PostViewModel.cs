@@ -12,7 +12,7 @@ namespace Broker.Models
         public List<IFormFile> Image { get; set; }
 
         [Required]
-        public List<int> CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public List<string> AgentsInvited{ get; set; }
         public int Id { get; set; }
         public string Title { get; set; }
@@ -38,7 +38,7 @@ namespace Broker.Models
         public User User { get; set; }
 
 
-        public virtual ICollection<PostCategory> PostCategories { get; set; }
+        public virtual PostCategory PostCategories { get; set; }
 
 
         public List<Category> categories { get; set; }
