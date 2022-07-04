@@ -49,7 +49,7 @@ namespace BrokerApp.Controllers
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
 
-            posts.FilteredPosts = _db.Posts.Where(p => p.PostUserId == UseriId).ToList();
+            posts.FilteredPosts = _db.Posts.Where(p => p.PostUserId.Equals(UseriId)).ToList();
 
             const int postPerPage = 2;
             if (pg < 1)
@@ -131,8 +131,8 @@ namespace BrokerApp.Controllers
             postViewModel.Title = post1.Title;
             postViewModel.Description = post1.Description;
             postViewModel.Price = post1.Price;
-            postViewModel.OwnerId = (int)post1.PostUserId;
-            postViewModel.OwnerName = post1.User.Name + " " + post1.User.LastName;
+            postViewModel.OwnerId =Convert.ToInt32(post1.PostUserId);
+            
             postViewModel.Image = post1.Images.FirstOrDefault();
             postViewModel.PostId = post1.PostId;
 
@@ -145,7 +145,7 @@ namespace BrokerApp.Controllers
 
 
             createPostView.categories = this._db.Categories.ToList();
-            createPostView.agents = this._db.Agents.ToList();
+            
             return View(createPostView);
         }
         [HttpPost]
@@ -166,7 +166,7 @@ namespace BrokerApp.Controllers
             post.Latitude = postView.Latitude;
             post.Longitude = postView.Longitude;
             post.ZipCode = postView.ZipCode;
-            post.PostUserId = 2;
+            post.PostUserId = "2";
             if (ModelState.IsValid)
             {
                 this._db.Posts.Add(post);
@@ -204,19 +204,7 @@ namespace BrokerApp.Controllers
                     }
                 }
 
-                if (postView.AgentsInvited != null)
-                {
-
-                    foreach (var agent in postView.AgentsInvited)
-                    {
-                        Invite inv = new Invite();
-                        inv.Post = post;
-                        inv.SentBy = post.PostUserId;
-                        inv.SentTo = agent;
-
-                        this._db.Invites.Add(inv);
-                    }
-                }
+             
 
 
                 _db.SaveChanges();
@@ -237,25 +225,42 @@ namespace BrokerApp.Controllers
 
 
         }
-
-        public IActionResult Edit(int? id)
+        [HttpPost]
+        public IActionResult Edit(int? id,Post? model)
         {
-            if (id == 0)
-            {
-                return View(new Post());
-            }
-            else
-            {
-                var post = this._db.Posts.Where(x => x.PostId == id).Include(x => x.Images).FirstOrDefault();
-                PostDetailViewModel postViewModel = new PostDetailViewModel();
-                postViewModel.Title = post.Title;
-                postViewModel.Description = post.Description;
-                postViewModel.Price = post.Price;
-                postViewModel.Image = post.Images.FirstOrDefault();
-                return View(postViewModel);
+            
+                var post = _db.Posts.Find(id);
+            if (ModelState.IsValid) {
+                post.Title = model.Title;
+                post.Description = model.Description;
+                post.City = model.City;
+                post.Country = model.Country;
+                post.Price = model.Price;
+                _db.Update(post);
+                _db.SaveChanges();
+                    }
 
-            }
+            return View("ViewEdit",post);
         }
+
+        //public IActionResult Edit(int? id)
+        //{
+        //    if (id == 0)
+        //    {
+        //        return View(new Post());
+        //    }
+        //    else
+        //    {
+        //        var post = this._db.Posts.Where(x => x.PostId == id).Include(x => x.Images).FirstOrDefault();
+        //        PostDetailViewModel postViewModel = new PostDetailViewModel();
+        //        postViewModel.Title = post.Title;
+        //        postViewModel.Description = post.Description;
+        //        postViewModel.Price = post.Price;
+        //        postViewModel.Image = post.Images.FirstOrDefault();
+        //        return View(postViewModel);
+
+        //    }
+        //}
         public IActionResult EditView(int? id)
         {
             if (id == 0)
@@ -308,12 +313,6 @@ namespace BrokerApp.Controllers
             return RedirectToAction("PostPageCreate");
         }
 
-        public IActionResult DeleteAgent(int? id)
-        {
-            var agent = _db.Agents.Find(id);
-            _db.Agents.Remove(agent);
-            _db.SaveChanges();
-            return View();
-        }
+     
     }
 }

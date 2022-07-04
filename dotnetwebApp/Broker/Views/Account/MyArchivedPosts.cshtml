@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Broker.Models.Post>
+
+
+
+
+<link href="@Url.Content("~/css/UserPostPage.css")" rel="stylesheet" type="text/css" />
+
+<div class="container">
+    <div class="row">
+
+        @foreach (var post in @Model)
+        {
+
+
+            <div class="col-4">
+
+                <article class="post-card">
+                    <div class="post-card-img">
+                        <img src="~/Assets//Images/grid1.jpg" />
+                    </div>
+                    <div class="post-card-info">
+                        <div class="post-card-info-address">
+
+                            <h3>@post.Country</h3>
+                            <p>@post.City</p>
+                            <hr />
+                            <h3>@post.Title</h3>
+                            <p>@post.Description</p>
+                            <hr />
+                            <div class="post-price-btns">
+                                <h3>$@post.Price</h3>
+                                
+                                <a asp-controller="Account" asp-action="Unarchive" asp-route-id="@post.PostId" class="btn btn-outline-primary">Unarchive</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        }
+
+    </div>
+</div>

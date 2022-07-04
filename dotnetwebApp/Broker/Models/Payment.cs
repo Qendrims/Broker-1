@@ -12,7 +12,7 @@ namespace Broker.Models
         public User User { get; set; }
         public int? SentTo { get; set; }
         [ForeignKey("SentTo")]
-        public Agent Agent { get; set; }
+        
         public double Price { get; set; }
         public double Tip { get; set; }
         public bool PaymentFinished { get; set; }

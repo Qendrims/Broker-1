@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Broker.Models.Post>
+
+
+
+
+<link href="@Url.Content("~/css/UserPostPage.css")" rel="stylesheet" type="text/css" />
+
+<div class="container">
+    <div class="row">
+
+        @foreach (var post in @Model)
+        {
+
+
+            <div class="col-4">
+
+                <article class="post-card">
+                    <div class="post-card-img">
+                        <img src="~/Assets//Images/grid1.jpg" />
+                    </div>
+                    <div class="post-card-info">
+                        <div class="post-card-info-address">
+
+                            <h3>@post.Country</h3>
+                            <p>@post.City</p>
+                            <hr />
+                            <h3>@post.Title</h3>
+                            <p>@post.Description</p>
+                            <hr />
+                            <div class="post-price-btns">
+                                <h3>$@post.Price</h3>
+
+                            </div>
+                            <div class="btns">
+                                <a href="#" class="btn btn-outline-primary">View Details</a>
+                                <a asp-controller="Post" asp-action="Edit" asp-route-id="@post.PostId" class="btn btn-outline-primary">Edit</a>
+                                <a onclick="return confirm(' Are you sure you want to delete post?')" asp-controller="Account" asp-action="DeletePost" asp-route-id="@post.PostId" class="btn btn-outline-danger">Delete</a>
+
+                                <a asp-controller="Account" asp-action="ArchivePost" asp-route-id="@post.PostId" class="btn btn-outline-primary">Archive</a>
+                                <a asp-controller="Account" asp-action="SponsorePost" asp-route-id="@post.PostId" class="btn btn-outline-success">Sponsore</a>
+                            </div>
+                            </div>
+                    </div>
+                </article>
+            </div>
+        }
+
+    </div>
+</div>

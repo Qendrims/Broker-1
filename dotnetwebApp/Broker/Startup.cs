@@ -1,8 +1,11 @@
 using AutoMapper;
 using Broker.ApplicationDB;
+using Broker.Helpers;
+using Broker.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,15 +29,16 @@ namespace Broker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<ApplicationDbContext>(c => c.UseSqlServer(connectionString));
+            services.AddIdentity<User, IdentityRole>(
+            ).AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
            
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
              services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            });
-           
+            services.AddScoped<IUserClaimsPrincipalFactory<User>,AppUserClaimsPrincipalFactory>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,14 +58,14 @@ namespace Broker
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Post}/{action=postpagecreate}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

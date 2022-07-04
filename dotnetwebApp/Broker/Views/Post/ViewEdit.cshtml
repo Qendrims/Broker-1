@@ -1,0 +1,40 @@
+﻿@model Post
+@{ 
+    ViewBag.Title = "Details";
+}
+<div class="edit">
+    <form>
+        <fieldset>
+            <label for="fname">Title:</label><br>
+            @Html.EditorFor(model => model.Title)<br>
+            <label for="fname">Description:</label><br>
+            @Html.EditorFor(model => model.Description)<br>
+            <label for="fname">Qyteti:</label><br>
+            @Html.EditorFor(model => model.City)<br>
+            <label for="fname">Shteti:</label><br>
+            @Html.EditorFor(model => model.Country)<br>
+            <label for="fname">Cmimi:</label><br>
+            @Html.EditorFor(model => model.Price)<br>
+            <button type="submit" value="submit">Submit</button>
+        </fieldset>>
+    </form>
+</div>
+
+
+@section Styles{ 
+
+<style type="text/css">
+    fieldset{
+        //color:aqua;
+    border:1px solid black;
+    width:30%;
+    margin-left:40%;
+    margin-top:5%;
+    padding-left:10%;
+    padding-top:1%;
+    padding-bottom:1%;
+}
+    </style>
+
+
+}

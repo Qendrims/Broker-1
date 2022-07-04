@@ -26,18 +26,17 @@ namespace Broker.Models
         public string City { get; set; }
         public string State { get; set; }
         public int ZipCode { get; set; }
-        public int? PostUserId { get; set; }
+        public string? PostUserId { get; set; }
         [ForeignKey("PostUserId")]
         public User User { get; set; }
 
-        public int? TakenBy { get; set; }
+        public string? TakenBy { get; set; }
         [ForeignKey("TakenBy")]
-        public Agent Agent { get; set; }
 
         public virtual ICollection<PostCategory> PostCategories { get; set; }
 
 
         public List<Category> categories { get; set; }
-        public List<Agent> agents { get; set; }
+        
     }
 }

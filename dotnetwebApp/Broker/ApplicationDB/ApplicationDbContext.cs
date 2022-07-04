@@ -1,33 +1,31 @@
 ﻿using Broker.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Broker.ApplicationDB
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
+        private readonly DbContextOptions _options;
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> option) : base(option)
         {
-
+            _options=option;
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<SimpleUser> SimpleUsers { get; set; }
-        public DbSet<Agent> Agents { get; set; }
+        public DbSet<User> users { get; set; } 
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostCategory> PostCategories { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<PostImage> PostImages { get; set; }
-        public DbSet<Payment> Payments { get; set; }
-        public DbSet<Invite> Invites { get; set; }
-        public DbSet<FeedBack> FeedBacks { get; set; }
-
+        //public DbSet<Payment> Payments { get; set; }
         public DbSet<Tags> Tags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasDiscriminator<string>("type")
-           .HasValue<Agent>("Agent")
-           .HasValue<SimpleUser>("SimpleUser");
+            base.OnModelCreating(modelBuilder);
+
 
             modelBuilder.Entity<Tags>().Property(t => t.TagName)
            .HasMaxLength(100);
@@ -35,39 +33,19 @@ namespace Broker.ApplicationDB
             modelBuilder.Entity<Category>().Property(c => c.CategoryName)
            .HasMaxLength(100);
 
-            modelBuilder.Entity<User>().Property(u => u.Name)
+            modelBuilder.Entity<User>().Property(u => u.UserName)
             .HasMaxLength(200)
             .IsRequired();
 
-            modelBuilder.Entity<User>().Property(u => u.LastName)
-            .HasMaxLength(300)
-            .IsRequired();
+            
 
             modelBuilder.Entity<User>().Property(u => u.Email)
             .HasMaxLength(300)
             .IsRequired();
 
 
-            modelBuilder.Entity<User>().Property(u => u.Telephone)
-            .HasMaxLength(200)
-            .IsRequired();
-
-            modelBuilder.Entity<User>().Property(u => u.Street)
-            .IsRequired();
-
-
-            modelBuilder.Entity<User>().Property(u => u.City)
-            .HasMaxLength(200);
-
-            modelBuilder.Entity<User>().Property(u => u.State)
-            .HasMaxLength(200);
-
-            modelBuilder.Entity<Agent>().Property(a => a.AgentId)
-            .IsRequired();
-
-
-            modelBuilder.Entity<Agent>().Property(a => a.AccountNr)
-            .IsRequired();
+            
+           
 
             modelBuilder.Entity<Post>().Property(p => p.Title)
             .HasMaxLength(100)

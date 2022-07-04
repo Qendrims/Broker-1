@@ -241,7 +241,12 @@
 }
 
 .btn{
-    margin-bottom: 10px;
+    float:right;
+
+}
+.btn-group{
+    position:relative;
+    left:400px;
 }
 
 
