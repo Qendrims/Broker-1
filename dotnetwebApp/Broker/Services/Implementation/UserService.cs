@@ -51,14 +51,14 @@ namespace Broker.Services.Implementation
             return false;
         }
 
-        public User RegisterUser(LoginUserModel loginUser)
+        public async Task<User> RegisterUser(LoginUserModel loginUser)
         {
             User user;
             user = _mapper.Map<User>(loginUser);
 
-            var result = _userManager.CreateAsync(user, loginUser.Password);
+            var result = await _userManager.CreateAsync(user, loginUser.Password);
             //var result = _signInManager.PasswordSignInAsync(agent.Email, agent.PasswordHash, false, false);
-            if (result.IsCompleted)
+            if (result.Succeeded)
             {
                 //await _signInManager.SignInAsync(user, isPersistent: false);
 

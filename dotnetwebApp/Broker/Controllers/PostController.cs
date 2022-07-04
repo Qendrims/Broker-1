@@ -28,7 +28,6 @@ namespace BrokerApp.Controllers
         private readonly ApplicationDbContext _Dbcontext;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private IMapper _mapper;
-        private readonly UserManager<User> _userManager;
         private readonly IPostService _postService;
 
         public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
@@ -116,12 +115,13 @@ namespace BrokerApp.Controllers
             var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
                 .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => minPrice == null || p.Price >= minPrice).Where(p => maxPrice == null || p.Price <= maxPrice).Where(p => p.IsArchived == false).Include(p => p.Images).ToList();
             posts.FilteredPosts = result;
+            if(result.Count > 0)
             posts.Image = result.FirstOrDefault().Images;
             posts.Category = category;
             posts.City = city;
             
             const int postPerPage = 20;
-            if (pg < 1)
+            if (pg < 1) 
                 pg = 1;
 
             int postCount = posts.FilteredPosts.Count();
@@ -171,19 +171,18 @@ namespace BrokerApp.Controllers
         [HttpPost]
         public IActionResult PostPageCreate(PostViewModel postView)
         {
-
             try
             {
 
                 if (ModelState.IsValid)
                 {
 
-                    _postService.CreatePost(postView, HttpContext);  
+                    _postService.CreatePost(postView, HttpContext);
 
-                return Json(new { status = 200, message = "Post created successfully" });
-            }
-            catch (Exception ex)
-            {
+                    return Json(new { status = 200, message = "Post created successfully" });
+                } else
+                {
+
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 if (string.IsNullOrEmpty(postView.Title))
                     data.Add("TitleError", "Title cant be empty");
@@ -191,19 +190,21 @@ namespace BrokerApp.Controllers
                 if (string.IsNullOrEmpty(postView.Description))
                     data.Add("DescriptionError", "Description cant be empty");
 
-                if (postView.categories == null || postView.categories.Count < 1)
-                    data.Add("CategoryError", "Category is not selected!");
 
-                if (postView.Image == null || postView.Image.Count < 1)
-                    data.Add("ImageError", "Please Add a photo");
+                    return Json(new { status = 400, message = "Something went wrong", data });
+                }
 
-                return Json(new { status = 400, message = "Something went wrong", data });
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { status = 400, message = ex.Message });
             }
 
         }
         [HttpGet]
         public IActionResult Edit(int? id)
-        {
+        { 
             try
             {
 

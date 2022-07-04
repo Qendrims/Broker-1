@@ -24,7 +24,6 @@ namespace Broker.Services
             PostViewModel createPostView = new PostViewModel();
 
             createPostView.categories = this._Dbcontext.Categories.ToList();
-            createPostView.agents = this._Dbcontext.Agents.ToList();
             return createPostView;
         }
 
@@ -36,12 +35,13 @@ namespace Broker.Services
 
             CreatePostImage(postView, saveMapper);
             CreatePostCategory(postView, saveMapper);
-            InviteAgents(postView, saveMapper);
             this._Dbcontext.SaveChanges();
         }
 
         private void CreatePostImage(PostViewModel postView,Post postMapper)
         {
+            if(postView.Image != null)
+            {
             foreach (var imageFile in postView.Image)
             {
                 string fullFileName = MethodHelper.FileToBeSaved(postView.Title, imageFile).Result;
@@ -52,36 +52,33 @@ namespace Broker.Services
                 image.Type = "jpg";
                 this._Dbcontext.PostImages.Add(image);
             }
+            }
         }
         
         private void CreatePostCategory(PostViewModel postView, Post postMapper)
         {
-            if (postView.CategoryId != null)
-            {
-                foreach (var catId in postView.CategoryId)
-                {
+           
                     PostCategory postCategory = new PostCategory();
-                    postCategory.CategoryId = catId;
+                    postCategory.CategoryId = postView.CategoryId;
                     postCategory.Post = postMapper;
                     this._Dbcontext.PostCategories.Add(postCategory);
-                }
-            }
+                
         }
 
-        private void InviteAgents(PostViewModel postView, Post postMapper)
-        {
-            if (postView.AgentsInvited != null)
-            {
-                foreach (var agent in postView.AgentsInvited)
-                {
-                    Invite inv = new Invite();
-                    inv.Post = postMapper;
-                    inv.SentBy = postMapper.PostUserId;
-                    inv.SentTo = agent.ToString();
+        //private void InviteAgents(PostViewModel postView, Post postMapper)
+        //{
+        //    if (postView.AgentsInvited != null)
+        //    {
+        //        foreach (var agent in postView.AgentsInvited)
+        //        {
+        //            Invite inv = new Invite();
+        //            inv.Post = postMapper;
+        //            inv.SentBy = postMapper.PostUserId;
+        //            inv.SentTo = agent.ToString();
 
-                    this._Dbcontext.Invites.Add(inv);
-                }
-            }
-        }
+        //            this._Dbcontext.Invites.Add(inv);
+        //        }
+        //    }
+        //}
     }
 }

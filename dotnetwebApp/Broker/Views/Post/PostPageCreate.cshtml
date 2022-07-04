@@ -182,13 +182,13 @@
         
             <h1>Create post</h1>
             <div style="display: flex; justify-content:center; align-items: center">
-            <form id="myForm" method="post" enctype="multipart/form-data" asp-controller="Post" asp-action="PostPageCreate">
+            <form id="myForm" method="post" enctype="multipart/form-data" >
                 <div class="form-attr">
 
                 <div class="form-group">
                     <label for="post.Title">Title</label>
                     <input type="text"
-                           name="title"
+                           name="Title"
                            class="form-control together"
                            id="exampleInputEmail1"
                            aria-describedby="emailHelp"
@@ -214,7 +214,7 @@
                 <br />
                 <div class="input-group">
                     <textarea class="form-control together"
-                              name="description"
+                              name="Description"
                               aria-label="With textarea"
                               id="description"
                               placeholder="description"></textarea>
@@ -230,9 +230,9 @@
                 @foreach (var cat in @Model.categories)
                 {
                     <option value="@cat.CategoryId" >@cat.CategoryName</option>
-
                 }
                     </select>
+                    <span asp-validation-for="CategoryId"></span>
                 <div id="show-specific-atributes">
 
                 </div>
@@ -409,19 +409,21 @@
                for(var file of allFilesList){
                    form.append("image",file);
                 }
-                var els=document.querySelectorAll('input, textarea');
+                var els=document.querySelectorAll('input, textarea,select');
                  for(var el of els){
                    if(el.type == "submit" || el.name == "Image" || el.id == "addr"){
                     continue;
                   }
-                  if(el.name == "CategoryId" || el.name == "agentsInvited"){
-                    if(el.checked)
-                     form.append(el.name,el.value);
-                     }
-                      else {
-                       form.append(el.name,el.value);
-                        }
-                }
+                  form.append(el.name,el.value);
+                 }
+                //  if(el.name == "CategoryId" || el.name == "agentsInvited"){
+                //    if(el.checked)
+                //     form.append(el.name,el.value);
+                //     }
+                     
+                 
+                  
+                
                 var req = new XMLHttpRequest();
                 req.open("POST", "/Post/PostPageCreate", true);
                 req.onload = function(oEvent)

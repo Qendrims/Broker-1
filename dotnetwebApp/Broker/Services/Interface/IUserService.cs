@@ -10,7 +10,7 @@ namespace Broker.Services.Interface
 
         Task<bool> IsLoggedIn(LoginUserModel loginUser);
 
-        User RegisterUser(LoginUserModel loginUser);
+        Task<User> RegisterUser(LoginUserModel loginUser);
 
         Task<string> GetUserToken(User user);
     }
