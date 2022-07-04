@@ -80,9 +80,8 @@
                             <h3>@post.Title</h3>
                             <p>@post.Description</p>
                             <hr />
-                            <div class="post-price-btns">
-                                <h3>$@post.Price</h3>
-                                <a href="/Post/Detail" class="btn btn-outline-primary">View Details</a>
+                            <div class="post-creator">
+                                <a href="/Post/ContactUser/@post.PostUserId" class="btn btn-outline-primary">Contact post owner</a>
                             </div>
                         </div>
                     </div>

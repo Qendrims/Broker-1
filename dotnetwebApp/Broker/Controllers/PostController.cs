@@ -51,6 +51,13 @@ namespace BrokerApp.Controllers
             return RedirectToAction("PostPage");
         }
 
+        public IActionResult ContactUser(string id)
+        {
+            UserViewModel user = new UserViewModel();
+            user.Users = _Dbcontext.Users.Where(u => u.Id == id).FirstOrDefault();
+           return View(user);
+        }
+
         public IActionResult MyPosts(string id, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
