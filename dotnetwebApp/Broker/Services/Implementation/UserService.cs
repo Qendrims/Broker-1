@@ -38,27 +38,27 @@ namespace Broker.Services.Implementation
             throw new System.NotImplementedException();
         }
 
-        public bool IsLoggedIn(LoginUserModel loginUser)
+        public async Task<bool> IsLoggedIn(LoginUserModel loginUser)
         {
             if (loginUser != null)
             {
-                var result = _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, false);
-                return true;
+                var result = await _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, false);
+
+                if (result.Succeeded) return true;
+
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
-        public User RegisterUser(LoginUserModel loginUser)
+        public async Task<User> RegisterUser(LoginUserModel loginUser)
         {
             User user;
             user = _mapper.Map<User>(loginUser);
 
-            var result = _userManager.CreateAsync(user, loginUser.Password);
+            var result = await _userManager.CreateAsync(user, loginUser.Password);
             //var result = _signInManager.PasswordSignInAsync(agent.Email, agent.PasswordHash, false, false);
-            if (result.IsCompleted)
+            if (result.Succeeded)
             {
                 //await _signInManager.SignInAsync(user, isPersistent: false);
 

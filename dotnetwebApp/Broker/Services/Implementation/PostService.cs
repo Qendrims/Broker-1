@@ -2,11 +2,12 @@
 using Broker.ApplicationDB;
 using Broker.FileHelper;
 using Broker.Models;
+using Broker.Services.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 
-namespace Broker.Services
+namespace Broker.Services.Implementation
 {
     public class PostService : IPostService
     {
@@ -24,7 +25,6 @@ namespace Broker.Services
             PostViewModel createPostView = new PostViewModel();
 
             createPostView.categories = this._Dbcontext.Categories.ToList();
-    
             return createPostView;
         }
 
@@ -36,11 +36,10 @@ namespace Broker.Services
 
             CreatePostImage(postView, saveMapper);
             CreatePostCategory(postView, saveMapper);
-           // InviteAgents(postView, saveMapper);
             this._Dbcontext.SaveChanges();
         }
 
-        private void CreatePostImage(PostViewModel postView,Post postMapper)
+        private void CreatePostImage(PostViewModel postView, Post postMapper)
         {
             foreach (var imageFile in postView.Image)
             {
@@ -53,37 +52,18 @@ namespace Broker.Services
                 this._Dbcontext.PostImages.Add(image);
             }
         }
-        
+
         private void CreatePostCategory(PostViewModel postView, Post postMapper)
         {
-            if (postView.CategoryId != null)
+            if (postView.CategoryId != 0)
             {
-                foreach (var catId in postView.CategoryId)
-                {
-                    PostCategory postCategory = new PostCategory();
-                    postCategory.CategoryId = catId;
-                    postCategory.Post = postMapper;
-                    this._Dbcontext.PostCategories.Add(postCategory);
-                }
+
+                PostCategory postCategory = new PostCategory();
+                postCategory.CategoryId = postView.CategoryId;
+                postCategory.Post = postMapper;
+                this._Dbcontext.PostCategories.Add(postCategory);
+
             }
         }
-
-    
-
-        //private void InviteAgents(PostViewModel postView, Post postMapper)
-        //{
-        //    if (postView.AgentsInvited != null)
-        //    {
-        //        foreach (var agent in postView.AgentsInvited)
-        //        {
-        //            Invite inv = new Invite();
-        //            inv.Post = postMapper;
-        //            inv.SentBy = postMapper.PostUserId;
-        //            inv.SentTo = agent.ToString();
-
-        //            this._Dbcontext.Invites.Add(inv);
-        //        }
-        //    }
-        //}
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Broker.Models;
 using Microsoft.AspNetCore.Http;
 
-namespace Broker.Services
+namespace Broker.Services.Interface
 {
     public interface IPostService
     {

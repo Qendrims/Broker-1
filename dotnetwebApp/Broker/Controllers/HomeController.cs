@@ -84,12 +84,20 @@ namespace Broker.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginUserModel loginUser)
+        public async Task<IActionResult> Login(LoginUserModel loginUser, string returnUrl)
         {
-            bool result = _userService.IsLoggedIn(loginUser);
+
+            bool result = _userService.IsLoggedIn(loginUser).Result;
             if (result)
             {
-                return RedirectToAction("Index", "Home");
+                if (returnUrl != null)
+                {
+                    return LocalRedirect(returnUrl);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             else
             {
@@ -110,15 +118,15 @@ namespace Broker.Controllers
             return View();
 
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> RegisterAsAgent(RegisterViewModel model)
-        //{
-        //    var user = _userService.RegisterUser(model);
-        //    if (user != null)
-        //    {
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterAsAgent(LoginUserModel model)
+        {
+            var user = _userService.RegisterUser(model);
+            if (user != null)
+            {
 
-        //        var token = _userService.GetUserToken(user);
+                var token = _userService.GetUserToken(user.Result);
 
         //        //Generate Email Confrimation Link
         //        var confrimationLink = Url.Action("Index", "Home",

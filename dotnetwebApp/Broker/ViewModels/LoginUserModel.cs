@@ -7,6 +7,8 @@ namespace Broker.ViewModels
         public string Email { get; set; }
 
         public string Password { get; set; }
+        public string ConfirmationPassword { get; set; }
+        
 
         public string Name { get; set; }
 
@@ -20,10 +22,7 @@ namespace Broker.ViewModels
 
         public string City { get; set; }
 
-        public string Type { get; set; }
-
         public string State { get; set; }
         public int ZipCode { get; set; }
-        public int AgentId { get; set; }
     }
 }

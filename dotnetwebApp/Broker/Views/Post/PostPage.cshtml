@@ -56,12 +56,7 @@
 
    <div class="container" style="padding: 0">
         <div class="row">
-            @if(@Model.FilteredPosts == null)
-            {
-                <h3>No posts to show</h3>
-            } else
-            {
-                
+ 
             @foreach(var post in @Model.FilteredPosts)
             {
                 
@@ -69,7 +64,7 @@
 
                 <article class="post-card">
                     <div class="post-card-img">
-                       <img src="~/UploadFiles/@Model.Image.FirstOrDefault().ImageName" />
+                       <img src="~/UploadFiles/@post.Images.FirstOrDefault().ImageName"/>
                     </div>
                     <div class="post-card-info">
                         <div class="post-card-info-address">
@@ -80,15 +75,16 @@
                             <h3>@post.Title</h3>
                             <p>@post.Description</p>
                             <hr />
-                            <div class="post-creator">
-                                <a href="/Post/ContactUser/@post.PostUserId" class="btn btn-outline-primary">Contact post owner</a>
+                            <div class="post-price-btns">
+                                <h3>$@post.Price</h3>
+                                <a href="/Post/Detail/@post.PostId" class="btn btn-outline-primary">View Details</a>
                             </div>
                         </div>
                     </div>
                 </article>
             </div>
             }
-           }
+           
              </div>
               </div>
 

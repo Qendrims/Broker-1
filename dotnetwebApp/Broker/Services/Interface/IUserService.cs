@@ -8,9 +8,9 @@ namespace Broker.Services.Interface
     {
         public string GetUserId();
 
-        bool IsLoggedIn(LoginUserModel loginUser);
+        Task<bool> IsLoggedIn(LoginUserModel loginUser);
 
-        User RegisterUser(LoginUserModel loginUser);
+        Task<User> RegisterUser(LoginUserModel loginUser);
 
         Task<string> GetUserToken(User user);
         object RegisterUser(RegisterViewModel model);

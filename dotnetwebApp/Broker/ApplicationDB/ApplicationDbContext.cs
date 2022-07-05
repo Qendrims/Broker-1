@@ -10,16 +10,12 @@ namespace Broker.ApplicationDB
         {
 
         }
-
-       
-        public DbSet<Agent> Agents { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostCategory> PostCategories { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<PostImage> PostImages { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Invite> Invites { get; set; }
-      
         public DbSet<AdsPayments> AdsPaymentcs { get; set; }
         public DbSet<Tags> Tags { get; set; }
 
@@ -27,10 +23,6 @@ namespace Broker.ApplicationDB
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-;
-            modelBuilder.Entity<User>().HasDiscriminator<string>("type")
-           .HasValue<Agent>("Agent");
-        
 
             modelBuilder.Entity<Tags>().Property(t => t.TagName)
            .HasMaxLength(100);
@@ -61,8 +53,6 @@ namespace Broker.ApplicationDB
 
             modelBuilder.Entity<User>().Property(u => u.State)
             .HasMaxLength(200);
-
-            
 
             modelBuilder.Entity<Post>().Property(p => p.Title)
             .HasMaxLength(100)
