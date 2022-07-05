@@ -80,25 +80,12 @@
 
 
 
-             <div class="form-outline mb-4">
-              <p>Register as</p>
-            <input type="radio"  name="Type" class="type" value="simpleUser">
-            <label class="labels" asp-for="Type">Simple User</label>
-            <input type="radio"  name="Type" class="type" value="agent">
-             <label class="labels" asp-for="Type">Agent</label>
-            <span asp-validation-for="Type" class="text-danger"></span> 
-            </div>
+          
 
             <div class="form-outline mb-4 col-6">
-            <label class="labels" asp-for="ZipCode"></label>
+            <label class="labels" asp-for="Telephone"></label>
             <input type="tel" id="telephone"  asp-for="Telephone" placeholder="PhoneNumber" class="form-control form-control-lg">
             <span asp-validation-for="Telephone" class="text-danger"></span> 
-            </div>
-
-            <div class="form-outline mb-4 hidden" id="agent-id">
-            <label class="labels" asp-for="AgentId"></label>
-            <input type="number" id="agentid"  asp-for="AgentId" placeholder="AgentId" class="form-control form-control-lg">
-            <span asp-validation-for="AgentId" class="text-danger"></span> 
             </div>
 
             <div class="row">
@@ -109,9 +96,9 @@
             <span asp-validation-for="Password" class="text-danger"></span> 
             </div>
 
-               <div class="form-outline mb-4 col-6">
+            <div class="form-outline mb-4 col-6">
             <label class="labels" asp-for="ConfirmationPassword"></label>                        
-            <input type="password" id="ConfirmationPassword"  asp-for="ConfirmationPassword" placeholder="Confirm password*" class="form-control form-control-lg">
+            <input type="password" id="ConfirmPassword"  asp-for="ConfirmationPassword" placeholder="Confirm password*" class="form-control form-control-lg">
             <span asp-validation-for="ConfirmationPassword" class="text-danger"></span> 
             </div>
 

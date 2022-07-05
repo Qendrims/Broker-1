@@ -2,11 +2,12 @@
 using Broker.ApplicationDB;
 using Broker.FileHelper;
 using Broker.Models;
+using Broker.Services.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 
-namespace Broker.Services
+namespace Broker.Services.Implementation
 {
     public class PostService : IPostService
     {
@@ -38,7 +39,7 @@ namespace Broker.Services
             this._Dbcontext.SaveChanges();
         }
 
-        private void CreatePostImage(PostViewModel postView,Post postMapper)
+        private void CreatePostImage(PostViewModel postView, Post postMapper)
         {
             if(postView.Image != null)
             {
@@ -54,31 +55,18 @@ namespace Broker.Services
             }
             }
         }
-        
+
         private void CreatePostCategory(PostViewModel postView, Post postMapper)
         {
-           
-                    PostCategory postCategory = new PostCategory();
-                    postCategory.CategoryId = postView.CategoryId;
-                    postCategory.Post = postMapper;
-                    this._Dbcontext.PostCategories.Add(postCategory);
-                
+            if (postView.CategoryId != 0)
+            {
+
+                PostCategory postCategory = new PostCategory();
+                postCategory.CategoryId = postView.CategoryId;
+                postCategory.Post = postMapper;
+                this._Dbcontext.PostCategories.Add(postCategory);
+
+            }
         }
-
-        //private void InviteAgents(PostViewModel postView, Post postMapper)
-        //{
-        //    if (postView.AgentsInvited != null)
-        //    {
-        //        foreach (var agent in postView.AgentsInvited)
-        //        {
-        //            Invite inv = new Invite();
-        //            inv.Post = postMapper;
-        //            inv.SentBy = postMapper.PostUserId;
-        //            inv.SentTo = agent.ToString();
-
-        //            this._Dbcontext.Invites.Add(inv);
-        //        }
-        //    }
-        //}
     }
 }

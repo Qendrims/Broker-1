@@ -14,166 +14,9 @@
 
 
 @section Styles
-{
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-
-
-
-<style type="text/css">
-    #lat, #lon {
-        text-align: right
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    .address {
-        cursor: pointer;
-    }
-
-        .address:not(:last-child) {
-            border-bottom: 1px solid black
-        }
-
-        .address:hover {
-            color: #AA0000;
-            text-decoration: underline
-        }
-
-    #map {
-        height: 400px;
-        min-width: 70%;
-        margin-left: 20px;
-    }
-
-    #addr {
-        width: 80% !important;
-    }
-
-        #addr:focus {
-            outline: none !important;
-        }
-
-    .btn {
-        margin: 5px !important;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    input {
-        margin-bottom: 5px;
-    }
-
-    .wrapper {
-        margin: 10px;
-
-        width: 100%;
-     /*   display: flex;
-        justify-content: center;
-        align-items: center;*/
-    }
-
-    .post-preview {
-        width: 45%;
-        height: 90vh;
-    }
-
-    .div-text {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #5885AF;
-        width: 90%;
-        border-radius: 5px;
-    }
-
-    .flex {
-        display: flex;
-    }
-
-    .btn-primary {
-        margin: 20px 40px;
-    }
-
-    #inner-posts {
-        border: 1px solid black;
-    }
-
-        #inner-posts h1 {
-            font-size: 20px;
-            padding: 2% 2%;
-        }
-
-        #inner-posts p {
-            font-size: 15px;
-            padding: 2% 2%;
-        }
-
-    .hidden {
-        display: none;
-    }
-
-    #results {
-        background-color: #fff;
-        width: 80%;
-        margin-top: 8px;
-        border-radius: 5px;
-        padding-left: 5px;
-    }
-
-    .custom-file {
-        height: auto !important;
-    }
-
-    #uploadedImages {
-        width: 90%;
-        position: relative;
-        margin: auto;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 15px;
-    }
-
-    figure {
-        height: 100px;
-        position: relative;
-    }
-
-    img {
-        width: 100%;
-        height: 100px;
-    }
-
-    .error {
-        color: red;
-    }
-    h1{
-        text-align: center;
-    }
-    form{
-        display: flex;
-        gap: 10px;
-        width: 100%;
-    }
-    .form-location{
-
-        width: 45%;
-
-    }
-    .form-attr{
-        width: 45%;
-    }
-    .remove-btn{
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        padding: 0 5px;
-        color: #dc3545;
-    }
-</style>
+    {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="~/css/postpagecreate.css" />
 }
 
 
@@ -194,20 +37,20 @@
                            aria-describedby="emailHelp"
                            placeholder="Enter title" />
 
-                    <p class="error" id="TitleError"></p>
-                </div>
+                            <p class="error" id="TitleError"></p>
+                        </div>
 
-                <div class="custom-file">
-                    <input type="file"
-                           name="Image"
-                           class="custom-file-input together"
-                           id="inputGroupFile01"
-                           onchange="preview()"
-                           multiple
-                           aria-describedby="inputGroupFileAddon01" />
-                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                    <p id="filesNumber">No files chosen</p>
-                    <div id="uploadedImages"></div>
+                        <div class="custom-file">
+                            <input type="file"
+                               name="Image"
+                               class="custom-file-input together"
+                               id="inputGroupFile01"
+                               onchange="preview()"
+                               multiple
+                               aria-describedby="inputGroupFileAddon01" />
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            <p id="filesNumber">No files chosen</p>
+                            <div id="uploadedImages"></div>
 
                     <p class="error" id="ImageError"></p>
                 </div>
@@ -221,156 +64,199 @@
                 </div>
                 <p class="error" id="DescriptionError"></p>
 
-                <br />
+                        <br />
 
-                <label>Choose Categories</label>
-                <br />
-                <select id="select-option" name="CategoryId" >
-                    <option value="">Select category</option>
-                @foreach (var cat in @Model.categories)
-                {
-                    <option value="@cat.CategoryId" >@cat.CategoryName</option>
-                }
+                        <label>Choose Categories</label>
+                        <br />
+                        <select id="select-option" name="CategoryId">
+
+                            <option selected value="@Model.categories.Where(c=>c.DefaultActive).FirstOrDefault().CategoryId">@Model.categories.Where(c=>c.DefaultActive).FirstOrDefault().CategoryName</option>
+                            @foreach (var cat in @Model.categories.Where(c => !c.DefaultActive).ToList())
+                        {
+                            <option value="@cat.CategoryId">@cat.CategoryName</option>
+
+                        }
                     </select>
-                    <span asp-validation-for="CategoryId"></span>
-                <div id="show-specific-atributes">
 
-                </div>
-                <p class="error" id="CategoryError"></p>
-                <br />
-                <div class="input-group together">
-                    <input type="text"
-                           class="form-control"
-                           id="price"
-                           name="Price"
-                           aria-label="Dollar amount (with dot and two decimal places)" />
-                    <div class="input-group-append flex">
-                        <span class="input-group-text">$</span>
-                    </div>
-                </div>
-                <br />
+                    <div id="show-specific-atributes">
 
+                        <div class="form-group category-inputs show" id="room">
+                            <label for="post.Rooms">Rooms</label>
+                            <input type="number"
+                                   name="rooms"
+                                   class="form-control  together"
+                                   id="exampleInputEmail1"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Rooms" />
 
-                 <div class="row">
-                    
-                    <div class="form-group col-6">
-                     <b>Latitude</b>
-                    <input type="text" name="Latitude" id="lat" size=12 class='form-control' value="" readonly>
-                    </div>
-                    
-                    <div class="form-group col-6">
-                        <b>Longitude</b>
-                    <input type="text" name="Longitude" id="lon" size=12 class='form-control' value="" readonly>
-                    </div>
-                </div>
-             
+                            <p class="error" id="RoomsError"></p>
+                        </div>
+                        <div class="form-group category-inputs show" id="bathroom">
+                            <label for="post.BathRooms">Bathrooms</label>
+                            <input type="number"
+                                   name="bathRooms"
+                                   class="form-control  together"
+                                   id="exampleInputEmail1"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Bathrooms" />
 
+                            <p class="error" id="BathRoomError"></p>
+                        </div>
+                        <div class="form-group category-inputs show" id="size">
+                            <label for="post.Size">Size</label>
+                            <input type="number"
+                                   name="size"
+                                   class="form-control  together"
+                                   id="exampleInputEmail1"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Enter title" />
 
-                <div class="row">
-                    <div class="form-group col-6">
-                        <label>City</label>
-                        <input type="text" name="City" id="city" class="form-control disabled" readonly />                        
-                        <p class="error" id="CityError"></p>
-                    </div>
-                    
-                    <div class="form-group col-6">
-                        <label>Country</label>
-                        <input type="text" name="Country" id="country" class="form-control disabled " readonly />
-                    </div>
-                </div>
+                            <p class="error" id="SizeError"></p>
+                        </div>
+                        <div class="form-group category-inputs" id="houseFloor">
+                            <label for="post.Floors">Floors</label>
+                            <input type="number"
+                                   name="floors"
+                                   class="form-control together"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Floors" />
 
-                <div class="row">
-                    <div class="form-group col-6">
+                            <p class="error" id="FloorsError"></p>
+                        </div>
+                        <div class="form-group category-inputs hide" id="apartmentFloor">
+                            <label for="post.ApartmentFlor">Floor</label>
+                            <input type="number"
+                                   name="apartmentFlor"
+                                   class="form-control together"
+                                   aria-describedby="emailHelp"
+                                   placeholder="kati" />
 
-                          <label>Zip Code</label>
-                <input type="number" name="ZipCode" id="zipcode" class="form-control disabled" readonly />
-                        
-                    </div>
-
-                     <div class="form-group col-6">
-                 <label>Road</label>
-                <input type="text" name="Street" id="road" class="form-control disabled" readonly />
-                    </div>
-                </div>
-
-                  <div class="row">
-                    <div class="form-group col-6">
-                   <label>State</label>
-                <input type="text" name="State" id="state" class="form-control disabled" readonly />
-                <p class="error" id="StateError"></p>
-                    </div>
-
-                     <div class="form-group col-6">
-                    <label>House Number</label>
-                <input type="number" name="HouseNumber" id="housenumber" class="form-control disabled" readonly />
-                    </div>
-                </div>
-              
-             <label>Neighbourhood</label>
-                <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly />
-
-                </div>
-
-                <div class="form-location">
-                    <div class="form-group">
-
-                <label>Search Address</label>
-                <div id="search">
-                    <input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
-                </div>
-                <div id="results"></div>
-                    <button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
-                    </div>
-
-
-
-
-                <div style="display: flex; flex-direction: column; width: 500px; height: 400px; overflow: hidden">
-                    <p style="margin-left: 20px">Please mark the address on map</p>
-                    <div id="map"></div>
-                    <h4 style="text-align: center" id="currAddress"></h4>
-                </div>
-
-                <br />
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
-                    Send Invitation
-                </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Agents</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <input type="text" class="form-control" id="searchAgents" />
-                                @*@foreach (var ag in @Model.agents)
-                                {
-                                    <div>
-                                        <input type="checkbox" name="agentsInvited" class="agentList" value="@ag.Id" /><span>@ag.Name @ag.LastName - @ag.City</span>
-                                    </div>
-                                }*@
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Send invite</button>
+                            <p class="error" id="FloorsError"></p>
+                        </div>
+                        <p class="error" id="CategoryError"></p>
+                        <br />
+                        <div class="input-group  together">
+                            <input type="text"
+                                   class="form-control"
+                                   id="price"
+                                   name="Price"
+                                   aria-label="Dollar amount (with dot and two decimal places)" />
+                            <div class="input-group-append flex">
+                                <span class="input-group-text">$</span>
                             </div>
                         </div>
+                        <br />
+
+
+                        <div class="row">
+
+                            <div class="form-group col-6">
+                                <b>Latitude</b>
+                                <input type="text" name="Latitude" id="lat" size=12 class='form-control' value="" readonly>
+                            </div>
+
+                            <div class="form-group col-6">
+                                <b>Longitude</b>
+                                <input type="text" name="Longitude" id="lon" size=12 class='form-control' value="" readonly>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label>City</label>
+                                <input type="text" name="City" id="city" class="form-control disabled" readonly />
+                                <p class="error" id="CityError"></p>
+                            </div>
+
+                            <div class="form-group col-6">
+                                <label>Country</label>
+                                <input type="text" name="Country" id="country" class="form-control disabled " readonly />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-6">
+
+                                <label>Zip Code</label>
+                                <input type="number" name="ZipCode" id="zipcode" class="form-control disabled" readonly />
+
+                            </div>
+
+                            <div class="form-group col-6">
+                                <label>Road</label>
+                                <input type="text" name="Street" id="road" class="form-control disabled" readonly />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label>State</label>
+                                <input type="text" name="State" id="state" class="form-control disabled" readonly />
+                                <p class="error" id="StateError"></p>
+                            </div>
+
+                            <div class="form-group col-6">
+                                <label>House Number</label>
+                                <input type="number" name="HouseNumber" id="housenumber" class="form-control disabled" readonly />
+                            </div>
+                        </div>
+
+                        <label>Neighbourhood</label>
+                        <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly />
+
                     </div>
-                </div>
 
-                <input type="submit" class="btn btn-primary" value="Submit" />
-                </div>
+                    <div class="form-location">
+                        <div class="form-group">
 
+                            <label>Search Address</label>
+                            <div id="search">
+                                <input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
+                            </div>
+                            <div id="results"></div>
+                            <button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
+                        </div>
+
+
+
+
+                        <div style="display: flex; flex-direction: column; width: 500px; height: 400px; overflow: hidden">
+                            <p style="margin-left: 20px">Please mark the address on map</p>
+                            <div id="map"></div>
+                            <h4 style="text-align: center" id="currAddress"></h4>
+                        </div>
+
+                        <br />
+
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Agents</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Send invite</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="submit" class="btn btn-primary" value="Submit" />
+                    </div>
+
+                </div>
             </form>
-                  </div>
-        </div>
- 
+    </div>
+
 </section>
 
 
@@ -379,176 +265,10 @@
 
 
 @section Scripts{
-<script src="~/js/CreatePostMap.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/CreatePostMap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
-<script>
-            $(document).ready(()=>{
-                toastr.options.closeDuration = 5000;
-                document.getElementById('searchAgents').addEventListener('keyup',searchAgents)
-                    document.querySelectorAll('input, textarea').forEach(inp => {
-                    inp.addEventListener('change',onChange)
-                })
-                document.querySelector('form').addEventListener('submit',handleSubmit)
-            })
-        function searchAgents(e){
-            var searchText = e.target.value;
-            var elements = document.querySelectorAll('.agentList');
-            elements.forEach(el => {
-                el.parentElement.classList.remove('hidden')
-                if(!el.nextElementSibling.innerHTML.match(searchText)){
-                    el.parentElement.classList.add('hidden')
-                }
-            })
-            }
-            const handleSubmit=(e)=>{
-               e.preventDefault()
-               var form = new FormData();
-               for(var file of allFilesList){
-                   form.append("image",file);
-                }
-                var els=document.querySelectorAll('input, textarea,select');
-                 for(var el of els){
-                   if(el.type == "submit" || el.name == "Image" || el.id == "addr"){
-                    continue;
-                  }
-                  form.append(el.name,el.value);
-                 }
-                //  if(el.name == "CategoryId" || el.name == "agentsInvited"){
-                //    if(el.checked)
-                //     form.append(el.name,el.value);
-                //     }
-                     
-                 
-                  
-                
-                var req = new XMLHttpRequest();
-                req.open("POST", "/Post/PostPageCreate", true);
-                req.onload = function(oEvent)
-                {
-                    let res=JSON.parse(req.response)
-                    console.log(res);
-                    if(res.status === 200){
-                          toastr.success('Post created successfully!')
-                    }
-                    else if(res.status == 400){
-                for (const [key, value] of Object.entries(res.data)) {
-      document.getElementById(`${key}`).innerHTML = value;
-    }
-                        toastr.error('Something went wrong!')
-                    }
-                };
-              req.send(form);
-                 return false;
-             }
-                    var data = {};
-                    function onChange(e){
-                        e.preventDefault();
-                        data = {
-                            ...data,
-                            [e.target.name]: e.target.value
-                        }
-                    }
-
-
-        let fileInput = document.getElementById('inputGroupFile01');
-        let imgContainer = document.getElementById('uploadedImages');
-        let numOfFiles = document.getElementById('filesNumber');
-        imgContainer.innerHTML = "";
-        let allFilesList = [];
-
-        function SetNumberFilesUploaded(textElement,number){
-            textElement.textContent = `${number} Files Selected`;
-        }
-
-          function preview(){
-              let fileList = [];
-
-
-               for(i of fileInput.files){
-                 let fileAlreadyUploaded = allFilesList.some(file => file.name == i.name);
-                 if(!fileAlreadyUploaded){
-                  allFilesList.push(i)
-                 fileList.push(i);
-                     }
-                }
-
-                SetNumberFilesUploaded(numOfFiles,allFilesList.length)
-              //numOfFiles.textContent = `${allFilesList.length} Files Selected`;
-            
-              for(let i =0;i<fileList.length;i++){
-                  let reader = new FileReader();
-                   let figure = document.createElement("figure");
-
-                     reader.onload=()=>{
-                     let img = document.createElement("img");
-                     let btn = document.createElement("button");
-                     btn.innerHTML = 'x';         
-                     btn.setAttribute("class","remove-btn");
-                     btn.setAttribute("id","remove-btn");
-                     btn.setAttribute("type","button");
-                      img.setAttribute("src",reader.result);
-                      img.setAttribute("id",i);
-                     figure.appendChild(img);
-                     figure.appendChild(btn);
-                     
-                     btn.addEventListener('click',e=>{
-                        let img = e.target.previousElementSibling.getAttribute('id');
-
-                        document.querySelectorAll('img').forEach(image => {
-                            if(image.id > img){
-                                image.id--;
-                            }
-                        })
-
-                       fileList = fileList.filter((file, index) => index != img);
-                       allFilesList = fileList;
-                      SetNumberFilesUploaded(numOfFiles,allFilesList.length)
-                       e.target.parentElement.remove();
-                   })
-
-                      }
-
-                    imgContainer.appendChild(figure);
-                 reader.readAsDataURL(fileList[i]);
-
-              }                  
-         }
-
-
-              let select = document.getElementById("select-option");
-              select.addEventListener('change', showAttribute);
-
-              function showAttribute(){
-                  console.log('select')
-                  let print = document.getElementById("show-specific-atributes");
-                  let selectValue = document.getElementById("select-option").value;
-                  if (selectValue == "1") {
-                      print.innerHTML = `<p>Hello ar</p>`;
-                  }
-               //  let btnRemovePhoto = document.querySelectorAll('.remove-btn');
-               //  console.log(btnRemovePhoto)
-               //btnRemovePhoto?.forEach(btn => {
-               //    btn.addEventListener('click',e=>{
-               //        console.log(e.target.parentElement)
-               //    })
-               //})
-
-
-               //for(i of fileList){
-               //     let reader = new FileReader();
-               //    let figure = document.createElement("figure");
-               //      reader.onload=()=>{
-               //      let img = document.createElement("img");
-               //       img.setAttribute("src",reader.result);
-               //      figure.appendChild(img);
-               //        }
-               //     imgContainer.appendChild(figure);
-               //  reader.readAsDataURL(i);
-               //     }
-               }
-           
-</script>
+    <script src="~/js/postpagecreate.js"></script>
 }

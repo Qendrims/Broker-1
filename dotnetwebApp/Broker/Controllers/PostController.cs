@@ -19,6 +19,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Broker.Services.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
+using Broker.Services.Interface;
 
 namespace BrokerApp.Controllers
 {
@@ -28,7 +29,7 @@ namespace BrokerApp.Controllers
         private readonly ApplicationDbContext _Dbcontext;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private IMapper _mapper;
-        private readonly IPostService _postService;
+        private readonly IPostService _postService; 
 
         public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
         {
@@ -142,13 +143,13 @@ namespace BrokerApp.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult Detail(int? id)
+        public IActionResult Detail(int id)
         {
+
             var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).ThenInclude(x => x.Category).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
+
             //var postCategories = this._Dbcontext.PostCategories.Where(p => p.PostId == id).Include(y => y.Category).Include(y => y.Post).ToList();
             //var post1 = postCategories.
-
-            PostDetailViewModel postViewModel = new PostDetailViewModel();
             try
             {
                 var saveMapper = _mapper.Map<PostDetailViewModel>(post1);
@@ -168,8 +169,8 @@ namespace BrokerApp.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult PostPageCreate(PostViewModel postView)
+        [HttpPost] 
+        public JsonResult PostPageCreate(PostViewModel postView)
         {
             try
             {

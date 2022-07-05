@@ -17,9 +17,14 @@ namespace Broker.ViewModels
         public string Street { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+        public int? Rooms { get; set; }
+        public int? BathRooms { get; set; }
+        public int? Size { get; set; }
+        public int? Floors { get; set; }
+        public int? ApartmentFlor { get; set; }
 
         public double Price { get; set; }
-        public int OwnerId { get; set; }
+        public string OwnerId { get; set; }
         public string OwnerName { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
