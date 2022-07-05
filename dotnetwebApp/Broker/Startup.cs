@@ -47,7 +47,7 @@ namespace Broker
             });
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IUserService, UserService>();
-            //services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IPostService, PostService>();
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             services.Configure<IdentityOptions>(options =>
             {

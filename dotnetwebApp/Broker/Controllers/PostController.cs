@@ -29,19 +29,21 @@ namespace BrokerApp.Controllers
         private readonly ApplicationDbContext _Dbcontext;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private IMapper _mapper;
-        private readonly IPostService _postService; 
+        private readonly IPostService _postService;
 
         public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
         {
             this._Dbcontext = _context;
             this._webHostEnvironment = _webHostEnvironment;
             this._mapper = mapper;
-
-        public IActionResult Archive(int id)
+            this._postService = postService;
+        }
+        public IActionResult Archive(int id) { 
             if (id == 0)
             {
                 return NotFound();
             }
+
             var post = _Dbcontext.Posts.Where(p => p.PostId == id).FirstOrDefault();
             post.IsArchived = true;
             _Dbcontext.Posts.Update(post);
@@ -166,7 +168,7 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult PostPageCreate()
         {
-            PostViewModel createPostView = _postService.GetCreatePostModel();
+           PostViewModel createPostView = _postService.GetCreatePostModel();
             return View(createPostView);
         }
 
@@ -184,23 +186,28 @@ namespace BrokerApp.Controllers
                     _postService.CreatePost(postView, HttpContext);
 
                     return Json(new { status = 200, message = "Post created successfully" });
-                } else
+                }
+                else
                 {
 
-                Dictionary<string, string> data = new Dictionary<string, string>();
-                if (string.IsNullOrEmpty(postView.Title))
-                    data.Add("TitleError", "Title cant be empty");
+                    Dictionary<string, string> data = new Dictionary<string, string>();
+                    if (string.IsNullOrEmpty(postView.Title))
+                        data.Add("TitleError", "Title cant be empty");
 
-                if (string.IsNullOrEmpty(postView.Description))
-                    data.Add("DescriptionError", "Description cant be empty");
+                    if (string.IsNullOrEmpty(postView.Description))
+                        data.Add("DescriptionError", "Description cant be empty");
 
-                if (postView.categories == null || postView.categories.Count < 1)
-                    data.Add("CategoryError", "Category is not selected!");
+                    if (postView.categories == null || postView.categories.Count < 1)
+                        data.Add("CategoryError", "Category is not selected!");
 
-                if (postView.Image == null || postView.Image.Count < 1)
-                    data.Add("ImageError", "Please Add a photo");
+                    if (postView.Image == null || postView.Image.Count < 1)
+                        data.Add("ImageError", "Please Add a photo");
 
-                return Json(new { status = 400, message = "Something went wrong", data });
+                    return Json(new { status = 400, message = "Something went wrong", data });
+                }
+            }catch (Exception ex)
+            {
+                return Json(new { status = 500, message = ex.Message });
             }
 
         }

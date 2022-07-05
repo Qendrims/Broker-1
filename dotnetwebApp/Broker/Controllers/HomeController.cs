@@ -128,19 +128,19 @@ namespace Broker.Controllers
 
                 var token = _userService.GetUserToken(user.Result);
 
-        //        //Generate Email Confrimation Link
-        //        var confrimationLink = Url.Action("Index", "Home",
-        //            new { token = token }, Request.Scheme);
-        //        await _emailSender.SendEmailAsync(model.Email, "Confirm email", "Confirm email by pressing this link: <a href=\"" + confrimationLink + "\">link</a>");
-        //        //Log confirmation lint to a file
-        //        _logger.Log(LogLevel.Warning, confrimationLink);
-        //        //await _userManager.AddToRoleAsync(user, "Visitor");
-        //        return RedirectToAction("Index", "Home");
+                //Generate Email Confrimation Link
+                var confrimationLink = Url.Action("Index", "Home",
+                    new { token = token }, Request.Scheme);
+                await _emailSender.SendEmailAsync(model.Email, "Confirm email", "Confirm email by pressing this link: <a href=\"" + confrimationLink + "\">link</a>");
+                //Log confirmation lint to a file
+                _logger.Log(LogLevel.Warning, confrimationLink);
+                //await _userManager.AddToRoleAsync(user, "Visitor");
+                return RedirectToAction("Index", "Home");
 
-        //    }
-        //    return View(model);
+            }
+            return View(model);
 
-        //}
+        }
 
 
         public IActionResult RegisterAsSimpleUser()

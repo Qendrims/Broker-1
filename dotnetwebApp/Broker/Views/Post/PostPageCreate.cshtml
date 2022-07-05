@@ -53,7 +53,7 @@
     .hidden {
         display: none;
     }
-    input {
+    input,select {
         margin-bottom: 5px;
     }
     .wrapper {
@@ -207,7 +207,9 @@
                         }
                     </select>
 
-                    <div id="show-specific-atributes">
+                    <br/>
+
+                 <div id="show-specific-atributes">
 
                         <div class="form-group category-inputs show" id="room">
                             <label for="post.Rooms">Rooms</label>
@@ -262,130 +264,10 @@
 
                             <p class="error" id="FloorsError"></p>
                         </div>
-                        <p class="error" id="CategoryError"></p>
                         <br />
-                        <div class="input-group  together">
-                            <input type="text"
-                                   class="form-control"
-                                   id="price"
-                                   name="Price"
-                                   aria-label="Dollar amount (with dot and two decimal places)" />
-                            <div class="input-group-append flex">
-                                <span class="input-group-text">$</span>
-                            </div>
-                        </div>
-                        <br />
-
-
-                        <div class="row">
-
-                            <div class="form-group col-6">
-                                <b>Latitude</b>
-                                <input type="text" name="Latitude" id="lat" size=12 class='form-control' value="" readonly>
-                            </div>
-
-                            <div class="form-group col-6">
-                                <b>Longitude</b>
-                                <input type="text" name="Longitude" id="lon" size=12 class='form-control' value="" readonly>
-                            </div>
-                        </div>
-
-
-
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label>City</label>
-                                <input type="text" name="City" id="city" class="form-control disabled" readonly />
-                                <p class="error" id="CityError"></p>
-                            </div>
-
-                            <div class="form-group col-6">
-                                <label>Country</label>
-                                <input type="text" name="Country" id="country" class="form-control disabled " readonly />
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-6">
-
-                                <label>Zip Code</label>
-                                <input type="number" name="ZipCode" id="zipcode" class="form-control disabled" readonly />
-
-                            </div>
-
-                            <div class="form-group col-6">
-                                <label>Road</label>
-                                <input type="text" name="Street" id="road" class="form-control disabled" readonly />
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label>State</label>
-                                <input type="text" name="State" id="state" class="form-control disabled" readonly />
-                                <p class="error" id="StateError"></p>
-                            </div>
-
-                            <div class="form-group col-6">
-                                <label>House Number</label>
-                                <input type="number" name="HouseNumber" id="housenumber" class="form-control disabled" readonly />
-                            </div>
-                        </div>
-
-                        <label>Neighbourhood</label>
-                        <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly />
-
-                    </div>
-
-                    <div class="form-location">
-                        <div class="form-group">
-
-                            <label>Search Address</label>
-                            <div id="search">
-                                <input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
-                            </div>
-                            <div id="results"></div>
-                            <button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
-                        </div>
-
-
-
-
-                        <div style="display: flex; flex-direction: column; width: 500px; height: 400px; overflow: hidden">
-                            <p style="margin-left: 20px">Please mark the address on map</p>
-                            <div id="map"></div>
-                            <h4 style="text-align: center" id="currAddress"></h4>
-                        </div>
-
-                        <br />
-
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Agents</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Send invite</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <input type="submit" class="btn btn-primary" value="Submit" />
-                    </div>
-
-                </div>
-                <p class="error" id="CategoryError"></p>
-                <br />
+                   
                 <div class="input-group together">
+                     <label for="Price">Price</label>
                     <input type="text"
                            class="form-control"
                            id="price"
@@ -396,7 +278,30 @@
                     </div>
                 </div>
                 <br />
+              </div>
+              </div>
 
+                <div class="form-location">
+                    <div class="form-group">
+
+                <label>Search Address</label>
+                <div id="search">
+                    <input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
+                </div>
+                <div id="results"></div>
+                    <button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
+                    </div>
+
+
+
+
+                <div style="display: flex; flex-direction: column; width: 500px; height: 400px; overflow: hidden">
+                    <p style="margin-left: 20px">Please mark the address on map</p>
+                    <div id="map"></div>
+                    <h4 style="text-align: center" id="currAddress"></h4>
+                </div>
+
+                <br />
 
                  <div class="row">
                     
@@ -456,31 +361,9 @@
              <label>Neighbourhood</label>
                 <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly />
 
-                </div>
-
-                <div class="form-location">
-                    <div class="form-group">
-
-                <label>Search Address</label>
-                <div id="search">
-                    <input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
-                </div>
-                <div id="results"></div>
-                    <button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
-                    </div>
-
-
-
-
-                <div style="display: flex; flex-direction: column; width: 500px; height: 400px; overflow: hidden">
-                    <p style="margin-left: 20px">Please mark the address on map</p>
-                    <div id="map"></div>
-                    <h4 style="text-align: center" id="currAddress"></h4>
-                </div>
-
-                <br />
 
                 <input type="submit" class="btn btn-primary" value="Submit" />
+               
                 </div>
 
             </form>
