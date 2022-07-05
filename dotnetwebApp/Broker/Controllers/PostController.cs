@@ -182,11 +182,11 @@ namespace BrokerApp.Controllers
                 {
 
                     _postService.CreatePost(postView, HttpContext);
-                }
-                return Json(new { status = 200, message = "Post created successfully" });
-            }
-            catch (Exception ex)
-            {
+
+                    return Json(new { status = 200, message = "Post created successfully" });
+                } else
+                {
+
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 if (string.IsNullOrEmpty(postView.Title))
                     data.Add("TitleError", "Title cant be empty");
