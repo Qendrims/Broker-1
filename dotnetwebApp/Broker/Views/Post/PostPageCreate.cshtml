@@ -206,12 +206,68 @@
 
                         }
                     </select>
-                <div id="show-specific-atributes">
 
-                </div>
-                <p class="error" id="CategoryError"></p>
-                <br />
+                    <br/>
+
+                 <div id="show-specific-atributes">
+
+                        <div class="form-group category-inputs show" id="room">
+                            <label for="post.Rooms">Rooms</label>
+                            <input type="number"
+                                   name="rooms"
+                                   class="form-control  together"
+                                   id="exampleInputEmail1"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Rooms" />
+
+                            <p class="error" id="RoomsError"></p>
+                        </div>
+                        <div class="form-group category-inputs show" id="bathroom">
+                            <label for="post.BathRooms">Bathrooms</label>
+                            <input type="number"
+                                   name="bathRooms"
+                                   class="form-control  together"
+                                   id="exampleInputEmail1"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Bathrooms" />
+
+                            <p class="error" id="BathRoomError"></p>
+                        </div>
+                        <div class="form-group category-inputs show" id="size">
+                            <label for="post.Size">Size</label>
+                            <input type="number"
+                                   name="size"
+                                   class="form-control  together"
+                                   id="exampleInputEmail1"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Enter title" />
+
+                            <p class="error" id="SizeError"></p>
+                        </div>
+                        <div class="form-group category-inputs" id="houseFloor">
+                            <label for="post.Floors">Floors</label>
+                            <input type="number"
+                                   name="floors"
+                                   class="form-control together"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Floors" />
+
+                            <p class="error" id="FloorsError"></p>
+                        </div>
+                        <div class="form-group category-inputs hide" id="apartmentFloor">
+                            <label for="post.ApartmentFlor">Floor</label>
+                            <input type="number"
+                                   name="apartmentFlor"
+                                   class="form-control together"
+                                   aria-describedby="emailHelp"
+                                   placeholder="kati" />
+
+                            <p class="error" id="FloorsError"></p>
+                        </div>
+                        <br />
+                   
                 <div class="input-group together">
+                     <label for="Price">Price</label>
                     <input type="text"
                            class="form-control"
                            id="price"
@@ -222,7 +278,30 @@
                     </div>
                 </div>
                 <br />
+              </div>
+              </div>
 
+                <div class="form-location">
+                    <div class="form-group">
+
+                <label>Search Address</label>
+                <div id="search">
+                    <input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
+                </div>
+                <div id="results"></div>
+                    <button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
+                    </div>
+
+
+
+
+                <div style="display: flex; flex-direction: column; width: 500px; height: 400px; overflow: hidden">
+                    <p style="margin-left: 20px">Please mark the address on map</p>
+                    <div id="map"></div>
+                    <h4 style="text-align: center" id="currAddress"></h4>
+                </div>
+
+                <br />
 
                  <div class="row">
                     
@@ -282,31 +361,9 @@
              <label>Neighbourhood</label>
                 <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly />
 
-                </div>
-
-                <div class="form-location">
-                    <div class="form-group">
-
-                <label>Search Address</label>
-                <div id="search">
-                    <input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
-                </div>
-                <div id="results"></div>
-                    <button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
-                    </div>
-
-
-
-
-                <div style="display: flex; flex-direction: column; width: 500px; height: 400px; overflow: hidden">
-                    <p style="margin-left: 20px">Please mark the address on map</p>
-                    <div id="map"></div>
-                    <h4 style="text-align: center" id="currAddress"></h4>
-                </div>
-
-                <br />
 
                 <input type="submit" class="btn btn-primary" value="Submit" />
+               
                 </div>
 
             </form>

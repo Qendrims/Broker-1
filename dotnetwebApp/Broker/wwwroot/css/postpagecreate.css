@@ -41,7 +41,7 @@
     display: none;
 }
 
-input {
+input,select {
     margin-bottom: 5px;
 }
 
