@@ -14,9 +14,138 @@
 
 
 @section Styles
-    {
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-    <link rel="stylesheet" href="~/css/postpagecreate.css" />
+{
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+
+
+<style type="text/css">
+    #lat, #lon {
+        text-align: right
+    }
+    .hidden {
+        display: none;
+    }
+    .address {
+        cursor: pointer;
+    }
+        .address:not(:last-child) {
+            border-bottom: 1px solid black
+        }
+        .address:hover {
+            color: #AA0000;
+            text-decoration: underline
+        }
+    #map {
+        height: 400px;
+        min-width: 70%;
+        margin-left: 20px;
+    }
+    #addr {
+        width: 80% !important;
+    }
+        #addr:focus {
+            outline: none !important;
+        }
+    .btn {
+        margin: 5px !important;
+    }
+    .hidden {
+        display: none;
+    }
+    input {
+        margin-bottom: 5px;
+    }
+    .wrapper {
+        margin: 10px;
+        width: 100%;
+     /*   display: flex;
+        justify-content: center;
+        align-items: center;*/
+    }
+    .post-preview {
+        width: 45%;
+        height: 90vh;
+    }
+    .div-text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #5885AF;
+        width: 90%;
+        border-radius: 5px;
+    }
+    .flex {
+        display: flex;
+    }
+    .btn-primary {
+        margin: 20px 40px;
+    }
+    #inner-posts {
+        border: 1px solid black;
+    }
+        #inner-posts h1 {
+            font-size: 20px;
+            padding: 2% 2%;
+        }
+        #inner-posts p {
+            font-size: 15px;
+            padding: 2% 2%;
+        }
+    .hidden {
+        display: none;
+    }
+    #results {
+        background-color: #fff;
+        width: 80%;
+        margin-top: 8px;
+        border-radius: 5px;
+        padding-left: 5px;
+    }
+    .custom-file {
+        height: auto !important;
+    }
+    #uploadedImages {
+        width: 90%;
+        position: relative;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 15px;
+    }
+    figure {
+        height: 100px;
+        position: relative;
+    }
+    img {
+        width: 100%;
+        height: 100px;
+    }
+    .error {
+        color: red;
+    }
+    h1{
+        text-align: center;
+    }
+    form{
+        display: flex;
+        gap: 10px;
+        width: 100%;
+    }
+    .form-location{
+        width: 45%;
+    }
+    .form-attr{
+        width: 45%;
+    }
+    .remove-btn{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 0 5px;
+        color: #dc3545;
+    }
+</style>
 }
 
 
@@ -37,20 +166,20 @@
                            aria-describedby="emailHelp"
                            placeholder="Enter title" />
 
-                            <p class="error" id="TitleError"></p>
-                        </div>
+                    <p class="error" id="TitleError"></p>
+                </div>
 
-                        <div class="custom-file">
-                            <input type="file"
-                               name="Image"
-                               class="custom-file-input together"
-                               id="inputGroupFile01"
-                               onchange="preview()"
-                               multiple
-                               aria-describedby="inputGroupFileAddon01" />
-                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                            <p id="filesNumber">No files chosen</p>
-                            <div id="uploadedImages"></div>
+                <div class="custom-file">
+                    <input type="file"
+                           name="Image"
+                           class="custom-file-input together"
+                           id="inputGroupFile01"
+                           onchange="preview()"
+                           multiple
+                           aria-describedby="inputGroupFileAddon01" />
+                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    <p id="filesNumber">No files chosen</p>
+                    <div id="uploadedImages"></div>
 
                     <p class="error" id="ImageError"></p>
                 </div>
@@ -64,9 +193,9 @@
                 </div>
                 <p class="error" id="DescriptionError"></p>
 
-                        <br />
+                <br />
 
-                        <label>Choose Categories</label>
+                <label>Choose Categories</label>
                         <br />
                         <select id="select-option" name="CategoryId">
 
@@ -77,191 +206,114 @@
 
                         }
                     </select>
-
-                    <div id="show-specific-atributes">
-
-                        <div class="form-group category-inputs show" id="room">
-                            <label for="post.Rooms">Rooms</label>
-                            <input type="number"
-                                   name="rooms"
-                                   class="form-control  together"
-                                   id="exampleInputEmail1"
-                                   aria-describedby="emailHelp"
-                                   placeholder="Rooms" />
-
-                            <p class="error" id="RoomsError"></p>
-                        </div>
-                        <div class="form-group category-inputs show" id="bathroom">
-                            <label for="post.BathRooms">Bathrooms</label>
-                            <input type="number"
-                                   name="bathRooms"
-                                   class="form-control  together"
-                                   id="exampleInputEmail1"
-                                   aria-describedby="emailHelp"
-                                   placeholder="Bathrooms" />
-
-                            <p class="error" id="BathRoomError"></p>
-                        </div>
-                        <div class="form-group category-inputs show" id="size">
-                            <label for="post.Size">Size</label>
-                            <input type="number"
-                                   name="size"
-                                   class="form-control  together"
-                                   id="exampleInputEmail1"
-                                   aria-describedby="emailHelp"
-                                   placeholder="Enter title" />
-
-                            <p class="error" id="SizeError"></p>
-                        </div>
-                        <div class="form-group category-inputs" id="houseFloor">
-                            <label for="post.Floors">Floors</label>
-                            <input type="number"
-                                   name="floors"
-                                   class="form-control together"
-                                   aria-describedby="emailHelp"
-                                   placeholder="Floors" />
-
-                            <p class="error" id="FloorsError"></p>
-                        </div>
-                        <div class="form-group category-inputs hide" id="apartmentFloor">
-                            <label for="post.ApartmentFlor">Floor</label>
-                            <input type="number"
-                                   name="apartmentFlor"
-                                   class="form-control together"
-                                   aria-describedby="emailHelp"
-                                   placeholder="kati" />
-
-                            <p class="error" id="FloorsError"></p>
-                        </div>
-                        <p class="error" id="CategoryError"></p>
-                        <br />
-                        <div class="input-group  together">
-                            <input type="text"
-                                   class="form-control"
-                                   id="price"
-                                   name="Price"
-                                   aria-label="Dollar amount (with dot and two decimal places)" />
-                            <div class="input-group-append flex">
-                                <span class="input-group-text">$</span>
-                            </div>
-                        </div>
-                        <br />
-
-
-                        <div class="row">
-
-                            <div class="form-group col-6">
-                                <b>Latitude</b>
-                                <input type="text" name="Latitude" id="lat" size=12 class='form-control' value="" readonly>
-                            </div>
-
-                            <div class="form-group col-6">
-                                <b>Longitude</b>
-                                <input type="text" name="Longitude" id="lon" size=12 class='form-control' value="" readonly>
-                            </div>
-                        </div>
-
-
-
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label>City</label>
-                                <input type="text" name="City" id="city" class="form-control disabled" readonly />
-                                <p class="error" id="CityError"></p>
-                            </div>
-
-                            <div class="form-group col-6">
-                                <label>Country</label>
-                                <input type="text" name="Country" id="country" class="form-control disabled " readonly />
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-6">
-
-                                <label>Zip Code</label>
-                                <input type="number" name="ZipCode" id="zipcode" class="form-control disabled" readonly />
-
-                            </div>
-
-                            <div class="form-group col-6">
-                                <label>Road</label>
-                                <input type="text" name="Street" id="road" class="form-control disabled" readonly />
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label>State</label>
-                                <input type="text" name="State" id="state" class="form-control disabled" readonly />
-                                <p class="error" id="StateError"></p>
-                            </div>
-
-                            <div class="form-group col-6">
-                                <label>House Number</label>
-                                <input type="number" name="HouseNumber" id="housenumber" class="form-control disabled" readonly />
-                            </div>
-                        </div>
-
-                        <label>Neighbourhood</label>
-                        <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly />
-
-                    </div>
-
-                    <div class="form-location">
-                        <div class="form-group">
-
-                            <label>Search Address</label>
-                            <div id="search">
-                                <input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
-                            </div>
-                            <div id="results"></div>
-                            <button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
-                        </div>
-
-
-
-
-                        <div style="display: flex; flex-direction: column; width: 500px; height: 400px; overflow: hidden">
-                            <p style="margin-left: 20px">Please mark the address on map</p>
-                            <div id="map"></div>
-                            <h4 style="text-align: center" id="currAddress"></h4>
-                        </div>
-
-                        <br />
-
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Agents</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Send invite</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <input type="submit" class="btn btn-primary" value="Submit" />
-                    </div>
+                <div id="show-specific-atributes">
 
                 </div>
+                <p class="error" id="CategoryError"></p>
+                <br />
+                <div class="input-group together">
+                    <input type="text"
+                           class="form-control"
+                           id="price"
+                           name="Price"
+                           aria-label="Dollar amount (with dot and two decimal places)" />
+                    <div class="input-group-append flex">
+                        <span class="input-group-text">$</span>
+                    </div>
+                </div>
+                <br />
+
+
+                 <div class="row">
+                    
+                    <div class="form-group col-6">
+                     <b>Latitude</b>
+                    <input type="text" name="Latitude" id="lat" size=12 class='form-control' value="" readonly>
+                    </div>
+                    
+                    <div class="form-group col-6">
+                        <b>Longitude</b>
+                    <input type="text" name="Longitude" id="lon" size=12 class='form-control' value="" readonly>
+                    </div>
+                </div>
+             
+
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label>City</label>
+                        <input type="text" name="City" id="city" class="form-control disabled" readonly />                        
+                        <p class="error" id="CityError"></p>
+                    </div>
+                    
+                    <div class="form-group col-6">
+                        <label>Country</label>
+                        <input type="text" name="Country" id="country" class="form-control disabled " readonly />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-6">
+
+                          <label>Zip Code</label>
+                <input type="number" name="ZipCode" id="zipcode" class="form-control disabled" readonly />
+                        
+                    </div>
+
+                     <div class="form-group col-6">
+                 <label>Road</label>
+                <input type="text" name="Street" id="road" class="form-control disabled" readonly />
+                    </div>
+                </div>
+
+                  <div class="row">
+                    <div class="form-group col-6">
+                   <label>State</label>
+                <input type="text" name="State" id="state" class="form-control disabled" readonly />
+                <p class="error" id="StateError"></p>
+                    </div>
+
+                     <div class="form-group col-6">
+                    <label>House Number</label>
+                <input type="number" name="HouseNumber" id="housenumber" class="form-control disabled" readonly />
+                    </div>
+                </div>
+              
+             <label>Neighbourhood</label>
+                <input type="text" name="Neighbourhood" id="neighbourhood" class="form-control disabled" readonly />
+
+                </div>
+
+                <div class="form-location">
+                    <div class="form-group">
+
+                <label>Search Address</label>
+                <div id="search">
+                    <input type="text" name="addr" class='form-control' value="" id="addr" size="58" />
+                </div>
+                <div id="results"></div>
+                    <button type="button" class='btn btn-primary' onclick="addr_search();">Search</button>
+                    </div>
+
+
+
+
+                <div style="display: flex; flex-direction: column; width: 500px; height: 400px; overflow: hidden">
+                    <p style="margin-left: 20px">Please mark the address on map</p>
+                    <div id="map"></div>
+                    <h4 style="text-align: center" id="currAddress"></h4>
+                </div>
+
+                <br />
+
+                <input type="submit" class="btn btn-primary" value="Submit" />
+                </div>
+
             </form>
-    </div>
-
+                  </div>
+        </div>
+ 
 </section>
-
-
-
-
 
 
 @section Scripts{
