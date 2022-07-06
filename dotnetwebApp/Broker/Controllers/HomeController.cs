@@ -72,6 +72,7 @@ namespace Broker.Controllers
             return View(homeViewModels);
         }
 
+
         public IActionResult ContactUs()
         {
             return View();
@@ -105,13 +106,61 @@ namespace Broker.Controllers
             }
         }
 
-        [HttpGet] 
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(viewModel.Email);
+                if (user != null && await _userManager.IsEmailConfirmedAsync(user))
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
+                    var passwordResetLink = Url.Action("ResetPassword", "Home",
+                        new { email = viewModel.Email, token = token }, Request.Scheme);
+                    user.ResetToken = token;
+                    this._db.Update(user);
+                    await this._db.SaveChangesAsync();
+                    string emailBody = "Confirm reste password by pressing this link: <a href='" + passwordResetLink + "'>link</a>";
+                    await _emailSender.SendEmailAsync(viewModel.Email, "Reset password", emailBody);
+                    _logger.Log(LogLevel.Warning, passwordResetLink);
+
+                }
+                return View("ResetPassword");
+            }
+            return View(viewModel);
+        }
+
+
+        public IActionResult ResetPassword(string token, string email)
+        {
+            ResetPasswordViewModel model = new ResetPasswordViewModel();
+            model.Token = token;
+            model.Email = email;
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            var user=this._db.Users.Where(u => u.ResetToken == model.Token).FirstOrDefault();
+
+            await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+
+            this._db.Users.Update(user);
+            await this._db.SaveChangesAsync();
+            return View();
+        }
         public IActionResult RegisterAsAgent()
         {
 

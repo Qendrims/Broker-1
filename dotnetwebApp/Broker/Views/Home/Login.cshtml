@@ -30,14 +30,12 @@
         @if(@ViewBag.Message!=null){
             <span id="errorMessage" class="text-danger">@ViewBag.Message</span>
         }
-        
-        
-        
-
-          
 
           <!-- Submit button -->
           <button id="loginbtn" type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+          <div>
+              <a asp-action="ForgotPassword">Forgot Password?</a>
+          </div>
 
           <div class="divider d-flex align-items-center my-4">
             <p class="text-center fw-bold mx-3 mb-0 text-muted">Not a member!</p>
