@@ -4,6 +4,7 @@ using Broker.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,13 @@ namespace Broker.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly ApplicationDbContext _db;
         public AccountController(UserManager<User> userManager,
-                                      SignInManager<User> signInManager,ApplicationDbContext db)
+                                      SignInManager<User> signInManager, ApplicationDbContext db)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _db = db;
         }
-        
+
         public IActionResult Register()
         {
             return View();
@@ -38,11 +39,11 @@ namespace Broker.Controllers
                 var user = new User
                 {
                     FullName = model.FullName,
-                    UserName=model.EmailAddress,
-                    Email=model.EmailAddress,
-                   Birthday=model.Birthday,
-                   PhoneNumber=model.PhoneNumber
-                    
+                    UserName = model.EmailAddress,
+                    Email = model.EmailAddress,
+                    Birthday = model.Birthday,
+                    PhoneNumber = model.PhoneNumber
+
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -98,9 +99,9 @@ namespace Broker.Controllers
         public IActionResult MyPost()
         {
             var userId = _userManager.GetUserId(HttpContext.User);
-            var posts = _db.Posts.Where(p => p.PostUserId == userId && p.IsArchived==false);
-            
-            
+            var posts = _db.Posts.Where(p => p.PostUserId == userId && p.IsArchived == false);
+
+
             return View(posts);
         }
         public IActionResult Index()
@@ -139,13 +140,12 @@ namespace Broker.Controllers
         }
         public IActionResult DeletePost(int id)
         {
-            var post = _db.Posts.Find(id);
-            
+            var post = _db.Posts.Where(p => p.PostId == id).FirstOrDefault();
             _db.Posts.Remove(post);
             _db.SaveChanges();
-            
+
             return RedirectToAction("MyPost");
-            
+
         }
         public IActionResult SponsorePost(int id)
         {
@@ -163,6 +163,36 @@ namespace Broker.Controllers
             var userId = _userManager.GetUserId(HttpContext.User);
             var user = _db.users.Find(userId);
             return View(user);
+        }
+        [HttpGet]
+        public IActionResult Edit(string id)
+        {
+            var user = _db.users.Where(p=>p.Id==id).FirstOrDefault();
+            
+            return View(user);
+        }
+        [HttpPost]
+        public IActionResult Edit(User model)
+        {
+            var userEdited = _db.users.Find(model.Id);
+            if (!ModelState.IsValid) {
+                
+                return View(model);
+            }
+            if (String.IsNullOrEmpty(model.PhoneNumber))
+            {
+                return View(model);
+            }
+           
+                userEdited.FullName = model.FullName;
+                userEdited.PhoneNumber = model.PhoneNumber;
+                userEdited.Birthday = model.Birthday;
+
+            _db.users.Update(userEdited);
+            _db.SaveChanges();
+            
+
+            return RedirectToAction("ProfileDetails");
         }
     }
 }

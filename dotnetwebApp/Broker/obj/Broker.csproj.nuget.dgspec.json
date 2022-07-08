@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\PBCA\\Desktop\\Broker-1\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj": {}
+    "C:\\Users\\alban\\OneDrive\\Documents\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\PBCA\\Desktop\\Broker-1\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj": {
+    "C:\\Users\\alban\\OneDrive\\Documents\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PBCA\\Desktop\\Broker-1\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
+        "projectUniqueName": "C:\\Users\\alban\\OneDrive\\Documents\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
         "projectName": "Broker",
-        "projectPath": "C:\\Users\\PBCA\\Desktop\\Broker-1\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
-        "packagesPath": "C:\\Users\\PBCA\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PBCA\\Desktop\\Broker-1\\Broker-1\\dotnetwebApp\\Broker\\obj\\",
+        "projectPath": "C:\\Users\\alban\\OneDrive\\Documents\\Broker-1\\dotnetwebApp\\Broker\\Broker.csproj",
+        "packagesPath": "C:\\Users\\alban\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\alban\\OneDrive\\Documents\\Broker-1\\dotnetwebApp\\Broker\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\PBCA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\alban\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -47,6 +47,10 @@
             "BCrypt.Net-Next": {
               "target": "Package",
               "version": "[3.1.0, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[3.3.0, )"
             },
             "Microsoft.AspNet.Mvc": {
               "target": "Package",
@@ -94,6 +98,10 @@
               "target": "Package",
               "version": "[3.1.5, )"
             },
+            "NETCore.MailKit": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.1, )"
@@ -121,7 +129,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
         }
       }
     }

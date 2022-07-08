@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BrokerApp.Controllers
@@ -159,14 +160,14 @@ namespace BrokerApp.Controllers
 
             post.Title = postView.Title;
             post.Description = postView.Description;
-            post.PostUserId = postView.PostUserId;
+            post.PostUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             post.City = postView.City;
             post.State = postView.State;
             post.Street = postView.Street;
             post.Latitude = postView.Latitude;
             post.Longitude = postView.Longitude;
             post.ZipCode = postView.ZipCode;
-            post.PostUserId = "2";
+            
             if (ModelState.IsValid)
             {
                 this._db.Posts.Add(post);

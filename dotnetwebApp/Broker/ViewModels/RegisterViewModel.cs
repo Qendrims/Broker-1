@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,12 +16,11 @@ namespace Broker.ViewModels
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Required(ErrorMessage = "Bithday is required")]
+        [Required(ErrorMessage = "Birthday is required")]
         [DisplayFormat(ApplyFormatInEditMode =true,DataFormatString ="0:dd\\mm\\yyyy")]
         public DateTime Birthday { get; set; }
-        [Required(ErrorMessage = "Phone number is required")]
+        [Required(ErrorMessage ="Phone number is required")]
         public string PhoneNumber { get; set; }
-        
         public string FullName { get; set; }
         [Compare("Password", ErrorMessage = "Password and confirmation password don't match.")]
         [DataType(DataType.Password)]
