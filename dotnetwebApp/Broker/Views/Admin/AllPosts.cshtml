@@ -1,0 +1,62 @@
+﻿@model AdminAllUsersAndPosts
+@{
+    ViewData["Title"] = "AllPosts";
+}
+
+<h1>AllPosts</h1>
+
+
+@*ndrysho emertimin e file*@
+<section>
+    <div class="container row">
+        <div class="col-6">
+            @*posts*@
+            <h3>Post list</h3>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var post in @Model.Posts)
+                    {
+                        <tr>
+                            <th scope="row">@post.PostId</th>
+                            <td>@post.Title</td>
+                            <td>@post.User.Name  @post.User.LastName</td>
+                            <td>@post.CreatedAt</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            <h3>User list</h3>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in @Model.Users)
+                    {
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>@user.Name @user.LastName</td>
+                            <td>@user.Email</td>
+                            <td>@user.CreatedAt</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

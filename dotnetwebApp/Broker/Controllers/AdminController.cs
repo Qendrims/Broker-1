@@ -1,90 +1,41 @@
-﻿using Broker.Models;
+﻿using Broker.ApplicationDB;
+using Broker.Models;
+using Broker.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace Broker.Controllers
 {
     public class AdminController : Controller
     {
-        // GET: AdminController
+        ApplicationDbContext _db;
+        // GET: AdminController]
+        public AdminController(ApplicationDbContext db)
+        {
+            this._db = db;
+        }
         public ActionResult Index()
 
         {
             if (User.IsInRole("Admin"))
             {
-
+                return RedirectToAction("Index", "Admin");
             }
             return View();
         }
 
-        // GET: AdminController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult AllPosts()
+        
         {
-            var use = new User();
-            return View();
-        }
+            AdminAllUsersAndPosts viewModel = new AdminAllUsersAndPosts();
 
-        // GET: AdminController/Create
-        public ActionResult Create()
-        {
-            return View();
+            viewModel.Posts = this._db.Posts.ToList();
+            viewModel.Users = this._db.Users.ToList();
+                
+           return View(viewModel);
         }
-
-        // POST: AdminController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AdminController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: AdminController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AdminController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AdminController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
+       
     }
 }
