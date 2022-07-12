@@ -95,9 +95,10 @@ namespace BrokerApp.Controllers
             return View(posts);
         }
 
-        public IActionResult PostPage(string category, string city,double? minPrice,double? maxPrice, int pg = 1)
+        public IActionResult PostPage(string category, string city,double? minPrice,double? maxPrice,int? rooms,int? bathrooms,int? size, int pg = 1)
         {
-          
+       
+
             FilteredPostViewModel posts = new FilteredPostViewModel();
             posts.FilteredCategories = _Dbcontext.Categories.ToList();
             posts.Cities = _Dbcontext.Posts.Where(p => !string.IsNullOrEmpty(p.City)).Select(m => m.City).Distinct().ToList();
@@ -114,14 +115,23 @@ namespace BrokerApp.Controllers
                 cat = _Dbcontext.Categories.First(c => c.CategoryName == category);
             }
             var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
-                .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => minPrice == null || p.Price >= minPrice).Where(p => maxPrice == null || p.Price <= maxPrice).Where(p => p.IsArchived == false).Include(p => p.Images).ToList();
+                .Where(p => city == null || p.City.ToLower() == city.ToLower())
+                .Where(p => minPrice == null || p.Price >= minPrice)
+                .Where(p => maxPrice == null || p.Price <= maxPrice)
+                .Where(p => rooms == null || p.Rooms == rooms)
+                .Where(p => bathrooms == null || p.BathRooms == bathrooms)
+                .Where(p => size == null || p.Size == size)
+                .Where(p => p.IsArchived == false)
+                .Include(p => p.Images).ToList();
+
             posts.FilteredPosts = result;
+            if(result.Count > 0)
             posts.Image = result.FirstOrDefault().Images;
             posts.Category = category;
             posts.City = city;
             
             const int postPerPage = 20;
-            if (pg < 1)
+            if (pg < 1) 
                 pg = 1;
 
             int postCount = posts.FilteredPosts.Count();
@@ -171,7 +181,6 @@ namespace BrokerApp.Controllers
         [HttpPost] 
         public JsonResult PostPageCreate(PostViewModel postView)
         {
-
             try
             {
 
@@ -179,11 +188,11 @@ namespace BrokerApp.Controllers
                 {
 
                     _postService.CreatePost(postView, HttpContext);
-                }
-                return Json(new { status = 200, message = "Post created successfully" });
-            }
-            catch (Exception ex)
-            {
+
+                    return Json(new { status = 200, message = "Post created successfully" });
+                } else
+                {
+
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 if (string.IsNullOrEmpty(postView.Title))
                     data.Add("TitleError", "Title cant be empty");
@@ -191,19 +200,21 @@ namespace BrokerApp.Controllers
                 if (string.IsNullOrEmpty(postView.Description))
                     data.Add("DescriptionError", "Description cant be empty");
 
-                if (postView.categories == null || postView.categories.Count < 1)
-                    data.Add("CategoryError", "Category is not selected!");
 
-                if (postView.Image == null || postView.Image.Count < 1)
-                    data.Add("ImageError", "Please Add a photo");
+                    return Json(new { status = 400, message = "Something went wrong", data });
+                }
 
-                return Json(new { status = 400, message = "Something went wrong", data });
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { status = 400, message = ex.Message });
             }
 
         }
         [HttpGet]
         public IActionResult Edit(int? id)
-        {
+        { 
             try
             {
 

@@ -88,7 +88,7 @@ namespace Broker.Controllers
         public async Task<IActionResult> Login(LoginUserModel loginUser, string returnUrl)
         {
 
-            bool result = _userService.IsLoggedIn(loginUser).Result;
+            bool result = await _userService.IsLoggedIn(loginUser);
             if (result)
             {
                 if (returnUrl != null)

@@ -41,6 +41,8 @@ namespace Broker.Services.Implementation
 
         private void CreatePostImage(PostViewModel postView, Post postMapper)
         {
+            if(postView.Image != null)
+            {
             foreach (var imageFile in postView.Image)
             {
                 string fullFileName = MethodHelper.FileToBeSaved(postView.Title, imageFile).Result;
@@ -50,6 +52,7 @@ namespace Broker.Services.Implementation
                 image.Post = postMapper;
                 image.Type = "jpg";
                 this._Dbcontext.PostImages.Add(image);
+            }
             }
         }
 
