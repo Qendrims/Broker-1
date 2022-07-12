@@ -10,7 +10,10 @@
 <link href="@Url.Content("~/css/detail.css")" rel="stylesheet" type="text/css" />
 
 
+
 <body>
+    <h1>@ViewBag.Message</h1>
+
 
     <div class="container">
         <div class="card">
@@ -101,20 +104,29 @@
             </div>
         </div>   
 
-                   <div class="owner">
+
+
+           <div class="owner">
+           
                 <div class="owner-img">
                    <img src="https://www.stockvault.net/free-photos/CEO">
                 </div>
                    <form class="owner-form" method="post">
-                      <input type="text" class="fullName" placeholder="Full Name">
-                      <input type="text" class="email" placeholder="Email">
-                      <textarea class="msg" rows="4" cols="50" placeholder="Write your message here"></textarea>
-                      <br />
-                     <button class="btn">Send Message</button>
+                      <input asp-for="@Model.FullName" type="text" class="name" placeholder="Name">
+                      <span class="text-danger" asp-validation-for="@Model.FullName"></span>
+                      <input asp-for="@Model.Subject" type="text" class="subject" placeholder="Subject">
+                       <span class="text-danger" asp-validation-for="@Model.Subject"></span>
+                      <textarea asp-for="@Model.Message" class="msg" rows="4" cols="50" placeholder="Write your message here"></textarea>
+                       <span class="text-danger" asp-validation-for="@Model.Message"></span>
+                       <br />
+                     <button type="submit" class="btn">Send Message</button>
+                     <br/>
+                   
                    </form>
+            
+            
             </div>
-
-    </div>
+   </div>
 
 
 

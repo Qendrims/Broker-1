@@ -20,6 +20,9 @@ using System.Threading.Tasks;
 using Broker.Services.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Broker.Services.Interface;
+using System.Web;
+using System.Net;
+using System.Net.Mail;
 
 namespace BrokerApp.Controllers
 {
@@ -320,6 +323,58 @@ namespace BrokerApp.Controllers
             this._Dbcontext.SaveChanges();
 
             return RedirectToAction("Index", "Home");
+        }
+
+
+
+        [HttpGet]
+        public ActionResult ContactPostOwner()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult ContactPostOwner(PostDetailViewModel contactPostOwner)
+        {
+            if (!ModelState.IsValid) return View();
+
+
+            try
+            {
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress("mejremehalilaj99@gmail.com","Mejreme Halilaj");
+                mail.To.Add("mhalilaj2017@gmail.com");
+
+                mail.IsBodyHtml = true;
+
+                string content = "Name : " + contactPostOwner.FullName;
+                content += "<br/> Message : " + contactPostOwner.Message;
+
+                mail.Body= content;
+
+                SmtpClient smtpClient=new SmtpClient();
+                smtpClient.Host = "mail.@gmail.com";
+
+                NetworkCredential networkCredential = new NetworkCredential("mejremehalilaj99@gmail.com","bih07091999GMAIL");
+
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = networkCredential;
+                smtpClient.Port = 587;
+                smtpClient.EnableSsl = true;
+                smtpClient.Send(mail);
+
+                ViewBag.Message = "Mail Sent";
+
+
+                ModelState.Clear();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message.ToString();
+            }
+
+            return View();
         }
     }
 }

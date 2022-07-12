@@ -1,6 +1,7 @@
 ﻿using Broker.Models;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Broker.ViewModels
 {
@@ -31,5 +32,13 @@ namespace Broker.ViewModels
         public string State { get; set; }
         public int ZipCode { get; set; }
         public virtual ICollection<PostCategory> PostCategories { get; set; }
+
+
+        [Required]
+        public string FullName { get; set; }
+        [Required]
+        public string Subject { get; set; }
+        [Required]
+        public string Message { get; set; }
     }
 }
