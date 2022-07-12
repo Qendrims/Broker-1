@@ -95,9 +95,10 @@ namespace BrokerApp.Controllers
             return View(posts);
         }
 
-        public IActionResult PostPage(string category, string city,double? minPrice,double? maxPrice, int pg = 1)
+        public IActionResult PostPage(string category, string city,double? minPrice,double? maxPrice,int? rooms,int? bathrooms,int? size, int pg = 1)
         {
-          
+       
+
             FilteredPostViewModel posts = new FilteredPostViewModel();
             posts.FilteredCategories = _Dbcontext.Categories.ToList();
             posts.Cities = _Dbcontext.Posts.Where(p => !string.IsNullOrEmpty(p.City)).Select(m => m.City).Distinct().ToList();
@@ -114,7 +115,15 @@ namespace BrokerApp.Controllers
                 cat = _Dbcontext.Categories.First(c => c.CategoryName == category);
             }
             var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
-                .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => minPrice == null || p.Price >= minPrice).Where(p => maxPrice == null || p.Price <= maxPrice).Where(p => p.IsArchived == false).Include(p => p.Images).ToList();
+                .Where(p => city == null || p.City.ToLower() == city.ToLower())
+                .Where(p => minPrice == null || p.Price >= minPrice)
+                .Where(p => maxPrice == null || p.Price <= maxPrice)
+                .Where(p => rooms == null || p.Rooms == rooms)
+                .Where(p => bathrooms == null || p.BathRooms == bathrooms)
+                .Where(p => size == null || p.Size == size)
+                .Where(p => p.IsArchived == false)
+                .Include(p => p.Images).ToList();
+
             posts.FilteredPosts = result;
             if(result.Count > 0)
             posts.Image = result.FirstOrDefault().Images;
