@@ -30,14 +30,16 @@ namespace BrokerApp.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private IMapper _mapper;
         private readonly IPostService _postService; 
+        private readonly IUserService _userService;
 
-        public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
+        public PostController(ApplicationDbContext _context, IUserService userService, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
         {
             this._Dbcontext = _context;
             this._webHostEnvironment = _webHostEnvironment;
             this._mapper = mapper;
             this._userManager = userManager;
             this._postService = postService;
+            this._userService = userService;
         }
 
         public IActionResult Archive(int id)
@@ -56,6 +58,7 @@ namespace BrokerApp.Controllers
 
         public IActionResult MyPosts(string id, int pg = 1)
         {
+            this._userService.TrackUser();
             FilteredPostViewModel posts = new FilteredPostViewModel();
 
             posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == id).ToList();
@@ -97,8 +100,8 @@ namespace BrokerApp.Controllers
 
         public IActionResult PostPage(string category, string city,double? minPrice,double? maxPrice,int? rooms,int? bathrooms,int? size, int pg = 1)
         {
-       
 
+            this._userService.TrackUser();
             FilteredPostViewModel posts = new FilteredPostViewModel();
             posts.FilteredCategories = _Dbcontext.Categories.ToList();
             posts.Cities = _Dbcontext.Posts.Where(p => !string.IsNullOrEmpty(p.City)).Select(m => m.City).Distinct().ToList();
@@ -154,7 +157,7 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult Detail(int id)
         {
-
+            this._userService.TrackUser();
             var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).ThenInclude(x => x.Category).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
 
             //var postCategories = this._Dbcontext.PostCategories.Where(p => p.PostId == id).Include(y => y.Category).Include(y => y.Post).ToList();
@@ -173,6 +176,7 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult PostPageCreate()
         {
+            this._userService.TrackUser();
             PostViewModel createPostView = _postService.GetCreatePostModel();
             return View(createPostView);
         }
@@ -214,7 +218,8 @@ namespace BrokerApp.Controllers
         }
         [HttpGet]
         public IActionResult Edit(int? id)
-        { 
+        {
+            this._userService.TrackUser();
             try
             {
 

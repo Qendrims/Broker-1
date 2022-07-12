@@ -15,12 +15,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using B = BCrypt.Net;
+using System.Web;
+using Microsoft.AspNetCore.Http;
 
 namespace Broker.Controllers
 {
     public class HomeController : Controller
     {
-
+        private readonly IHttpContextAccessor _accessor;
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
         private readonly SignInManager<User> _signInManager;
@@ -29,8 +31,9 @@ namespace Broker.Controllers
         private IEmailSender _emailSender;
         private readonly IUserService _userService;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IUserService userService, IEmailSender emailSender)
+        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor c , ApplicationDbContext db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IUserService userService, IEmailSender emailSender)
         {
+            this._accessor = c;
             this._logger = logger;
             this._db = db;
             this._signInManager = signInManager;
@@ -49,8 +52,10 @@ namespace Broker.Controllers
             return Json(data);
         }
 
+
         public IActionResult Index()
         {
+            _userService.TrackUser();
 
             List<HomeViewModel> homeViewModels = new List<HomeViewModel>();
 
@@ -74,11 +79,13 @@ namespace Broker.Controllers
 
         public IActionResult ContactUs()
         {
+            _userService.TrackUser();
             return View();
         }
 
         public IActionResult Login()
         {
+            _userService.TrackUser();
             return View();
         }
 
@@ -114,7 +121,7 @@ namespace Broker.Controllers
 
         public IActionResult RegisterAsAgent()
         {
-
+            _userService.TrackUser();
             return View();
 
         }

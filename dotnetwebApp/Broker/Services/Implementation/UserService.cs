@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Broker.ApplicationDB;
 using Broker.Mailing;
 using Broker.Models;
 using Broker.Services.Interface;
@@ -6,6 +7,7 @@ using Broker.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Security.Claims;
 using System.Security.Policy;
 using System.Threading.Tasks;
@@ -19,14 +21,30 @@ namespace Broker.Services.Implementation
         private readonly UserManager<User> _userManager;
         private IMapper _mapper;
         private IEmailSender _emailSender;
-
-        public UserService(IHttpContextAccessor httpContextAccessor, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IEmailSender emailSender)
+        private readonly ApplicationDbContext _Dbcontext;
+        public UserService(ApplicationDbContext Dbcontext,IHttpContextAccessor httpContextAccessor, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IEmailSender emailSender)
         {
             this._httpContextAccessor = httpContextAccessor;
             this._signInManager = signInManager;
             this._userManager = userManager;
             this._mapper = mapper;
             this._emailSender = emailSender;
+            this._Dbcontext = Dbcontext;
+        }
+
+        public void TrackUser()
+        {
+
+            string ipAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            TrackUser track = new TrackUser
+            {
+                UserId = this.GetUserId(),
+                IP = ipAddress,
+                LastUpdate = DateTime.Now
+            };
+
+            this._Dbcontext.Add(track);
+            this._Dbcontext.SaveChanges();
         }
         public string GetUserId()
         {

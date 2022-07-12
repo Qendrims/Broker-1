@@ -7,7 +7,7 @@ namespace Broker.Services.Interface
     public interface IUserService
     {
         public string GetUserId();
-
+        public void TrackUser();
         Task<bool> IsLoggedIn(LoginUserModel loginUser);
 
         Task<User> RegisterUser(LoginUserModel loginUser);

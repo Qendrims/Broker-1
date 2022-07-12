@@ -9,9 +9,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -40,7 +42,7 @@ namespace Broker
 
 
             services.AddControllersWithViews();
-           
+            services.AddHttpContextAccessor();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
