@@ -16,13 +16,16 @@ namespace Broker.Controllers
             this._db = db;
         }
         public ActionResult Index()
-
         {
+            AdminAllUsersAndPosts viewModel = new AdminAllUsersAndPosts();
             if (User.IsInRole("Admin"))
             {
                 return RedirectToAction("Index", "Admin");
             }
-            return View();
+
+            viewModel.Posts = this._db.Posts.ToList();
+            viewModel.Users = this._db.Users.ToList();
+            return View(viewModel);
         }
 
         public IActionResult AllPosts()
