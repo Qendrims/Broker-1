@@ -18,6 +18,12 @@ namespace Broker.ApplicationDB
         public DbSet<Invite> Invites { get; set; }
         public DbSet<AdsPayments> AdsPaymentcs { get; set; }
         public DbSet<Tags> Tags { get; set; }
+        public DbSet<ContactOwner> ContactOwners { get; set; }
+
+
+
+        //public DbSet<Notification> Notifications { get; set; }
+        //public DbSet<NotificationUser> UserNotifications { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

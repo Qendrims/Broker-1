@@ -128,6 +128,7 @@ namespace BrokerApp.Controllers
             posts.Category = category;
             posts.City = city;
             
+
             const int postPerPage = 20;
             if (pg < 1)
                 pg = 1;
@@ -327,52 +328,48 @@ namespace BrokerApp.Controllers
 
 
 
-        [HttpGet]
-        public ActionResult ContactPostOwner()
-        {
-            return View();
-        }
+       
 
 
         [HttpPost]
-        public ActionResult ContactPostOwner(PostDetailViewModel contactPostOwner)
+        public ActionResult Detail(ContactOwner contactPostOwner)
         {
             if (!ModelState.IsValid) return View();
 
 
-            try
-            {
-                MailMessage mail = new MailMessage();
-                mail.From = new MailAddress("mejremehalilaj99@gmail.com","Mejreme Halilaj");
-                mail.To.Add("mhalilaj2017@gmail.com");
+            ////try
+            ////{
+            ////    MailMessage mail = new MailMessage();
+            ////    mail.From = new MailAddress("arkadriu@gmail.com", "A K");
+            ////    mail.To.Add("mejremehalilaj99@gmail.com");
 
-                mail.IsBodyHtml = true;
+            ////    mail.IsBodyHtml = true;
 
-                string content = "Name : " + contactPostOwner.FullName;
-                content += "<br/> Message : " + contactPostOwner.Message;
+            ////    string content = "Name : " + contactPostOwner.FullName;
+            ////    content += "<br/> Message : " + contactPostOwner.Message;
 
-                mail.Body= content;
+            ////    mail.Body= content;
 
-                SmtpClient smtpClient=new SmtpClient();
-                smtpClient.Host = "mail.@gmail.com";
+            ////    SmtpClient smtpClient=new SmtpClient();
+            ////    smtpClient.Host = "mail.@gmail.com";
 
-                NetworkCredential networkCredential = new NetworkCredential("mejremehalilaj99@gmail.com","bih07091999GMAIL");
+            ////    NetworkCredential networkCredential = new NetworkCredential("arkadriu@gmail.com", "owvxwstsezdcdhyq");
 
-                smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = networkCredential;
-                smtpClient.Port = 587;
-                smtpClient.EnableSsl = true;
-                smtpClient.Send(mail);
+            ////    smtpClient.UseDefaultCredentials = false;
+            ////    smtpClient.Credentials = networkCredential;
+            ////    smtpClient.Port = 587;
+            ////    smtpClient.EnableSsl = true;
+            ////    smtpClient.Send(mail);
 
-                ViewBag.Message = "Mail Sent";
+            ////    ViewBag.Message = "Mail Sent";
 
 
-                ModelState.Clear();
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message.ToString();
-            }
+            ////    ModelState.Clear();
+            ////}
+            ////catch (Exception ex)
+            ////{
+            ////    ViewBag.Message = ex.Message.ToString();
+            ////}
 
             return View();
         }

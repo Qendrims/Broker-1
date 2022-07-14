@@ -1,4 +1,4 @@
-﻿@using Broker.ViewModels
+﻿@using Broker.Models
 
 @model PostDetailViewModel
 @{
@@ -112,8 +112,8 @@
                    <img src="https://www.stockvault.net/free-photos/CEO">
                 </div>
                    <form class="owner-form" method="post">
-                      <input asp-for="@Model.FullName" type="text" class="name" placeholder="Name">
-                      <span class="text-danger" asp-validation-for="@Model.FullName"></span>
+                      <input asp-for="@Model.Email" type="text" class="name" placeholder="Name">
+                      <span class="text-danger" asp-validation-for="@Model.Email"></span>
                       <input asp-for="@Model.Subject" type="text" class="subject" placeholder="Subject">
                        <span class="text-danger" asp-validation-for="@Model.Subject"></span>
                       <textarea asp-for="@Model.Message" class="msg" rows="4" cols="50" placeholder="Write your message here"></textarea>

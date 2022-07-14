@@ -35,7 +35,7 @@ namespace Broker.ViewModels
 
 
         [Required]
-        public string FullName { get; set; }
+        public string Email { get; set; }
         [Required]
         public string Subject { get; set; }
         [Required]
