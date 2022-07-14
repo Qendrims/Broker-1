@@ -167,7 +167,7 @@ namespace BrokerApp.Controllers
             post.Latitude = postView.Latitude;
             post.Longitude = postView.Longitude;
             post.ZipCode = postView.ZipCode;
-            
+            post.Price = (double)postView.Price;
             if (ModelState.IsValid)
             {
                 this._db.Posts.Add(post);

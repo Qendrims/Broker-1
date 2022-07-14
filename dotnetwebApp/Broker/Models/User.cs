@@ -14,7 +14,7 @@ namespace Broker.Models
         public string FullName { get; set; }
         [Required(ErrorMessage ="Birthday is required")]
         public DateTime Birthday{ get; set; }
-        
+    
         [Required(ErrorMessage = "ZipCode is required")]
         public int ZipCode { get; set; }
     }

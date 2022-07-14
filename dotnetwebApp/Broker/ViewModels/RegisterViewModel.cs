@@ -19,7 +19,7 @@ namespace Broker.ViewModels
         [Required(ErrorMessage = "Birthday is required")]
         [DisplayFormat(ApplyFormatInEditMode =true,DataFormatString ="0:dd\\mm\\yyyy")]
         public DateTime Birthday { get; set; }
-        [Required(ErrorMessage ="Phone number is required")]
+        [Required(ErrorMessage = "Phone number is required")]
         public string PhoneNumber { get; set; }
         public string FullName { get; set; }
         [Compare("Password", ErrorMessage = "Password and confirmation password don't match.")]

@@ -33,7 +33,7 @@
 
                     <div class="btn-group float-right">
                         <button type="button" class="btn btn-info dropdown-toggle float-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @User.FindFirst("FullName").Value 
+                            @User.FindFirst("FullName").Value
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" asp-controller="Account" asp-action="MyPost">My Posts</a>
@@ -56,14 +56,10 @@
 
                 }
             </ul>
-
-
-
         </div>
-
     </header>
-    @RenderBody()
 
+    @RenderBody()
 
     <div class="homepage-footer">
 

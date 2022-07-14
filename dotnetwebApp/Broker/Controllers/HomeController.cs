@@ -33,14 +33,14 @@ namespace Broker.Controllers
             List<HomeViewModel> homeViewModels = new List<HomeViewModel>();
 
             var categories = this._db.Categories.ToList();
-
+            var posts = _db.Posts.Where(p => p.IsSponsored == true);
             foreach(var category in categories)
             {
                 HomeViewModel model = new HomeViewModel();
 
                 model.category = category;
                 model.posts = this._db.Posts.Where(p => p.PostCategories.Any(x => x.CategoryId == category.CategoryId)).ToList();
-
+                
                if(model.posts.Count != 0)
                 {
                 homeViewModels.Add(model);

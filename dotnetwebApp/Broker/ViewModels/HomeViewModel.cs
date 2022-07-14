@@ -6,5 +6,6 @@ namespace Broker.Models
     {
         public List<Post> posts { get; set; }
         public Category category { get; set; }
+        
     }
 }
