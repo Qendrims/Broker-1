@@ -6,7 +6,7 @@ namespace Broker.ApplicationDB
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> option) : base(option)
         {
 
         }
@@ -44,9 +44,6 @@ namespace Broker.ApplicationDB
             .IsRequired();
 
 
-            modelBuilder.Entity<User>().Property(u => u.Street);
-
-
             modelBuilder.Entity<User>().Property(u => u.City)
             .HasMaxLength(200);
 
@@ -69,8 +66,7 @@ namespace Broker.ApplicationDB
             modelBuilder.Entity<Post>().Property(p => p.City)
             .HasMaxLength(200);
 
-            modelBuilder.Entity<Post>().Property(p => p.PostUserId)
-            .IsRequired();
+            
 
             modelBuilder.Entity<PostCategory>().HasKey(pc => new { pc.CategoryId, pc.PostId });
 

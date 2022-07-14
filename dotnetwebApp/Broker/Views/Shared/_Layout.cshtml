@@ -30,44 +30,9 @@
             </ul>
 
             <img src="~/Assets/Images/logo.jpg" alt="logo" />
+            
 
-            @if (!User.Identity.IsAuthenticated)
-            {
-            <ul class="nav-list" id="list2">
-                <li ><a href="/Post/PostPage">Posts</a></li>
-                <li ><a href="/Home/RegisterAsAgent">Sign Up</a></li>
-                    <li ><a href="/Home/Login">Log In</a></li>
-                </ul>
-            } else
-            {
-                var userId = UserService.GetUserId();
-                var user = _userManager.FindByIdAsync(userId).Result;
-
-                <div class="dropdown">
-                      <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                      <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                      </svg>
-                     Welcome @user.Name
-                     
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                        <li><a class="dropdown-item active" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="/Post/Postpagecreate">Create Post</a></li>
-                        <li><a class="dropdown-item" href="/Post/MyPosts">My posts</a></li>
-                        <li><a class="dropdown-item" href="/Post/Postpage">All posts</a></li>
-                        <li><a class="dropdown-item" href="/Post/ArchivedPosts">Archived posts</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li id="LogOut"><a class="dropdown-item" href="/Home/Logout">Log Out</a></li>
-                      </ul>
-                     </div>
-             }
-           
-                @*<li id="Posts"><a href="/Post/PostPage">Posts</a></li>*@
-
-
-
-
+            <partial name="_Identity.cshtml" />
             <!-- shtohet njw button ose nje list -->
 
         </div>

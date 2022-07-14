@@ -5,6 +5,7 @@ using Broker.FileHelper;
 using Broker.Models;
 using Broker.Services;
 using Broker.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -20,6 +21,7 @@ using System.Threading.Tasks;
 using Broker.Services.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Broker.Services.Interface;
+
 
 namespace BrokerApp.Controllers
 {
@@ -56,14 +58,26 @@ namespace BrokerApp.Controllers
             return RedirectToAction("PostPage");
         }
 
+        //    int postCount = posts.FilteredPosts.Count();
+        //    var pager = new Pagination(postCount, pg, pageSize);
+
+        //    int postSkip = (pg - 1) * pageSize;
+
+        //    posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
+        //    this.ViewBag.Pager = pager;
+        //    return View(posts);
+        //   // return View(posts);
+        //}
+
+        [Authorize]
         public IActionResult MyPosts(string id, int pg = 1)
         {
             this._userService.TrackUser();
             FilteredPostViewModel posts = new FilteredPostViewModel();
 
-            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == id).ToList();
+            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == id).Include(x => x.Images).ToList();
 
-            const int postPerPage = 2;
+            const int postPerPage = 6;
             if (pg < 1)
                 pg = 1;
 
@@ -73,6 +87,7 @@ namespace BrokerApp.Controllers
             int postSkip = (pg - 1) * postPerPage;
 
             posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
+           
             this.ViewBag.Pager = pager;
 
             return View(posts);
@@ -151,11 +166,6 @@ namespace BrokerApp.Controllers
             return View("PostPage", posts);
         }
 
-        public IActionResult DeleteAgent(int? id)
-        {
-            _Dbcontext.SaveChanges();
-            return View();
-        }
         [HttpGet]
         public IActionResult Detail(int id)
         {
@@ -184,7 +194,7 @@ namespace BrokerApp.Controllers
         }
 
 
-        [HttpPost] 
+        [HttpPost]
         public JsonResult PostPageCreate(PostViewModel postView)
         {
             try
@@ -196,15 +206,16 @@ namespace BrokerApp.Controllers
                     _postService.CreatePost(postView, HttpContext);
 
                     return Json(new { status = 200, message = "Post created successfully" });
-                } else
+                }
+                else
                 {
 
-                Dictionary<string, string> data = new Dictionary<string, string>();
-                if (string.IsNullOrEmpty(postView.Title))
-                    data.Add("TitleError", "Title cant be empty");
+                    Dictionary<string, string> data = new Dictionary<string, string>();
+                    if (string.IsNullOrEmpty(postView.Title))
+                        data.Add("TitleError", "Title cant be empty");
 
-                if (string.IsNullOrEmpty(postView.Description))
-                    data.Add("DescriptionError", "Description cant be empty");
+                    if (string.IsNullOrEmpty(postView.Description))
+                        data.Add("DescriptionError", "Description cant be empty");
 
 
                     return Json(new { status = 400, message = "Something went wrong", data });
@@ -219,39 +230,22 @@ namespace BrokerApp.Controllers
 
         }
         [HttpGet]
-        public IActionResult Edit(int? id)
-        {
-            this._userService.TrackUser();
-            try
-            {
-
-                var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(x => x.Images).FirstOrDefault();
-                PostDetailViewModel postViewModel = new PostDetailViewModel();
-                try
-                {
-                    var saveMapper = _mapper.Map<PostDetailViewModel>(post);
-                    return View(saveMapper);
-                }
-                catch (Exception ex)
-                {
-                    return View("Error");
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                return View("Error", ex);
-            }
-
+        public IActionResult Edit(int id)
+        {  
+              var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(x => x.Images).Include(x => x.PostCategories).Include(x => x.User).FirstOrDefault();
+                
+               
+              var postViewModel = _mapper.Map<PostDetailViewModel>(post);
+              postViewModel.categories = _Dbcontext.Categories.ToList();
+              return View(postViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(PostDetailViewModel ViewModel)
+        public IActionResult Edit(PostDetailViewModel ViewModel,int id)
         {
 
-            var post = this._Dbcontext.Posts.Where(x => x.PostId == ViewModel.PostId).Include(e => e.Images).FirstOrDefault();
+            var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(e => e.Images).FirstOrDefault();
             var ImageToDelete = post.Images.Where(x => x.PostId == ViewModel.PostId).FirstOrDefault();
 
             try
@@ -259,7 +253,7 @@ namespace BrokerApp.Controllers
 
                 post.Title = ViewModel.Title;
                 post.Description = ViewModel.Description;
-                post.Price = ViewModel.Price;
+                post.NewPrice = ViewModel.NewPrice;
                 if (ViewModel.ImageUploaded != null)
                     foreach (var image in ViewModel.ImageUploaded)
                     {
@@ -280,7 +274,7 @@ namespace BrokerApp.Controllers
 
                 this._Dbcontext.Update(post);
                 this._Dbcontext.SaveChanges();
-                return View("Detail", ViewModel);
+                return Redirect("https://localhost:44359/Post/MyPosts/"+_userManager.GetUserId(User));
             }
             catch (Exception ex)
             {

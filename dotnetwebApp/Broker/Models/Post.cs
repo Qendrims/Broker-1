@@ -14,26 +14,28 @@ namespace Broker.Models
         public int PostId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public double Price { get; set; }
         public int? Rooms { get; set; }
         public int? BathRooms { get; set; } 
 
         public int? Size { get; set; }
         public int? Floors { get; set; }
         public int? ApartmentFlor { get; set; }
-
+        public double NewPrice { get; set; }
+        public double OldPrice { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public bool IsArchived { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public string Street { get; set; }
-        public string Country { get; set; }
         public string City { get; set; }
         public string State { get; set; }
+
+        public string Country { get; set; }
         public int ZipCode { get; set; }
         public string PostUserId { get; set; }
         [ForeignKey("PostUserId")]
         public User User { get; set; }
+        
 
         public virtual ICollection<PostCategory> PostCategories { get; set; }
         public bool IsDeleted { get; set; } = false;

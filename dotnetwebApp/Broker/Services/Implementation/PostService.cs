@@ -53,20 +53,19 @@ namespace Broker.Services.Implementation
                 image.Type = "jpg";
                 this._Dbcontext.PostImages.Add(image);
             }
-            }
         }
-
         private void CreatePostCategory(PostViewModel postView, Post postMapper)
         {
-            if (postView.CategoryId != 0)
+            if (postView.CategoryId != null)
             {
-
-                PostCategory postCategory = new PostCategory();
-                postCategory.CategoryId = postView.CategoryId;
-                postCategory.Post = postMapper;
-                this._Dbcontext.PostCategories.Add(postCategory);
-
+                foreach (var catId in postView.CategoryId)
+                {
+                    PostCategory postCategory = new PostCategory();
+                    postCategory.CategoryId = catId;
+                    postCategory.Post = postMapper;
+                    this._Dbcontext.PostCategories.Add(postCategory);
+                }
             }
-        }
+        }      
     }
 }

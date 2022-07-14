@@ -1,4 +1,5 @@
-﻿using Broker.ApplicationDB;
+﻿using AutoMapper;
+using Broker.ApplicationDB;
 using Broker.Models;
 using Broker.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,11 @@ namespace Broker.Controllers
     public class SimpleUserController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public SimpleUserController(ApplicationDbContext db)
+        private IMapper _mapper;
+        public SimpleUserController(ApplicationDbContext db, IMapper mapper)
         {
             _db = db;
+            this._mapper = mapper;
         }
         public IActionResult HomePage()
         {
@@ -34,5 +37,51 @@ namespace Broker.Controllers
             }
             return View(homeViewModels);
         }
+
+
+        public IActionResult GetUserById(int id)
+        {
+            var User = _db.Users.Find(id);
+            return View(User);
+        }
+
+
+        public IActionResult DeleteSU(int id) {
+           
+                var simpleUser = _db.Users.Find(id);
+                _db.Users.Remove(simpleUser);
+                _db.SaveChanges();
+                return RedirectToAction("Index","Home");
+
+        }
+
+        [HttpGet]
+        public IActionResult UpdateSU(int id)
+        {
+
+            var simpleUser = _db.Users.Find(id);
+            if (simpleUser == null ) {
+                return RedirectToAction("Error","Home");
+            }
+            return View(simpleUser);
+
+        }
+
+        //[HttpPost]
+        //public IActionResult UpdateSU(SUViewModel suvm,int id)
+        //{
+
+        //    var simpleUser = _db.SimpleUsers.Find(id);
+        //    var password = simpleUser.Password; 
+        //    simpleUser = _mapper.Map<SimpleUser>(suvm);
+        //    simpleUser.Password = password;
+
+        //    if (ModelState.IsValid) {
+        //        _db.SimpleUsers.Update(simpleUser);
+        //        _db.SaveChanges();
+        //        return RedirectToAction("HomePage","SimpleUser");
+        //    }
+        //    return View(suvm);
+        //}
     }
 }

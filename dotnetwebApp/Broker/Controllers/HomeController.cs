@@ -83,79 +83,8 @@ namespace Broker.Controllers
             return View();
         }
 
-        public IActionResult Login()
-        {
-            _userService.TrackUser();
-            return View();
-        }
+      
 
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginUserModel loginUser, string returnUrl)
-        {
-
-            bool result = await _userService.IsLoggedIn(loginUser);
-            if (result)
-            {
-                if (returnUrl != null)
-                {
-                    return LocalRedirect(returnUrl);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            else
-            {
-                return View("Login", "Home");
-            }
-        }
-
-        [HttpGet] 
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
-        }
-
-        public IActionResult RegisterAsAgent()
-        {
-            _userService.TrackUser();
-            return View();
-
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RegisterAsAgent(LoginUserModel model)
-        {
-            var user = _userService.RegisterUser(model);
-            if (user != null)
-            {
-
-                var token = _userService.GetUserToken(user.Result);
-
-                //Generate Email Confrimation Link
-                var confrimationLink = Url.Action("Index", "Home",
-                    new { token = token }, Request.Scheme);
-                await _emailSender.SendEmailAsync(model.Email, "Confirm email", "Confirm email by pressing this link: <a href=\"" + confrimationLink + "\">link</a>");
-                //Log confirmation lint to a file
-                _logger.Log(LogLevel.Warning, confrimationLink);
-                //await _userManager.AddToRoleAsync(user, "Visitor");
-                return RedirectToAction("Index", "Home");
-
-            }
-            return View(model);
-
-        }
-
-
-        public IActionResult RegisterAsSimpleUser()
-        {
-
-            return View();
-
-        }
         public IActionResult AboutUs()
         {
             return View();
@@ -180,9 +109,5 @@ namespace Broker.Controllers
             return View();
         }
 
-        public IActionResult Agents()
-        {
-            return View();
-        }
     }
 }

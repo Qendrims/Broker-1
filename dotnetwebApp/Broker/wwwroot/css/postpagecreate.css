@@ -19,6 +19,8 @@
         text-decoration: underline
     }
 
+
+
 #map {
     height: 400px;
     min-width: 70%;
@@ -41,7 +43,7 @@
     display: none;
 }
 
-input,select {
+input, select {
     margin-bottom: 5px;
 }
 

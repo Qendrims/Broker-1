@@ -1,5 +1,4 @@
-
-function searchAgents(e) {
+﻿function searchAgents(e) {
     var searchText = e.target.value;
     var elements = document.querySelectorAll('.agentList');
     elements.forEach(el => {

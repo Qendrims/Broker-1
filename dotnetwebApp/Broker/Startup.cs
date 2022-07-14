@@ -1,7 +1,10 @@
 using AutoMapper;
 using Broker.ApplicationDB;
+using Broker.Data;
 using Broker.Mailing;
 using Broker.Models;
+using Broker.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Broker.Services.Implementation;
 using Broker.Services.Interface;
 using Broker.Services.Mailing;
@@ -47,10 +50,22 @@ namespace Broker
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddScoped<IEmailSender, EmailSender>();
+
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IEmailSender, EmailSender>();
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+            //add cache
+            //services.AddMemoryCache();
+
+            //add Session
+            //services.AddSession();
+
+            services.AddAuthentication(options => {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
+
             services.Configure<IdentityOptions>(options =>
             {
                 //Password Settings
@@ -104,7 +119,13 @@ namespace Broker
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            //use Session
+            //app.UseSession();
+
+            //Authoentication and Authorization
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -113,6 +134,9 @@ namespace Broker
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //Seeding Roles
+            AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
         }
     }
 }

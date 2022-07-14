@@ -37,6 +37,16 @@ namespace Broker.Models
         [ForeignKey("PostUserId")]
         public User User { get; set; }
 
+        public int? Rooms { get; set; }
+        public int? BathRooms { get; set; }
+
+        public int? Size { get; set; }
+        public int? Floors { get; set; }
+        public int? ApartmentFlor { get; set; }
+        public int HouseNumber { get; set; }
+
+        public string Neighbourhood { get; set; }
+
 
         public virtual PostCategory PostCategories { get; set; }
 
