@@ -5,6 +5,7 @@ using Broker.FileHelper;
 using Broker.Models;
 using Broker.Services;
 using Broker.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +17,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace BrokerApp.Controllers
 {
@@ -61,13 +63,15 @@ namespace BrokerApp.Controllers
         //    return View(posts);
         //   // return View(posts);
         //}
+
+        [Authorize]
         public IActionResult MyPosts(string id, int pg = 1)
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
 
-            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == id).ToList();
+            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == id).Include(x => x.Images).ToList();
 
-            const int postPerPage = 2;
+            const int postPerPage = 6;
             if (pg < 1)
                 pg = 1;
 
@@ -77,6 +81,7 @@ namespace BrokerApp.Controllers
             int postSkip = (pg - 1) * postPerPage;
 
             posts.FilteredPosts = posts.FilteredPosts.Skip(postSkip).Take(pager.PageSize).ToList();
+           
             this.ViewBag.Pager = pager;
 
             return View(posts);
@@ -102,6 +107,7 @@ namespace BrokerApp.Controllers
             return View(posts);
         }
 
+        [Authorize]
         public IActionResult PostPage(string category, string city,double? minPrice,double? maxPrice, int pg = 1)
         {
           
@@ -120,7 +126,7 @@ namespace BrokerApp.Controllers
                 cat = _Dbcontext.Categories.First(c => c.CategoryName == category);
             }
             var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
-                .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => minPrice == null || p.Price >= minPrice).Where(p => maxPrice == null || p.Price <= maxPrice).Where(p => p.IsArchived == false).Include(p => p.Images).ToList();
+                .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => minPrice == null || p.NewPrice >= minPrice).Where(p => maxPrice == null || p.NewPrice <= maxPrice).Where(p => p.IsArchived == false).Include(p => p.Images).ToList();
             posts.FilteredPosts = result;
             posts.Category = category;
             posts.City = city;
@@ -158,6 +164,8 @@ namespace BrokerApp.Controllers
                 return View("Error");
             }
         }
+
+        [Authorize]
         [HttpGet]
         public IActionResult PostPageCreate()
         {
@@ -166,10 +174,8 @@ namespace BrokerApp.Controllers
         }
 
 
-
-
         [HttpPost]
-        public IActionResult PostPageCreate(PostViewModel postView)
+        public JsonResult PostPageCreate(PostViewModel postView)
         {
             try
             {
@@ -177,21 +183,24 @@ namespace BrokerApp.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    _postService.CreatePost(postView, HttpContext);  
+                    _postService.CreatePost(postView, HttpContext);
 
-                return Json(new { status = 200, message = "Post created successfully" });
+                    return Json(new { status = 200, message = "Post created successfully" });
+                }
+                else
+                {
+
+                    Dictionary<string, string> data = new Dictionary<string, string>();
+                    if (string.IsNullOrEmpty(postView.Title))
+                        data.Add("TitleError", "Title cant be empty");
+
+                    if (string.IsNullOrEmpty(postView.Description))
+                        data.Add("DescriptionError", "Description cant be empty");
+
+
+                    return Json(new { status = 400, message = "Something went wrong", data });
                 }
 
-                Dictionary<string, string> data = new Dictionary<string, string>();
-                if (string.IsNullOrEmpty(postView.Title))
-                    data.Add("TitleError", "Title cant be empty");
-
-                if (string.IsNullOrEmpty(postView.Description))
-                    data.Add("DescriptionError", "Description cant be empty");
-                if (postView.CategoryId == null)
-                    data.Add("CategoryError", "Choose at least one category");
-
-                return Json(new { status = 400, message = "Something went wrong", data });
             }
             catch (Exception ex)
             {
@@ -201,45 +210,30 @@ namespace BrokerApp.Controllers
 
         }
         [HttpGet]
-        public IActionResult Edit(int? id)
-        {
-            try
-            {
-
-                var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(x => x.Images).FirstOrDefault();
-                PostDetailViewModel postViewModel = new PostDetailViewModel();
-                try
-                {
-                    var saveMapper = _mapper.Map<PostDetailViewModel>(post);
-                    return View(saveMapper);
-                }
-                catch(Exception ex)
-                {
-                    return View("Error");
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                return View("Error", ex);
-            }
-
+        public IActionResult Edit(int id)
+        {  
+              var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(x => x.Images).Include(x => x.PostCategories).Include(x => x.User).FirstOrDefault();
+                
+               
+              var postViewModel = _mapper.Map<PostDetailViewModel>(post);
+              postViewModel.categories = _Dbcontext.Categories.ToList();
+              return View(postViewModel);
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, PostDetailViewModel ViewModel)
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(PostDetailViewModel ViewModel,int id)
         {
 
             var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(e => e.Images).FirstOrDefault();
-            var ImageToDelete = post.Images.Where(x => x.PostId == id).FirstOrDefault();
+            var ImageToDelete = post.Images.Where(x => x.PostId == ViewModel.PostId).FirstOrDefault();
 
             try
             {
 
                 post.Title = ViewModel.Title;
                 post.Description = ViewModel.Description;
-                post.Price = ViewModel.Price;
+                post.NewPrice = ViewModel.NewPrice;
                 if (ViewModel.ImageUploaded != null)
                     foreach (var image in ViewModel.ImageUploaded)
                     {
@@ -257,11 +251,10 @@ namespace BrokerApp.Controllers
                     ViewModel.Image = post.Images.ToList();
                 }
 
-                ViewModel.PostId = id;
 
                 this._Dbcontext.Update(post);
                 this._Dbcontext.SaveChanges();
-                return View("Detail", ViewModel);
+                return Redirect("https://localhost:44359/Post/MyPosts/"+_userManager.GetUserId(User));
             }
             catch (Exception ex)
             {

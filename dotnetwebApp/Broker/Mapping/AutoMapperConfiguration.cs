@@ -12,9 +12,13 @@ namespace Broker.Mapping
             CreateMap<Post,PostDetailViewModel>()
                 .ForMember(x => x.Image, y => y.MapFrom(b => b.Images))
                 .ForMember(x => x.OwnerId, y => y.MapFrom(b => b.PostUserId))
-                .ForMember(x => x.OwnerName, y => y.MapFrom(b => b.User.Name + " " + b.User.LastName));
+                .ForMember(x => x.OwnerName, y => y.MapFrom(b => b.User.Name + " " + b.User.LastName))
+                .ForMember(x => x.NewPrice, y => y.MapFrom(b => b.NewPrice));
             
-            CreateMap<PostViewModel, Post>();
+            CreateMap<PostViewModel, Post>()
+                .ForMember(x => x.OldPrice, y => y.MapFrom(b => b.Price))
+                .ForMember(x => x.NewPrice, y => y.MapFrom(b => b.Price));
+
             CreateMap<AdsPaymentViewModel, AdsPayments>();
 
             CreateMap<RegisterUserViewModel, User>();

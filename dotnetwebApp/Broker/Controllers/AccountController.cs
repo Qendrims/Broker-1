@@ -43,7 +43,7 @@ namespace Broker.Controllers
                         var result = await _signInManager.PasswordSignInAsync(user,loginUser.Password,false,false);
                         if (result.Succeeded)
                         {
-                            return RedirectToAction("Index","Home");
+                            return RedirectToAction("PostPage","Post");
                         }
                     }
                     ViewBag.Message = "Username or Password is incorrect";
@@ -87,17 +87,24 @@ namespace Broker.Controllers
             }
 
             var newUser = _mapper.Map<User>(userRegistered);
-            
+            newUser.UserName = newUser.Email;
+
             var result = await _userManager.CreateAsync(newUser, userRegistered.Password);
             
             if (result.Succeeded)
             {
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                if (!string.IsNullOrEmpty(token)) {
+                    
+                }
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
             }
             
             return View("RegisterCompleted");
 
         }
+
+        
 
         [HttpGet]
         public async Task<IActionResult> Logout() {

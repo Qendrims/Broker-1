@@ -1,4 +1,3 @@
-
 var startLat;
 var startLong;
 
@@ -28,7 +27,7 @@ var myMarker = L.marker([startLat, startLong], { title: "Coordinates", alt: "Coo
 
     document.getElementById('lat').value = lat;
     document.getElementById('lon').value = lon;
-    latlongSearch(lat,lon)
+    latlongSearch(lat, lon)
 });
 
 
@@ -40,9 +39,9 @@ function chooseAddr(lat1, lng1, address) {
     lon = lng1.toFixed(8);
     document.getElementById('lat').value = lat;
     document.getElementById('lon').value = lon;
-    
+
     document.getElementById('results').innerHTML = "";
-    latlongSearch(lat1,lng1)
+    latlongSearch(lat1, lng1)
 }
 
 //show search results
@@ -54,7 +53,7 @@ function myFunction(arr) {
     if (arr.length > 0) {
         for (i = 0; i < arr.length; i++) {
 
-              out += `<div class="address" title="Show Location and Coordinates" onclick="chooseAddr(${arr[i].lat},${arr[i].lon},'${arr[i].display_name}')"> ${arr[i].display_name} </div>`
+            out += `<div class="address" title="Show Location and Coordinates" onclick="chooseAddr(${arr[i].lat},${arr[i].lon},'${arr[i].display_name}')"> ${arr[i].display_name} </div>`
 
         }
         document.getElementById('results').innerHTML = out;
@@ -70,7 +69,7 @@ function myFunction(arr) {
 // search address based on latitude and longitude
 function latlongSearch(lat, long) {
     fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + lat + "&lon=" + long).then(res => res.json()).then(data => {
-         document.getElementById('currAddress').textContent = data.display_name;
+        document.getElementById('currAddress').textContent = data.display_name;
         document.getElementById('city').value = data.address.city != null ? data.address.city : "";
         document.getElementById('country').value = data.address.country != null ? data.address.country : "";
         document.getElementById('neighbourhood').value = data.address.neighbourhood != null ? data.address.neighbourhood : "";
@@ -78,8 +77,8 @@ function latlongSearch(lat, long) {
         document.getElementById('state').value = data.address.state != null ? data.address.state : "";
         document.getElementById('housenumber').value = data.address.house_number != null ? +data.address.house_number : "";
         document.getElementById('zipcode').value = data.address.postcode != null ? +data.address.postcode : "";
-        
-   });
+
+    });
 }
 
 // click on map function
@@ -94,7 +93,7 @@ map.on('click', e => {
     document.getElementById('lat').value = lat;
     document.getElementById('lon').value = long;
 
-      
+
 })
 
 // search address with text input
@@ -105,7 +104,7 @@ function addr_search() {
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var myArr = JSON.parse(this.responseText);
-           // console.log(myArr);
+            // console.log(myArr);
             myFunction(myArr);
         }
     };

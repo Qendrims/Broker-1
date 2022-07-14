@@ -12,7 +12,17 @@
 
 <link href="@Url.Content("~/css/UserPostPage.css")" rel="stylesheet" type="text/css" />
 
-
+  <div class="homeSlider">
+    <div class="homepage-slider">
+        <img src="../../Assets/Images/grid1.jpg" class="homepage-slider-imgs">
+        <img src="../../Assets/Images/slider4.jpg" class="homepage-slider-imgs">
+        <img src="../../Assets/Images/slider5.jpg" class="homepage-slider-imgs">   
+        <div class="homepage-search">
+            <input class="homepageSearch" type="text" placeholder="Find an agent">
+            <div class="searchResults"></div>
+          </div>
+ </div>
+ </div>
 
 <div class="container" style="display: flex;gap: 10px;">
 
@@ -75,13 +85,13 @@
                         <div class="post-card-info-address">
                             
                             <h3>@post.Country</h3>
-                            <p>@post.City</p>
+                            <p>@post.City</p>z
                             <hr />
                             <h3>@post.Title</h3>
                             <p>@post.Description</p>
                             <hr />
                             <div class="post-price-btns">
-                                <h3>$@post.Price</h3>
+                                <h3>$@post.OldPrice</h3>
                                 <a href="#" class="btn btn-outline-primary">View Details</a>
                             </div>
                         </div>
@@ -138,3 +148,4 @@
 
 
 <script src="@Url.Content("~/js/UserPostPage.js")"></script>
+<script src="~/js/welcomePage.js"></script>

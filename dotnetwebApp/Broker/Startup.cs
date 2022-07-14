@@ -1,6 +1,7 @@
 using AutoMapper;
 using Broker.ApplicationDB;
 using Broker.Data;
+using Broker.Mailing;
 using Broker.Models;
 using Broker.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -46,6 +47,7 @@ namespace Broker
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IEmailSender, EmailSender>();
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
             //add cache

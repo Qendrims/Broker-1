@@ -1,7 +1,8 @@
-﻿
+﻿@using Broker.Data
+
 @inject UserManager<User> UserManager;
 
-@if(!User.Identity.IsAuthenticated){
+@if(!User.Identity.IsAuthenticated ){
     <ul class="nav-list" id="list1">
     <li id="Login"><a asp-controller="Account" asp-action="Login">LogIn</a></li>
     <li id="Register"><a asp-controller="Account" asp-action="RegisterUser" >Register</a></li>
@@ -17,7 +18,7 @@ else
                             Welcome @UserManager.GetUserName(User)
                           </button>
                           <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                              <li><a class="dropdown-item" href="#">My Posts</a></li>
+                              <li><a class="dropdown-item" asp-controller="Post" asp-action="MyPosts" asp-route-id="@UserManager.GetUserId(User)">My Posts</a></li>
                               <li><a class="dropdown-item" href="#">Archived Posts</a></li>
                             <li><a class="dropdown-item" asp-controller="SimpleUser" asp-action="UpdateSU" asp-route-id="1">Update profile</a></li>
                             <li><a class="dropdown-item" asp-controller="SimpleUser" asp-action="GetSUById" asp-route-id="2002">Delete account</a></li>

@@ -55,11 +55,15 @@ html {
         font-size: 12px;
     }
 
-    .post a {
-        text-decoration: none;
-        font-size: 14px;
-        color: darkolivegreen;
-    }
+#discountPrice {
+    text-decoration: line-through;
+}
+
+.post a {
+    text-decoration: none;
+    font-size: 14px;
+    color: darkolivegreen;
+}
 
         .post a:hover {
             color: darkgreen;
