@@ -11,18 +11,60 @@
 }
 
 <link href="@Url.Content("~/css/UserPostPage.css")" rel="stylesheet" type="text/css" />
+<style>
+section.range-slider {
+    position: relative;
+    width: 200px;
+    height: 35px;
+}
 
-  <div class="homeSlider">
-    <div class="homepage-slider">
-        <img src="../../Assets/Images/grid1.jpg" class="homepage-slider-imgs">
-        <img src="../../Assets/Images/slider4.jpg" class="homepage-slider-imgs">
-        <img src="../../Assets/Images/slider5.jpg" class="homepage-slider-imgs">   
-        <div class="homepage-search">
-            <input class="homepageSearch" type="text" placeholder="Find an agent">
-            <div class="searchResults"></div>
-          </div>
- </div>
- </div>
+section.range-slider input {
+    pointer-events: none;
+    position: absolute;
+    overflow: hidden;
+    left: 0;
+    top: 15px;
+    width: 200px;
+    outline: none;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+section.range-slider input::-webkit-slider-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 1;
+    outline: 0;
+}
+
+section.range-slider input::-moz-range-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 10;
+    -moz-appearance: none;
+    width: 9px;
+}
+
+section.range-slider input::-moz-range-track {
+    position: relative;
+    z-index: -1;
+    background-color: rgba(0, 0, 0, 1);
+    border: 0;
+}
+section.range-slider input:last-of-type::-moz-range-track {
+    -moz-appearance: none;
+    background: none transparent;
+    border: 0;
+}
+  section.range-slider input[type=range]::-moz-focus-outer {
+  border: 0;
+}
+.form-label{
+    align-self: flex-start;
+}
+</style>
+
 
 <div class="container" style="display: flex;gap: 10px;">
 
@@ -47,16 +89,52 @@
                 }
             </select>
 
-            <label class="label label-default" for="customRange2">Select price</label>
+
+      @*   <label class="form-label">Select price</label>
+          <div class="min-max-slider" data-legendnum="2">
+    <label for="min">Minimum price</label>
+    <input id="min" class="min" name="minPrice" type="range" step="1" min="0" max="3000" />
+    <label for="max">Maximum price</label>
+    <input id="max" class="max" name="maxPrice" type="range" step="1" min="0" max="3000" />
+         </div>*@
+
+         <!-- This block can be reused as many times as needed -->
+<section class="range-slider">
+    <label>Select Price</label>
+  <span class="rangeValues"></span>
+  <input value="5" min="0" max="990" step="10" type="range">
+  <input value="10" min="10" max="1000" step="10" type="range">
+</section>
+
+         <label class="form-label">Rooms</label>
+         <input class="col-6 p-0" type="number" name="rooms" />
+
+          <label class="form-label">Bathrooms</label>
+         <input class="col-6 p-0" type="number" name="bathrooms" />
+      
+          <label class="form-label">Size</label>
+          <div style="width: 100%;display: flex;align-items: center">
+
+         <input  class="col-6 p-0" type="number" name="size" />
+         <span>m<sup>2</sup></span>
+          </div>   
+    
+
+
+
+
+        
+
+           @* <label class="label label-default" for="customRange2">Select price</label>
             <p>Min Price</p>
-             <input type="range" name="minPrice" class="form-range" min="0" max="100" oninput="num.value = this.value+'$'" id="minPrice" />
+             <input type="range"  name="minPrice" class="form-range" min="0" max="100" oninput="num.value = this.value+'$'" id="minPrice" />
             <output id="num"></output>
 
              <p>Max Price</p>
              <input type="range" name="maxPrice" class="form-range" min="0" max="100" oninput="num2.value = this.value+'$'" id="maxPrice" />
             <output id="num2"></output>
           
-            <span asp-validation-for="minPrice" class="text-danger"></span>
+            <span asp-validation-for="minPrice" class="text-danger"></span>*@
 
              <input id="btn-submit" type='submit' class="btn btn-primary" value='Search' />
         </form>
@@ -66,16 +144,11 @@
 
    <div class="container" style="padding: 0">
         <div class="row">
-            @if(@Model.FilteredPosts == null)
-            {
-                <h3>No posts to show</h3>
-            } else
-            {
-                
+ 
             @foreach(var post in @Model.FilteredPosts)
             {
                 
-            <div class="col-4">
+            <div class="col-lg-4 col-sm-12 col-md-6">
 
                 <article class="post-card">
                     <div class="post-card-img">
@@ -99,7 +172,7 @@
                 </article>
             </div>
             }
-           }
+           
              </div>
               </div>
 
@@ -146,6 +219,145 @@
 
 </div>
 
-
 <script src="@Url.Content("~/js/UserPostPage.js")"></script>
-<script src="~/js/welcomePage.js"></script>
+<script>
+    function getVals(){
+  // Get slider values
+  var parent = this.parentNode;
+  var slides = parent.getElementsByTagName("input");
+    var slide1 = parseFloat( slides[0].value );
+    var slide2 = parseFloat( slides[1].value );
+  // Neither slider will clip the other, so make sure we determine which is larger
+  if( slide1 > slide2 ){ var tmp = slide2; slide2 = slide1; slide1 = tmp; }
+  
+  var displayElement = parent.getElementsByClassName("rangeValues")[0];
+      displayElement.innerHTML = slide1 + " - " + slide2;
+}
+
+window.onload = function(){
+  // Initialize Sliders
+  var sliderSections = document.getElementsByClassName("range-slider");
+      for( var x = 0; x < sliderSections.length; x++ ){
+        var sliders = sliderSections[x].getElementsByTagName("input");
+        for( var y = 0; y < sliders.length; y++ ){
+          if( sliders[y].type ==="range" ){
+            sliders[y].oninput = getVals;
+            // Manually trigger event first time to display values
+            sliders[y].oninput();
+          }
+        }
+      }
+}
+//  var thumbsize = 14;
+
+//function draw(slider,splitvalue) {
+
+//    /* set function vars */
+//    var min = slider.querySelector('.min');
+//    var max = slider.querySelector('.max');
+//    var lower = slider.querySelector('.lower');
+//    var upper = slider.querySelector('.upper');
+//    var legend = slider.querySelector('.legend');
+//    var thumbsize = parseInt(slider.getAttribute('data-thumbsize'));
+//    var rangewidth = parseInt(slider.getAttribute('data-rangewidth'));
+//    var rangemin = parseInt(slider.getAttribute('data-rangemin'));
+//    var rangemax = parseInt(slider.getAttribute('data-rangemax'));
+
+//    /* set min and max attributes */
+//    min.setAttribute('max',splitvalue);
+//    max.setAttribute('min',splitvalue);
+
+//    /* set css */
+//    min.style.width = parseInt(thumbsize + ((splitvalue - rangemin)/(rangemax - rangemin))*(rangewidth - (2*thumbsize)))+'px';
+//    max.style.width = parseInt(thumbsize + ((rangemax - splitvalue)/(rangemax - rangemin))*(rangewidth - (2*thumbsize)))+'px';
+//    min.style.left = '0px';
+//    max.style.left = parseInt(min.style.width)+'px';
+//    min.style.top = lower.offsetHeight+'px';
+//    max.style.top = lower.offsetHeight+'px';
+//    legend.style.marginTop = min.offsetHeight+'px';
+//    slider.style.height = (lower.offsetHeight + min.offsetHeight + legend.offsetHeight)+'px';
+    
+//    /* correct for 1 off at the end */
+//    if(max.value>(rangemax - 1)) max.setAttribute('data-value',rangemax);
+
+//    /* write value and labels */
+//    max.value = max.getAttribute('data-value'); 
+//    min.value = min.getAttribute('data-value');
+//    lower.innerHTML = min.getAttribute('data-value');
+//    upper.innerHTML = max.getAttribute('data-value');
+
+//}
+
+//function init(slider) {
+//    /* set function vars */
+//    var min = slider.querySelector('.min');
+//    var max = slider.querySelector('.max');
+//    var rangemin = parseInt(min.getAttribute('min'));
+//    var rangemax = parseInt(max.getAttribute('max'));
+//    var avgvalue = (rangemin + rangemax)/2;
+//    var legendnum = slider.getAttribute('data-legendnum');
+
+//    /* set data-values */
+//    min.setAttribute('data-value',rangemin);
+//    max.setAttribute('data-value',rangemax);
+    
+//    /* set data vars */
+//    slider.setAttribute('data-rangemin',rangemin); 
+//    slider.setAttribute('data-rangemax',rangemax); 
+//    slider.setAttribute('data-thumbsize',thumbsize); 
+//    slider.setAttribute('data-rangewidth',slider.offsetWidth);
+
+//    /* write labels */
+//    var lower = document.createElement('span');
+//    var upper = document.createElement('span');
+//    lower.classList.add('lower','value');
+//    upper.classList.add('upper','value');
+//    lower.appendChild(document.createTextNode(rangemin));
+//    upper.appendChild(document.createTextNode(rangemax));
+//    slider.insertBefore(lower,min.previousElementSibling);
+//    slider.insertBefore(upper,min.previousElementSibling);
+    
+//    /* write legend */
+//    var legend = document.createElement('div');
+//    legend.classList.add('legend');
+//    var legendvalues = [];
+//    for (var i = 0; i < legendnum; i++) {
+//        legendvalues[i] = document.createElement('div');
+//        var val = Math.round(rangemin+(i/(legendnum-1))*(rangemax - rangemin));
+//        legendvalues[i].appendChild(document.createTextNode(val));
+//        legend.appendChild(legendvalues[i]);
+
+//    } 
+//    slider.appendChild(legend);
+
+//    /* draw */
+//    draw(slider,avgvalue);
+
+//    /* events */
+//    min.addEventListener("input", function() {update(min);});
+//    max.addEventListener("input", function() {update(max);});
+//}
+
+//function update(el){
+//    /* set function vars */
+//    var slider = el.parentElement;
+//    var min = slider.querySelector('#min');
+//    var max = slider.querySelector('#max');
+//    var minvalue = Math.floor(min.value);
+//    var maxvalue = Math.floor(max.value);
+    
+//    /* set inactive values before draw */
+//    min.setAttribute('data-value',minvalue);
+//    max.setAttribute('data-value',maxvalue);
+
+//    var avgvalue = (minvalue + maxvalue)/2;
+
+//    /* draw */
+//    draw(slider,avgvalue);
+//}
+
+//var sliders = document.querySelectorAll('.min-max-slider');
+//sliders.forEach( function(slider) {
+//    init(slider);
+//});
+</script>

@@ -14,7 +14,6 @@ namespace Broker.Models
         public int PostId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-
         public int? Rooms { get; set; }
         public int? BathRooms { get; set; }
 
@@ -27,7 +26,6 @@ namespace Broker.Models
         public double Longitude { get; set; }
         public bool IsArchived { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public DateTime MeetingDate { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
         public string State { get; set; }

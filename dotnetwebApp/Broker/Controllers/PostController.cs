@@ -13,30 +13,35 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using System;
+using System.Security.Claims;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Broker.Services.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
+using Broker.Services.Interface;
 
 
 namespace BrokerApp.Controllers
 {
     public class PostController : Controller
     {
-
+        private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _Dbcontext;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private IMapper _mapper;
-        private readonly UserManager<User> _userManager;
-        private readonly IPostService _postService;
+        private readonly IPostService _postService; 
+        private readonly IUserService _userService;
 
-        public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
+        public PostController(ApplicationDbContext _context, IUserService userService, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
         {
             this._Dbcontext = _context;
             this._webHostEnvironment = _webHostEnvironment;
             this._mapper = mapper;
             this._userManager = userManager;
             this._postService = postService;
+            this._userService = userService;
         }
 
         public IActionResult Archive(int id)
@@ -67,6 +72,7 @@ namespace BrokerApp.Controllers
         [Authorize]
         public IActionResult MyPosts(string id, int pg = 1)
         {
+            this._userService.TrackUser();
             FilteredPostViewModel posts = new FilteredPostViewModel();
 
             posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == id).Include(x => x.Images).ToList();
@@ -108,17 +114,19 @@ namespace BrokerApp.Controllers
         }
 
         [Authorize]
-        public IActionResult PostPage(string category, string city,double? minPrice,double? maxPrice, int pg = 1)
+        public IActionResult PostPage(string category, string city,double? minPrice,double? maxPrice,int? rooms,int? bathrooms,int? size, int pg = 1)
         {
-          
+
+            this._userService.TrackUser();
             FilteredPostViewModel posts = new FilteredPostViewModel();
             posts.FilteredCategories = _Dbcontext.Categories.ToList();
             posts.Cities = _Dbcontext.Posts.Where(p => !string.IsNullOrEmpty(p.City)).Select(m => m.City).Distinct().ToList();
 
             if (minPrice > maxPrice)
             {
-                ModelState.AddModelError("minPrice", "Min price must be lower than max price");
-                return View(posts);
+                var newMin = minPrice;
+                minPrice = maxPrice;
+                maxPrice = newMin;
             }
             Category cat = new Category();
             if (category != null)
@@ -126,13 +134,23 @@ namespace BrokerApp.Controllers
                 cat = _Dbcontext.Categories.First(c => c.CategoryName == category);
             }
             var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
-                .Where(p => city == null || p.City.ToLower() == city.ToLower()).Where(p => minPrice == null || p.NewPrice >= minPrice).Where(p => maxPrice == null || p.NewPrice <= maxPrice).Where(p => p.IsArchived == false).Include(p => p.Images).ToList();
+                .Where(p => city == null || p.City.ToLower() == city.ToLower())
+                .Where(p => minPrice == null || p.Price >= minPrice)
+                .Where(p => maxPrice == null || p.Price <= maxPrice)
+                .Where(p => rooms == null || p.Rooms == rooms)
+                .Where(p => bathrooms == null || p.BathRooms == bathrooms)
+                .Where(p => size == null || p.Size == size)
+                .Where(p => p.IsArchived == false)
+                .Include(p => p.Images).ToList();
+
             posts.FilteredPosts = result;
+            if(result.Count > 0)
+            posts.Image = result.FirstOrDefault().Images;
             posts.Category = category;
             posts.City = city;
             
             const int postPerPage = 20;
-            if (pg < 1)
+            if (pg < 1) 
                 pg = 1;
 
             int postCount = posts.FilteredPosts.Count();
@@ -147,13 +165,14 @@ namespace BrokerApp.Controllers
             return View("PostPage", posts);
         }
 
-
         [HttpGet]
-        public IActionResult Detail(int? id)
+        public IActionResult Detail(int id)
         {
-            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
+            this._userService.TrackUser();
+            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).ThenInclude(x => x.Category).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
 
-            PostDetailViewModel postViewModel = new PostDetailViewModel();
+            //var postCategories = this._Dbcontext.PostCategories.Where(p => p.PostId == id).Include(y => y.Category).Include(y => y.Post).ToList();
+            //var post1 = postCategories.
             try
             {
                 var saveMapper = _mapper.Map<PostDetailViewModel>(post1);
@@ -164,11 +183,11 @@ namespace BrokerApp.Controllers
                 return View("Error");
             }
         }
-
         [Authorize]
         [HttpGet]
         public IActionResult PostPageCreate()
         {
+            this._userService.TrackUser();
             PostViewModel createPostView = _postService.GetCreatePostModel();
             return View(createPostView);
         }
@@ -300,7 +319,7 @@ namespace BrokerApp.Controllers
             this._Dbcontext.AdsPaymentcs.Add(saveMapper);
             this._Dbcontext.SaveChanges();
 
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

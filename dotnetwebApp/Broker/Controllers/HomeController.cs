@@ -2,6 +2,7 @@
 using Broker.ApplicationDB;
 using Broker.Mailing;
 using Broker.Models;
+using Broker.Services.Interface;
 using Broker.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,27 +15,32 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using B = BCrypt.Net;
+using System.Web;
+using Microsoft.AspNetCore.Http;
 
 namespace Broker.Controllers
 {
     public class HomeController : Controller
     {
-
+        private readonly IHttpContextAccessor _accessor;
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private IMapper _mapper;
         private IEmailSender _emailSender;
+        private readonly IUserService _userService;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IEmailSender emailSender)
+        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor c , ApplicationDbContext db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IUserService userService, IEmailSender emailSender)
         {
+            this._accessor = c;
             this._logger = logger;
             this._db = db;
             this._signInManager = signInManager;
             this._userManager = userManager;
             this._mapper = mapper;
             _emailSender = emailSender;
+            this._userService = userService;
         }
 
         [HttpGet]
@@ -46,8 +52,10 @@ namespace Broker.Controllers
             return Json(data);
         }
 
+
         public IActionResult Index()
         {
+            _userService.TrackUser();
 
             List<HomeViewModel> homeViewModels = new List<HomeViewModel>();
 
@@ -71,6 +79,7 @@ namespace Broker.Controllers
 
         public IActionResult ContactUs()
         {
+            _userService.TrackUser();
             return View();
         }
 

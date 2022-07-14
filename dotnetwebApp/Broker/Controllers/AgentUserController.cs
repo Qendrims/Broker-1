@@ -1,5 +1,5 @@
 ﻿using Broker.ApplicationDB;
-using Broker.Models;
+using Broker.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;

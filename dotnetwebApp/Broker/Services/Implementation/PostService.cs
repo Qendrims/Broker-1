@@ -2,11 +2,12 @@
 using Broker.ApplicationDB;
 using Broker.FileHelper;
 using Broker.Models;
+using Broker.Services.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 
-namespace Broker.Services
+namespace Broker.Services.Implementation
 {
     public class PostService : IPostService
     {
@@ -40,6 +41,8 @@ namespace Broker.Services
 
         private void CreatePostImage(PostViewModel postView, Post postMapper)
         {
+            if(postView.Image != null)
+            {
             foreach (var imageFile in postView.Image)
             {
                 string fullFileName = MethodHelper.FileToBeSaved(postView.Title, imageFile).Result;

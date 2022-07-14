@@ -10,7 +10,7 @@
 
         
             
-    <form autocomplete="off" asp-action="Login" method="post">
+    <form autocomplete="off"  method="post">
           
         <h4 id="registerHeader">Please login to your account</h4>
               <!-- Email input -->
@@ -48,15 +48,10 @@
           </div>
 
           
-           <button type="button" class="btn btn-primary btn-lg btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <a class="btn btn-primary btn-lg" href="/Home/RegisterAsAgent">
            Register
-           </button>
-           <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/Home/RegisterAsAgent">As Agent</a>
-                    <a class="dropdown-item" href="/Home/RegisterAsSimpleUser">As Simple User</a>
-           </div>
-            
-
+           </a>
+           
     </form>
 
             

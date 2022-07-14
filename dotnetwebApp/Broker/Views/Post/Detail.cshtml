@@ -1,4 +1,5 @@
-﻿
+﻿@using Broker.ViewModels
+
 @model PostDetailViewModel
 @{
     ViewData["Title"] = "Detail";
@@ -10,64 +11,97 @@
 
 
 <body>
-	
-	<div class="container">
-		<div class="card">
-			<div class="container-fliud">
-				<div class="wrapper row">
-					<div class="preview col-md-6">
-						
-						<div class="preview-pic tab-content">
-							@for(int i = 0; i< @Model.Image.Count; i++)
-							{
-								@if(i==0){
-									<div class="tab-pane active" id="pic-@i">
-									<img src="~/UploadFiles/@Model.Image[i].ImageName"/>
-									
-									</div>
-								} else
-								{
-									
-								<div class="tab-pane" id="pic-@i">
-									<img src="~/UploadFiles/@Model.Image[i].ImageName"/>
-									
-								</div>
-								}
-								
-							}
-							<ul class="preview-thumbnail nav nav-tabs">
-								@for(int i = 0; i< @Model.Image.Count; i++)
-								{
-									@if(i==0)
-									{
-										<li class="active"><a data-target="#pic-@i" data-toggle="tab"><img src="~/UploadFiles/@Model.Image[i].ImageName"/></a></li>
-									
-									}
-									else{
-										<li><a data-target="#pic-@i" data-toggle="tab"><img src="~/UploadFiles/@Model.Image[i].ImageName"/></a></li>
-									}
-								}
-							</ul>
-						</div>
-						
-						
-					</div>
-					<div class="details col-md-6">
-						<h3 class="product-title">@Model.Title</h3>
-						<h4>Location: @Model.Country,@Model.State,@Model.City,@Model.Street,@Model.ZipCode.</h4>
-						<p class="product-description">@Model.Description</p>
-						<h4 class="price">Price: <span>$@Model.NewPrice</span></h4>
-						<p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
-						<div class="action">
-							<button class="add-to-cart btn btn-default" type="button">Take this Job</button>
-							<button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-  </body>
+
+    <div class="container">
+        <div class="card">
+            <div class="container-fliud">
+                <div class="wrapper row">
+                    <div class="preview col-md-6">
+
+                        <div class="preview-pic tab-content">
+                            @for (int i = 0; i < @Model.Image.Count; i++)
+                            {
+                                @if (i == 0)
+                                {
+                                    <div class="tab-pane active" id="pic-@i">
+                                        <img src="~/UploadFiles/@Model.Image[i].ImageName" />
+
+                                    </div>
+                                }
+                                else
+                                {
+
+                                    <div class="tab-pane" id="pic-@i">
+                                        <img src="~/UploadFiles/@Model.Image[i].ImageName" />
+
+                                    </div>
+                                }
+
+                            }
+                            <ul class="preview-thumbnail nav nav-tabs">
+                                @for (int i = 0; i < @Model.Image.Count; i++)
+                                {
+                                    @if (i == 0)
+                                    {
+                                        <li class="active"><a data-target="#pic-@i" data-toggle="tab"><img src="~/UploadFiles/@Model.Image[i].ImageName" /></a></li>
+
+                                    }
+                                    else
+                                    {
+                                        <li><a data-target="#pic-@i" data-toggle="tab"><img src="~/UploadFiles/@Model.Image[i].ImageName" /></a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+
+
+                    </div>
+                    <div class="details col-md-6">
+
+                        <h4 class="room">Size:@Model.Size km2</h4>
+                        @for (int i = 0; i < 1; i++)
+                        {
+                            if (@Model.PostCategories.FirstOrDefault().CategoryId != 4)
+                            {
+                                if (@Model.PostCategories.FirstOrDefault().CategoryId == 5)
+                                {
+                                    <h4>Floor's Local:@Model.ApartmentFlor</h4>
+                                    continue;
+                                }
+                                if (@Model.PostCategories.FirstOrDefault().CategoryId == 2
+                                || @Model.PostCategories.FirstOrDefault().CategoryId == 3)
+                                {
+                                    <h4>Floor's Apartment:@Model.ApartmentFlor</h4>
+                                }
+                                else
+                                {
+                                    <h4>Floors:@Model.Floors</h4>
+                                }
+                                <h4>Rooms:@Model.Rooms</h4>
+                                <h4>Bath Rooms:@Model.BathRooms</h4>
+
+                            }
+                            else continue;
+                        }
+
+
+
+
+                        <h3 class="product-title">@Model.Title</h3>
+                        <h4>Location: @Model.Country,@Model.State,@Model.City,@Model.Street,@Model.ZipCode.</h4>
+                        <p class="product-description">@Model.Description</p>
+                        <h4 class="price">Price: <span>$@Model.Price</span></h4>
+                        <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+                        <div class="action">
+                            <button class="add-to-cart btn btn-default" type="button">Take this Job</button>
+                            <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 
 
 

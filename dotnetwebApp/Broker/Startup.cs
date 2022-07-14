@@ -5,13 +5,18 @@ using Broker.Mailing;
 using Broker.Models;
 using Broker.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Broker.Services.Implementation;
+using Broker.Services.Interface;
+using Broker.Services.Mailing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -30,6 +35,7 @@ namespace Broker
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var emailConfig = Configuration
@@ -39,7 +45,7 @@ namespace Broker
 
 
             services.AddControllersWithViews();
-           
+            services.AddHttpContextAccessor();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
