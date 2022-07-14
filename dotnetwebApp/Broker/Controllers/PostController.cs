@@ -98,7 +98,7 @@ namespace BrokerApp.Controllers
             return View(posts);
         }
 
-        public IActionResult PostPage(string category, string city,double? minPrice,double? maxPrice,int? rooms,int? bathrooms,int? size, int pg = 1)
+        public IActionResult PostPage(string category, string city,double? minPrice,double? maxPrice,int? story,int? floors,int? rooms,int? bathrooms,int? size, int pg = 1)
         {
 
             this._userService.TrackUser();
@@ -108,7 +108,7 @@ namespace BrokerApp.Controllers
 
             if (minPrice > maxPrice)
             {
-                var newMin = minPrice;
+                var newMin = minPrice; 
                 minPrice = maxPrice;
                 maxPrice = newMin;
             }
@@ -124,6 +124,8 @@ namespace BrokerApp.Controllers
                 .Where(p => rooms == null || p.Rooms == rooms)
                 .Where(p => bathrooms == null || p.BathRooms == bathrooms)
                 .Where(p => size == null || p.Size == size)
+                .Where(p=> story == null || p.ApartmentFlor == story)
+                .Where(p => floors == null || p.Floors == floors)
                 .Where(p => p.IsArchived == false)
                 .Include(p => p.Images).ToList();
 

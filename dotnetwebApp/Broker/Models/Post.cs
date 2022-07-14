@@ -16,7 +16,7 @@ namespace Broker.Models
         public string Description { get; set; }
         public double Price { get; set; }
         public int? Rooms { get; set; }
-        public int? BathRooms { get; set; }
+        public int? BathRooms { get; set; } 
 
         public int? Size { get; set; }
         public int? Floors { get; set; }
