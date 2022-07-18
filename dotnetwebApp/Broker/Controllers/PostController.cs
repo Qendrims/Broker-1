@@ -23,6 +23,7 @@ using Broker.Services.Interface;
 using System.Web;
 using System.Net;
 using System.Net.Mail;
+using Broker.Mailing;
 
 namespace BrokerApp.Controllers
 {
@@ -33,13 +34,16 @@ namespace BrokerApp.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private IMapper _mapper;
         private readonly IPostService _postService;
+        private IEmailSender _emailSender;
 
-        public PostController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
+        public PostController(IEmailSender emailSender, ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
         {
             this._Dbcontext = _context;
             this._webHostEnvironment = _webHostEnvironment;
             this._mapper = mapper;
             this._postService = postService;
+            _userManager= userManager;
+            _emailSender= emailSender;
         }
         public IActionResult Archive(int id) { 
             if (id == 0)
@@ -332,7 +336,8 @@ namespace BrokerApp.Controllers
 
 
         [HttpPost]
-        public ActionResult Detail(ContactOwner contactPostOwner)
+        [Authorize]
+        public async Task<ActionResult> Detail(PostDetailViewModel postDetail,int id)
         {
             if (!ModelState.IsValid) return View();
 
@@ -371,7 +376,18 @@ namespace BrokerApp.Controllers
             ////    ViewBag.Message = ex.Message.ToString();
             ////}
 
-            return View();
+            ContactOwner contactOwner = new ContactOwner();
+            contactOwner.Email = _userManager.GetUserName(User);
+            contactOwner.Subject = postDetail.Subject;
+            contactOwner.Message = postDetail.Message;
+            contactOwner.FromUser = _userManager.GetUserId(User);
+            contactOwner.ToPost = id;
+
+            _Dbcontext.ContactOwners.Add(contactOwner);
+            _Dbcontext.SaveChanges();
+
+            await _emailSender.SendEmailAsync(contactOwner.Email,contactOwner.Subject, contactOwner.Message);
+            return RedirectToAction("PostPage","Post");
         }
     }
 }
