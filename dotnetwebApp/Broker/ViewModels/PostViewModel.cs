@@ -27,7 +27,6 @@ namespace Broker.Models
         public double Longitude { get; set; }
         public bool IsArchived { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public DateTime MeetingDate { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
         public string State { get; set; }

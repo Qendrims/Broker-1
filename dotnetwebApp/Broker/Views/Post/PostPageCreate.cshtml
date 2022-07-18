@@ -145,6 +145,10 @@
         padding: 0 5px;
         color: #dc3545;
     }
+
+    .hide{
+        display:none;
+    }
 </style>
 }
 
@@ -197,7 +201,7 @@
 
                 <label>Choose Categories</label>
                         <br />
-                        <select id="select-option" name="CategoryId">
+                        <select id="select-option" name="CategoryId" onchange="showAttribute()">
 
                             <option selected value="@Model.categories.Where(c=>c.DefaultActive).FirstOrDefault().CategoryId">@Model.categories.Where(c=>c.DefaultActive).FirstOrDefault().CategoryName</option>
                             @foreach (var cat in @Model.categories.Where(c => !c.DefaultActive).ToList())
@@ -209,9 +213,8 @@
 
                     <br/>
 
-                 <div id="show-specific-atributes">
-
-                        <div class="form-group category-inputs show" id="room">
+                 <div id="show-specific-atributes" >
+                    <div class="form-group category-inputs show" id="room">
                             <label for="post.Rooms">Rooms</label>
                             <input type="number"
                                    name="rooms"
