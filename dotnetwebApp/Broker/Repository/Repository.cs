@@ -2,6 +2,7 @@
 using Broker.ApplicationDB;
 using Broker.Services.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +16,17 @@ namespace Broker.Services.Repository
     {
         private readonly ApplicationDbContext _Dbcontext;
         internal DbSet<T> dbSet;
+        private readonly ILogger _logger;
 
-        public Repository(ApplicationDbContext Dbcontext)
+        public Repository(ApplicationDbContext Dbcontext, ILogger logger)
         {
             this._Dbcontext = Dbcontext; 
             this.dbSet = _Dbcontext.Set<T>();
+            this._logger = logger;
         }
         
         
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             dbSet.Add(entity);
         }
