@@ -1,6 +1,7 @@
 ﻿
 using Broker.ApplicationDB;
 using Broker.Services.Repository.IRepository;
+using Broker.UOW;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -14,14 +15,13 @@ namespace Broker.Services.Repository
 
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly ApplicationDbContext _Dbcontext;
+        private readonly UnitOfWork _Dbcontext;
         internal DbSet<T> dbSet;
         private readonly ILogger _logger;
 
-        public Repository(ApplicationDbContext Dbcontext, ILogger logger)
+        public Repository(UnitOfWork Dbcontext, ILogger logger)
         {
             this._Dbcontext = Dbcontext; 
-            this.dbSet = _Dbcontext.Set<T>();
             this._logger = logger;
         }
         

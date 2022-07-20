@@ -1,12 +1,12 @@
 ﻿using Broker.Services.Repository.IRepository;
 using System.Threading.Tasks;
 
-namespace Broker.UnitOfWork
+namespace Broker.UOW
 {
     public interface IUnitOfWork
     {
         IUserRepository Users { get; }
 
-        Task Save();
+        void Save();
     }
 }

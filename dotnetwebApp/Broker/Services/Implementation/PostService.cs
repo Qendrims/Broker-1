@@ -11,10 +11,10 @@ namespace Broker.Services.Implementation
 {
     public class PostService : IPostService
     {
-        private readonly ApplicationDbContext _Dbcontext;
+        private readonly ApplicationDB.UnitOfWork _Dbcontext;
         private IMapper _mapper;
         private readonly UserManager<User> _userManager;
-        public PostService(ApplicationDbContext Dbcontext, IMapper mapper, UserManager<User> userManager)
+        public PostService(ApplicationDB.UnitOfWork Dbcontext, IMapper mapper, UserManager<User> userManager)
         {
             this._Dbcontext = Dbcontext;
             this._mapper = mapper;
