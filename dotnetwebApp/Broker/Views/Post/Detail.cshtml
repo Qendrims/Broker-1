@@ -1,13 +1,14 @@
 ﻿@using Broker.ViewModels
 
 @model PostDetailViewModel
+@inject UserManager<User> UserManager;
 @{
     ViewData["Title"] = "Detail";
 }
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
-<link href="@Url.Content("~/css/detail.css")" rel="stylesheet" type="text/css" />
+<link href="~/css/detail.css" rel="stylesheet" type="text/css" />
 
 
 <body>
@@ -94,8 +95,46 @@
                         <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
                         <div class="action">
                             <button class="add-to-cart btn btn-default" type="button">Take this Job</button>
-                            <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+                            <button id='test' class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
                         </div>
+
+
+
+                      
+                        @if(User.Identity.IsAuthenticated){
+                            <h2 style="text-align: center">Rate and write a review</h2>
+                        <form id="review-form" method="post" asp-controller="Post" asp-action="AddReview">
+                            <input type="number" name="PostId" value=@Model.PostId hidden/>
+                            <input type="text" name="SentBy" value=@UserManager.GetUserId(User) hidden/>
+                            <input type="number" id="rate" name="Star" hidden />
+                            <div id="stars">
+
+                            </div>
+                            <textarea name="Comment" placeholder="Write a review"></textarea>
+                            <input type="submit" class="btn btn-primary"/>
+                            </form>
+                        } else
+                        {
+                            <p style="color: red">You need to be logged in to write a review.</p>
+                        }
+
+                          <div class="reviews">
+                        @foreach(var rev in @Model.Reviews)
+                        {
+                            <div class="reviews-item">
+                                <div class="reviews-sentby" style="display: flex;flex-direction: column">
+                                    <span><b>@rev.User.Name @rev.User.LastName</b></span>
+                                    <div>
+                                    @for(var i = 1; i < 6; i++){
+                                   <i id=@i class="fa-solid fa-star" style="color:@(i < rev.Star ? "gold" : "#c0c0c0")"></i>
+                                        }
+                                        </div>
+                                    </div>
+                                    <p>@rev.Comment</p>
+                            <hr />
+                            </div>
+                        }
+                         </div>
                     </div>
                 </div>
             </div>
@@ -104,5 +143,64 @@
 </body>
 
 
+
+<script>
+
+     let hover = 0;
+     let clickedIndex = 0;
+
+     const stars = Array(5).fill(0);
+
+     const element = stars.map((_,i) => {
+         return `<i id="${i + 1}" class="fa-solid fa-star ratestars" style="color:#c0c0c0"></i>`
+     }).join("")
+
+
+      document.getElementById('stars').innerHTML = element;
+
+
+      const starsElements = document.querySelectorAll('.ratestars')
+
+
+    starsElements.forEach(star => {
+
+        star.addEventListener('mouseover',e=>{
+        hover = e.target.id;
+
+         starsElements.forEach(st => {
+             if(st.id <= hover){
+                 
+                 st.style.color = "gold"
+             }
+         })
+        })
+
+        /// mouseleave
+         star.addEventListener('mouseleave',e=>{
+      
+         starsElements.forEach(st => {
+             if(st.id > clickedIndex)
+             st.style.color = "#c0c0c0"
+         })
+
+         })
+
+
+          star.addEventListener('click',e=>{
+        clickedIndex = e.target.id;
+        document.getElementById('rate').value = clickedIndex;
+        console.log(document.getElementById('rate').value);
+         starsElements.forEach(st => {
+
+                if(st.id <= clickedIndex){
+                 st.style.color = "gold"
+             }
+
+         })
+        })
+
+    })
+
+</script>
 
 

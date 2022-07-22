@@ -1,5 +1,5 @@
 using AutoMapper;
-using Broker.ApplicationDB;
+using Broker.ApplicationDBContext;
 using Broker.Data;
 using Broker.Mailing;
 using Broker.Models;
@@ -137,6 +137,7 @@ namespace Broker
 
             //Seeding Roles
             AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
+           
         }
     }
 }

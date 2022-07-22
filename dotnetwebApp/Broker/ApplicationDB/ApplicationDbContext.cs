@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Broker.ApplicationDB
+namespace Broker.ApplicationDBContext
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {
@@ -10,15 +10,19 @@ namespace Broker.ApplicationDB
         {
 
         }
+
+        public ApplicationDbContext()
+        {
+
+        }
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostCategory> PostCategories { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<PostImage> PostImages { get; set; }
-        public DbSet<Payment> Payments { get; set; }
-        public DbSet<Invite> Invites { get; set; }
         public DbSet<AdsPayments> AdsPaymentcs { get; set; }
         public DbSet<Tags> Tags { get; set; }
         public DbSet<TrackUser> TrackUsers { get; set; }
+        public DbSet<Review> Reviews { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,6 +34,24 @@ namespace Broker.ApplicationDB
 
             modelBuilder.Entity<Category>().Property(c => c.CategoryName)
            .HasMaxLength(100);
+
+            modelBuilder.Entity<Category>().HasData(new Category
+            {
+                CategoryId = 1,
+                CategoryName = "House",
+                DefaultActive = true
+
+            },new Category
+            {
+                CategoryId=2,
+                CategoryName = "Apartment",
+                DefaultActive = false
+            },new Category
+            {
+                CategoryId = 3,
+                CategoryName = "Land",
+                DefaultActive= false
+            });
 
             modelBuilder.Entity<User>().Property(u => u.Name)
             .HasMaxLength(200)

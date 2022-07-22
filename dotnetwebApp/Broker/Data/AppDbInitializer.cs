@@ -1,4 +1,5 @@
-﻿using Broker.Models;
+﻿using Broker.ApplicationDBContext;
+using Broker.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,12 @@ namespace Broker.Data
 {
     public class AppDbInitializer
     {
+        private readonly ApplicationDbContext _db;
+        public AppDbInitializer(ApplicationDbContext db)
+        {
+            this._db = db;
+        }
+
         public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder) {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope()) {
 
@@ -77,6 +84,47 @@ namespace Broker.Data
                 }
             }
         
+        }
+
+        public static void createCategory(IApplicationBuilder applicationBuilder)
+        {
+                ApplicationDbContext _db = new ApplicationDbContext();
+
+                Category house = new Category
+            {
+                CategoryName = "House",
+                DefaultActive = true
+            };
+
+            Category apartment = new Category
+            {
+                CategoryName = "Apartment",
+                DefaultActive = false
+            };
+
+            Category office = new Category
+            {
+                CategoryName = "Office",
+                DefaultActive = false
+            };
+
+            Category land = new Category
+            {
+                CategoryName = "Land",
+                DefaultActive = false
+            };
+
+            Category bar = new Category
+            {
+                CategoryName = "Bar",
+                DefaultActive = false
+            };
+
+            _db.Categories.Add(house);
+            _db.Categories.Add(apartment);
+            _db.Categories.Add(office);
+            _db.Categories.Add(land);
+            _db.Categories.Add(bar);
         }
     }
 }

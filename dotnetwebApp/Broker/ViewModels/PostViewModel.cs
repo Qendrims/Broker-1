@@ -13,7 +13,7 @@ namespace Broker.Models
 
         [Required]
         public int CategoryId { get; set; }
-        public List<string> AgentsInvited{ get; set; }
+        public List<string> AgentsInvited { get; set; }
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
@@ -32,20 +32,12 @@ namespace Broker.Models
         public string City { get; set; }
         public string State { get; set; }
         public string Country { get; set; }
+        public string HouseNumber { get; set; }
+        public string Neighbourhood { get; set; }
         public int ZipCode { get; set; }
         public string PostUserId { get; set; }
         [ForeignKey("PostUserId")]
         public User User { get; set; }
-
-        public int? Rooms { get; set; }
-        public int? BathRooms { get; set; }
-
-        public int? Size { get; set; }
-        public int? Floors { get; set; }
-        public int? ApartmentFlor { get; set; }
-        public int HouseNumber { get; set; }
-
-        public string Neighbourhood { get; set; }
 
 
         public virtual PostCategory PostCategories { get; set; }

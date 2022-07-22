@@ -1,6 +1,6 @@
 
 using AutoMapper;
-using Broker.ApplicationDB;
+using Broker.ApplicationDBContext;
 using Broker.FileHelper;
 using Broker.Models;
 using Broker.Services;
@@ -33,14 +33,16 @@ namespace BrokerApp.Controllers
         private IMapper _mapper;
         private readonly IPostService _postService; 
         private readonly IUserService _userService;
+        private readonly IHttpContextAccessor _HttpContextAccessor;
 
-        public PostController(ApplicationDbContext _context, IUserService userService, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
+        public PostController(ApplicationDbContext _context, IHttpContextAccessor _HttpContextAccessor, IUserService userService, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
         {
             this._Dbcontext = _context;
             this._webHostEnvironment = _webHostEnvironment;
             this._mapper = mapper;
             this._userManager = userManager;
             this._postService = postService;
+            this._HttpContextAccessor = _HttpContextAccessor;
             this._userService = userService;
         }
 
@@ -123,7 +125,7 @@ namespace BrokerApp.Controllers
 
             if (minPrice > maxPrice)
             {
-                var newMin = minPrice; 
+                var newMin = minPrice;
                 minPrice = maxPrice;
                 maxPrice = newMin;
             }
@@ -139,19 +141,19 @@ namespace BrokerApp.Controllers
                 .Where(p => rooms == null || p.Rooms == rooms)
                 .Where(p => bathrooms == null || p.BathRooms == bathrooms)
                 .Where(p => size == null || p.Size == size)
-                .Where(p=> story == null || p.ApartmentFlor == story)
+                .Where(p => story == null || p.ApartmentFlor == story)
                 .Where(p => floors == null || p.Floors == floors)
                 .Where(p => p.IsArchived == false)
                 .Include(p => p.Images).ToList();
 
             posts.FilteredPosts = result;
-            if(result.Count > 0)
-            posts.Image = result.FirstOrDefault().Images;
+            if (result.Count > 0)
+                posts.Image = result.FirstOrDefault().Images;
             posts.Category = category;
             posts.City = city;
-            
+
             const int postPerPage = 20;
-            if (pg < 1) 
+            if (pg < 1)
                 pg = 1;
 
             int postCount = posts.FilteredPosts.Count();
@@ -169,8 +171,9 @@ namespace BrokerApp.Controllers
         [HttpGet]
         public IActionResult Detail(int id)
         {
+           // var c = this._HttpContextAccessor;
             this._userService.TrackUser();
-            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).ThenInclude(x => x.Category).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
+            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).ThenInclude(x => x.Category).Include(p => p.Reviews).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
 
             //var postCategories = this._Dbcontext.PostCategories.Where(p => p.PostId == id).Include(y => y.Category).Include(y => y.Post).ToList();
             //var post1 = postCategories.
@@ -227,7 +230,7 @@ namespace BrokerApp.Controllers
 
                 return Json(new { status = 400, message = ex.Message });
             }
-
+              
         }
         [HttpGet]
         public IActionResult Edit(int id)
@@ -320,6 +323,14 @@ namespace BrokerApp.Controllers
             this._Dbcontext.AdsPaymentcs.Add(saveMapper);
             this._Dbcontext.SaveChanges();
 
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public IActionResult AddReview(Review review)
+        {
+            _Dbcontext.Reviews.Add(review);
+            _Dbcontext.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
     }

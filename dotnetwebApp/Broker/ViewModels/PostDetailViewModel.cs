@@ -10,7 +10,7 @@ namespace Broker.ViewModels
         public int PostId { get; set; }
         public string Title { get; set; }
 
-        public List<PostImage> Image { get; set; }=new List<PostImage>();
+        public List<PostImage> Image { get; set; } = new List<PostImage>();
 
         public List<IFormFile> ImageUploaded { get; set; }
 
@@ -25,11 +25,12 @@ namespace Broker.ViewModels
         public int? Size { get; set; }
         public int? Floors { get; set; }
 
-        [Display(Name ="Apartment Floor")]
+        [Display(Name = "Apartment Floor")]
         public int? ApartmentFlor { get; set; }
 
         [Display(Name = "Price")]
         public double NewPrice { get; set; }
+        public double Price { get; set; }
         public string OwnerId { get; set; }
         public string OwnerName { get; set; }
         public double Latitude { get; set; }
@@ -40,6 +41,7 @@ namespace Broker.ViewModels
         public int HouseNumber { get; set; }
 
         public string Neighbourhood { get; set; }
+        public List<Review> Reviews { get; set; }
         public virtual ICollection<PostCategory> PostCategories { get; set; }
 
         public List<Category> categories { get; set; }

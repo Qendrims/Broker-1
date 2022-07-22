@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Broker.ApplicationDB;
+using Broker.ApplicationDBContext;
 using Broker.FileHelper;
 using Broker.Models;
 using Broker.Services.Interface;
@@ -41,31 +41,29 @@ namespace Broker.Services.Implementation
 
         private void CreatePostImage(PostViewModel postView, Post postMapper)
         {
-            if(postView.Image != null)
+            if (postView.Image != null)
             {
-            foreach (var imageFile in postView.Image)
-            {
-                string fullFileName = MethodHelper.FileToBeSaved(postView.Title, imageFile).Result;
-
-                PostImage image = new PostImage();
-                image.ImageName = fullFileName;
-                image.Post = postMapper;
-                image.Type = "jpg";
-                this._Dbcontext.PostImages.Add(image);
-            }
-        }
-        private void CreatePostCategory(PostViewModel postView, Post postMapper)
-        {
-            if (postView.CategoryId != null)
-            {
-                foreach (var catId in postView.CategoryId)
+                foreach (var imageFile in postView.Image)
                 {
-                    PostCategory postCategory = new PostCategory();
-                    postCategory.CategoryId = catId;
-                    postCategory.Post = postMapper;
-                    this._Dbcontext.PostCategories.Add(postCategory);
+                    string fullFileName = MethodHelper.FileToBeSaved(postView.Title, imageFile).Result;
+
+                    PostImage image = new PostImage();
+                    image.ImageName = fullFileName;
+                    image.Post = postMapper;
+                    image.Type = "jpg";
+                    this._Dbcontext.PostImages.Add(image);
                 }
             }
-        }      
+        }
+
+            private void CreatePostCategory(PostViewModel postView, Post postMapper)
+            {
+               
+                        PostCategory postCategory = new PostCategory();
+                        postCategory.CategoryId = postView.CategoryId;
+                        postCategory.Post = postMapper;
+                        this._Dbcontext.PostCategories.Add(postCategory);
+                 
+            }      
     }
 }

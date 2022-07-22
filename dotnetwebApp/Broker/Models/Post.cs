@@ -16,7 +16,7 @@ namespace Broker.Models
         public string Description { get; set; }
         public int? Rooms { get; set; }
         public int? BathRooms { get; set; } 
-
+        public double? Price { get; set; }
         public int? Size { get; set; }
         public int? Floors { get; set; }
         public int? ApartmentFlor { get; set; }
@@ -25,7 +25,7 @@ namespace Broker.Models
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public bool IsArchived { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;  
         public string Street { get; set; }
         public string City { get; set; }
         public string State { get; set; }
@@ -38,6 +38,7 @@ namespace Broker.Models
         
 
         public virtual ICollection<PostCategory> PostCategories { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
         public bool IsDeleted { get; set; } = false;
 
         public bool IsActive { get; set; } = true;
