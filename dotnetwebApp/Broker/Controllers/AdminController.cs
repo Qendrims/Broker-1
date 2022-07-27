@@ -29,16 +29,24 @@ namespace Broker.Controllers
         }
 
         public IActionResult AllPosts()
-        
         {
             AdminAllUsersAndPosts viewModel = new AdminAllUsersAndPosts();
 
             viewModel.Posts = this._db.Posts.ToList();
             viewModel.Users = this._db.Users.ToList();
-                
-           return View(viewModel);
+
+            return View(viewModel);
         }
-        
-       
+        public IActionResult AllUsers()
+        {
+            AdminAllUsersAndPosts viewModel = new AdminAllUsersAndPosts();
+
+            viewModel.Users = this._db.Users.ToList();
+            viewModel.Posts = this._db.Posts.ToList();
+
+            return View(viewModel);
+        }
+
+
     }
 }
