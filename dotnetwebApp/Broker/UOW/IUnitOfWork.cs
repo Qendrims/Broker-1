@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Broker.UnitOfWork
+namespace Broker.UOW
 {
     public interface IUnitOfWork : IDisposable
     {

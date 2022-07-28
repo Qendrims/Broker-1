@@ -3,6 +3,7 @@ using Broker.ApplicationDB;
 using Broker.Mailing;
 using Broker.Models;
 using Broker.Services.Interface;
+using Broker.UOW;
 using Broker.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -22,14 +23,14 @@ namespace Broker.Controllers
     {
 
         private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext _db;
+        private readonly UnitOfWork _db;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private IMapper _mapper;
         private IEmailSender _emailSender;
         private readonly IUserService _userService;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IUserService userService, IEmailSender emailSender)
+        public HomeController(ILogger<HomeController> logger, UnitOfWork db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IUserService userService, IEmailSender emailSender)
         {
             this._logger = logger;
             this._db = db;
@@ -130,7 +131,7 @@ namespace Broker.Controllers
                         new { email = viewModel.Email, token = token }, Request.Scheme);
                     user.ResetToken = token;
                     this._db.Update(user);
-                    await this._db.SaveChangesAsync();
+                    await this._db.Save();
                     string emailBody = "Confirm reste password by pressing this link: <a href='" + passwordResetLink + "'>link</a>";
                     await _emailSender.SendEmailAsync(viewModel.Email, "Reset password", emailBody);
                     _logger.Log(LogLevel.Warning, passwordResetLink);
@@ -158,7 +159,7 @@ namespace Broker.Controllers
             await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
 
             this._db.Users.Update(user);
-            await this._db.SaveChangesAsync();
+            await this._db.Save();
             return View();
         }
         public IActionResult RegisterAsAgent()

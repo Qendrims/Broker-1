@@ -2,12 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Broker.Services.Repository.IRepository
 {
     public interface IRepository<T> where T : class
     {
-       
         //T- Post
         T GetFirstOrDefault(Expression<Func<T, bool>> filter);
 
@@ -16,6 +16,7 @@ namespace Broker.Services.Repository.IRepository
         void Add(T entity);
 
         void Remove(T entity);
+
 
 
 

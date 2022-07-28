@@ -5,6 +5,7 @@ using Broker.Models;
 using Broker.Services.Implementation;
 using Broker.Services.Interface;
 using Broker.Services.Mailing;
+using Broker.UOW;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -48,6 +49,8 @@ namespace Broker
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPostService, PostService>();
+            //Adding the Unit of Work to the Dependency Injec Container
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             services.Configure<IdentityOptions>(options =>
             {
