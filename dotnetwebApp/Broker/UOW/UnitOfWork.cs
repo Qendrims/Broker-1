@@ -1,25 +1,23 @@
 ﻿using Broker.ApplicationDB;
+using Broker.Repository;
 using Broker.Services.Repository.IRepository;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
-namespace Broker.UnitOfWork
+namespace Broker.UOW
 {
     public class UnitOfWork : IUnitOfWork
     {
         private ApplicationDbContext _applicationDbContext;
-        private readonly IUserRepository _userRepository;
-        public IUserRepository Users
-        {
-            get
-            {
-                if (this._userRepository == null)
-                {
-                    return _userRepository;
-                }
-                else throw new System.Exception("This user not existed!");
-            }
-        }
+        private ILogger logger;
+        private IUserRepository _userRepository;
 
+        public UnitOfWork(ApplicationDbContext applicationDbContext)
+        {
+            this._applicationDbContext = applicationDbContext;
+            Users = new UserRepository(_applicationDbContext, logger);
+        }
+        public IUserRepository Users{ get; private set; }
         public void Dispose()
         {
             throw new System.NotImplementedException();

@@ -17,6 +17,8 @@ namespace Broker.Services.Repository.IRepository
 
         void Remove(T entity);
 
+        void Update(T entity);
+
 
 
     }
