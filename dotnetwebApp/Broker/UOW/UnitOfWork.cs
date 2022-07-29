@@ -9,26 +9,23 @@ namespace Broker.UOW
     public class UnitOfWork : IUnitOfWork
     {
         private ApplicationDbContext _applicationDbContext;
-        private ILogger _logger; 
-        public IUserRepository Users { get; private set; }
-        public UnitOfWork(ApplicationDbContext applicationDbContext, ILogger logger)
+        private ILogger logger;
+        private IUserRepository _userRepository;
+
+        public UnitOfWork(ApplicationDbContext applicationDbContext)
         {
             this._applicationDbContext = applicationDbContext;
-            this._logger = logger;
-
-            Users = new UserRepository(_applicationDbContext, _logger);
+            Users = new UserRepository(_applicationDbContext, logger);
+        }
+        public IUserRepository Users{ get; private set; }
+        public void Dispose()
+        {
+            throw new System.NotImplementedException();
         }
 
-        
-
-        public  void Dispose()
+        public Task Save()
         {
-            _applicationDbContext.Dispose();
-        }
-         
-        public async Task Save()
-        {
-            await _applicationDbContext.SaveChangesAsync();
+            throw new System.NotImplementedException();
         }
     }
 }

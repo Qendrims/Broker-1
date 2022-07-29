@@ -48,6 +48,12 @@ namespace Broker.Services.Repository
         {
             dbSet.Remove(entity);
         }
-        
+
+        public void Update(T entity)
+        {
+            dbSet.Attach(entity);
+            var entry = _Dbcontext.Entry(entity);
+            entry.State = EntityState.Modified;
+        }
     }
 }

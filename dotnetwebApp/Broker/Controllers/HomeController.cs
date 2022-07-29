@@ -22,8 +22,10 @@ namespace Broker.Controllers
     public class HomeController : Controller
     {
 
-        private readonly ILogger<HomeController> _logger;
+        
         private readonly UnitOfWork _db;
+        private readonly ApplicationDbContext _dbContext;
+        private readonly ILogger _logger;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private IMapper _mapper;
@@ -32,7 +34,7 @@ namespace Broker.Controllers
 
         public HomeController(ILogger<HomeController> logger, UnitOfWork db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IUserService userService, IEmailSender emailSender)
         {
-            this._logger = logger;
+
             this._db = db;
             this._signInManager = signInManager;
             this._userManager = userManager;
@@ -44,7 +46,7 @@ namespace Broker.Controllers
         [HttpGet]
         public JsonResult GetSomething()
         {
-            var categories = _db.Categories.ToList();
+            var categories = _dbContext.Categories.ToList();
             var data = JsonConvert.SerializeObject(categories);
 
             return Json(data);
@@ -55,14 +57,14 @@ namespace Broker.Controllers
 
             List<HomeViewModel> homeViewModels = new List<HomeViewModel>();
 
-            var categories = this._db.Categories.ToList();
+            var categories = this._dbContext.Categories.ToList();
 
             foreach (var category in categories)
             {
                 HomeViewModel model = new HomeViewModel();
 
                 model.category = category;
-                model.posts = this._db.Posts.Where(p => p.PostCategories.Any(x => x.CategoryId == category.CategoryId)).Take(10).ToList();
+                model.posts = this._dbContext.Posts.Where(p => p.PostCategories.Any(x => x.CategoryId == category.CategoryId)).Take(10).ToList();
 
                 if (model.posts.Count != 0)
                 {
@@ -130,7 +132,7 @@ namespace Broker.Controllers
                     var passwordResetLink = Url.Action("ResetPassword", "Home",
                         new { email = viewModel.Email, token = token }, Request.Scheme);
                     user.ResetToken = token;
-                    this._db.Update(user);
+                    this._db.Users.Update(user);
                     await this._db.Save();
                     string emailBody = "Confirm reste password by pressing this link: <a href='" + passwordResetLink + "'>link</a>";
                     await _emailSender.SendEmailAsync(viewModel.Email, "Reset password", emailBody);
@@ -154,7 +156,7 @@ namespace Broker.Controllers
         [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-            var user=this._db.Users.Where(u => u.ResetToken == model.Token).FirstOrDefault();
+            var user=this._db.Users.GetFirstOrDefault(u => u.ResetToken == model.Token); 
 
             await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
 
