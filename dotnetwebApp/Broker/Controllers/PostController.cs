@@ -58,7 +58,7 @@ namespace BrokerApp.Controllers
         {
             FilteredPostViewModel posts = new FilteredPostViewModel();
 
-            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == id).ToList();
+            posts.FilteredPosts = _Dbcontext.Posts.Where(p => p.PostUserId == id && p.IsDeleted==false).ToList();
 
             const int postPerPage = 2;
             if (pg < 1)
@@ -146,11 +146,6 @@ namespace BrokerApp.Controllers
             return View("PostPage", posts);
         }
 
-        public IActionResult DeleteAgent(int? id)
-        {
-            _Dbcontext.SaveChanges();
-            return View();
-        }
         [HttpGet]
         public IActionResult Detail(int id)
         {
@@ -295,7 +290,10 @@ namespace BrokerApp.Controllers
                 var postToDelete = this._Dbcontext.Posts.Find(id);
                 var imageToDelete = this._Dbcontext.PostImages.Where(x => x.PostId == id).FirstOrDefault();
                 this._Dbcontext.PostImages.Remove((PostImage)imageToDelete);
-                this._Dbcontext.Posts.Remove(postToDelete);
+                postToDelete.IsActive = false;
+                postToDelete.IsDeleted = true;
+
+                //this._Dbcontext.Posts.Remove(postToDelete);
                 this._Dbcontext.SaveChanges();
 
                 return RedirectToAction("PostPageCreate");

@@ -1,6 +1,7 @@
 ﻿
 using Broker.ApplicationDB;
 using Broker.Services.Repository.IRepository;
+using Broker.UOW;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;

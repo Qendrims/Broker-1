@@ -1,5 +1,6 @@
 ﻿using Broker.ApplicationDB;
 using Broker.Repository;
+using Broker.Repository.IRepository;
 using Broker.Services.Repository.IRepository;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace Broker.UOW
     {
         private ApplicationDbContext _applicationDbContext;
         private ILogger logger;
-        private IUserRepository _userRepository;
+        private UserRepository _userRepository;
 
         public UnitOfWork(ApplicationDbContext applicationDbContext)
         {
@@ -18,14 +19,16 @@ namespace Broker.UOW
             Users = new UserRepository(_applicationDbContext, logger);
         }
         public IUserRepository Users{ get; private set; }
+        public IPostRepository Post { get; private set; }
+
         public void Dispose()
         {
             throw new System.NotImplementedException();
         }
 
-        public Task Save()
+        public async Task Save()
         {
-            throw new System.NotImplementedException();
+            await _applicationDbContext.SaveChangesAsync();
         }
     }
 }

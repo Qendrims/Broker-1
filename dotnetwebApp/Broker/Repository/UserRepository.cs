@@ -17,10 +17,5 @@ namespace Broker.Repository
         {
 
         }
-
-        public void Update(User user)
-        {
-            var existingUser = _db.Users.
-        }
     }
 }

@@ -195,12 +195,6 @@ namespace Broker.Controllers
         }
 
 
-        public IActionResult RegisterAsSimpleUser()
-        {
-
-            return View();
-
-        }
         public IActionResult AboutUs()
         {
             return View();
