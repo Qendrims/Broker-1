@@ -177,17 +177,17 @@ namespace Broker.Controllers
             var user = _userService.RegisterUser(model);
             if (user != null)
             {
+                if (_userService.GetUserToken(user.Result).Result)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Error");
+                }
 
-                var token = _userService.GetUserToken(user.Result);
+            //await _userManager.AddToRoleAsync(user, "Visitor");
 
-                //Generate Email Confrimation Link
-                var confrimationLink = Url.Action("Index", "Home",
-                    new { token = token }, Request.Scheme);
-                await _emailSender.SendEmailAsync(model.Email, "Confirm email", "Confirm email by pressing this link: <a href=\"" + confrimationLink + "\">link</a>");
-                //Log confirmation lint to a file
-                _logger.Log(LogLevel.Warning, confrimationLink);
-                //await _userManager.AddToRoleAsync(user, "Visitor");
-                return RedirectToAction("Index", "Home");
 
             }
             return View(model);

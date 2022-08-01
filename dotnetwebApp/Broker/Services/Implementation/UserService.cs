@@ -2,6 +2,7 @@
 using Broker.Mailing;
 using Broker.Models;
 using Broker.Services.Interface;
+using Broker.UOW;
 using Broker.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -17,11 +18,13 @@ namespace Broker.Services.Implementation
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly IUnitOfWork unitOfWork;
         private IMapper _mapper;
         private IEmailSender _emailSender;
 
-        public UserService(IHttpContextAccessor httpContextAccessor, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IEmailSender emailSender)
+        public UserService(IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IEmailSender emailSender)
         {
+            this.unitOfWork = unitOfWork;
             this._httpContextAccessor = httpContextAccessor;
             this._signInManager = signInManager;
             this._userManager = userManager;
@@ -66,12 +69,27 @@ namespace Broker.Services.Implementation
             }
             return null;
         }
-        public Task<string> GetUserToken(User user)
+        public async Task<bool> GetUserToken(User user)
         {
-            //Generate Email Confirmation token
-            var token = _userManager.GenerateEmailConfirmationTokenAsync(user);
-            _userManager.ConfirmEmailAsync(user, token.Result);
-            return token;
+            try
+            {
+                //Generate Email Confirmation token
+                var token = _userManager.GenerateEmailConfirmationTokenAsync(user);
+                await _userManager.ConfirmEmailAsync(user, token.Result);
+                var confrimationLink = "https://localhost:44359/Index/Home?token=" + token;
+                await _emailSender.SendEmailAsync(user.Email, "Confirm email", "Confirm email by pressing this link: <a href=\"" + confrimationLink + "\">link</a>");
+                return true;
+            }
+            catch {
+                return false;
+            }
+        }
+
+        //take all users qe kane nje postim
+        private void test() 
+        {
+            var users = this.unitOfWork.Users.GetAllUersWithOnePost();
+            
         }
 
 

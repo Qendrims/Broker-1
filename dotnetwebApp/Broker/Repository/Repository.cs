@@ -16,7 +16,7 @@ namespace Broker.Services.Repository
 
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly ApplicationDbContext _Dbcontext;
+        protected readonly ApplicationDbContext _Dbcontext;
         internal DbSet<T> dbSet;
         private readonly ILogger _logger;
 
@@ -55,6 +55,11 @@ namespace Broker.Services.Repository
             dbSet.Attach(entity);
             var entry = _Dbcontext.Entry(entity);
             entry.State = EntityState.Modified;
+        }
+
+        public void Include(T entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

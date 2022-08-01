@@ -19,8 +19,6 @@ namespace Broker.Services.Repository.IRepository
 
         void Update(T entity);
 
-
-
-
+        void Include(T entity);
     }
 }

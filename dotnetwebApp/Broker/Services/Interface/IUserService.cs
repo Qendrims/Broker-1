@@ -12,6 +12,6 @@ namespace Broker.Services.Interface
 
         Task<User> RegisterUser(LoginUserModel loginUser);
 
-        Task<string> GetUserToken(User user);
+        Task<bool> GetUserToken(User user);
     }
 }
