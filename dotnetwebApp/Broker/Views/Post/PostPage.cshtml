@@ -164,8 +164,13 @@ section.range-slider input:last-of-type::-moz-range-track {
                             <p>@post.Description</p>
                             <hr />
                             <div class="post-price-btns">
-                                <h3>$@post.OldPrice</h3>
-                                <a href="#" class="btn btn-outline-primary">View Details</a>
+                                 @if(@post.NewPrice<@post.OldPrice){
+                                    <div class="price"> <p>Price: <span id="discountPrice"> @post.OldPrice €</span> <span>@post.NewPrice €</span></p> </div>
+                                  }
+                                else{
+                                    <div class="price"><p>Price: @post.NewPrice €</p></div>
+                                }
+                                <a asp-controller="Post" asp-action="Detail" asp-route-id="@post.PostId" class="btn btn-outline-primary">View Details</a>
                             </div>
                         </div>
                     </div>

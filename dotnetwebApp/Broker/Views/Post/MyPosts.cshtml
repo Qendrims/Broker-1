@@ -1,7 +1,4 @@
 ﻿@using Broker.ViewModels
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 
 @model FilteredPostViewModel;
 @{
@@ -11,6 +8,7 @@
     {
         pager = ViewBag.Pager;
     }
+
 }
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -59,15 +57,41 @@
         }
  </div>*@
 
+
  <div class="container">
      <div class="products-container" >
      @foreach (var post in @Model.FilteredPosts)
         {
             int index = @Model.FilteredPosts.IndexOf(post) + 1;
             
+        
+            <div class="product" data-name="p-@index">
+                  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                  @for(int i=0;i<@post.Images.ToArray().Count();i++){
+                      <li data-bs-target="#carouselExampleIndicators" data-slide-to="@i" class="@(i==0 ? "active" : "")"></li>
+                  }
+                  </ol>
 
-              <div class="product" data-name="p-@index">
-                    <img src="~/UploadFiles/@post.Images.FirstOrDefault().ImageName"/>
+                  <div class="carousel-inner">
+                  
+                  @for(int i=0;i<@post.Images.ToArray().Count();i++){
+                      
+                   <div class="@(i==0 ? "carousel-item active" : "carousel-item")">
+                          <img class="d-block w-100" src="~/UploadFiles/@post.Images.ToArray()[i].ImageName" alt="@post.Images.ToArray()[i].ImageName">
+                   </div>
+                  }
+                  </div>
+                      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    
+                    </div>
                     
                     <h3>@post.Title</h3>
 
@@ -79,9 +103,11 @@
                     }
 
                     <div class="myPostOptions">
-                        <div id="details"><button>
+                        <div id="details"><button><a asp-controller="Post" asp-action="Detail" asp-route-id="@post.PostId">
                             Details
-                            </button>
+                            
+                            </a>
+                        </button>
                          </div>
                         
                         <div id="archive"><button>

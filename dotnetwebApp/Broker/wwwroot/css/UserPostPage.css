@@ -271,7 +271,15 @@ button {
         margin-left:50px;
     }
 
+.container .products-container .product .price {
+    font-size: 2rem;
+    color: #444;
+}
 
+#discountPrice {
+    text-decoration: line-through;
+    color:red;
+}
 
 
 

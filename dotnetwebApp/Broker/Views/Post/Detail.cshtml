@@ -1,4 +1,4 @@
-﻿@using Broker.ViewModels
+﻿@using Broker.Models
 
 @model PostDetailViewModel
 @{
@@ -10,7 +10,10 @@
 <link href="@Url.Content("~/css/detail.css")" rel="stylesheet" type="text/css" />
 
 
+
 <body>
+    <h1>@ViewBag.Message</h1>
+
 
     <div class="container">
         <div class="card">
@@ -99,10 +102,36 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </div>   
+
+
+
+           <div class="owner">
+           
+                <div class="owner-img">
+                   <img src="https://www.stockvault.net/free-photos/CEO">
+                </div>
+                   <form class="owner-form" method="post">
+                      <input asp-for="Email" type="text" class="name" placeholder="Name">
+                      <span class="text-danger" asp-validation-for="Email"></span>
+                      <input asp-for="Subject" type="text" class="subject" placeholder="Subject">
+                       <span class="text-danger" asp-validation-for="Subject"></span>
+                      <textarea asp-for="Message" class="msg" rows="4" cols="50" placeholder="Write your message here"></textarea>
+                       <span class="text-danger" asp-validation-for="Message"></span>
+                       <br />
+                     <input type="submit" class="btn" value="Send Message" asp-route-id="@Model.PostId" />
+                     <br/>
+                   
+                   </form>
+            
+            
+            </div>
+   </div>
+
+
+
+
+
+
+
 </body>
-
-
-
-

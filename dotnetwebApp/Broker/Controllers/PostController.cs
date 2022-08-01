@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using Broker.Services.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Broker.Services.Interface;
+using Broker.Mailing;
 
 
 namespace BrokerApp.Controllers
@@ -33,8 +34,9 @@ namespace BrokerApp.Controllers
         private IMapper _mapper;
         private readonly IPostService _postService; 
         private readonly IUserService _userService;
+        private readonly IEmailSender _emailSender;
 
-        public PostController(ApplicationDbContext _context, IUserService userService, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
+        public PostController(IEmailSender emailSender, ApplicationDbContext _context, IUserService userService, IWebHostEnvironment _webHostEnvironment, IMapper mapper, UserManager<User> userManager, IPostService postService)
         {
             this._Dbcontext = _context;
             this._webHostEnvironment = _webHostEnvironment;
@@ -42,6 +44,7 @@ namespace BrokerApp.Controllers
             this._userManager = userManager;
             this._postService = postService;
             this._userService = userService;
+            this._emailSender= emailSender;
         }
 
         public IActionResult Archive(int id)
@@ -135,8 +138,8 @@ namespace BrokerApp.Controllers
             }
             var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
                 .Where(p => city == null || p.City.ToLower() == city.ToLower())
-                .Where(p => minPrice == null || p.Price >= minPrice)
-                .Where(p => maxPrice == null || p.Price <= maxPrice)
+                .Where(p => minPrice == null || p.NewPrice >= minPrice)
+                .Where(p => maxPrice == null || p.NewPrice <= maxPrice)
                 .Where(p => rooms == null || p.Rooms == rooms)
                 .Where(p => bathrooms == null || p.BathRooms == bathrooms)
                 .Where(p => size == null || p.Size == size)
@@ -166,10 +169,10 @@ namespace BrokerApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Detail(int id)
+        public async Task<IActionResult> Detail(int id)
         {
-            this._userService.TrackUser();
-            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).ThenInclude(x => x.Category).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
+
+            var post1 =await this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).ThenInclude(x => x.Category).Include(x => x.User).Include(x => x.Images).FirstOrDefaultAsync();
 
             //var postCategories = this._Dbcontext.PostCategories.Where(p => p.PostId == id).Include(y => y.Category).Include(y => y.Post).ToList();
             //var post1 = postCategories.
@@ -183,6 +186,63 @@ namespace BrokerApp.Controllers
                 return View("Error");
             }
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult> Detail(PostDetailViewModel postDetail, int id)
+        {
+            if (!ModelState.IsValid) return View();
+
+
+            ////try
+            ////{
+            ////    MailMessage mail = new MailMessage();
+            ////    mail.From = new MailAddress("arkadriu@gmail.com", "A K");
+            ////    mail.To.Add("mejremehalilaj99@gmail.com");
+
+            ////    mail.IsBodyHtml = true;
+
+            ////    string content = "Name : " + contactPostOwner.FullName;
+            ////    content += "<br/> Message : " + contactPostOwner.Message;
+
+            ////    mail.Body= content;
+
+            ////    SmtpClient smtpClient=new SmtpClient();
+            ////    smtpClient.Host = "mail.@gmail.com";
+
+            ////    NetworkCredential networkCredential = new NetworkCredential("arkadriu@gmail.com", "owvxwstsezdcdhyq");
+
+            ////    smtpClient.UseDefaultCredentials = false;
+            ////    smtpClient.Credentials = networkCredential;
+            ////    smtpClient.Port = 587;
+            ////    smtpClient.EnableSsl = true;
+            ////    smtpClient.Send(mail);
+
+            ////    ViewBag.Message = "Mail Sent";
+
+
+            ////    ModelState.Clear();
+            ////}
+            ////catch (Exception ex)
+            ////{
+            ////    ViewBag.Message = ex.Message.ToString();
+            ////}
+
+            ContactOwner contactOwner = new ContactOwner();
+            contactOwner.Email = _userManager.GetUserName(User);
+            contactOwner.Subject = postDetail.Subject;
+            contactOwner.Message = postDetail.Message;
+            contactOwner.FromUser = _userManager.GetUserId(User);
+            contactOwner.ToPost = id;
+
+            _Dbcontext.SaveChanges();
+
+            await _emailSender.SendEmailAsync(contactOwner.Email, contactOwner.Subject, contactOwner.Message);
+            return RedirectToAction("PostPage", "Post");
+        }
+    
+
+
         [Authorize]
         [HttpGet]
         public IActionResult PostPageCreate()
@@ -234,14 +294,14 @@ namespace BrokerApp.Controllers
               var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(x => x.Images).Include(x => x.PostCategories).Include(x => x.User).FirstOrDefault();
                 
                
-              var postViewModel = _mapper.Map<PostDetailViewModel>(post);
+              var postViewModel = _mapper.Map<PostEditViewModel>(post);
               postViewModel.categories = _Dbcontext.Categories.ToList();
               return View(postViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(PostDetailViewModel ViewModel,int id)
+        public IActionResult Edit(PostEditViewModel ViewModel,int id)
         {
 
             var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(e => e.Images).FirstOrDefault();

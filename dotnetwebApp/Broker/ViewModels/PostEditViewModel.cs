@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Broker.ViewModels
 {
-    public class PostDetailViewModel
+    public class PostEditViewModel
     {
         public int PostId { get; set; }
         public string Title { get; set; }
@@ -19,11 +19,17 @@ namespace Broker.ViewModels
         public string City { get; set; }
         public string Country { get; set; }
         public int? Rooms { get; set; }
+
         public int? BathRooms { get; set; }
+
         public int? Size { get; set; }
         public int? Floors { get; set; }
+
+        [Display(Name = "Apartment Floor")]
         public int? ApartmentFlor { get; set; }
 
+        [Display(Name = "Price")]
+        public double NewPrice { get; set; }
         public double Price { get; set; }
         public string OwnerId { get; set; }
         public string OwnerName { get; set; }
@@ -31,15 +37,16 @@ namespace Broker.ViewModels
         public double Longitude { get; set; }
         public string State { get; set; }
         public int ZipCode { get; set; }
+
+        public int HouseNumber { get; set; }
+
+        public string Neighbourhood { get; set; }
+        public List<Review> Reviews { get; set; }
         public virtual ICollection<PostCategory> PostCategories { get; set; }
 
+        public List<Category> categories { get; set; }
 
-        [Required]
-        public string Email { get; set; }
-        [Required]
-        public string Subject { get; set; }
-        [Required]
-        public string Message { get; set; }
 
+        
     }
 }

@@ -41,31 +41,31 @@ namespace Broker.Services.Implementation
 
         private void CreatePostImage(PostViewModel postView, Post postMapper)
         {
-            if(postView.Image != null)
+            if (postView.Image != null)
             {
-            foreach (var imageFile in postView.Image)
-            {
-                string fullFileName = MethodHelper.FileToBeSaved(postView.Title, imageFile).Result;
+                foreach (var imageFile in postView.Image)
+                {
+                    string fullFileName = MethodHelper.FileToBeSaved(postView.Title, imageFile).Result;
 
-                PostImage image = new PostImage();
-                image.ImageName = fullFileName;
-                image.Post = postMapper;
-                image.Type = "jpg";
-                this._Dbcontext.PostImages.Add(image);
+                    PostImage image = new PostImage();
+                    image.ImageName = fullFileName;
+                    image.Post = postMapper;
+                    image.Type = "jpg";
+                    this._Dbcontext.PostImages.Add(image);
+                }
             }
         }
         private void CreatePostCategory(PostViewModel postView, Post postMapper)
         {
-            if (postView.CategoryId != null)
+            if (postView.CategoryId != 0)
             {
-                foreach (var catId in postView.CategoryId)
-                {
-                    PostCategory postCategory = new PostCategory();
-                    postCategory.CategoryId = catId;
-                    postCategory.Post = postMapper;
-                    this._Dbcontext.PostCategories.Add(postCategory);
-                }
+
+                PostCategory postCategory = new PostCategory();
+                postCategory.CategoryId = postView.CategoryId;
+                postCategory.Post = postMapper;
+                this._Dbcontext.PostCategories.Add(postCategory);
+
             }
-        }      
+        }
     }
-}
+    } 

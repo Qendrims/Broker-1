@@ -9,7 +9,7 @@ namespace Broker.Mapping
     {
         public AutoMapperConfiguration()
         {
-            CreateMap<Post,PostDetailViewModel>()
+            CreateMap<Post,PostEditViewModel>()
                 .ForMember(x => x.Image, y => y.MapFrom(b => b.Images))
                 .ForMember(x => x.OwnerId, y => y.MapFrom(b => b.PostUserId))
                 .ForMember(x => x.OwnerName, y => y.MapFrom(b => b.User.Name + " " + b.User.LastName))
@@ -18,6 +18,9 @@ namespace Broker.Mapping
             CreateMap<PostViewModel, Post>()
                 .ForMember(x => x.OldPrice, y => y.MapFrom(b => b.Price))
                 .ForMember(x => x.NewPrice, y => y.MapFrom(b => b.Price));
+
+            CreateMap<Post, PostDetailViewModel>();
+                
 
             CreateMap<AdsPaymentViewModel, AdsPayments>();
 

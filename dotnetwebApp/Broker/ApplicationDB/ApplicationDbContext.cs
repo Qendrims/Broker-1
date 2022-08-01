@@ -14,12 +14,13 @@ namespace Broker.ApplicationDB
         public DbSet<PostCategory> PostCategories { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<PostImage> PostImages { get; set; }
-        public DbSet<Payment> Payments { get; set; }
-        public DbSet<Invite> Invites { get; set; }
         public DbSet<AdsPayments> AdsPaymentcs { get; set; }
         public DbSet<Tags> Tags { get; set; }
         public DbSet<TrackUser> TrackUsers { get; set; }
 
+        public DbSet<ContactOwner> contactOwners { get; set; }
+
+        public DbSet<Review> reviews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -76,6 +77,8 @@ namespace Broker.ApplicationDB
 
             modelBuilder.Entity<PostImage>().Property(pi => pi.ImageName)
             .IsRequired();
+
+            modelBuilder.Entity<ContactOwner>().HasKey(co => new { co.Id, co.FromUser, co.ToPost });
         }
 
     }
