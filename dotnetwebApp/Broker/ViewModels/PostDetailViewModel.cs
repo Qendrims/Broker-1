@@ -31,5 +31,22 @@ namespace Broker.ViewModels
         public string State { get; set; }
         public int ZipCode { get; set; }
         public virtual ICollection<PostCategory> PostCategories { get; set; }
+
+
+
+        public string GetImageName(Post postImages,string imageName) 
+        {
+
+            foreach(PostImage postImage in postImages.Images)
+            {
+                if(postImage.ImageName == imageName)
+                {
+                    return postImage.ImageName;
+                }
+
+            }
+            return null;
+        }
+
     }
 }

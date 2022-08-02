@@ -23,8 +23,7 @@ namespace Broker.Controllers
     {
 
         
-        private readonly UnitOfWork _db;
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IUnitOfWork _db;
         private readonly ILogger _logger;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
@@ -32,9 +31,8 @@ namespace Broker.Controllers
         private IEmailSender _emailSender;
         private readonly IUserService _userService;
 
-        public HomeController(ILogger<HomeController> logger, UnitOfWork db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IUserService userService, IEmailSender emailSender)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork db, SignInManager<User> signInManager, UserManager<User> userManager, IMapper mapper, IUserService userService, IEmailSender emailSender)
         {
-
             this._db = db;
             this._signInManager = signInManager;
             this._userManager = userManager;
@@ -46,7 +44,7 @@ namespace Broker.Controllers
         [HttpGet]
         public JsonResult GetSomething()
         {
-            var categories = _dbContext.Categories.ToList();
+            var categories = _db.Categories.GetAll();
             var data = JsonConvert.SerializeObject(categories);
 
             return Json(data);
@@ -57,14 +55,14 @@ namespace Broker.Controllers
 
             List<HomeViewModel> homeViewModels = new List<HomeViewModel>();
 
-            var categories = this._dbContext.Categories.ToList();
+            var categories = this._db.Categories.GetAll();
 
             foreach (var category in categories)
             {
                 HomeViewModel model = new HomeViewModel();
 
                 model.category = category;
-                model.posts = this._dbContext.Posts.Where(p => p.PostCategories.Any(x => x.CategoryId == category.CategoryId)).Take(10).ToList();
+                model.posts = this._db.Posts.Get10PostByCategory(category);
 
                 if (model.posts.Count != 0)
                 {
@@ -156,6 +154,7 @@ namespace Broker.Controllers
         [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
+
             var user=this._db.Users.GetFirstOrDefault(u => u.ResetToken == model.Token); 
 
             await _userManager.ResetPasswordAsync(user, model.Token, model.Password);

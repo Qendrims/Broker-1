@@ -12,18 +12,23 @@ namespace Broker.UOW
         private ApplicationDbContext _applicationDbContext;
         private ILogger logger;
         private UserRepository _userRepository;
+        private PostRepository _postRepository;
+        private CategoryRepository _categoryRepository;
 
         public UnitOfWork(ApplicationDbContext applicationDbContext)
         {
             this._applicationDbContext = applicationDbContext;
             Users = new UserRepository(_applicationDbContext, logger);
+            Posts = new PostRepository(applicationDbContext, logger);
+            Categories = new CategoryRepository(applicationDbContext, logger);
         }
         public IUserRepository Users{ get; private set; }
-        public IPostRepository Post { get; private set; }
+        public IPostRepository Posts { get; private set; }
+        public ICategoryRepository Categories { get; private set; }
 
         public void Dispose()
         {
-            throw new System.NotImplementedException();
+            _applicationDbContext.Dispose();
         }
 
         public async Task Save()

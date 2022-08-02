@@ -20,11 +20,13 @@ using System.Threading.Tasks;
 using Broker.Services.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Broker.Services.Interface;
+using Broker.UOW;
 
 namespace BrokerApp.Controllers
 {
     public class PostController : Controller
     {
+        private readonly IUnitOfWork _db;
         private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _Dbcontext;
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -46,10 +48,10 @@ namespace BrokerApp.Controllers
             {
                 return NotFound();
             }
-            var post = _Dbcontext.Posts.Where(p => p.PostId == id).FirstOrDefault();
+            var post = _db.Posts.GetFirstOrDefault(p => p.PostId == id);
             post.IsArchived = true;
-            _Dbcontext.Posts.Update(post);
-            _Dbcontext.SaveChanges();
+            _db.Posts.Update(post);
+            _db.Save();
 
             return RedirectToAction("PostPage");
         }
@@ -100,8 +102,8 @@ namespace BrokerApp.Controllers
        
 
             FilteredPostViewModel posts = new FilteredPostViewModel();
-            posts.FilteredCategories = _Dbcontext.Categories.ToList();
-            posts.Cities = _Dbcontext.Posts.Where(p => !string.IsNullOrEmpty(p.City)).Select(m => m.City).Distinct().ToList();
+            posts.FilteredCategories = _db.Categories.GetAll();
+            posts.Cities = _db.Posts.GetAllCities();
 
             if (minPrice > maxPrice)
             {
@@ -114,15 +116,7 @@ namespace BrokerApp.Controllers
             {
                 cat = _Dbcontext.Categories.First(c => c.CategoryName == category);
             }
-            var result = _Dbcontext.Posts.Where(p => category == null || p.PostCategories.Any(pc => pc.CategoryId == cat.CategoryId))
-                .Where(p => city == null || p.City.ToLower() == city.ToLower())
-                .Where(p => minPrice == null || p.Price >= minPrice)
-                .Where(p => maxPrice == null || p.Price <= maxPrice)
-                .Where(p => rooms == null || p.Rooms == rooms)
-                .Where(p => bathrooms == null || p.BathRooms == bathrooms)
-                .Where(p => size == null || p.Size == size)
-                .Where(p => p.IsArchived == false)
-                .Include(p => p.Images).ToList();
+            var result = _db.Posts.FiltredPost(cat.CategoryId,category, city, minPrice, maxPrice, rooms, bathrooms, size);
 
             posts.FilteredPosts = result;
             if(result.Count > 0)
@@ -150,7 +144,7 @@ namespace BrokerApp.Controllers
         public IActionResult Detail(int id)
         {
 
-            var post1 = this._Dbcontext.Posts.Where(p => p.PostId == id).Include(y => y.PostCategories).ThenInclude(x => x.Category).Include(x => x.User).Include(x => x.Images).FirstOrDefault();
+            var post1 = this._db.Posts.GetPostWithImages(id);
 
             //var postCategories = this._Dbcontext.PostCategories.Where(p => p.PostId == id).Include(y => y.Category).Include(y => y.Post).ToList();
             //var post1 = postCategories.
@@ -208,12 +202,12 @@ namespace BrokerApp.Controllers
 
         }
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         { 
             try
             {
 
-                var post = this._Dbcontext.Posts.Where(x => x.PostId == id).Include(x => x.Images).FirstOrDefault();
+                var post = this._db.Posts.GetPostToEdit(id);
                 PostDetailViewModel postViewModel = new PostDetailViewModel();
                 try
                 {
@@ -239,8 +233,8 @@ namespace BrokerApp.Controllers
         public IActionResult Edit(PostDetailViewModel ViewModel)
         {
 
-            var post = this._Dbcontext.Posts.Where(x => x.PostId == ViewModel.PostId).Include(e => e.Images).FirstOrDefault();
-            var ImageToDelete = post.Images.Where(x => x.PostId == ViewModel.PostId).FirstOrDefault();
+            var post = this._db.Posts.GetPostToEdit(ViewModel);
+            var ImageToDelete = post.Images.Where(x => x.PostId == ViewModel.PostId && x.ImageName == ViewModel.GetImageName(post, x.ImageName)).ToList();
 
             try
             {
@@ -290,11 +284,11 @@ namespace BrokerApp.Controllers
                 var postToDelete = this._Dbcontext.Posts.Find(id);
                 var imageToDelete = this._Dbcontext.PostImages.Where(x => x.PostId == id).FirstOrDefault();
                 this._Dbcontext.PostImages.Remove((PostImage)imageToDelete);
-                postToDelete.IsActive = false;
-                postToDelete.IsDeleted = true;
+                //postToDelete.IsActive = false;
+                //postToDelete.IsDeleted = true;
 
                 //this._Dbcontext.Posts.Remove(postToDelete);
-                this._Dbcontext.SaveChanges();
+                this._db.Save();
 
                 return RedirectToAction("PostPageCreate");
             }

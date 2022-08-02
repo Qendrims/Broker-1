@@ -34,8 +34,10 @@ namespace Broker.Services.Repository
         }
         public List<T> GetAll()
         {
+
             IQueryable<T> query = dbSet;
-            return query.ToList(); 
+            return query.ToList();
+          
         }
 
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
@@ -45,7 +47,7 @@ namespace Broker.Services.Repository
             return query.FirstOrDefault();
         }
 
-        public void Remove(T entity)
+        public virtual void Remove(T entity)
         {
             dbSet.Remove(entity);
         }
