@@ -126,6 +126,11 @@
             
             
             </div>
+
+            <div class="relatedPosts">
+                <h2>Related Posts</h2>
+                @await Component.InvokeAsync("RelatedPosts",new {id = @Model.PostCategories.FirstOrDefault().CategoryId})
+            </div>
    </div>
 
 
