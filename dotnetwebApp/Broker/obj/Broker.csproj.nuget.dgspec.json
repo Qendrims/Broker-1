@@ -109,6 +109,10 @@
             "Portable.BouncyCastle": {
               "target": "Package",
               "version": "[1.9.0, )"
+            },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[39.124.0, )"
             }
           },
           "imports": [

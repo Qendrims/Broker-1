@@ -1,0 +1,87 @@
+﻿@using Microsoft.Extensions.Options
+@inject IOptions<Broker.StripeSettings> Stripe
+@model Broker.ViewModels.PaymentViewModel
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <div class="text-center">
+        <i class="fab fa-cc-stripe fa-2x"></i><i class="fab fa-cc-visa fa-2x"></i><i class="fab fa-cc-mastercard fa-2x"></i>
+        <script src="https://js.stripe.com/v3/"></script>
+        <form asp-controller="Payment" asp-action="Charge" method="post" id="payment-form">
+            <label for="card-number">Credit Card Number</label>
+            <div class="input-group mb-2">
+                <span id="card-number" class="form-control">
+
+                </span>
+            </div>
+            <label for="card-cvc">CVC Number</label>
+            <div class="input-group mb-2">
+                <span id="card-cvc" class="form-control">
+
+                </span>
+            </div>
+            <label for="card-exp">Expiration</label>
+            <div class="input-group mb-2">
+                <span id="card-exp" class="form-control">
+
+                </span>
+            </div>
+            <input class="StripeToken" asp-for="Token" type="text" />
+            <input asp-for="Total" />
+            <input asp-for="Email" type="email" />
+            <button type="submit" class="btn btn-danger">Pay</button>
+        </form>
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var stripe = Stripe('pk_test_51LNuQsLSrvjKlGfvaaFhMKsHVfSK80eTADgnLdqkJy9AVhs8vgcH6N3Y74XnEKqspxSDdiIzTdCyTPPc37lzxOgs00ppHiaQcy')
+            var elements = stripe.elements();
+            var style = {
+                base: {
+                    'lineheight': '1.35',
+                    'fontsize': '1.11rem',
+                    'color': '#495857',
+                    'fontFamily': 'apple-system,BinkMacSystemFont,"Sagoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'
+
+                }
+            };
+            var card = elements.create('cardNumber', {
+                'placeholder': '',
+                'style': style
+            });
+            card.mount('#card-number');
+            var cvc = elements.create('cardCvc', {
+                'placeholder': '',
+                'style': style
+            });
+            cvc.mount('#card-cvc');
+            var exp = elements.create('cardExpiry', {
+                'placeholder': '',
+                'style': style
+            });
+            exp.mount('#card-exp');
+
+            var form = document.getElementById('payment-form');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                stripe.createToken(card).then(function (result) {
+                    if (result.error) {
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                    } else {
+                        stripeTokenHandler(result.token);
+                        console.log(result.token);
+                    }
+                })
+            });
+            function stripeTokenHandler(token) {
+                $(".StripeToken").val(token.id);
+                form.submit();
+            }
+        });
+    </script>

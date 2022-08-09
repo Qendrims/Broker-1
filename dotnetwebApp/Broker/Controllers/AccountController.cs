@@ -23,6 +23,7 @@ namespace Broker.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _db = db;
+
         }
 
         public IActionResult Register()
@@ -129,7 +130,7 @@ namespace Broker.Controllers
             _db.Posts.Update(posts);
             _db.SaveChanges();
 
-            return RedirectToAction("MyPost");
+            return RedirectToAction("MyArchivedPosts");
 
         }
         public IActionResult MyArchivedPosts()
@@ -193,6 +194,14 @@ namespace Broker.Controllers
             
 
             return RedirectToAction("ProfileDetails");
+        }
+        public IActionResult PaymentMethods()
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var userData = _db.Users.Where(p => p.Id == userId).FirstOrDefault(); ;
+
+            return View(userData);
+
         }
     }
 }

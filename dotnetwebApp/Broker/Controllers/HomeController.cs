@@ -29,6 +29,17 @@ namespace Broker.Controllers
 
         public IActionResult Index()
         {
+            var postet = _db.Posts.ToList();
+            foreach( var post in postet)
+            {
+                
+                var differenceInTime = DateTime.Now.Subtract(post.LastClicked);
+                if (differenceInTime.TotalDays >= 30 && !(differenceInTime.TotalDays<0) && post.LastClicked.Year!=0001)
+                {
+                    _db.Posts.Remove(post);
+                    _db.SaveChanges();
+                }
+            }
 
             List<HomeViewModel> homeViewModels = new List<HomeViewModel>();
 

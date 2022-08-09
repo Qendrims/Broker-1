@@ -52,7 +52,7 @@
             @foreach(var post in @Model.FilteredPosts)
             {
                 
-            <div class="col-4">
+            <div class="col-4" >
 
                 <article class="post-card">
                     <div class="post-card-img">
@@ -69,7 +69,7 @@
                             <hr />
                             <div class="post-price-btns">
                                 <h3>$@post.Price</h3>
-                                <a href="#" class="btn btn-outline-primary">View Details</a>
+                                <a class="btn btn-outline-primary" asp-controller="Post" asp-action="PostDetails" asp-route-id="@post.PostId">View Details</a>
                             </div>
                         </div>
                     </div>

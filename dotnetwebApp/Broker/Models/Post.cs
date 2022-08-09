@@ -19,7 +19,6 @@ namespace Broker.Models
         public double Longitude { get; set; }
         public bool IsArchived { get; set; }
         public bool IsSponsored { get; set; }
-
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public string Street { get; set; }
         public string Country { get; set; }
@@ -30,10 +29,10 @@ namespace Broker.Models
         [ForeignKey("PostUserId")]
         public User User { get; set; }
         public virtual ICollection<PostCategory> PostCategories { get; set; }
-        public bool IsDeleted { get; set; } = false;
 
+        public bool IsDeleted { get; set; } = false;        
         public bool IsActive { get; set; } = true;
-
+        public DateTime LastClicked { get; set; }
         public virtual ICollection<PostImage> Images { get; set; }
 
 

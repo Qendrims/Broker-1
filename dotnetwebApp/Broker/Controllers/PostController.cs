@@ -314,6 +314,17 @@ namespace BrokerApp.Controllers
             return RedirectToAction("PostPageCreate");
         }
 
+        public IActionResult PostDetails(int id)
+        {
+            var post = _db.Posts.Where(p => p.PostId == id).FirstOrDefault();
+            post.LastClicked = DateTime.Now;
+            _db.Posts.Update(post);
+            _db.SaveChanges(); 
+            return View(post);
+
+        
+        }
+
      
     }
 }
